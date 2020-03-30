@@ -4,14 +4,14 @@ import triathematician.util.log
 import java.time.LocalDate
 
 fun main() {
-    `compute moving average and doubling time series`()
+//    `compute moving average and doubling time series`()
 //    reportCountyTrends(CASES, 50)
 //    reportStateTrends(CASES, 50)
 //    reportCountryTrends(CASES, 50)
 
-//    reportCountyTrends(DEATHS, 4)
-//    reportStateTrends(DEATHS, 5)
-//    reportCountryTrends(DEATHS, 10)
+    reportCountyTrends(DEATHS, 4)
+    reportStateTrends(DEATHS, 5)
+    reportCountryTrends(DEATHS, 10)
 }
 
 fun reportStateTrends(metric: String = DEATHS, min: Int = 5) {
@@ -54,7 +54,7 @@ fun reportHotspots(
         metricFilter: (Int) -> Boolean = { it > 5 }
 ) {
     println("location\tmetric\tvalue\tchange (avg)\tdoubling time (days)\tseverity (change)\tseverity (doubling)\tseverity (total)")
-    CovidDailyReports.timeSeriesData1()
+    CovidDailyReports.allTimeSeriesData()
             .filter { idFilter(it.id) }
             .filter { it.metric == metric && metricFilter(it.lastValue) }
             .filter { it.values.movingAverage(5).doublingTimes().lastOrNull()?.isFinite() ?: false }
