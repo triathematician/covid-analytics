@@ -35,7 +35,7 @@ object CsseCovid19DailyReports {
 
     /** Gets all time series data. */
     fun allTimeSeriesData(): List<MetricTimeSeries> = (timeSeriesData3()).toList().regroupAndMerge()
-            .flatMap { listOfNotNull(it, it.scaledByPopulation { "$it (per capita)" }) }
+            .flatMap { listOfNotNull(it, it.scaledByPopulation { "$it (per million)" }) }
 
     /** Create time series from format 1 files. */
     fun timeSeriesData1() = timeSeriesData(files1) { read1(it) }
@@ -175,9 +175,9 @@ private fun List<DailyReportRow>.global() = DailyReportRow(null, "", "", "Global
 
 //region population lookups
 
-fun MetricTimeSeries.scaledByPopulation(idFunction: (String) -> String) = when (val pop = lookupPopulation(id)) {
+fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = lookupPopulation(id)) {
     null -> null
-    else -> (this / pop.toDouble()).also { it.id = idFunction(it.id) }
+    else -> (this / (pop.toDouble() / 1000000)).also { it.metric = metricFunction(it.metric) }
 }
 
 //endregion
