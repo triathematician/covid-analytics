@@ -1,5 +1,7 @@
 package triathematician.covid19
 
-// This class links to various data sources providing time series information.
+//
+// This file links to various data sources providing time series information.
+//
 
-fun dailyReports() = CovidDailyReports.allTimeSeriesData()
+fun dailyReports() = CsseCovid19DailyReports.allTimeSeriesData()

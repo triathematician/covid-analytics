@@ -1,17 +1,18 @@
 package triathematician.covid19
 
+import triathematician.timeseries.*
 import triathematician.util.log
 import java.time.LocalDate
 
 fun main() {
-//    `compute moving average and doubling time series`()
+    `compute moving average and doubling time series`()
 //    reportCountyTrends(CASES, 50)
 //    reportStateTrends(CASES, 50)
 //    reportCountryTrends(CASES, 50)
 
-    reportCountyTrends(DEATHS, 4)
-    reportStateTrends(DEATHS, 5)
-    reportCountryTrends(DEATHS, 10)
+//    reportCountyTrends(DEATHS, 4)
+//    reportStateTrends(DEATHS, 5)
+//    reportCountryTrends(DEATHS, 10)
 }
 
 fun reportStateTrends(metric: String = DEATHS, min: Int = 5) {
@@ -51,10 +52,10 @@ private val COUNTRY_ID_FILTER: (String) -> Boolean = { !US_STATE_ID_FILTER(it) &
 fun reportHotspots(
         metric: String = "Deaths",
         idFilter: (String) -> Boolean = { true },
-        metricFilter: (Int) -> Boolean = { it > 5 }
+        metricFilter: (Double) -> Boolean = { it >= 5 }
 ) {
     println("location\tmetric\tvalue\tchange (avg)\tdoubling time (days)\tseverity (change)\tseverity (doubling)\tseverity (total)")
-    CovidDailyReports.allTimeSeriesData()
+    CsseCovid19DailyReports.allTimeSeriesData()
             .filter { idFilter(it.id) }
             .filter { it.metric == metric && metricFilter(it.lastValue) }
             .filter { it.values.movingAverage(5).doublingTimes().lastOrNull()?.isFinite() ?: false }
@@ -88,11 +89,13 @@ fun `compute moving average and doubling time series`(metric: String = "Deaths")
 }
 
 fun `compute long term trends for italy and south korea`() {
-    val italy = MetricTimeSeries("Italy", "Deaths", LocalDate.of(2020, 2, 21), listOf(1, 2, 3, 7, 10, 12, 17, 21, 29, 34, 52, 79, 107, 148, 197, 233, 366, 463, 631, 827, 827, 1266, 1441, 1809, 2158, 2503, 2978, 3405, 4032, 4825, 5476, 6077, 6820, 7503, 8215, 9134))
+    val italy = intTimeSeries("Italy", "Deaths", LocalDate.of(2020, 2, 21),
+            listOf(1, 2, 3, 7, 10, 12, 17, 21, 29, 34, 52, 79, 107, 148, 197, 233, 366, 463, 631, 827, 827, 1266, 1441, 1809, 2158, 2503, 2978, 3405, 4032, 4825, 5476, 6077, 6820, 7503, 8215, 9134))
     italy.values.changes().movingAverage(7).log("ITALY deltas\t")
     italy.values.movingAverage(7).doublingTimes().log("   doubling\t")
 
-    val `south korea` = MetricTimeSeries("Italy", "Deaths", LocalDate.of(2020, 2, 21), listOf(1, 2, 2, 6, 8, 10, 12, 13, 13, 16, 17, 28, 28, 35, 35, 42, 44, 50, 53, 54, 60, 66, 66, 72, 75, 75, 81, 84, 91, 94, 102, 111, 111, 120, 126, 131, 139))
+    val `south korea` = intTimeSeries("Italy", "Deaths", LocalDate.of(2020, 2, 21),
+            listOf(1, 2, 2, 6, 8, 10, 12, 13, 13, 16, 17, 28, 28, 35, 35, 42, 44, 50, 53, 54, 60, 66, 66, 72, 75, 75, 81, 84, 91, 94, 102, 111, 111, 120, 126, 131, 139))
     `south korea`.values.changes().movingAverage(7).log("SOUTH KOREA deltas\t")
     `south korea`.values.movingAverage(7).doublingTimes().log("   doubling\t")
 }
