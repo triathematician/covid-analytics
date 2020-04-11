@@ -1,5 +1,6 @@
 package triathematician.covid19
 
+import triathematician.population.lookupPopulation
 import triathematician.timeseries.*
 import triathematician.util.log
 import java.time.LocalDate
@@ -18,8 +19,8 @@ fun main() {
 //    reportStateTrends(CASES_PER_MILLION, min = 100.0)
 //    reportCountryTrends(CASES_PER_MILLION, min = 100.0)
 
-//    reportCountyTrends(DEATHS_PER_MILLION, min = 0.1)
-//    reportStateTrends(DEATHS_PER_MILLION, min = 0.0)
+    reportCountyTrends(DEATHS_PER_MILLION, min = 0.1)
+    reportStateTrends(DEATHS_PER_MILLION, min = 0.0)
     reportCountryTrends(DEATHS_PER_MILLION, min = 0.1)
 }
 
@@ -60,20 +61,32 @@ fun reportHotspots(
     println("location\tmetric\tvalue\tchange (avg)\tdoubling time (days)\tseverity (change)\tseverity (doubling)\tseverity (total)")
     CsseCovid19DailyReports.allTimeSeriesData()
             .filter { idFilter(it.id) }
+            .filter { lookupPopulation(it.id)?.let { it > 50000 } ?: false }
             .filter { it.metric == metric && metricFilter(it.lastValue) }
             .filter { it.values.movingAverage(5).doublingTimes().lastOrNull()?.isFinite() ?: false }
-            .map { it.hotspotInfo() }
+            .flatMap { it.hotspotInfo() }
             .sortedByDescending { (it[7] as Int * 10000) + (it[3] as Double) }
             .forEach { it.log() }
 }
 
-fun MetricTimeSeries.hotspotInfo(): List<Any> {
-    val lastDelta = values.changes().movingAverage(5).last()
-    val riskDelta = risk_PerCapitaDeathsPerDay(lastDelta)
-    val lastDoubling = values.movingAverage(5).doublingTimes().last()
-    val riskDoubling = risk_DoublingTime(lastDoubling)
-    return listOf(id, metric, values.last(), lastDelta, lastDoubling, riskDelta.level, riskDoubling.level, riskDelta.level + riskDoubling.level)
+fun MetricTimeSeries.hotspotInfo(): List<List<Any>> {
+    val changes = values.changes().movingAverage(5)
+    val doublings = values.movingAverage(5).doublingTimes()
+
+    return listOf(hotspotInfo(id, metric, values.last(), changes.last(), doublings.last()),
+            hotspotInfo("$id -1", "$metric -1", values.penultimate()!!, changes.penultimate()!!, doublings.penultimate()!!),
+            hotspotInfo("$id -2", "$metric -2", values.thirdToLast()!!, changes.thirdToLast()!!, doublings.thirdToLast()!!)
+    )
 }
+
+private fun hotspotInfo(id: String, metric: String, value: Any, lastDelta: Double, lastDoubling: Double): List<Any> {
+    val riskDelta = risk_PerCapitaDeathsPerDay(lastDelta)
+    val riskDoubling = risk_DoublingTime(lastDoubling)
+    return listOf(id, metric, value, lastDelta, lastDoubling, riskDelta.level, riskDoubling.level, riskDelta.level + riskDoubling.level)
+}
+
+private fun <X> List<X>.penultimate() = getOrNull(size - 2)
+private fun <X> List<X>.thirdToLast() = getOrNull(size - 3)
 
 fun `compute moving average and doubling time series`(metric: String, min: Double) {
     dailyReports()

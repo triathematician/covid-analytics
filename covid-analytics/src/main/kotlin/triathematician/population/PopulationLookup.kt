@@ -46,7 +46,7 @@ private val excludedIds = listOf("Unassigned", "Out-of", "Out of", "Recovered", 
 
 private fun logIfNotFound(id: String) {
     if (excludedIds.none { it in id } && id !in loggedIds) {
-        println("no pop for $id")
+//        println("no pop for $id")
         loggedIds += id
     }
 }
