@@ -23,7 +23,7 @@ fun risk_DoublingTime(days: Double) = when {
 fun risk_DeathsPerDay(dailyAverage: Double) = risk(dailyAverage, 1.0)
 
 /** Estimated risk based on recent per-capita deaths per day. */
-fun risk_PerCapitaDeathsPerDay(dailyAverage: Double) = risk(dailyAverage, 0.1)
+fun risk_PerCapitaDeathsPerDay(dailyAverage: Double) = risk(dailyAverage, 0.01)
 
 /** Risk based on exponential levels. */
 private fun risk(value: Double, baseLevel: Double) = when {

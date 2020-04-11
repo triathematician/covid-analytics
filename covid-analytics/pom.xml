@@ -10,7 +10,7 @@
 
     <properties>
         <kotlin.version>1.3.70</kotlin.version>
-        <main.class>triathematician.covid19.CovidAnalyticsKt</main.class>
+        <main.class>triathematician.covid19.CovidConstantsKt</main.class>
     </properties>
 
     <dependencies>

@@ -14,10 +14,14 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
     constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>): this(id, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
     constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int): this(id, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
+    val size: Int
+        get() = values.size
     val lastValue: Double
         get() = values.lastOrNull() ?: 0.0
     val end: LocalDate
         get() = start.plusDays((values.size - 1).toLong())
+    val valuesAsMap: Map<LocalDate, Double>
+        get() = values.mapIndexed { i, d -> start.plusDays(i.toLong()) to d }.toMap()
 
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
 
