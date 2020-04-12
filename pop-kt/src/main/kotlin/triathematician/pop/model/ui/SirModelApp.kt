@@ -55,6 +55,7 @@ class Results {
     val e = mutableListOf<XYChart.Data<Number, Number>>().asObservable()
     val i = mutableListOf<XYChart.Data<Number, Number>>().asObservable()
     val r = mutableListOf<XYChart.Data<Number, Number>>().asObservable()
+    val x = mutableListOf<XYChart.Data<Number, Number>>().asObservable()
 }
 
 class SirModelAppView: View() {
@@ -89,13 +90,30 @@ class SirModelAppView: View() {
                     configForm()
                 }
             }
-            areachart("Model Dynamics", NumberAxis().apply { label = "Day"}, NumberAxis().apply { label = "Population" }) {
-                animated = false
-                createSymbols = false
-                series("S", results.s)
-                series("E", results.e)
-                series("I", results.i)
-                series("R", results.r)
+            drawer {
+                item("Model Dynamics", expanded = true) {
+                    areachart("Model Dynamics", NumberAxis().apply { label = "Day" }, NumberAxis().apply { label = "Population" }) {
+                        animated = false
+                        createSymbols = false
+                        series("S", results.s)
+                        series("E", results.e)
+                        series("I", results.i)
+                        series("R", results.r)
+                    }
+                }
+                item("Linearization of Recoveries") {
+                    scatterchart("Hubbert Transform", NumberAxis().apply { label = "Total" },
+                            NumberAxis().apply {
+                                label = "Percent Growth"
+                                isAutoRanging = false
+                                lowerBound = 0.0
+                                tickUnit = 0.05
+                                upperBound = 0.2
+                            }) {
+                        animated = false
+                        series("X", results.x)
+                    }
+                }
             }
         }
         hbox {
@@ -171,10 +189,22 @@ class SirModelAppView: View() {
     fun rerunModel() {
         val model = seir(inits.s + inits.e + inits.i + inits.r, inits.e, inits.i, inits.r, vals.beta.toDouble(), vals.gamma.toDouble(), vals.gamma2.toDouble())
         val data = model.run(500)
+        Frac.reset()
         results.s.setAll(data.mapIndexed { i, ints -> XYChart.Data<Number, Number>(i, ints[0]) })
         results.e.setAll(data.mapIndexed { i, ints -> XYChart.Data<Number, Number>(i, ints[1]) })
         results.i.setAll(data.mapIndexed { i, ints -> XYChart.Data<Number, Number>(i, ints[2]) })
         results.r.setAll(data.mapIndexed { i, ints -> XYChart.Data<Number, Number>(i, ints[3]) })
+        results.x.setAll(data.mapIndexed { i, ints -> XYChart.Data<Number, Number>(ints[3], Frac.percentChange(ints[3].toDouble())) })
+    }
+
+    private object Frac {
+        var last = 0.0
+        fun reset() { last = 0.0 }
+        fun percentChange(tot: Double): Double {
+            val delta = tot - last
+            last = tot
+            return if (tot == 0.0) 0.0 else delta/tot
+        }
     }
 }
 

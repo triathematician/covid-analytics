@@ -25,12 +25,14 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
 
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
 
+    private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
+
+    //region DERIVED SERIES
+
     operator fun plus(n: Number): MetricTimeSeries = copy(values = values.map { it + n.toDouble() })
     operator fun minus(n: Number): MetricTimeSeries = copy(values = values.map { it - n.toDouble() })
     operator fun times(n: Number): MetricTimeSeries = copy(values = values.map { it * n.toDouble() })
     operator fun div(n: Number): MetricTimeSeries = copy(values = values.map { it / n.toDouble() })
-
-    private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
 
     /** Return copy of this series where values are foerced to be increasing. */
     fun coerceIncreasing(): MetricTimeSeries {
@@ -41,6 +43,12 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
         return copy(values = res)
     }
 
+    fun movingAverage(bucket: Int) = copy(values = values.movingAverage(bucket))
+
+    //endregion
+
+    //region CLEANUP UTILS
+
     /** If time series starts with more than max zeros, trim so that it has max zeros. */
     fun restrictNumberOfStartingZerosTo(max: Int): MetricTimeSeries {
         val firstNonZeroIndex = values.indexOfFirst { it > 0 }
@@ -49,6 +57,8 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
             else -> this
         }
     }
+
+    //endregion
 }
 
 //region factories

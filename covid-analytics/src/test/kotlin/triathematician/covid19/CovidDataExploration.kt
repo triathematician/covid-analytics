@@ -8,6 +8,15 @@ import triathematician.timeseries.movingAverage
 import triathematician.util.log
 import java.time.LocalDate
 
+fun main() {
+    dailyReports().filter { it.id == "Italy" }
+            .map { it.movingAverage(7) }
+            .forEach {
+                println("${it.id} ${it.metric}")
+                println("  ${it.values.joinToString(" ")}")
+            }
+}
+
 fun `compute moving average and doubling time series`(metric: String, min: Double) {
     dailyReports()
             .filter { COUNTRY_ID_FILTER(it.id) }

@@ -38,7 +38,7 @@ object CsseCovid19DailyReports {
     private val files3 = allFiles.filter { it.name > "03-21-2020.csv" }
 
     /** Gets all time series data. */
-    fun allTimeSeriesData(): List<MetricTimeSeries> = (timeSeriesData3()).toList().regroupAndMerge()
+    fun allTimeSeriesData(): List<MetricTimeSeries> = (timeSeriesData1() + timeSeriesData2() + timeSeriesData3()).toList().regroupAndMerge()
             .flatMap { listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }) }
 
     /** Create time series from format 1 files. */
@@ -110,7 +110,7 @@ object CsseCovid19DailyReports {
     // Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered,Latitude,Longitude
     private fun read2(fields: List<String>) = DailyReportRow(null, "", fields[0], fields[1].chinaFix(),
             fields[2].toLocalDate(*FORMATS), fields[6].toDoubleOrNull(), fields[7].toDoubleOrNull(),
-            fields[3].toInt(), fields[4].toInt(), fields[5].toInt(), 0, combinedKey2(fields[0], fields[2]))
+            fields[3].toInt(), fields[4].toInt(), fields[5].toInt(), 0, combinedKey2(fields[0], fields[1]))
 
     private fun combinedKey2(state: String, region: String) = when {
         state.isEmpty() -> region.chinaFix()

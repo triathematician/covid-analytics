@@ -19,6 +19,7 @@ Diamond Princess,Confirmed,2020-04-07T04:00:00Z,49
 Diamond Princess,Confirmed,2020-04-08T04:00:00Z,49
 Diamond Princess,Confirmed,2020-04-09T04:00:00Z,49
 Diamond Princess,Confirmed,2020-04-10T04:00:00Z,49
+Diamond Princess,Confirmed,2020-04-11T04:00:00Z,49
 Grand Princess,Confirmed,2020-03-22T04:00:00Z,30
 Grand Princess,Confirmed,2020-03-23T04:00:00Z,30
 Grand Princess,Confirmed,2020-03-24T04:00:00Z,30
@@ -39,6 +40,7 @@ Grand Princess,Confirmed,2020-04-07T04:00:00Z,103
 Grand Princess,Confirmed,2020-04-08T04:00:00Z,103
 Grand Princess,Confirmed,2020-04-09T04:00:00Z,103
 Grand Princess,Confirmed,2020-04-10T04:00:00Z,103
+Grand Princess,Confirmed,2020-04-11T04:00:00Z,103
 Grand Princess,Deaths,2020-03-22T04:00:00Z,1
 Grand Princess,Deaths,2020-03-23T04:00:00Z,1
 Grand Princess,Deaths,2020-03-24T04:00:00Z,1
@@ -59,6 +61,7 @@ Grand Princess,Deaths,2020-04-07T04:00:00Z,3
 Grand Princess,Deaths,2020-04-08T04:00:00Z,3
 Grand Princess,Deaths,2020-04-09T04:00:00Z,3
 Grand Princess,Deaths,2020-04-10T04:00:00Z,3
+Grand Princess,Deaths,2020-04-11T04:00:00Z,3
 Guam,Confirmed,2020-03-22T04:00:00Z,27
 Guam,Confirmed,2020-03-23T04:00:00Z,29
 Guam,Confirmed,2020-03-24T04:00:00Z,32
@@ -79,6 +82,7 @@ Guam,Confirmed,2020-04-07T04:00:00Z,121
 Guam,Confirmed,2020-04-08T04:00:00Z,121
 Guam,Confirmed,2020-04-09T04:00:00Z,128
 Guam,Confirmed,2020-04-10T04:00:00Z,130
+Guam,Confirmed,2020-04-11T04:00:00Z,133
 Guam,Confirmed (per 100k),2020-03-22T04:00:00Z,16.00
 Guam,Confirmed (per 100k),2020-03-23T04:00:00Z,17.18
 Guam,Confirmed (per 100k),2020-03-24T04:00:00Z,18.96
@@ -99,6 +103,7 @@ Guam,Confirmed (per 100k),2020-04-07T04:00:00Z,71.69
 Guam,Confirmed (per 100k),2020-04-08T04:00:00Z,71.69
 Guam,Confirmed (per 100k),2020-04-09T04:00:00Z,75.84
 Guam,Confirmed (per 100k),2020-04-10T04:00:00Z,77.03
+Guam,Confirmed (per 100k),2020-04-11T04:00:00Z,78.80
 Guam,Deaths,2020-03-22T04:00:00Z,1
 Guam,Deaths,2020-03-23T04:00:00Z,1
 Guam,Deaths,2020-03-24T04:00:00Z,1
@@ -119,6 +124,7 @@ Guam,Deaths,2020-04-07T04:00:00Z,4
 Guam,Deaths,2020-04-08T04:00:00Z,4
 Guam,Deaths,2020-04-09T04:00:00Z,4
 Guam,Deaths,2020-04-10T04:00:00Z,4
+Guam,Deaths,2020-04-11T04:00:00Z,5
 Guam,Deaths (per 100k),2020-03-22T04:00:00Z,0.59
 Guam,Deaths (per 100k),2020-03-23T04:00:00Z,0.59
 Guam,Deaths (per 100k),2020-03-24T04:00:00Z,0.59
@@ -139,6 +145,7 @@ Guam,Deaths (per 100k),2020-04-07T04:00:00Z,2.37
 Guam,Deaths (per 100k),2020-04-08T04:00:00Z,2.37
 Guam,Deaths (per 100k),2020-04-09T04:00:00Z,2.37
 Guam,Deaths (per 100k),2020-04-10T04:00:00Z,2.37
+Guam,Deaths (per 100k),2020-04-11T04:00:00Z,2.96
 Puerto Rico,Confirmed,2020-03-22T04:00:00Z,23
 Puerto Rico,Confirmed,2020-03-23T04:00:00Z,31
 Puerto Rico,Confirmed,2020-03-24T04:00:00Z,39
@@ -159,6 +166,7 @@ Puerto Rico,Confirmed,2020-04-07T04:00:00Z,573
 Puerto Rico,Confirmed,2020-04-08T04:00:00Z,620
 Puerto Rico,Confirmed,2020-04-09T04:00:00Z,683
 Puerto Rico,Confirmed,2020-04-10T04:00:00Z,725
+Puerto Rico,Confirmed,2020-04-11T04:00:00Z,788
 Puerto Rico,Confirmed (per 100k),2020-03-22T04:00:00Z,0.72
 Puerto Rico,Confirmed (per 100k),2020-03-23T04:00:00Z,0.97
 Puerto Rico,Confirmed (per 100k),2020-03-24T04:00:00Z,1.22
@@ -179,6 +187,7 @@ Puerto Rico,Confirmed (per 100k),2020-04-07T04:00:00Z,17.94
 Puerto Rico,Confirmed (per 100k),2020-04-08T04:00:00Z,19.41
 Puerto Rico,Confirmed (per 100k),2020-04-09T04:00:00Z,21.39
 Puerto Rico,Confirmed (per 100k),2020-04-10T04:00:00Z,22.70
+Puerto Rico,Confirmed (per 100k),2020-04-11T04:00:00Z,24.67
 Puerto Rico,Deaths,2020-03-22T04:00:00Z,1
 Puerto Rico,Deaths,2020-03-23T04:00:00Z,2
 Puerto Rico,Deaths,2020-03-24T04:00:00Z,2
@@ -199,6 +208,7 @@ Puerto Rico,Deaths,2020-04-07T04:00:00Z,23
 Puerto Rico,Deaths,2020-04-08T04:00:00Z,24
 Puerto Rico,Deaths,2020-04-09T04:00:00Z,33
 Puerto Rico,Deaths,2020-04-10T04:00:00Z,39
+Puerto Rico,Deaths,2020-04-11T04:00:00Z,42
 Puerto Rico,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Puerto Rico,Deaths (per 100k),2020-03-23T04:00:00Z,0.06
 Puerto Rico,Deaths (per 100k),2020-03-24T04:00:00Z,0.06
@@ -219,6 +229,7 @@ Puerto Rico,Deaths (per 100k),2020-04-07T04:00:00Z,0.72
 Puerto Rico,Deaths (per 100k),2020-04-08T04:00:00Z,0.75
 Puerto Rico,Deaths (per 100k),2020-04-09T04:00:00Z,1.03
 Puerto Rico,Deaths (per 100k),2020-04-10T04:00:00Z,1.22
+Puerto Rico,Deaths (per 100k),2020-04-11T04:00:00Z,1.32
 Virgin Islands,Confirmed,2020-03-22T04:00:00Z,6
 Virgin Islands,Confirmed,2020-03-23T04:00:00Z,7
 Virgin Islands,Confirmed,2020-03-24T04:00:00Z,17
@@ -239,6 +250,7 @@ Virgin Islands,Confirmed,2020-04-07T04:00:00Z,43
 Virgin Islands,Confirmed,2020-04-08T04:00:00Z,45
 Virgin Islands,Confirmed,2020-04-09T04:00:00Z,45
 Virgin Islands,Confirmed,2020-04-10T04:00:00Z,50
+Virgin Islands,Confirmed,2020-04-11T04:00:00Z,51
 Virgin Islands,Confirmed (per 100k),2020-03-22T04:00:00Z,5.75
 Virgin Islands,Confirmed (per 100k),2020-03-23T04:00:00Z,6.70
 Virgin Islands,Confirmed (per 100k),2020-03-24T04:00:00Z,16.28
@@ -259,6 +271,7 @@ Virgin Islands,Confirmed (per 100k),2020-04-07T04:00:00Z,41.18
 Virgin Islands,Confirmed (per 100k),2020-04-08T04:00:00Z,43.09
 Virgin Islands,Confirmed (per 100k),2020-04-09T04:00:00Z,43.09
 Virgin Islands,Confirmed (per 100k),2020-04-10T04:00:00Z,47.88
+Virgin Islands,Confirmed (per 100k),2020-04-11T04:00:00Z,48.84
 Virgin Islands,Deaths,2020-03-30T04:00:00Z,0
 Virgin Islands,Deaths,2020-03-31T04:00:00Z,0
 Virgin Islands,Deaths,2020-04-01T04:00:00Z,0
@@ -271,6 +284,7 @@ Virgin Islands,Deaths,2020-04-07T04:00:00Z,1
 Virgin Islands,Deaths,2020-04-08T04:00:00Z,1
 Virgin Islands,Deaths,2020-04-09T04:00:00Z,1
 Virgin Islands,Deaths,2020-04-10T04:00:00Z,1
+Virgin Islands,Deaths,2020-04-11T04:00:00Z,1
 Virgin Islands,Deaths (per 100k),2020-03-30T04:00:00Z,0.00
 Virgin Islands,Deaths (per 100k),2020-03-31T04:00:00Z,0.00
 Virgin Islands,Deaths (per 100k),2020-04-01T04:00:00Z,0.00
@@ -283,6 +297,7 @@ Virgin Islands,Deaths (per 100k),2020-04-07T04:00:00Z,0.96
 Virgin Islands,Deaths (per 100k),2020-04-08T04:00:00Z,0.96
 Virgin Islands,Deaths (per 100k),2020-04-09T04:00:00Z,0.96
 Virgin Islands,Deaths (per 100k),2020-04-10T04:00:00Z,0.96
+Virgin Islands,Deaths (per 100k),2020-04-11T04:00:00Z,0.96
 Northern Mariana Islands,Confirmed,2020-03-25T04:00:00Z,0
 Northern Mariana Islands,Confirmed,2020-03-26T04:00:00Z,0
 Northern Mariana Islands,Confirmed,2020-03-27T04:00:00Z,0
@@ -300,6 +315,7 @@ Northern Mariana Islands,Confirmed,2020-04-07T04:00:00Z,6
 Northern Mariana Islands,Confirmed,2020-04-08T04:00:00Z,6
 Northern Mariana Islands,Confirmed,2020-04-09T04:00:00Z,6
 Northern Mariana Islands,Confirmed,2020-04-10T04:00:00Z,6
+Northern Mariana Islands,Confirmed,2020-04-11T04:00:00Z,6
 Northern Mariana Islands,Confirmed (per 100k),2020-03-25T04:00:00Z,0.00
 Northern Mariana Islands,Confirmed (per 100k),2020-03-26T04:00:00Z,0.00
 Northern Mariana Islands,Confirmed (per 100k),2020-03-27T04:00:00Z,0.00
@@ -317,6 +333,7 @@ Northern Mariana Islands,Confirmed (per 100k),2020-04-07T04:00:00Z,10.42
 Northern Mariana Islands,Confirmed (per 100k),2020-04-08T04:00:00Z,10.42
 Northern Mariana Islands,Confirmed (per 100k),2020-04-09T04:00:00Z,10.42
 Northern Mariana Islands,Confirmed (per 100k),2020-04-10T04:00:00Z,10.42
+Northern Mariana Islands,Confirmed (per 100k),2020-04-11T04:00:00Z,10.42
 Northern Mariana Islands,Deaths,2020-03-26T04:00:00Z,0
 Northern Mariana Islands,Deaths,2020-03-27T04:00:00Z,0
 Northern Mariana Islands,Deaths,2020-03-28T04:00:00Z,0
@@ -333,6 +350,7 @@ Northern Mariana Islands,Deaths,2020-04-07T04:00:00Z,1
 Northern Mariana Islands,Deaths,2020-04-08T04:00:00Z,1
 Northern Mariana Islands,Deaths,2020-04-09T04:00:00Z,1
 Northern Mariana Islands,Deaths,2020-04-10T04:00:00Z,1
+Northern Mariana Islands,Deaths,2020-04-11T04:00:00Z,1
 Northern Mariana Islands,Deaths (per 100k),2020-03-26T04:00:00Z,0.00
 Northern Mariana Islands,Deaths (per 100k),2020-03-27T04:00:00Z,0.00
 Northern Mariana Islands,Deaths (per 100k),2020-03-28T04:00:00Z,0.00
@@ -349,6 +367,7 @@ Northern Mariana Islands,Deaths (per 100k),2020-04-07T04:00:00Z,1.74
 Northern Mariana Islands,Deaths (per 100k),2020-04-08T04:00:00Z,1.74
 Northern Mariana Islands,Deaths (per 100k),2020-04-09T04:00:00Z,1.74
 Northern Mariana Islands,Deaths (per 100k),2020-04-10T04:00:00Z,1.74
+Northern Mariana Islands,Deaths (per 100k),2020-04-11T04:00:00Z,1.74
 New York,Confirmed,2020-03-22T04:00:00Z,15800
 New York,Confirmed,2020-03-23T04:00:00Z,20884
 New York,Confirmed,2020-03-24T04:00:00Z,25681
@@ -369,6 +388,7 @@ New York,Confirmed,2020-04-07T04:00:00Z,139875
 New York,Confirmed,2020-04-08T04:00:00Z,151061
 New York,Confirmed,2020-04-09T04:00:00Z,161779
 New York,Confirmed,2020-04-10T04:00:00Z,172348
+New York,Confirmed,2020-04-11T04:00:00Z,181026
 New York,Confirmed (per 100k),2020-03-22T04:00:00Z,81.22
 New York,Confirmed (per 100k),2020-03-23T04:00:00Z,107.35
 New York,Confirmed (per 100k),2020-03-24T04:00:00Z,132.01
@@ -389,6 +409,7 @@ New York,Confirmed (per 100k),2020-04-07T04:00:00Z,719.02
 New York,Confirmed (per 100k),2020-04-08T04:00:00Z,776.52
 New York,Confirmed (per 100k),2020-04-09T04:00:00Z,831.62
 New York,Confirmed (per 100k),2020-04-10T04:00:00Z,885.95
+New York,Confirmed (per 100k),2020-04-11T04:00:00Z,930.55
 New York,Deaths,2020-03-22T04:00:00Z,117
 New York,Deaths,2020-03-23T04:00:00Z,158
 New York,Deaths,2020-03-24T04:00:00Z,210
@@ -409,6 +430,7 @@ New York,Deaths,2020-04-07T04:00:00Z,5489
 New York,Deaths,2020-04-08T04:00:00Z,6268
 New York,Deaths,2020-04-09T04:00:00Z,7067
 New York,Deaths,2020-04-10T04:00:00Z,7867
+New York,Deaths,2020-04-11T04:00:00Z,8627
 New York,Deaths (per 100k),2020-03-22T04:00:00Z,0.60
 New York,Deaths (per 100k),2020-03-23T04:00:00Z,0.81
 New York,Deaths (per 100k),2020-03-24T04:00:00Z,1.08
@@ -429,6 +451,7 @@ New York,Deaths (per 100k),2020-04-07T04:00:00Z,28.22
 New York,Deaths (per 100k),2020-04-08T04:00:00Z,32.22
 New York,Deaths (per 100k),2020-04-09T04:00:00Z,36.33
 New York,Deaths (per 100k),2020-04-10T04:00:00Z,40.44
+New York,Deaths (per 100k),2020-04-11T04:00:00Z,44.35
 Washington,Confirmed,2020-03-22T04:00:00Z,1997
 Washington,Confirmed,2020-03-23T04:00:00Z,2221
 Washington,Confirmed,2020-03-24T04:00:00Z,2328
@@ -449,6 +472,7 @@ Washington,Confirmed,2020-04-07T04:00:00Z,8692
 Washington,Confirmed,2020-04-08T04:00:00Z,9276
 Washington,Confirmed,2020-04-09T04:00:00Z,9639
 Washington,Confirmed,2020-04-10T04:00:00Z,10119
+Washington,Confirmed,2020-04-11T04:00:00Z,10434
 Washington,Confirmed (per 100k),2020-03-22T04:00:00Z,26.22
 Washington,Confirmed (per 100k),2020-03-23T04:00:00Z,29.17
 Washington,Confirmed (per 100k),2020-03-24T04:00:00Z,30.57
@@ -469,6 +493,7 @@ Washington,Confirmed (per 100k),2020-04-07T04:00:00Z,114.14
 Washington,Confirmed (per 100k),2020-04-08T04:00:00Z,121.81
 Washington,Confirmed (per 100k),2020-04-09T04:00:00Z,126.58
 Washington,Confirmed (per 100k),2020-04-10T04:00:00Z,132.88
+Washington,Confirmed (per 100k),2020-04-11T04:00:00Z,137.02
 Washington,Deaths,2020-03-22T04:00:00Z,97
 Washington,Deaths,2020-03-23T04:00:00Z,109
 Washington,Deaths,2020-03-24T04:00:00Z,116
@@ -489,6 +514,7 @@ Washington,Deaths,2020-04-07T04:00:00Z,400
 Washington,Deaths,2020-04-08T04:00:00Z,426
 Washington,Deaths,2020-04-09T04:00:00Z,456
 Washington,Deaths,2020-04-10T04:00:00Z,483
+Washington,Deaths,2020-04-11T04:00:00Z,495
 Washington,Deaths (per 100k),2020-03-22T04:00:00Z,1.27
 Washington,Deaths (per 100k),2020-03-23T04:00:00Z,1.43
 Washington,Deaths (per 100k),2020-03-24T04:00:00Z,1.52
@@ -509,6 +535,7 @@ Washington,Deaths (per 100k),2020-04-07T04:00:00Z,5.25
 Washington,Deaths (per 100k),2020-04-08T04:00:00Z,5.59
 Washington,Deaths (per 100k),2020-04-09T04:00:00Z,5.99
 Washington,Deaths (per 100k),2020-04-10T04:00:00Z,6.34
+Washington,Deaths (per 100k),2020-04-11T04:00:00Z,6.50
 New Jersey,Confirmed,2020-03-22T04:00:00Z,1914
 New Jersey,Confirmed,2020-03-23T04:00:00Z,2844
 New Jersey,Confirmed,2020-03-24T04:00:00Z,3675
@@ -529,6 +556,7 @@ New Jersey,Confirmed,2020-04-07T04:00:00Z,44416
 New Jersey,Confirmed,2020-04-08T04:00:00Z,47437
 New Jersey,Confirmed,2020-04-09T04:00:00Z,51027
 New Jersey,Confirmed,2020-04-10T04:00:00Z,54588
+New Jersey,Confirmed,2020-04-11T04:00:00Z,58151
 New Jersey,Confirmed (per 100k),2020-03-22T04:00:00Z,21.55
 New Jersey,Confirmed (per 100k),2020-03-23T04:00:00Z,32.02
 New Jersey,Confirmed (per 100k),2020-03-24T04:00:00Z,41.37
@@ -549,6 +577,7 @@ New Jersey,Confirmed (per 100k),2020-04-07T04:00:00Z,500.06
 New Jersey,Confirmed (per 100k),2020-04-08T04:00:00Z,534.07
 New Jersey,Confirmed (per 100k),2020-04-09T04:00:00Z,574.49
 New Jersey,Confirmed (per 100k),2020-04-10T04:00:00Z,614.58
+New Jersey,Confirmed (per 100k),2020-04-11T04:00:00Z,654.69
 New Jersey,Deaths,2020-03-22T04:00:00Z,20
 New Jersey,Deaths,2020-03-23T04:00:00Z,27
 New Jersey,Deaths,2020-03-24T04:00:00Z,44
@@ -569,6 +598,7 @@ New Jersey,Deaths,2020-04-07T04:00:00Z,1232
 New Jersey,Deaths,2020-04-08T04:00:00Z,1504
 New Jersey,Deaths,2020-04-09T04:00:00Z,1709
 New Jersey,Deaths,2020-04-10T04:00:00Z,1932
+New Jersey,Deaths,2020-04-11T04:00:00Z,2183
 New Jersey,Deaths (per 100k),2020-03-22T04:00:00Z,0.23
 New Jersey,Deaths (per 100k),2020-03-23T04:00:00Z,0.30
 New Jersey,Deaths (per 100k),2020-03-24T04:00:00Z,0.50
@@ -589,6 +619,7 @@ New Jersey,Deaths (per 100k),2020-04-07T04:00:00Z,13.87
 New Jersey,Deaths (per 100k),2020-04-08T04:00:00Z,16.93
 New Jersey,Deaths (per 100k),2020-04-09T04:00:00Z,19.24
 New Jersey,Deaths (per 100k),2020-04-10T04:00:00Z,21.75
+New Jersey,Deaths (per 100k),2020-04-11T04:00:00Z,24.58
 California,Confirmed,2020-03-22T04:00:00Z,1646
 California,Confirmed,2020-03-23T04:00:00Z,2108
 California,Confirmed,2020-03-24T04:00:00Z,2538
@@ -609,6 +640,7 @@ California,Confirmed,2020-04-07T04:00:00Z,17351
 California,Confirmed,2020-04-08T04:00:00Z,18897
 California,Confirmed,2020-04-09T04:00:00Z,19710
 California,Confirmed,2020-04-10T04:00:00Z,21081
+California,Confirmed,2020-04-11T04:00:00Z,21706
 California,Confirmed (per 100k),2020-03-22T04:00:00Z,4.17
 California,Confirmed (per 100k),2020-03-23T04:00:00Z,5.34
 California,Confirmed (per 100k),2020-03-24T04:00:00Z,6.42
@@ -629,6 +661,7 @@ California,Confirmed (per 100k),2020-04-07T04:00:00Z,43.91
 California,Confirmed (per 100k),2020-04-08T04:00:00Z,47.83
 California,Confirmed (per 100k),2020-04-09T04:00:00Z,49.88
 California,Confirmed (per 100k),2020-04-10T04:00:00Z,53.35
+California,Confirmed (per 100k),2020-04-11T04:00:00Z,54.93
 California,Deaths,2020-03-22T04:00:00Z,30
 California,Deaths,2020-03-23T04:00:00Z,39
 California,Deaths,2020-03-24T04:00:00Z,50
@@ -649,6 +682,7 @@ California,Deaths,2020-04-07T04:00:00Z,432
 California,Deaths,2020-04-08T04:00:00Z,495
 California,Deaths,2020-04-09T04:00:00Z,544
 California,Deaths,2020-04-10T04:00:00Z,583
+California,Deaths,2020-04-11T04:00:00Z,605
 California,Deaths (per 100k),2020-03-22T04:00:00Z,0.08
 California,Deaths (per 100k),2020-03-23T04:00:00Z,0.10
 California,Deaths (per 100k),2020-03-24T04:00:00Z,0.13
@@ -669,6 +703,7 @@ California,Deaths (per 100k),2020-04-07T04:00:00Z,1.09
 California,Deaths (per 100k),2020-04-08T04:00:00Z,1.25
 California,Deaths (per 100k),2020-04-09T04:00:00Z,1.38
 California,Deaths (per 100k),2020-04-10T04:00:00Z,1.48
+California,Deaths (per 100k),2020-04-11T04:00:00Z,1.53
 Illinois,Confirmed,2020-03-22T04:00:00Z,1049
 Illinois,Confirmed,2020-03-23T04:00:00Z,1285
 Illinois,Confirmed,2020-03-24T04:00:00Z,1537
@@ -689,6 +724,7 @@ Illinois,Confirmed,2020-04-07T04:00:00Z,12271
 Illinois,Confirmed,2020-04-08T04:00:00Z,15078
 Illinois,Confirmed,2020-04-09T04:00:00Z,15079
 Illinois,Confirmed,2020-04-10T04:00:00Z,17887
+Illinois,Confirmed,2020-04-11T04:00:00Z,19180
 Illinois,Confirmed (per 100k),2020-03-22T04:00:00Z,8.28
 Illinois,Confirmed (per 100k),2020-03-23T04:00:00Z,10.14
 Illinois,Confirmed (per 100k),2020-03-24T04:00:00Z,12.13
@@ -709,6 +745,7 @@ Illinois,Confirmed (per 100k),2020-04-07T04:00:00Z,96.84
 Illinois,Confirmed (per 100k),2020-04-08T04:00:00Z,118.99
 Illinois,Confirmed (per 100k),2020-04-09T04:00:00Z,119.00
 Illinois,Confirmed (per 100k),2020-04-10T04:00:00Z,141.16
+Illinois,Confirmed (per 100k),2020-04-11T04:00:00Z,151.36
 Illinois,Deaths,2020-03-22T04:00:00Z,9
 Illinois,Deaths,2020-03-23T04:00:00Z,12
 Illinois,Deaths,2020-03-24T04:00:00Z,16
@@ -729,6 +766,7 @@ Illinois,Deaths,2020-04-07T04:00:00Z,308
 Illinois,Deaths,2020-04-08T04:00:00Z,462
 Illinois,Deaths,2020-04-09T04:00:00Z,462
 Illinois,Deaths,2020-04-10T04:00:00Z,597
+Illinois,Deaths,2020-04-11T04:00:00Z,677
 Illinois,Deaths (per 100k),2020-03-22T04:00:00Z,0.07
 Illinois,Deaths (per 100k),2020-03-23T04:00:00Z,0.09
 Illinois,Deaths (per 100k),2020-03-24T04:00:00Z,0.13
@@ -749,6 +787,7 @@ Illinois,Deaths (per 100k),2020-04-07T04:00:00Z,2.43
 Illinois,Deaths (per 100k),2020-04-08T04:00:00Z,3.65
 Illinois,Deaths (per 100k),2020-04-09T04:00:00Z,3.65
 Illinois,Deaths (per 100k),2020-04-10T04:00:00Z,4.71
+Illinois,Deaths (per 100k),2020-04-11T04:00:00Z,5.34
 Michigan,Confirmed,2020-03-22T04:00:00Z,1035
 Michigan,Confirmed,2020-03-23T04:00:00Z,1329
 Michigan,Confirmed,2020-03-24T04:00:00Z,1793
@@ -769,6 +808,7 @@ Michigan,Confirmed,2020-04-07T04:00:00Z,18970
 Michigan,Confirmed,2020-04-08T04:00:00Z,20346
 Michigan,Confirmed,2020-04-09T04:00:00Z,21504
 Michigan,Confirmed,2020-04-10T04:00:00Z,22434
+Michigan,Confirmed,2020-04-11T04:00:00Z,23605
 Michigan,Confirmed (per 100k),2020-03-22T04:00:00Z,10.36
 Michigan,Confirmed (per 100k),2020-03-23T04:00:00Z,13.31
 Michigan,Confirmed (per 100k),2020-03-24T04:00:00Z,17.95
@@ -789,6 +829,7 @@ Michigan,Confirmed (per 100k),2020-04-07T04:00:00Z,189.95
 Michigan,Confirmed (per 100k),2020-04-08T04:00:00Z,203.73
 Michigan,Confirmed (per 100k),2020-04-09T04:00:00Z,215.32
 Michigan,Confirmed (per 100k),2020-04-10T04:00:00Z,224.64
+Michigan,Confirmed (per 100k),2020-04-11T04:00:00Z,236.36
 Michigan,Deaths,2020-03-22T04:00:00Z,9
 Michigan,Deaths,2020-03-23T04:00:00Z,15
 Michigan,Deaths,2020-03-24T04:00:00Z,24
@@ -809,6 +850,7 @@ Michigan,Deaths,2020-04-07T04:00:00Z,845
 Michigan,Deaths,2020-04-08T04:00:00Z,959
 Michigan,Deaths,2020-04-09T04:00:00Z,1076
 Michigan,Deaths,2020-04-10T04:00:00Z,1276
+Michigan,Deaths,2020-04-11T04:00:00Z,1384
 Michigan,Deaths (per 100k),2020-03-22T04:00:00Z,0.09
 Michigan,Deaths (per 100k),2020-03-23T04:00:00Z,0.15
 Michigan,Deaths (per 100k),2020-03-24T04:00:00Z,0.24
@@ -829,6 +871,7 @@ Michigan,Deaths (per 100k),2020-04-07T04:00:00Z,8.46
 Michigan,Deaths (per 100k),2020-04-08T04:00:00Z,9.60
 Michigan,Deaths (per 100k),2020-04-09T04:00:00Z,10.77
 Michigan,Deaths (per 100k),2020-04-10T04:00:00Z,12.78
+Michigan,Deaths (per 100k),2020-04-11T04:00:00Z,13.86
 Florida,Confirmed,2020-03-22T04:00:00Z,1004
 Florida,Confirmed,2020-03-23T04:00:00Z,1227
 Florida,Confirmed,2020-03-24T04:00:00Z,1412
@@ -849,6 +892,7 @@ Florida,Confirmed,2020-04-07T04:00:00Z,14545
 Florida,Confirmed,2020-04-08T04:00:00Z,15456
 Florida,Confirmed,2020-04-09T04:00:00Z,16364
 Florida,Confirmed,2020-04-10T04:00:00Z,17531
+Florida,Confirmed,2020-04-11T04:00:00Z,18494
 Florida,Confirmed (per 100k),2020-03-22T04:00:00Z,4.67
 Florida,Confirmed (per 100k),2020-03-23T04:00:00Z,5.71
 Florida,Confirmed (per 100k),2020-03-24T04:00:00Z,6.57
@@ -869,6 +913,7 @@ Florida,Confirmed (per 100k),2020-04-07T04:00:00Z,67.72
 Florida,Confirmed (per 100k),2020-04-08T04:00:00Z,71.96
 Florida,Confirmed (per 100k),2020-04-09T04:00:00Z,76.19
 Florida,Confirmed (per 100k),2020-04-10T04:00:00Z,81.62
+Florida,Confirmed (per 100k),2020-04-11T04:00:00Z,86.11
 Florida,Deaths,2020-03-22T04:00:00Z,13
 Florida,Deaths,2020-03-23T04:00:00Z,18
 Florida,Deaths,2020-03-24T04:00:00Z,18
@@ -889,6 +934,7 @@ Florida,Deaths,2020-04-07T04:00:00Z,283
 Florida,Deaths,2020-04-08T04:00:00Z,309
 Florida,Deaths,2020-04-09T04:00:00Z,354
 Florida,Deaths,2020-04-10T04:00:00Z,390
+Florida,Deaths,2020-04-11T04:00:00Z,438
 Florida,Deaths (per 100k),2020-03-22T04:00:00Z,0.06
 Florida,Deaths (per 100k),2020-03-23T04:00:00Z,0.08
 Florida,Deaths (per 100k),2020-03-24T04:00:00Z,0.08
@@ -909,6 +955,7 @@ Florida,Deaths (per 100k),2020-04-07T04:00:00Z,1.32
 Florida,Deaths (per 100k),2020-04-08T04:00:00Z,1.44
 Florida,Deaths (per 100k),2020-04-09T04:00:00Z,1.65
 Florida,Deaths (per 100k),2020-04-10T04:00:00Z,1.82
+Florida,Deaths (per 100k),2020-04-11T04:00:00Z,2.04
 Louisiana,Confirmed,2020-03-22T04:00:00Z,837
 Louisiana,Confirmed,2020-03-23T04:00:00Z,1172
 Louisiana,Confirmed,2020-03-24T04:00:00Z,1388
@@ -929,6 +976,7 @@ Louisiana,Confirmed,2020-04-07T04:00:00Z,16284
 Louisiana,Confirmed,2020-04-08T04:00:00Z,17030
 Louisiana,Confirmed,2020-04-09T04:00:00Z,18283
 Louisiana,Confirmed,2020-04-10T04:00:00Z,19253
+Louisiana,Confirmed,2020-04-11T04:00:00Z,20014
 Louisiana,Confirmed (per 100k),2020-03-22T04:00:00Z,18.00
 Louisiana,Confirmed (per 100k),2020-03-23T04:00:00Z,25.21
 Louisiana,Confirmed (per 100k),2020-03-24T04:00:00Z,29.86
@@ -949,6 +997,7 @@ Louisiana,Confirmed (per 100k),2020-04-07T04:00:00Z,350.28
 Louisiana,Confirmed (per 100k),2020-04-08T04:00:00Z,366.33
 Louisiana,Confirmed (per 100k),2020-04-09T04:00:00Z,393.28
 Louisiana,Confirmed (per 100k),2020-04-10T04:00:00Z,414.15
+Louisiana,Confirmed (per 100k),2020-04-11T04:00:00Z,430.52
 Louisiana,Deaths,2020-03-22T04:00:00Z,20
 Louisiana,Deaths,2020-03-23T04:00:00Z,35
 Louisiana,Deaths,2020-03-24T04:00:00Z,46
@@ -969,6 +1018,7 @@ Louisiana,Deaths,2020-04-07T04:00:00Z,582
 Louisiana,Deaths,2020-04-08T04:00:00Z,652
 Louisiana,Deaths,2020-04-09T04:00:00Z,702
 Louisiana,Deaths,2020-04-10T04:00:00Z,755
+Louisiana,Deaths,2020-04-11T04:00:00Z,806
 Louisiana,Deaths (per 100k),2020-03-22T04:00:00Z,0.43
 Louisiana,Deaths (per 100k),2020-03-23T04:00:00Z,0.75
 Louisiana,Deaths (per 100k),2020-03-24T04:00:00Z,0.99
@@ -989,6 +1039,7 @@ Louisiana,Deaths (per 100k),2020-04-07T04:00:00Z,12.52
 Louisiana,Deaths (per 100k),2020-04-08T04:00:00Z,14.03
 Louisiana,Deaths (per 100k),2020-04-09T04:00:00Z,15.10
 Louisiana,Deaths (per 100k),2020-04-10T04:00:00Z,16.24
+Louisiana,Deaths (per 100k),2020-04-11T04:00:00Z,17.34
 Massachusetts,Confirmed,2020-03-22T04:00:00Z,646
 Massachusetts,Confirmed,2020-03-23T04:00:00Z,777
 Massachusetts,Confirmed,2020-03-24T04:00:00Z,1159
@@ -1009,6 +1060,7 @@ Massachusetts,Confirmed,2020-04-07T04:00:00Z,15202
 Massachusetts,Confirmed,2020-04-08T04:00:00Z,16790
 Massachusetts,Confirmed,2020-04-09T04:00:00Z,18941
 Massachusetts,Confirmed,2020-04-10T04:00:00Z,20974
+Massachusetts,Confirmed,2020-04-11T04:00:00Z,22860
 Massachusetts,Confirmed (per 100k),2020-03-22T04:00:00Z,9.37
 Massachusetts,Confirmed (per 100k),2020-03-23T04:00:00Z,11.27
 Massachusetts,Confirmed (per 100k),2020-03-24T04:00:00Z,16.82
@@ -1029,6 +1081,7 @@ Massachusetts,Confirmed (per 100k),2020-04-07T04:00:00Z,220.56
 Massachusetts,Confirmed (per 100k),2020-04-08T04:00:00Z,243.60
 Massachusetts,Confirmed (per 100k),2020-04-09T04:00:00Z,274.81
 Massachusetts,Confirmed (per 100k),2020-04-10T04:00:00Z,304.30
+Massachusetts,Confirmed (per 100k),2020-04-11T04:00:00Z,331.66
 Massachusetts,Deaths,2020-03-22T04:00:00Z,5
 Massachusetts,Deaths,2020-03-23T04:00:00Z,9
 Massachusetts,Deaths,2020-03-24T04:00:00Z,11
@@ -1049,6 +1102,7 @@ Massachusetts,Deaths,2020-04-07T04:00:00Z,356
 Massachusetts,Deaths,2020-04-08T04:00:00Z,433
 Massachusetts,Deaths,2020-04-09T04:00:00Z,503
 Massachusetts,Deaths,2020-04-10T04:00:00Z,599
+Massachusetts,Deaths,2020-04-11T04:00:00Z,686
 Massachusetts,Deaths (per 100k),2020-03-22T04:00:00Z,0.07
 Massachusetts,Deaths (per 100k),2020-03-23T04:00:00Z,0.13
 Massachusetts,Deaths (per 100k),2020-03-24T04:00:00Z,0.16
@@ -1069,6 +1123,7 @@ Massachusetts,Deaths (per 100k),2020-04-07T04:00:00Z,5.17
 Massachusetts,Deaths (per 100k),2020-04-08T04:00:00Z,6.28
 Massachusetts,Deaths (per 100k),2020-04-09T04:00:00Z,7.30
 Massachusetts,Deaths (per 100k),2020-04-10T04:00:00Z,8.69
+Massachusetts,Deaths (per 100k),2020-04-11T04:00:00Z,9.95
 Texas,Confirmed,2020-03-22T04:00:00Z,643
 Texas,Confirmed,2020-03-23T04:00:00Z,758
 Texas,Confirmed,2020-03-24T04:00:00Z,955
@@ -1089,6 +1144,7 @@ Texas,Confirmed,2020-04-07T04:00:00Z,8925
 Texas,Confirmed,2020-04-08T04:00:00Z,9777
 Texas,Confirmed,2020-04-09T04:00:00Z,11208
 Texas,Confirmed,2020-04-10T04:00:00Z,12105
+Texas,Confirmed,2020-04-11T04:00:00Z,13023
 Texas,Confirmed (per 100k),2020-03-22T04:00:00Z,2.22
 Texas,Confirmed (per 100k),2020-03-23T04:00:00Z,2.61
 Texas,Confirmed (per 100k),2020-03-24T04:00:00Z,3.29
@@ -1109,6 +1165,7 @@ Texas,Confirmed (per 100k),2020-04-07T04:00:00Z,30.78
 Texas,Confirmed (per 100k),2020-04-08T04:00:00Z,33.72
 Texas,Confirmed (per 100k),2020-04-09T04:00:00Z,38.65
 Texas,Confirmed (per 100k),2020-04-10T04:00:00Z,41.75
+Texas,Confirmed (per 100k),2020-04-11T04:00:00Z,44.91
 Texas,Deaths,2020-03-22T04:00:00Z,7
 Texas,Deaths,2020-03-23T04:00:00Z,9
 Texas,Deaths,2020-03-24T04:00:00Z,12
@@ -1129,6 +1186,7 @@ Texas,Deaths,2020-04-07T04:00:00Z,160
 Texas,Deaths,2020-04-08T04:00:00Z,189
 Texas,Deaths,2020-04-09T04:00:00Z,210
 Texas,Deaths,2020-04-10T04:00:00Z,238
+Texas,Deaths,2020-04-11T04:00:00Z,266
 Texas,Deaths (per 100k),2020-03-22T04:00:00Z,0.02
 Texas,Deaths (per 100k),2020-03-23T04:00:00Z,0.03
 Texas,Deaths (per 100k),2020-03-24T04:00:00Z,0.04
@@ -1149,6 +1207,7 @@ Texas,Deaths (per 100k),2020-04-07T04:00:00Z,0.55
 Texas,Deaths (per 100k),2020-04-08T04:00:00Z,0.65
 Texas,Deaths (per 100k),2020-04-09T04:00:00Z,0.72
 Texas,Deaths (per 100k),2020-04-10T04:00:00Z,0.82
+Texas,Deaths (per 100k),2020-04-11T04:00:00Z,0.92
 Georgia,Confirmed,2020-03-22T04:00:00Z,621
 Georgia,Confirmed,2020-03-23T04:00:00Z,772
 Georgia,Confirmed,2020-03-24T04:00:00Z,1026
@@ -1169,6 +1228,7 @@ Georgia,Confirmed,2020-04-07T04:00:00Z,8822
 Georgia,Confirmed,2020-04-08T04:00:00Z,9901
 Georgia,Confirmed,2020-04-09T04:00:00Z,10566
 Georgia,Confirmed,2020-04-10T04:00:00Z,11485
+Georgia,Confirmed,2020-04-11T04:00:00Z,12159
 Georgia,Confirmed (per 100k),2020-03-22T04:00:00Z,5.85
 Georgia,Confirmed (per 100k),2020-03-23T04:00:00Z,7.27
 Georgia,Confirmed (per 100k),2020-03-24T04:00:00Z,9.66
@@ -1189,6 +1249,7 @@ Georgia,Confirmed (per 100k),2020-04-07T04:00:00Z,83.09
 Georgia,Confirmed (per 100k),2020-04-08T04:00:00Z,93.25
 Georgia,Confirmed (per 100k),2020-04-09T04:00:00Z,99.52
 Georgia,Confirmed (per 100k),2020-04-10T04:00:00Z,108.17
+Georgia,Confirmed (per 100k),2020-04-11T04:00:00Z,114.52
 Georgia,Deaths,2020-03-22T04:00:00Z,25
 Georgia,Deaths,2020-03-23T04:00:00Z,25
 Georgia,Deaths,2020-03-24T04:00:00Z,32
@@ -1209,6 +1270,7 @@ Georgia,Deaths,2020-04-07T04:00:00Z,329
 Georgia,Deaths,2020-04-08T04:00:00Z,362
 Georgia,Deaths,2020-04-09T04:00:00Z,379
 Georgia,Deaths,2020-04-10T04:00:00Z,416
+Georgia,Deaths,2020-04-11T04:00:00Z,429
 Georgia,Deaths (per 100k),2020-03-22T04:00:00Z,0.24
 Georgia,Deaths (per 100k),2020-03-23T04:00:00Z,0.24
 Georgia,Deaths (per 100k),2020-03-24T04:00:00Z,0.30
@@ -1229,6 +1291,7 @@ Georgia,Deaths (per 100k),2020-04-07T04:00:00Z,3.10
 Georgia,Deaths (per 100k),2020-04-08T04:00:00Z,3.41
 Georgia,Deaths (per 100k),2020-04-09T04:00:00Z,3.57
 Georgia,Deaths (per 100k),2020-04-10T04:00:00Z,3.92
+Georgia,Deaths (per 100k),2020-04-11T04:00:00Z,4.04
 Colorado,Confirmed,2020-03-22T04:00:00Z,591
 Colorado,Confirmed,2020-03-23T04:00:00Z,704
 Colorado,Confirmed,2020-03-24T04:00:00Z,723
@@ -1249,6 +1312,7 @@ Colorado,Confirmed,2020-04-07T04:00:00Z,5429
 Colorado,Confirmed,2020-04-08T04:00:00Z,5655
 Colorado,Confirmed,2020-04-09T04:00:00Z,5655
 Colorado,Confirmed,2020-04-10T04:00:00Z,6202
+Colorado,Confirmed,2020-04-11T04:00:00Z,6513
 Colorado,Confirmed (per 100k),2020-03-22T04:00:00Z,10.26
 Colorado,Confirmed (per 100k),2020-03-23T04:00:00Z,12.22
 Colorado,Confirmed (per 100k),2020-03-24T04:00:00Z,12.55
@@ -1269,6 +1333,7 @@ Colorado,Confirmed (per 100k),2020-04-07T04:00:00Z,94.27
 Colorado,Confirmed (per 100k),2020-04-08T04:00:00Z,98.20
 Colorado,Confirmed (per 100k),2020-04-09T04:00:00Z,98.20
 Colorado,Confirmed (per 100k),2020-04-10T04:00:00Z,107.70
+Colorado,Confirmed (per 100k),2020-04-11T04:00:00Z,113.10
 Colorado,Deaths,2020-03-22T04:00:00Z,6
 Colorado,Deaths,2020-03-23T04:00:00Z,7
 Colorado,Deaths,2020-03-24T04:00:00Z,8
@@ -1289,6 +1354,7 @@ Colorado,Deaths,2020-04-07T04:00:00Z,179
 Colorado,Deaths,2020-04-08T04:00:00Z,193
 Colorado,Deaths,2020-04-09T04:00:00Z,193
 Colorado,Deaths,2020-04-10T04:00:00Z,226
+Colorado,Deaths,2020-04-11T04:00:00Z,250
 Colorado,Deaths (per 100k),2020-03-22T04:00:00Z,0.10
 Colorado,Deaths (per 100k),2020-03-23T04:00:00Z,0.12
 Colorado,Deaths (per 100k),2020-03-24T04:00:00Z,0.14
@@ -1309,6 +1375,7 @@ Colorado,Deaths (per 100k),2020-04-07T04:00:00Z,3.11
 Colorado,Deaths (per 100k),2020-04-08T04:00:00Z,3.35
 Colorado,Deaths (per 100k),2020-04-09T04:00:00Z,3.35
 Colorado,Deaths (per 100k),2020-04-10T04:00:00Z,3.92
+Colorado,Deaths (per 100k),2020-04-11T04:00:00Z,4.34
 Pennsylvania,Confirmed,2020-03-22T04:00:00Z,509
 Pennsylvania,Confirmed,2020-03-23T04:00:00Z,698
 Pennsylvania,Confirmed,2020-03-24T04:00:00Z,946
@@ -1329,6 +1396,7 @@ Pennsylvania,Confirmed,2020-04-07T04:00:00Z,14853
 Pennsylvania,Confirmed,2020-04-08T04:00:00Z,16631
 Pennsylvania,Confirmed,2020-04-09T04:00:00Z,18300
 Pennsylvania,Confirmed,2020-04-10T04:00:00Z,20051
+Pennsylvania,Confirmed,2020-04-11T04:00:00Z,21719
 Pennsylvania,Confirmed (per 100k),2020-03-22T04:00:00Z,3.98
 Pennsylvania,Confirmed (per 100k),2020-03-23T04:00:00Z,5.45
 Pennsylvania,Confirmed (per 100k),2020-03-24T04:00:00Z,7.39
@@ -1349,6 +1417,7 @@ Pennsylvania,Confirmed (per 100k),2020-04-07T04:00:00Z,116.02
 Pennsylvania,Confirmed (per 100k),2020-04-08T04:00:00Z,129.91
 Pennsylvania,Confirmed (per 100k),2020-04-09T04:00:00Z,142.95
 Pennsylvania,Confirmed (per 100k),2020-04-10T04:00:00Z,156.62
+Pennsylvania,Confirmed (per 100k),2020-04-11T04:00:00Z,169.65
 Pennsylvania,Deaths,2020-03-22T04:00:00Z,4
 Pennsylvania,Deaths,2020-03-23T04:00:00Z,6
 Pennsylvania,Deaths,2020-03-24T04:00:00Z,8
@@ -1369,6 +1438,7 @@ Pennsylvania,Deaths,2020-04-07T04:00:00Z,247
 Pennsylvania,Deaths,2020-04-08T04:00:00Z,318
 Pennsylvania,Deaths,2020-04-09T04:00:00Z,345
 Pennsylvania,Deaths,2020-04-10T04:00:00Z,418
+Pennsylvania,Deaths,2020-04-11T04:00:00Z,503
 Pennsylvania,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Pennsylvania,Deaths (per 100k),2020-03-23T04:00:00Z,0.05
 Pennsylvania,Deaths (per 100k),2020-03-24T04:00:00Z,0.06
@@ -1389,6 +1459,7 @@ Pennsylvania,Deaths (per 100k),2020-04-07T04:00:00Z,1.93
 Pennsylvania,Deaths (per 100k),2020-04-08T04:00:00Z,2.48
 Pennsylvania,Deaths (per 100k),2020-04-09T04:00:00Z,2.69
 Pennsylvania,Deaths (per 100k),2020-04-10T04:00:00Z,3.27
+Pennsylvania,Deaths (per 100k),2020-04-11T04:00:00Z,3.93
 Tennessee,Confirmed,2020-03-22T04:00:00Z,505
 Tennessee,Confirmed,2020-03-23T04:00:00Z,614
 Tennessee,Confirmed,2020-03-24T04:00:00Z,772
@@ -1409,6 +1480,7 @@ Tennessee,Confirmed,2020-04-07T04:00:00Z,4139
 Tennessee,Confirmed,2020-04-08T04:00:00Z,4363
 Tennessee,Confirmed,2020-04-09T04:00:00Z,4634
 Tennessee,Confirmed,2020-04-10T04:00:00Z,4891
+Tennessee,Confirmed,2020-04-11T04:00:00Z,5132
 Tennessee,Confirmed (per 100k),2020-03-22T04:00:00Z,7.39
 Tennessee,Confirmed (per 100k),2020-03-23T04:00:00Z,8.99
 Tennessee,Confirmed (per 100k),2020-03-24T04:00:00Z,11.30
@@ -1429,6 +1501,7 @@ Tennessee,Confirmed (per 100k),2020-04-07T04:00:00Z,60.61
 Tennessee,Confirmed (per 100k),2020-04-08T04:00:00Z,63.89
 Tennessee,Confirmed (per 100k),2020-04-09T04:00:00Z,67.86
 Tennessee,Confirmed (per 100k),2020-04-10T04:00:00Z,71.62
+Tennessee,Confirmed (per 100k),2020-04-11T04:00:00Z,75.15
 Tennessee,Deaths,2020-03-22T04:00:00Z,2
 Tennessee,Deaths,2020-03-23T04:00:00Z,2
 Tennessee,Deaths,2020-03-24T04:00:00Z,2
@@ -1449,6 +1522,7 @@ Tennessee,Deaths,2020-04-07T04:00:00Z,72
 Tennessee,Deaths,2020-04-08T04:00:00Z,80
 Tennessee,Deaths,2020-04-09T04:00:00Z,94
 Tennessee,Deaths,2020-04-10T04:00:00Z,98
+Tennessee,Deaths,2020-04-11T04:00:00Z,106
 Tennessee,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Tennessee,Deaths (per 100k),2020-03-23T04:00:00Z,0.03
 Tennessee,Deaths (per 100k),2020-03-24T04:00:00Z,0.03
@@ -1469,6 +1543,7 @@ Tennessee,Deaths (per 100k),2020-04-07T04:00:00Z,1.05
 Tennessee,Deaths (per 100k),2020-04-08T04:00:00Z,1.17
 Tennessee,Deaths (per 100k),2020-04-09T04:00:00Z,1.38
 Tennessee,Deaths (per 100k),2020-04-10T04:00:00Z,1.44
+Tennessee,Deaths (per 100k),2020-04-11T04:00:00Z,1.55
 Wisconsin,Confirmed,2020-03-22T04:00:00Z,381
 Wisconsin,Confirmed,2020-03-23T04:00:00Z,425
 Wisconsin,Confirmed,2020-03-24T04:00:00Z,481
@@ -1489,6 +1564,7 @@ Wisconsin,Confirmed,2020-04-07T04:00:00Z,2578
 Wisconsin,Confirmed,2020-04-08T04:00:00Z,2710
 Wisconsin,Confirmed,2020-04-09T04:00:00Z,2886
 Wisconsin,Confirmed,2020-04-10T04:00:00Z,3068
+Wisconsin,Confirmed,2020-04-11T04:00:00Z,3213
 Wisconsin,Confirmed (per 100k),2020-03-22T04:00:00Z,6.54
 Wisconsin,Confirmed (per 100k),2020-03-23T04:00:00Z,7.30
 Wisconsin,Confirmed (per 100k),2020-03-24T04:00:00Z,8.26
@@ -1509,6 +1585,7 @@ Wisconsin,Confirmed (per 100k),2020-04-07T04:00:00Z,44.28
 Wisconsin,Confirmed (per 100k),2020-04-08T04:00:00Z,46.54
 Wisconsin,Confirmed (per 100k),2020-04-09T04:00:00Z,49.57
 Wisconsin,Confirmed (per 100k),2020-04-10T04:00:00Z,52.69
+Wisconsin,Confirmed (per 100k),2020-04-11T04:00:00Z,55.18
 Wisconsin,Deaths,2020-03-22T04:00:00Z,4
 Wisconsin,Deaths,2020-03-23T04:00:00Z,5
 Wisconsin,Deaths,2020-03-24T04:00:00Z,5
@@ -1529,6 +1606,7 @@ Wisconsin,Deaths,2020-04-07T04:00:00Z,92
 Wisconsin,Deaths,2020-04-08T04:00:00Z,100
 Wisconsin,Deaths,2020-04-09T04:00:00Z,111
 Wisconsin,Deaths,2020-04-10T04:00:00Z,128
+Wisconsin,Deaths,2020-04-11T04:00:00Z,137
 Wisconsin,Deaths (per 100k),2020-03-22T04:00:00Z,0.07
 Wisconsin,Deaths (per 100k),2020-03-23T04:00:00Z,0.09
 Wisconsin,Deaths (per 100k),2020-03-24T04:00:00Z,0.09
@@ -1549,6 +1627,7 @@ Wisconsin,Deaths (per 100k),2020-04-07T04:00:00Z,1.58
 Wisconsin,Deaths (per 100k),2020-04-08T04:00:00Z,1.72
 Wisconsin,Deaths (per 100k),2020-04-09T04:00:00Z,1.91
 Wisconsin,Deaths (per 100k),2020-04-10T04:00:00Z,2.20
+Wisconsin,Deaths (per 100k),2020-04-11T04:00:00Z,2.35
 Ohio,Confirmed,2020-03-22T04:00:00Z,356
 Ohio,Confirmed,2020-03-23T04:00:00Z,443
 Ohio,Confirmed,2020-03-24T04:00:00Z,567
@@ -1569,6 +1648,7 @@ Ohio,Confirmed,2020-04-07T04:00:00Z,4782
 Ohio,Confirmed,2020-04-08T04:00:00Z,5148
 Ohio,Confirmed,2020-04-09T04:00:00Z,5512
 Ohio,Confirmed,2020-04-10T04:00:00Z,5878
+Ohio,Confirmed,2020-04-11T04:00:00Z,6250
 Ohio,Confirmed (per 100k),2020-03-22T04:00:00Z,3.05
 Ohio,Confirmed (per 100k),2020-03-23T04:00:00Z,3.79
 Ohio,Confirmed (per 100k),2020-03-24T04:00:00Z,4.85
@@ -1589,6 +1669,7 @@ Ohio,Confirmed (per 100k),2020-04-07T04:00:00Z,40.91
 Ohio,Confirmed (per 100k),2020-04-08T04:00:00Z,44.04
 Ohio,Confirmed (per 100k),2020-04-09T04:00:00Z,47.16
 Ohio,Confirmed (per 100k),2020-04-10T04:00:00Z,50.29
+Ohio,Confirmed (per 100k),2020-04-11T04:00:00Z,53.47
 Ohio,Deaths,2020-03-22T04:00:00Z,3
 Ohio,Deaths,2020-03-23T04:00:00Z,6
 Ohio,Deaths,2020-03-24T04:00:00Z,8
@@ -1609,6 +1690,7 @@ Ohio,Deaths,2020-04-07T04:00:00Z,167
 Ohio,Deaths,2020-04-08T04:00:00Z,193
 Ohio,Deaths,2020-04-09T04:00:00Z,213
 Ohio,Deaths,2020-04-10T04:00:00Z,231
+Ohio,Deaths,2020-04-11T04:00:00Z,247
 Ohio,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Ohio,Deaths (per 100k),2020-03-23T04:00:00Z,0.05
 Ohio,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -1629,6 +1711,7 @@ Ohio,Deaths (per 100k),2020-04-07T04:00:00Z,1.43
 Ohio,Deaths (per 100k),2020-04-08T04:00:00Z,1.65
 Ohio,Deaths (per 100k),2020-04-09T04:00:00Z,1.82
 Ohio,Deaths (per 100k),2020-04-10T04:00:00Z,1.98
+Ohio,Deaths (per 100k),2020-04-11T04:00:00Z,2.11
 Connecticut,Confirmed,2020-03-22T04:00:00Z,327
 Connecticut,Confirmed,2020-03-23T04:00:00Z,415
 Connecticut,Confirmed,2020-03-24T04:00:00Z,618
@@ -1649,6 +1732,7 @@ Connecticut,Confirmed,2020-04-07T04:00:00Z,7781
 Connecticut,Confirmed,2020-04-08T04:00:00Z,7781
 Connecticut,Confirmed,2020-04-09T04:00:00Z,9784
 Connecticut,Confirmed,2020-04-10T04:00:00Z,10538
+Connecticut,Confirmed,2020-04-11T04:00:00Z,11510
 Connecticut,Confirmed (per 100k),2020-03-22T04:00:00Z,9.17
 Connecticut,Confirmed (per 100k),2020-03-23T04:00:00Z,11.64
 Connecticut,Confirmed (per 100k),2020-03-24T04:00:00Z,17.33
@@ -1669,6 +1753,7 @@ Connecticut,Confirmed (per 100k),2020-04-07T04:00:00Z,218.24
 Connecticut,Confirmed (per 100k),2020-04-08T04:00:00Z,218.24
 Connecticut,Confirmed (per 100k),2020-04-09T04:00:00Z,274.42
 Connecticut,Confirmed (per 100k),2020-04-10T04:00:00Z,295.57
+Connecticut,Confirmed (per 100k),2020-04-11T04:00:00Z,322.84
 Connecticut,Deaths,2020-03-22T04:00:00Z,8
 Connecticut,Deaths,2020-03-23T04:00:00Z,10
 Connecticut,Deaths,2020-03-24T04:00:00Z,12
@@ -1689,6 +1774,7 @@ Connecticut,Deaths,2020-04-07T04:00:00Z,277
 Connecticut,Deaths,2020-04-08T04:00:00Z,326
 Connecticut,Deaths,2020-04-09T04:00:00Z,380
 Connecticut,Deaths,2020-04-10T04:00:00Z,448
+Connecticut,Deaths,2020-04-11T04:00:00Z,494
 Connecticut,Deaths (per 100k),2020-03-22T04:00:00Z,0.22
 Connecticut,Deaths (per 100k),2020-03-23T04:00:00Z,0.28
 Connecticut,Deaths (per 100k),2020-03-24T04:00:00Z,0.34
@@ -1709,6 +1795,7 @@ Connecticut,Deaths (per 100k),2020-04-07T04:00:00Z,7.77
 Connecticut,Deaths (per 100k),2020-04-08T04:00:00Z,9.14
 Connecticut,Deaths (per 100k),2020-04-09T04:00:00Z,10.66
 Connecticut,Deaths (per 100k),2020-04-10T04:00:00Z,12.57
+Connecticut,Deaths (per 100k),2020-04-11T04:00:00Z,13.86
 North Carolina,Confirmed,2020-03-22T04:00:00Z,305
 North Carolina,Confirmed,2020-03-23T04:00:00Z,353
 North Carolina,Confirmed,2020-03-24T04:00:00Z,495
@@ -1729,6 +1816,7 @@ North Carolina,Confirmed,2020-04-07T04:00:00Z,3299
 North Carolina,Confirmed,2020-04-08T04:00:00Z,3499
 North Carolina,Confirmed,2020-04-09T04:00:00Z,3736
 North Carolina,Confirmed,2020-04-10T04:00:00Z,3965
+North Carolina,Confirmed,2020-04-11T04:00:00Z,4354
 North Carolina,Confirmed (per 100k),2020-03-22T04:00:00Z,2.91
 North Carolina,Confirmed (per 100k),2020-03-23T04:00:00Z,3.37
 North Carolina,Confirmed (per 100k),2020-03-24T04:00:00Z,4.72
@@ -1749,6 +1837,7 @@ North Carolina,Confirmed (per 100k),2020-04-07T04:00:00Z,31.45
 North Carolina,Confirmed (per 100k),2020-04-08T04:00:00Z,33.36
 North Carolina,Confirmed (per 100k),2020-04-09T04:00:00Z,35.62
 North Carolina,Confirmed (per 100k),2020-04-10T04:00:00Z,37.80
+North Carolina,Confirmed (per 100k),2020-04-11T04:00:00Z,41.51
 North Carolina,Deaths,2020-03-22T04:00:00Z,0
 North Carolina,Deaths,2020-03-23T04:00:00Z,0
 North Carolina,Deaths,2020-03-24T04:00:00Z,0
@@ -1769,6 +1858,7 @@ North Carolina,Deaths,2020-04-07T04:00:00Z,53
 North Carolina,Deaths,2020-04-08T04:00:00Z,66
 North Carolina,Deaths,2020-04-09T04:00:00Z,76
 North Carolina,Deaths,2020-04-10T04:00:00Z,83
+North Carolina,Deaths,2020-04-11T04:00:00Z,89
 North Carolina,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 North Carolina,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 North Carolina,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -1789,6 +1879,7 @@ North Carolina,Deaths (per 100k),2020-04-07T04:00:00Z,0.51
 North Carolina,Deaths (per 100k),2020-04-08T04:00:00Z,0.63
 North Carolina,Deaths (per 100k),2020-04-09T04:00:00Z,0.72
 North Carolina,Deaths (per 100k),2020-04-10T04:00:00Z,0.79
+North Carolina,Deaths (per 100k),2020-04-11T04:00:00Z,0.85
 Maryland,Confirmed,2020-03-22T04:00:00Z,244
 Maryland,Confirmed,2020-03-23T04:00:00Z,290
 Maryland,Confirmed,2020-03-24T04:00:00Z,349
@@ -1809,6 +1900,7 @@ Maryland,Confirmed,2020-04-07T04:00:00Z,4371
 Maryland,Confirmed,2020-04-08T04:00:00Z,5529
 Maryland,Confirmed,2020-04-09T04:00:00Z,6185
 Maryland,Confirmed,2020-04-10T04:00:00Z,6968
+Maryland,Confirmed,2020-04-11T04:00:00Z,7694
 Maryland,Confirmed (per 100k),2020-03-22T04:00:00Z,4.04
 Maryland,Confirmed (per 100k),2020-03-23T04:00:00Z,4.80
 Maryland,Confirmed (per 100k),2020-03-24T04:00:00Z,5.77
@@ -1829,6 +1921,7 @@ Maryland,Confirmed (per 100k),2020-04-07T04:00:00Z,72.30
 Maryland,Confirmed (per 100k),2020-04-08T04:00:00Z,91.45
 Maryland,Confirmed (per 100k),2020-04-09T04:00:00Z,102.30
 Maryland,Confirmed (per 100k),2020-04-10T04:00:00Z,115.26
+Maryland,Confirmed (per 100k),2020-04-11T04:00:00Z,127.26
 Maryland,Deaths,2020-03-22T04:00:00Z,3
 Maryland,Deaths,2020-03-23T04:00:00Z,3
 Maryland,Deaths,2020-03-24T04:00:00Z,4
@@ -1849,6 +1942,7 @@ Maryland,Deaths,2020-04-07T04:00:00Z,103
 Maryland,Deaths,2020-04-08T04:00:00Z,124
 Maryland,Deaths,2020-04-09T04:00:00Z,138
 Maryland,Deaths,2020-04-10T04:00:00Z,171
+Maryland,Deaths,2020-04-11T04:00:00Z,206
 Maryland,Deaths (per 100k),2020-03-22T04:00:00Z,0.05
 Maryland,Deaths (per 100k),2020-03-23T04:00:00Z,0.05
 Maryland,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -1869,6 +1963,7 @@ Maryland,Deaths (per 100k),2020-04-07T04:00:00Z,1.70
 Maryland,Deaths (per 100k),2020-04-08T04:00:00Z,2.05
 Maryland,Deaths (per 100k),2020-04-09T04:00:00Z,2.28
 Maryland,Deaths (per 100k),2020-04-10T04:00:00Z,2.83
+Maryland,Deaths (per 100k),2020-04-11T04:00:00Z,3.41
 Virginia,Confirmed,2020-03-22T04:00:00Z,220
 Virginia,Confirmed,2020-03-23T04:00:00Z,254
 Virginia,Confirmed,2020-03-24T04:00:00Z,293
@@ -1889,6 +1984,7 @@ Virginia,Confirmed,2020-04-07T04:00:00Z,3335
 Virginia,Confirmed,2020-04-08T04:00:00Z,3645
 Virginia,Confirmed,2020-04-09T04:00:00Z,4042
 Virginia,Confirmed,2020-04-10T04:00:00Z,4509
+Virginia,Confirmed,2020-04-11T04:00:00Z,5077
 Virginia,Confirmed (per 100k),2020-03-22T04:00:00Z,2.58
 Virginia,Confirmed (per 100k),2020-03-23T04:00:00Z,2.98
 Virginia,Confirmed (per 100k),2020-03-24T04:00:00Z,3.43
@@ -1909,6 +2005,7 @@ Virginia,Confirmed (per 100k),2020-04-07T04:00:00Z,39.07
 Virginia,Confirmed (per 100k),2020-04-08T04:00:00Z,42.70
 Virginia,Confirmed (per 100k),2020-04-09T04:00:00Z,47.36
 Virginia,Confirmed (per 100k),2020-04-10T04:00:00Z,52.83
+Virginia,Confirmed (per 100k),2020-04-11T04:00:00Z,59.48
 Virginia,Deaths,2020-03-22T04:00:00Z,6
 Virginia,Deaths,2020-03-23T04:00:00Z,6
 Virginia,Deaths,2020-03-24T04:00:00Z,9
@@ -1929,6 +2026,7 @@ Virginia,Deaths,2020-04-07T04:00:00Z,66
 Virginia,Deaths,2020-04-08T04:00:00Z,66
 Virginia,Deaths,2020-04-09T04:00:00Z,109
 Virginia,Deaths,2020-04-10T04:00:00Z,121
+Virginia,Deaths,2020-04-11T04:00:00Z,130
 Virginia,Deaths (per 100k),2020-03-22T04:00:00Z,0.07
 Virginia,Deaths (per 100k),2020-03-23T04:00:00Z,0.07
 Virginia,Deaths (per 100k),2020-03-24T04:00:00Z,0.11
@@ -1949,6 +2047,7 @@ Virginia,Deaths (per 100k),2020-04-07T04:00:00Z,0.77
 Virginia,Deaths (per 100k),2020-04-08T04:00:00Z,0.77
 Virginia,Deaths (per 100k),2020-04-09T04:00:00Z,1.28
 Virginia,Deaths (per 100k),2020-04-10T04:00:00Z,1.42
+Virginia,Deaths (per 100k),2020-04-11T04:00:00Z,1.52
 Mississippi,Confirmed,2020-03-22T04:00:00Z,207
 Mississippi,Confirmed,2020-03-23T04:00:00Z,249
 Mississippi,Confirmed,2020-03-24T04:00:00Z,320
@@ -1969,6 +2068,7 @@ Mississippi,Confirmed,2020-04-07T04:00:00Z,1915
 Mississippi,Confirmed,2020-04-08T04:00:00Z,2003
 Mississippi,Confirmed,2020-04-09T04:00:00Z,2260
 Mississippi,Confirmed,2020-04-10T04:00:00Z,2469
+Mississippi,Confirmed,2020-04-11T04:00:00Z,2642
 Mississippi,Confirmed (per 100k),2020-03-22T04:00:00Z,6.96
 Mississippi,Confirmed (per 100k),2020-03-23T04:00:00Z,8.37
 Mississippi,Confirmed (per 100k),2020-03-24T04:00:00Z,10.75
@@ -1989,6 +2089,7 @@ Mississippi,Confirmed (per 100k),2020-04-07T04:00:00Z,64.34
 Mississippi,Confirmed (per 100k),2020-04-08T04:00:00Z,67.30
 Mississippi,Confirmed (per 100k),2020-04-09T04:00:00Z,75.94
 Mississippi,Confirmed (per 100k),2020-04-10T04:00:00Z,82.96
+Mississippi,Confirmed (per 100k),2020-04-11T04:00:00Z,88.77
 Mississippi,Deaths,2020-03-22T04:00:00Z,1
 Mississippi,Deaths,2020-03-23T04:00:00Z,1
 Mississippi,Deaths,2020-03-24T04:00:00Z,1
@@ -2009,6 +2110,7 @@ Mississippi,Deaths,2020-04-07T04:00:00Z,60
 Mississippi,Deaths,2020-04-08T04:00:00Z,67
 Mississippi,Deaths,2020-04-09T04:00:00Z,76
 Mississippi,Deaths,2020-04-10T04:00:00Z,82
+Mississippi,Deaths,2020-04-11T04:00:00Z,93
 Mississippi,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Mississippi,Deaths (per 100k),2020-03-23T04:00:00Z,0.03
 Mississippi,Deaths (per 100k),2020-03-24T04:00:00Z,0.03
@@ -2029,6 +2131,7 @@ Mississippi,Deaths (per 100k),2020-04-07T04:00:00Z,2.02
 Mississippi,Deaths (per 100k),2020-04-08T04:00:00Z,2.25
 Mississippi,Deaths (per 100k),2020-04-09T04:00:00Z,2.55
 Mississippi,Deaths (per 100k),2020-04-10T04:00:00Z,2.76
+Mississippi,Deaths (per 100k),2020-04-11T04:00:00Z,3.12
 Indiana,Confirmed,2020-03-22T04:00:00Z,204
 Indiana,Confirmed,2020-03-23T04:00:00Z,270
 Indiana,Confirmed,2020-03-24T04:00:00Z,368
@@ -2049,6 +2152,7 @@ Indiana,Confirmed,2020-04-07T04:00:00Z,5510
 Indiana,Confirmed,2020-04-08T04:00:00Z,5943
 Indiana,Confirmed,2020-04-09T04:00:00Z,6351
 Indiana,Confirmed,2020-04-10T04:00:00Z,6907
+Indiana,Confirmed,2020-04-11T04:00:00Z,7435
 Indiana,Confirmed (per 100k),2020-03-22T04:00:00Z,3.03
 Indiana,Confirmed (per 100k),2020-03-23T04:00:00Z,4.01
 Indiana,Confirmed (per 100k),2020-03-24T04:00:00Z,5.47
@@ -2069,6 +2173,7 @@ Indiana,Confirmed (per 100k),2020-04-07T04:00:00Z,81.85
 Indiana,Confirmed (per 100k),2020-04-08T04:00:00Z,88.28
 Indiana,Confirmed (per 100k),2020-04-09T04:00:00Z,94.34
 Indiana,Confirmed (per 100k),2020-04-10T04:00:00Z,102.60
+Indiana,Confirmed (per 100k),2020-04-11T04:00:00Z,110.44
 Indiana,Deaths,2020-03-22T04:00:00Z,6
 Indiana,Deaths,2020-03-23T04:00:00Z,7
 Indiana,Deaths,2020-03-24T04:00:00Z,12
@@ -2089,6 +2194,7 @@ Indiana,Deaths,2020-04-07T04:00:00Z,173
 Indiana,Deaths,2020-04-08T04:00:00Z,203
 Indiana,Deaths,2020-04-09T04:00:00Z,245
 Indiana,Deaths,2020-04-10T04:00:00Z,300
+Indiana,Deaths,2020-04-11T04:00:00Z,330
 Indiana,Deaths (per 100k),2020-03-22T04:00:00Z,0.09
 Indiana,Deaths (per 100k),2020-03-23T04:00:00Z,0.10
 Indiana,Deaths (per 100k),2020-03-24T04:00:00Z,0.18
@@ -2109,6 +2215,7 @@ Indiana,Deaths (per 100k),2020-04-07T04:00:00Z,2.57
 Indiana,Deaths (per 100k),2020-04-08T04:00:00Z,3.02
 Indiana,Deaths (per 100k),2020-04-09T04:00:00Z,3.64
 Indiana,Deaths (per 100k),2020-04-10T04:00:00Z,4.46
+Indiana,Deaths (per 100k),2020-04-11T04:00:00Z,4.90
 South Carolina,Confirmed,2020-03-22T04:00:00Z,196
 South Carolina,Confirmed,2020-03-23T04:00:00Z,298
 South Carolina,Confirmed,2020-03-24T04:00:00Z,342
@@ -2129,6 +2236,7 @@ South Carolina,Confirmed,2020-04-07T04:00:00Z,2417
 South Carolina,Confirmed,2020-04-08T04:00:00Z,2417
 South Carolina,Confirmed,2020-04-09T04:00:00Z,2793
 South Carolina,Confirmed,2020-04-10T04:00:00Z,3067
+South Carolina,Confirmed,2020-04-11T04:00:00Z,3211
 South Carolina,Confirmed (per 100k),2020-03-22T04:00:00Z,3.81
 South Carolina,Confirmed (per 100k),2020-03-23T04:00:00Z,5.79
 South Carolina,Confirmed (per 100k),2020-03-24T04:00:00Z,6.64
@@ -2149,6 +2257,7 @@ South Carolina,Confirmed (per 100k),2020-04-07T04:00:00Z,46.94
 South Carolina,Confirmed (per 100k),2020-04-08T04:00:00Z,46.94
 South Carolina,Confirmed (per 100k),2020-04-09T04:00:00Z,54.25
 South Carolina,Confirmed (per 100k),2020-04-10T04:00:00Z,59.57
+South Carolina,Confirmed (per 100k),2020-04-11T04:00:00Z,62.37
 South Carolina,Deaths,2020-03-22T04:00:00Z,3
 South Carolina,Deaths,2020-03-23T04:00:00Z,5
 South Carolina,Deaths,2020-03-24T04:00:00Z,5
@@ -2169,6 +2278,7 @@ South Carolina,Deaths,2020-04-07T04:00:00Z,51
 South Carolina,Deaths,2020-04-08T04:00:00Z,51
 South Carolina,Deaths,2020-04-09T04:00:00Z,67
 South Carolina,Deaths,2020-04-10T04:00:00Z,72
+South Carolina,Deaths,2020-04-11T04:00:00Z,80
 South Carolina,Deaths (per 100k),2020-03-22T04:00:00Z,0.06
 South Carolina,Deaths (per 100k),2020-03-23T04:00:00Z,0.10
 South Carolina,Deaths (per 100k),2020-03-24T04:00:00Z,0.10
@@ -2189,6 +2299,7 @@ South Carolina,Deaths (per 100k),2020-04-07T04:00:00Z,0.99
 South Carolina,Deaths (per 100k),2020-04-08T04:00:00Z,0.99
 South Carolina,Deaths (per 100k),2020-04-09T04:00:00Z,1.30
 South Carolina,Deaths (per 100k),2020-04-10T04:00:00Z,1.40
+South Carolina,Deaths (per 100k),2020-04-11T04:00:00Z,1.55
 Nevada,Confirmed,2020-03-22T04:00:00Z,190
 Nevada,Confirmed,2020-03-23T04:00:00Z,245
 Nevada,Confirmed,2020-03-24T04:00:00Z,278
@@ -2209,6 +2320,7 @@ Nevada,Confirmed,2020-04-07T04:00:00Z,2124
 Nevada,Confirmed,2020-04-08T04:00:00Z,2259
 Nevada,Confirmed,2020-04-09T04:00:00Z,2456
 Nevada,Confirmed,2020-04-10T04:00:00Z,2722
+Nevada,Confirmed,2020-04-11T04:00:00Z,2722
 Nevada,Confirmed (per 100k),2020-03-22T04:00:00Z,6.17
 Nevada,Confirmed (per 100k),2020-03-23T04:00:00Z,7.95
 Nevada,Confirmed (per 100k),2020-03-24T04:00:00Z,9.03
@@ -2229,6 +2341,7 @@ Nevada,Confirmed (per 100k),2020-04-07T04:00:00Z,68.96
 Nevada,Confirmed (per 100k),2020-04-08T04:00:00Z,73.34
 Nevada,Confirmed (per 100k),2020-04-09T04:00:00Z,79.74
 Nevada,Confirmed (per 100k),2020-04-10T04:00:00Z,88.37
+Nevada,Confirmed (per 100k),2020-04-11T04:00:00Z,88.37
 Nevada,Deaths,2020-03-22T04:00:00Z,2
 Nevada,Deaths,2020-03-23T04:00:00Z,4
 Nevada,Deaths,2020-03-24T04:00:00Z,4
@@ -2249,6 +2362,7 @@ Nevada,Deaths,2020-04-07T04:00:00Z,72
 Nevada,Deaths,2020-04-08T04:00:00Z,72
 Nevada,Deaths,2020-04-09T04:00:00Z,81
 Nevada,Deaths,2020-04-10T04:00:00Z,90
+Nevada,Deaths,2020-04-11T04:00:00Z,102
 Nevada,Deaths (per 100k),2020-03-22T04:00:00Z,0.06
 Nevada,Deaths (per 100k),2020-03-23T04:00:00Z,0.13
 Nevada,Deaths (per 100k),2020-03-24T04:00:00Z,0.13
@@ -2269,6 +2383,7 @@ Nevada,Deaths (per 100k),2020-04-07T04:00:00Z,2.34
 Nevada,Deaths (per 100k),2020-04-08T04:00:00Z,2.34
 Nevada,Deaths (per 100k),2020-04-09T04:00:00Z,2.63
 Nevada,Deaths (per 100k),2020-04-10T04:00:00Z,2.92
+Nevada,Deaths (per 100k),2020-04-11T04:00:00Z,3.31
 Utah,Confirmed,2020-03-22T04:00:00Z,162
 Utah,Confirmed,2020-03-23T04:00:00Z,257
 Utah,Confirmed,2020-03-24T04:00:00Z,298
@@ -2289,6 +2404,7 @@ Utah,Confirmed,2020-04-07T04:00:00Z,1746
 Utah,Confirmed,2020-04-08T04:00:00Z,1855
 Utah,Confirmed,2020-04-09T04:00:00Z,1856
 Utah,Confirmed,2020-04-10T04:00:00Z,2103
+Utah,Confirmed,2020-04-11T04:00:00Z,2207
 Utah,Confirmed (per 100k),2020-03-22T04:00:00Z,5.05
 Utah,Confirmed (per 100k),2020-03-23T04:00:00Z,8.02
 Utah,Confirmed (per 100k),2020-03-24T04:00:00Z,9.30
@@ -2309,6 +2425,7 @@ Utah,Confirmed (per 100k),2020-04-07T04:00:00Z,54.46
 Utah,Confirmed (per 100k),2020-04-08T04:00:00Z,57.86
 Utah,Confirmed (per 100k),2020-04-09T04:00:00Z,57.89
 Utah,Confirmed (per 100k),2020-04-10T04:00:00Z,65.60
+Utah,Confirmed (per 100k),2020-04-11T04:00:00Z,68.84
 Utah,Deaths,2020-03-22T04:00:00Z,1
 Utah,Deaths,2020-03-23T04:00:00Z,1
 Utah,Deaths,2020-03-24T04:00:00Z,1
@@ -2329,6 +2446,7 @@ Utah,Deaths,2020-04-07T04:00:00Z,13
 Utah,Deaths,2020-04-08T04:00:00Z,13
 Utah,Deaths,2020-04-09T04:00:00Z,13
 Utah,Deaths,2020-04-10T04:00:00Z,17
+Utah,Deaths,2020-04-11T04:00:00Z,18
 Utah,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Utah,Deaths (per 100k),2020-03-23T04:00:00Z,0.03
 Utah,Deaths (per 100k),2020-03-24T04:00:00Z,0.03
@@ -2349,6 +2467,7 @@ Utah,Deaths (per 100k),2020-04-07T04:00:00Z,0.41
 Utah,Deaths (per 100k),2020-04-08T04:00:00Z,0.41
 Utah,Deaths (per 100k),2020-04-09T04:00:00Z,0.41
 Utah,Deaths (per 100k),2020-04-10T04:00:00Z,0.53
+Utah,Deaths (per 100k),2020-04-11T04:00:00Z,0.56
 Minnesota,Confirmed,2020-03-22T04:00:00Z,167
 Minnesota,Confirmed,2020-03-23T04:00:00Z,234
 Minnesota,Confirmed,2020-03-24T04:00:00Z,261
@@ -2369,6 +2488,7 @@ Minnesota,Confirmed,2020-04-07T04:00:00Z,1069
 Minnesota,Confirmed,2020-04-08T04:00:00Z,1154
 Minnesota,Confirmed,2020-04-09T04:00:00Z,1240
 Minnesota,Confirmed,2020-04-10T04:00:00Z,1336
+Minnesota,Confirmed,2020-04-11T04:00:00Z,1427
 Minnesota,Confirmed (per 100k),2020-03-22T04:00:00Z,2.96
 Minnesota,Confirmed (per 100k),2020-03-23T04:00:00Z,4.15
 Minnesota,Confirmed (per 100k),2020-03-24T04:00:00Z,4.63
@@ -2389,6 +2509,7 @@ Minnesota,Confirmed (per 100k),2020-04-07T04:00:00Z,18.96
 Minnesota,Confirmed (per 100k),2020-04-08T04:00:00Z,20.46
 Minnesota,Confirmed (per 100k),2020-04-09T04:00:00Z,21.99
 Minnesota,Confirmed (per 100k),2020-04-10T04:00:00Z,23.69
+Minnesota,Confirmed (per 100k),2020-04-11T04:00:00Z,25.30
 Minnesota,Deaths,2020-03-22T04:00:00Z,1
 Minnesota,Deaths,2020-03-23T04:00:00Z,1
 Minnesota,Deaths,2020-03-24T04:00:00Z,1
@@ -2409,6 +2530,7 @@ Minnesota,Deaths,2020-04-07T04:00:00Z,34
 Minnesota,Deaths,2020-04-08T04:00:00Z,39
 Minnesota,Deaths,2020-04-09T04:00:00Z,50
 Minnesota,Deaths,2020-04-10T04:00:00Z,57
+Minnesota,Deaths,2020-04-11T04:00:00Z,64
 Minnesota,Deaths (per 100k),2020-03-22T04:00:00Z,0.02
 Minnesota,Deaths (per 100k),2020-03-23T04:00:00Z,0.02
 Minnesota,Deaths (per 100k),2020-03-24T04:00:00Z,0.02
@@ -2429,6 +2551,7 @@ Minnesota,Deaths (per 100k),2020-04-07T04:00:00Z,0.60
 Minnesota,Deaths (per 100k),2020-04-08T04:00:00Z,0.69
 Minnesota,Deaths (per 100k),2020-04-09T04:00:00Z,0.89
 Minnesota,Deaths (per 100k),2020-04-10T04:00:00Z,1.01
+Minnesota,Deaths (per 100k),2020-04-11T04:00:00Z,1.13
 Arkansas,Confirmed,2020-03-22T04:00:00Z,165
 Arkansas,Confirmed,2020-03-23T04:00:00Z,192
 Arkansas,Confirmed,2020-03-24T04:00:00Z,219
@@ -2449,6 +2572,7 @@ Arkansas,Confirmed,2020-04-07T04:00:00Z,946
 Arkansas,Confirmed,2020-04-08T04:00:00Z,1000
 Arkansas,Confirmed,2020-04-09T04:00:00Z,1119
 Arkansas,Confirmed,2020-04-10T04:00:00Z,1171
+Arkansas,Confirmed,2020-04-11T04:00:00Z,1228
 Arkansas,Confirmed (per 100k),2020-03-22T04:00:00Z,5.47
 Arkansas,Confirmed (per 100k),2020-03-23T04:00:00Z,6.36
 Arkansas,Confirmed (per 100k),2020-03-24T04:00:00Z,7.26
@@ -2469,6 +2593,7 @@ Arkansas,Confirmed (per 100k),2020-04-07T04:00:00Z,31.35
 Arkansas,Confirmed (per 100k),2020-04-08T04:00:00Z,33.14
 Arkansas,Confirmed (per 100k),2020-04-09T04:00:00Z,37.08
 Arkansas,Confirmed (per 100k),2020-04-10T04:00:00Z,38.80
+Arkansas,Confirmed (per 100k),2020-04-11T04:00:00Z,40.69
 Arkansas,Deaths,2020-03-22T04:00:00Z,0
 Arkansas,Deaths,2020-03-23T04:00:00Z,0
 Arkansas,Deaths,2020-03-24T04:00:00Z,2
@@ -2489,6 +2614,7 @@ Arkansas,Deaths,2020-04-07T04:00:00Z,18
 Arkansas,Deaths,2020-04-08T04:00:00Z,18
 Arkansas,Deaths,2020-04-09T04:00:00Z,21
 Arkansas,Deaths,2020-04-10T04:00:00Z,21
+Arkansas,Deaths,2020-04-11T04:00:00Z,25
 Arkansas,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Arkansas,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Arkansas,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -2509,6 +2635,7 @@ Arkansas,Deaths (per 100k),2020-04-07T04:00:00Z,0.60
 Arkansas,Deaths (per 100k),2020-04-08T04:00:00Z,0.60
 Arkansas,Deaths (per 100k),2020-04-09T04:00:00Z,0.70
 Arkansas,Deaths (per 100k),2020-04-10T04:00:00Z,0.70
+Arkansas,Deaths (per 100k),2020-04-11T04:00:00Z,0.83
 Oregon,Confirmed,2020-03-22T04:00:00Z,161
 Oregon,Confirmed,2020-03-23T04:00:00Z,191
 Oregon,Confirmed,2020-03-24T04:00:00Z,210
@@ -2529,6 +2656,7 @@ Oregon,Confirmed,2020-04-07T04:00:00Z,1132
 Oregon,Confirmed,2020-04-08T04:00:00Z,1181
 Oregon,Confirmed,2020-04-09T04:00:00Z,1321
 Oregon,Confirmed,2020-04-10T04:00:00Z,1322
+Oregon,Confirmed,2020-04-11T04:00:00Z,1371
 Oregon,Confirmed (per 100k),2020-03-22T04:00:00Z,3.82
 Oregon,Confirmed (per 100k),2020-03-23T04:00:00Z,4.53
 Oregon,Confirmed (per 100k),2020-03-24T04:00:00Z,4.98
@@ -2549,6 +2677,7 @@ Oregon,Confirmed (per 100k),2020-04-07T04:00:00Z,26.84
 Oregon,Confirmed (per 100k),2020-04-08T04:00:00Z,28.00
 Oregon,Confirmed (per 100k),2020-04-09T04:00:00Z,31.32
 Oregon,Confirmed (per 100k),2020-04-10T04:00:00Z,31.34
+Oregon,Confirmed (per 100k),2020-04-11T04:00:00Z,32.51
 Oregon,Deaths,2020-03-22T04:00:00Z,5
 Oregon,Deaths,2020-03-23T04:00:00Z,5
 Oregon,Deaths,2020-03-24T04:00:00Z,8
@@ -2569,6 +2698,7 @@ Oregon,Deaths,2020-04-07T04:00:00Z,29
 Oregon,Deaths,2020-04-08T04:00:00Z,33
 Oregon,Deaths,2020-04-09T04:00:00Z,44
 Oregon,Deaths,2020-04-10T04:00:00Z,44
+Oregon,Deaths,2020-04-11T04:00:00Z,48
 Oregon,Deaths (per 100k),2020-03-22T04:00:00Z,0.12
 Oregon,Deaths (per 100k),2020-03-23T04:00:00Z,0.12
 Oregon,Deaths (per 100k),2020-03-24T04:00:00Z,0.19
@@ -2589,6 +2719,7 @@ Oregon,Deaths (per 100k),2020-04-07T04:00:00Z,0.69
 Oregon,Deaths (per 100k),2020-04-08T04:00:00Z,0.78
 Oregon,Deaths (per 100k),2020-04-09T04:00:00Z,1.04
 Oregon,Deaths (per 100k),2020-04-10T04:00:00Z,1.04
+Oregon,Deaths (per 100k),2020-04-11T04:00:00Z,1.14
 Alabama,Confirmed,2020-03-22T04:00:00Z,157
 Alabama,Confirmed,2020-03-23T04:00:00Z,196
 Alabama,Confirmed,2020-03-24T04:00:00Z,242
@@ -2609,6 +2740,7 @@ Alabama,Confirmed,2020-04-07T04:00:00Z,2169
 Alabama,Confirmed,2020-04-08T04:00:00Z,2328
 Alabama,Confirmed,2020-04-09T04:00:00Z,2703
 Alabama,Confirmed,2020-04-10T04:00:00Z,2947
+Alabama,Confirmed,2020-04-11T04:00:00Z,3217
 Alabama,Confirmed (per 100k),2020-03-22T04:00:00Z,3.20
 Alabama,Confirmed (per 100k),2020-03-23T04:00:00Z,4.00
 Alabama,Confirmed (per 100k),2020-03-24T04:00:00Z,4.94
@@ -2629,6 +2761,7 @@ Alabama,Confirmed (per 100k),2020-04-07T04:00:00Z,44.24
 Alabama,Confirmed (per 100k),2020-04-08T04:00:00Z,47.48
 Alabama,Confirmed (per 100k),2020-04-09T04:00:00Z,55.13
 Alabama,Confirmed (per 100k),2020-04-10T04:00:00Z,60.10
+Alabama,Confirmed (per 100k),2020-04-11T04:00:00Z,65.61
 Alabama,Deaths,2020-03-22T04:00:00Z,0
 Alabama,Deaths,2020-03-23T04:00:00Z,0
 Alabama,Deaths,2020-03-24T04:00:00Z,0
@@ -2649,6 +2782,7 @@ Alabama,Deaths,2020-04-07T04:00:00Z,64
 Alabama,Deaths,2020-04-08T04:00:00Z,66
 Alabama,Deaths,2020-04-09T04:00:00Z,70
 Alabama,Deaths,2020-04-10T04:00:00Z,80
+Alabama,Deaths,2020-04-11T04:00:00Z,92
 Alabama,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Alabama,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Alabama,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -2669,6 +2803,7 @@ Alabama,Deaths (per 100k),2020-04-07T04:00:00Z,1.31
 Alabama,Deaths (per 100k),2020-04-08T04:00:00Z,1.35
 Alabama,Deaths (per 100k),2020-04-09T04:00:00Z,1.43
 Alabama,Deaths (per 100k),2020-04-10T04:00:00Z,1.63
+Alabama,Deaths (per 100k),2020-04-11T04:00:00Z,1.88
 Arizona,Confirmed,2020-03-22T04:00:00Z,152
 Arizona,Confirmed,2020-03-23T04:00:00Z,235
 Arizona,Confirmed,2020-03-24T04:00:00Z,326
@@ -2689,6 +2824,7 @@ Arizona,Confirmed,2020-04-07T04:00:00Z,2870
 Arizona,Confirmed,2020-04-08T04:00:00Z,3036
 Arizona,Confirmed,2020-04-09T04:00:00Z,3036
 Arizona,Confirmed,2020-04-10T04:00:00Z,3112
+Arizona,Confirmed,2020-04-11T04:00:00Z,3393
 Arizona,Confirmed (per 100k),2020-03-22T04:00:00Z,2.09
 Arizona,Confirmed (per 100k),2020-03-23T04:00:00Z,3.23
 Arizona,Confirmed (per 100k),2020-03-24T04:00:00Z,4.48
@@ -2709,6 +2845,7 @@ Arizona,Confirmed (per 100k),2020-04-07T04:00:00Z,39.43
 Arizona,Confirmed (per 100k),2020-04-08T04:00:00Z,41.71
 Arizona,Confirmed (per 100k),2020-04-09T04:00:00Z,41.71
 Arizona,Confirmed (per 100k),2020-04-10T04:00:00Z,42.75
+Arizona,Confirmed (per 100k),2020-04-11T04:00:00Z,46.62
 Arizona,Deaths,2020-03-22T04:00:00Z,2
 Arizona,Deaths,2020-03-23T04:00:00Z,2
 Arizona,Deaths,2020-03-24T04:00:00Z,5
@@ -2729,6 +2866,7 @@ Arizona,Deaths,2020-04-07T04:00:00Z,73
 Arizona,Deaths,2020-04-08T04:00:00Z,80
 Arizona,Deaths,2020-04-09T04:00:00Z,89
 Arizona,Deaths,2020-04-10T04:00:00Z,97
+Arizona,Deaths,2020-04-11T04:00:00Z,108
 Arizona,Deaths (per 100k),2020-03-22T04:00:00Z,0.03
 Arizona,Deaths (per 100k),2020-03-23T04:00:00Z,0.03
 Arizona,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -2749,6 +2887,7 @@ Arizona,Deaths (per 100k),2020-04-07T04:00:00Z,1.00
 Arizona,Deaths (per 100k),2020-04-08T04:00:00Z,1.10
 Arizona,Deaths (per 100k),2020-04-09T04:00:00Z,1.22
 Arizona,Deaths (per 100k),2020-04-10T04:00:00Z,1.33
+Arizona,Deaths (per 100k),2020-04-11T04:00:00Z,1.48
 Kentucky,Confirmed,2020-03-22T04:00:00Z,103
 Kentucky,Confirmed,2020-03-23T04:00:00Z,123
 Kentucky,Confirmed,2020-03-24T04:00:00Z,162
@@ -2769,6 +2908,7 @@ Kentucky,Confirmed,2020-04-07T04:00:00Z,1149
 Kentucky,Confirmed,2020-04-08T04:00:00Z,1149
 Kentucky,Confirmed,2020-04-09T04:00:00Z,1341
 Kentucky,Confirmed,2020-04-10T04:00:00Z,1693
+Kentucky,Confirmed,2020-04-11T04:00:00Z,1693
 Kentucky,Confirmed (per 100k),2020-03-22T04:00:00Z,2.31
 Kentucky,Confirmed (per 100k),2020-03-23T04:00:00Z,2.75
 Kentucky,Confirmed (per 100k),2020-03-24T04:00:00Z,3.63
@@ -2789,6 +2929,7 @@ Kentucky,Confirmed (per 100k),2020-04-07T04:00:00Z,25.72
 Kentucky,Confirmed (per 100k),2020-04-08T04:00:00Z,25.72
 Kentucky,Confirmed (per 100k),2020-04-09T04:00:00Z,30.02
 Kentucky,Confirmed (per 100k),2020-04-10T04:00:00Z,37.89
+Kentucky,Confirmed (per 100k),2020-04-11T04:00:00Z,37.89
 Kentucky,Deaths,2020-03-22T04:00:00Z,3
 Kentucky,Deaths,2020-03-23T04:00:00Z,4
 Kentucky,Deaths,2020-03-24T04:00:00Z,4
@@ -2809,6 +2950,7 @@ Kentucky,Deaths,2020-04-07T04:00:00Z,65
 Kentucky,Deaths,2020-04-08T04:00:00Z,65
 Kentucky,Deaths,2020-04-09T04:00:00Z,73
 Kentucky,Deaths,2020-04-10T04:00:00Z,90
+Kentucky,Deaths,2020-04-11T04:00:00Z,90
 Kentucky,Deaths (per 100k),2020-03-22T04:00:00Z,0.07
 Kentucky,Deaths (per 100k),2020-03-23T04:00:00Z,0.09
 Kentucky,Deaths (per 100k),2020-03-24T04:00:00Z,0.09
@@ -2829,6 +2971,7 @@ Kentucky,Deaths (per 100k),2020-04-07T04:00:00Z,1.45
 Kentucky,Deaths (per 100k),2020-04-08T04:00:00Z,1.45
 Kentucky,Deaths (per 100k),2020-04-09T04:00:00Z,1.63
 Kentucky,Deaths (per 100k),2020-04-10T04:00:00Z,2.01
+Kentucky,Deaths (per 100k),2020-04-11T04:00:00Z,2.01
 Missouri,Confirmed,2020-03-22T04:00:00Z,87
 Missouri,Confirmed,2020-03-23T04:00:00Z,187
 Missouri,Confirmed,2020-03-24T04:00:00Z,257
@@ -2849,6 +2992,7 @@ Missouri,Confirmed,2020-04-07T04:00:00Z,3130
 Missouri,Confirmed,2020-04-08T04:00:00Z,3209
 Missouri,Confirmed,2020-04-09T04:00:00Z,3432
 Missouri,Confirmed,2020-04-10T04:00:00Z,3897
+Missouri,Confirmed,2020-04-11T04:00:00Z,4108
 Missouri,Confirmed (per 100k),2020-03-22T04:00:00Z,1.42
 Missouri,Confirmed (per 100k),2020-03-23T04:00:00Z,3.05
 Missouri,Confirmed (per 100k),2020-03-24T04:00:00Z,4.19
@@ -2869,6 +3013,7 @@ Missouri,Confirmed (per 100k),2020-04-07T04:00:00Z,51.00
 Missouri,Confirmed (per 100k),2020-04-08T04:00:00Z,52.29
 Missouri,Confirmed (per 100k),2020-04-09T04:00:00Z,55.92
 Missouri,Confirmed (per 100k),2020-04-10T04:00:00Z,63.50
+Missouri,Confirmed (per 100k),2020-04-11T04:00:00Z,66.93
 Missouri,Deaths,2020-03-22T04:00:00Z,3
 Missouri,Deaths,2020-03-23T04:00:00Z,4
 Missouri,Deaths,2020-03-24T04:00:00Z,7
@@ -2889,6 +3034,7 @@ Missouri,Deaths,2020-04-07T04:00:00Z,65
 Missouri,Deaths,2020-04-08T04:00:00Z,86
 Missouri,Deaths,2020-04-09T04:00:00Z,93
 Missouri,Deaths,2020-04-10T04:00:00Z,99
+Missouri,Deaths,2020-04-11T04:00:00Z,116
 Missouri,Deaths (per 100k),2020-03-22T04:00:00Z,0.05
 Missouri,Deaths (per 100k),2020-03-23T04:00:00Z,0.07
 Missouri,Deaths (per 100k),2020-03-24T04:00:00Z,0.11
@@ -2909,6 +3055,7 @@ Missouri,Deaths (per 100k),2020-04-07T04:00:00Z,1.06
 Missouri,Deaths (per 100k),2020-04-08T04:00:00Z,1.40
 Missouri,Deaths (per 100k),2020-04-09T04:00:00Z,1.52
 Missouri,Deaths (per 100k),2020-04-10T04:00:00Z,1.61
+Missouri,Deaths (per 100k),2020-04-11T04:00:00Z,1.89
 Iowa,Confirmed,2020-03-22T04:00:00Z,90
 Iowa,Confirmed,2020-03-23T04:00:00Z,105
 Iowa,Confirmed,2020-03-24T04:00:00Z,124
@@ -2929,6 +3076,7 @@ Iowa,Confirmed,2020-04-07T04:00:00Z,1046
 Iowa,Confirmed,2020-04-08T04:00:00Z,1145
 Iowa,Confirmed,2020-04-09T04:00:00Z,1270
 Iowa,Confirmed,2020-04-10T04:00:00Z,1388
+Iowa,Confirmed,2020-04-11T04:00:00Z,1510
 Iowa,Confirmed (per 100k),2020-03-22T04:00:00Z,2.85
 Iowa,Confirmed (per 100k),2020-03-23T04:00:00Z,3.33
 Iowa,Confirmed (per 100k),2020-03-24T04:00:00Z,3.93
@@ -2949,6 +3097,7 @@ Iowa,Confirmed (per 100k),2020-04-07T04:00:00Z,33.15
 Iowa,Confirmed (per 100k),2020-04-08T04:00:00Z,36.29
 Iowa,Confirmed (per 100k),2020-04-09T04:00:00Z,40.25
 Iowa,Confirmed (per 100k),2020-04-10T04:00:00Z,43.99
+Iowa,Confirmed (per 100k),2020-04-11T04:00:00Z,47.86
 Iowa,Deaths,2020-03-22T04:00:00Z,0
 Iowa,Deaths,2020-03-23T04:00:00Z,0
 Iowa,Deaths,2020-03-24T04:00:00Z,0
@@ -2969,6 +3118,7 @@ Iowa,Deaths,2020-04-07T04:00:00Z,25
 Iowa,Deaths,2020-04-08T04:00:00Z,27
 Iowa,Deaths,2020-04-09T04:00:00Z,29
 Iowa,Deaths,2020-04-10T04:00:00Z,31
+Iowa,Deaths,2020-04-11T04:00:00Z,34
 Iowa,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Iowa,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Iowa,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -2989,6 +3139,7 @@ Iowa,Deaths (per 100k),2020-04-07T04:00:00Z,0.79
 Iowa,Deaths (per 100k),2020-04-08T04:00:00Z,0.86
 Iowa,Deaths (per 100k),2020-04-09T04:00:00Z,0.92
 Iowa,Deaths (per 100k),2020-04-10T04:00:00Z,0.98
+Iowa,Deaths (per 100k),2020-04-11T04:00:00Z,1.08
 Maine,Confirmed,2020-03-22T04:00:00Z,89
 Maine,Confirmed,2020-03-23T04:00:00Z,107
 Maine,Confirmed,2020-03-24T04:00:00Z,118
@@ -3009,6 +3160,7 @@ Maine,Confirmed,2020-04-07T04:00:00Z,519
 Maine,Confirmed,2020-04-08T04:00:00Z,537
 Maine,Confirmed,2020-04-09T04:00:00Z,560
 Maine,Confirmed,2020-04-10T04:00:00Z,586
+Maine,Confirmed,2020-04-11T04:00:00Z,616
 Maine,Confirmed (per 100k),2020-03-22T04:00:00Z,6.62
 Maine,Confirmed (per 100k),2020-03-23T04:00:00Z,7.96
 Maine,Confirmed (per 100k),2020-03-24T04:00:00Z,8.78
@@ -3029,6 +3181,7 @@ Maine,Confirmed (per 100k),2020-04-07T04:00:00Z,38.61
 Maine,Confirmed (per 100k),2020-04-08T04:00:00Z,39.95
 Maine,Confirmed (per 100k),2020-04-09T04:00:00Z,41.66
 Maine,Confirmed (per 100k),2020-04-10T04:00:00Z,43.59
+Maine,Confirmed (per 100k),2020-04-11T04:00:00Z,45.83
 Maine,Deaths,2020-03-22T04:00:00Z,0
 Maine,Deaths,2020-03-23T04:00:00Z,0
 Maine,Deaths,2020-03-24T04:00:00Z,0
@@ -3049,6 +3202,7 @@ Maine,Deaths,2020-04-07T04:00:00Z,12
 Maine,Deaths,2020-04-08T04:00:00Z,14
 Maine,Deaths,2020-04-09T04:00:00Z,16
 Maine,Deaths,2020-04-10T04:00:00Z,17
+Maine,Deaths,2020-04-11T04:00:00Z,19
 Maine,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Maine,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Maine,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3069,6 +3223,7 @@ Maine,Deaths (per 100k),2020-04-07T04:00:00Z,0.89
 Maine,Deaths (per 100k),2020-04-08T04:00:00Z,1.04
 Maine,Deaths (per 100k),2020-04-09T04:00:00Z,1.19
 Maine,Deaths (per 100k),2020-04-10T04:00:00Z,1.26
+Maine,Deaths (per 100k),2020-04-11T04:00:00Z,1.41
 Rhode Island,Confirmed,2020-03-22T04:00:00Z,83
 Rhode Island,Confirmed,2020-03-23T04:00:00Z,106
 Rhode Island,Confirmed,2020-03-24T04:00:00Z,124
@@ -3089,6 +3244,7 @@ Rhode Island,Confirmed,2020-04-07T04:00:00Z,1229
 Rhode Island,Confirmed,2020-04-08T04:00:00Z,1450
 Rhode Island,Confirmed,2020-04-09T04:00:00Z,1727
 Rhode Island,Confirmed,2020-04-10T04:00:00Z,1727
+Rhode Island,Confirmed,2020-04-11T04:00:00Z,2349
 Rhode Island,Confirmed (per 100k),2020-03-22T04:00:00Z,7.83
 Rhode Island,Confirmed (per 100k),2020-03-23T04:00:00Z,10.01
 Rhode Island,Confirmed (per 100k),2020-03-24T04:00:00Z,11.71
@@ -3109,6 +3265,7 @@ Rhode Island,Confirmed (per 100k),2020-04-07T04:00:00Z,116.01
 Rhode Island,Confirmed (per 100k),2020-04-08T04:00:00Z,136.87
 Rhode Island,Confirmed (per 100k),2020-04-09T04:00:00Z,163.02
 Rhode Island,Confirmed (per 100k),2020-04-10T04:00:00Z,163.02
+Rhode Island,Confirmed (per 100k),2020-04-11T04:00:00Z,221.74
 Rhode Island,Deaths,2020-03-22T04:00:00Z,0
 Rhode Island,Deaths,2020-03-23T04:00:00Z,0
 Rhode Island,Deaths,2020-03-24T04:00:00Z,0
@@ -3129,6 +3286,7 @@ Rhode Island,Deaths,2020-04-07T04:00:00Z,30
 Rhode Island,Deaths,2020-04-08T04:00:00Z,35
 Rhode Island,Deaths,2020-04-09T04:00:00Z,43
 Rhode Island,Deaths,2020-04-10T04:00:00Z,43
+Rhode Island,Deaths,2020-04-11T04:00:00Z,56
 Rhode Island,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Rhode Island,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Rhode Island,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3149,6 +3307,7 @@ Rhode Island,Deaths (per 100k),2020-04-07T04:00:00Z,2.83
 Rhode Island,Deaths (per 100k),2020-04-08T04:00:00Z,3.30
 Rhode Island,Deaths (per 100k),2020-04-09T04:00:00Z,4.06
 Rhode Island,Deaths (per 100k),2020-04-10T04:00:00Z,4.06
+Rhode Island,Deaths (per 100k),2020-04-11T04:00:00Z,5.29
 New Hampshire,Confirmed,2020-03-22T04:00:00Z,74
 New Hampshire,Confirmed,2020-03-23T04:00:00Z,101
 New Hampshire,Confirmed,2020-03-24T04:00:00Z,101
@@ -3169,6 +3328,7 @@ New Hampshire,Confirmed,2020-04-07T04:00:00Z,715
 New Hampshire,Confirmed,2020-04-08T04:00:00Z,747
 New Hampshire,Confirmed,2020-04-09T04:00:00Z,819
 New Hampshire,Confirmed,2020-04-10T04:00:00Z,819
+New Hampshire,Confirmed,2020-04-11T04:00:00Z,885
 New Hampshire,Confirmed (per 100k),2020-03-22T04:00:00Z,5.44
 New Hampshire,Confirmed (per 100k),2020-03-23T04:00:00Z,7.43
 New Hampshire,Confirmed (per 100k),2020-03-24T04:00:00Z,7.43
@@ -3189,6 +3349,7 @@ New Hampshire,Confirmed (per 100k),2020-04-07T04:00:00Z,52.58
 New Hampshire,Confirmed (per 100k),2020-04-08T04:00:00Z,54.94
 New Hampshire,Confirmed (per 100k),2020-04-09T04:00:00Z,60.23
 New Hampshire,Confirmed (per 100k),2020-04-10T04:00:00Z,60.23
+New Hampshire,Confirmed (per 100k),2020-04-11T04:00:00Z,65.09
 New Hampshire,Deaths,2020-03-22T04:00:00Z,0
 New Hampshire,Deaths,2020-03-23T04:00:00Z,1
 New Hampshire,Deaths,2020-03-24T04:00:00Z,1
@@ -3209,6 +3370,7 @@ New Hampshire,Deaths,2020-04-07T04:00:00Z,9
 New Hampshire,Deaths,2020-04-08T04:00:00Z,13
 New Hampshire,Deaths,2020-04-09T04:00:00Z,21
 New Hampshire,Deaths,2020-04-10T04:00:00Z,21
+New Hampshire,Deaths,2020-04-11T04:00:00Z,22
 New Hampshire,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 New Hampshire,Deaths (per 100k),2020-03-23T04:00:00Z,0.07
 New Hampshire,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -3229,6 +3391,7 @@ New Hampshire,Deaths (per 100k),2020-04-07T04:00:00Z,0.66
 New Hampshire,Deaths (per 100k),2020-04-08T04:00:00Z,0.96
 New Hampshire,Deaths (per 100k),2020-04-09T04:00:00Z,1.54
 New Hampshire,Deaths (per 100k),2020-04-10T04:00:00Z,1.54
+New Hampshire,Deaths (per 100k),2020-04-11T04:00:00Z,1.62
 Oklahoma,Confirmed,2020-03-22T04:00:00Z,67
 Oklahoma,Confirmed,2020-03-23T04:00:00Z,81
 Oklahoma,Confirmed,2020-03-24T04:00:00Z,106
@@ -3249,6 +3412,7 @@ Oklahoma,Confirmed,2020-04-07T04:00:00Z,1474
 Oklahoma,Confirmed,2020-04-08T04:00:00Z,1526
 Oklahoma,Confirmed,2020-04-09T04:00:00Z,1686
 Oklahoma,Confirmed,2020-04-10T04:00:00Z,1794
+Oklahoma,Confirmed,2020-04-11T04:00:00Z,1868
 Oklahoma,Confirmed (per 100k),2020-03-22T04:00:00Z,1.69
 Oklahoma,Confirmed (per 100k),2020-03-23T04:00:00Z,2.05
 Oklahoma,Confirmed (per 100k),2020-03-24T04:00:00Z,2.68
@@ -3269,6 +3433,7 @@ Oklahoma,Confirmed (per 100k),2020-04-07T04:00:00Z,37.25
 Oklahoma,Confirmed (per 100k),2020-04-08T04:00:00Z,38.56
 Oklahoma,Confirmed (per 100k),2020-04-09T04:00:00Z,42.61
 Oklahoma,Confirmed (per 100k),2020-04-10T04:00:00Z,45.34
+Oklahoma,Confirmed (per 100k),2020-04-11T04:00:00Z,47.21
 Oklahoma,Deaths,2020-03-22T04:00:00Z,2
 Oklahoma,Deaths,2020-03-23T04:00:00Z,2
 Oklahoma,Deaths,2020-03-24T04:00:00Z,3
@@ -3289,6 +3454,7 @@ Oklahoma,Deaths,2020-04-07T04:00:00Z,67
 Oklahoma,Deaths,2020-04-08T04:00:00Z,79
 Oklahoma,Deaths,2020-04-09T04:00:00Z,80
 Oklahoma,Deaths,2020-04-10T04:00:00Z,88
+Oklahoma,Deaths,2020-04-11T04:00:00Z,94
 Oklahoma,Deaths (per 100k),2020-03-22T04:00:00Z,0.05
 Oklahoma,Deaths (per 100k),2020-03-23T04:00:00Z,0.05
 Oklahoma,Deaths (per 100k),2020-03-24T04:00:00Z,0.08
@@ -3309,6 +3475,7 @@ Oklahoma,Deaths (per 100k),2020-04-07T04:00:00Z,1.69
 Oklahoma,Deaths (per 100k),2020-04-08T04:00:00Z,2.00
 Oklahoma,Deaths (per 100k),2020-04-09T04:00:00Z,2.02
 Oklahoma,Deaths (per 100k),2020-04-10T04:00:00Z,2.22
+Oklahoma,Deaths (per 100k),2020-04-11T04:00:00Z,2.38
 Kansas,Confirmed,2020-03-22T04:00:00Z,65
 Kansas,Confirmed,2020-03-23T04:00:00Z,84
 Kansas,Confirmed,2020-03-24T04:00:00Z,100
@@ -3329,6 +3496,7 @@ Kansas,Confirmed,2020-04-07T04:00:00Z,912
 Kansas,Confirmed,2020-04-08T04:00:00Z,1046
 Kansas,Confirmed,2020-04-09T04:00:00Z,1116
 Kansas,Confirmed,2020-04-10T04:00:00Z,1117
+Kansas,Confirmed,2020-04-11T04:00:00Z,1275
 Kansas,Confirmed (per 100k),2020-03-22T04:00:00Z,2.23
 Kansas,Confirmed (per 100k),2020-03-23T04:00:00Z,2.88
 Kansas,Confirmed (per 100k),2020-03-24T04:00:00Z,3.43
@@ -3349,6 +3517,7 @@ Kansas,Confirmed (per 100k),2020-04-07T04:00:00Z,31.30
 Kansas,Confirmed (per 100k),2020-04-08T04:00:00Z,35.90
 Kansas,Confirmed (per 100k),2020-04-09T04:00:00Z,38.31
 Kansas,Confirmed (per 100k),2020-04-10T04:00:00Z,38.34
+Kansas,Confirmed (per 100k),2020-04-11T04:00:00Z,43.76
 Kansas,Deaths,2020-03-22T04:00:00Z,2
 Kansas,Deaths,2020-03-23T04:00:00Z,2
 Kansas,Deaths,2020-03-24T04:00:00Z,2
@@ -3369,6 +3538,7 @@ Kansas,Deaths,2020-04-07T04:00:00Z,29
 Kansas,Deaths,2020-04-08T04:00:00Z,34
 Kansas,Deaths,2020-04-09T04:00:00Z,42
 Kansas,Deaths,2020-04-10T04:00:00Z,42
+Kansas,Deaths,2020-04-11T04:00:00Z,55
 Kansas,Deaths (per 100k),2020-03-22T04:00:00Z,0.07
 Kansas,Deaths (per 100k),2020-03-23T04:00:00Z,0.07
 Kansas,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -3389,6 +3559,7 @@ Kansas,Deaths (per 100k),2020-04-07T04:00:00Z,1.00
 Kansas,Deaths (per 100k),2020-04-08T04:00:00Z,1.17
 Kansas,Deaths (per 100k),2020-04-09T04:00:00Z,1.44
 Kansas,Deaths (per 100k),2020-04-10T04:00:00Z,1.44
+Kansas,Deaths (per 100k),2020-04-11T04:00:00Z,1.89
 New Mexico,Confirmed,2020-03-22T04:00:00Z,57
 New Mexico,Confirmed,2020-03-23T04:00:00Z,83
 New Mexico,Confirmed,2020-03-24T04:00:00Z,100
@@ -3409,6 +3580,7 @@ New Mexico,Confirmed,2020-04-07T04:00:00Z,876
 New Mexico,Confirmed,2020-04-08T04:00:00Z,902
 New Mexico,Confirmed,2020-04-09T04:00:00Z,902
 New Mexico,Confirmed,2020-04-10T04:00:00Z,1081
+New Mexico,Confirmed,2020-04-11T04:00:00Z,1091
 New Mexico,Confirmed (per 100k),2020-03-22T04:00:00Z,2.72
 New Mexico,Confirmed (per 100k),2020-03-23T04:00:00Z,3.96
 New Mexico,Confirmed (per 100k),2020-03-24T04:00:00Z,4.77
@@ -3429,6 +3601,7 @@ New Mexico,Confirmed (per 100k),2020-04-07T04:00:00Z,41.78
 New Mexico,Confirmed (per 100k),2020-04-08T04:00:00Z,43.02
 New Mexico,Confirmed (per 100k),2020-04-09T04:00:00Z,43.02
 New Mexico,Confirmed (per 100k),2020-04-10T04:00:00Z,51.55
+New Mexico,Confirmed (per 100k),2020-04-11T04:00:00Z,52.03
 New Mexico,Deaths,2020-03-22T04:00:00Z,0
 New Mexico,Deaths,2020-03-23T04:00:00Z,0
 New Mexico,Deaths,2020-03-24T04:00:00Z,0
@@ -3449,6 +3622,7 @@ New Mexico,Deaths,2020-04-07T04:00:00Z,13
 New Mexico,Deaths,2020-04-08T04:00:00Z,13
 New Mexico,Deaths,2020-04-09T04:00:00Z,16
 New Mexico,Deaths,2020-04-10T04:00:00Z,17
+New Mexico,Deaths,2020-04-11T04:00:00Z,19
 New Mexico,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 New Mexico,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 New Mexico,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3469,6 +3643,7 @@ New Mexico,Deaths (per 100k),2020-04-07T04:00:00Z,0.62
 New Mexico,Deaths (per 100k),2020-04-08T04:00:00Z,0.62
 New Mexico,Deaths (per 100k),2020-04-09T04:00:00Z,0.76
 New Mexico,Deaths (per 100k),2020-04-10T04:00:00Z,0.81
+New Mexico,Deaths (per 100k),2020-04-11T04:00:00Z,0.91
 Hawaii,Confirmed,2020-03-22T04:00:00Z,53
 Hawaii,Confirmed,2020-03-23T04:00:00Z,56
 Hawaii,Confirmed,2020-03-24T04:00:00Z,90
@@ -3489,6 +3664,7 @@ Hawaii,Confirmed,2020-04-07T04:00:00Z,410
 Hawaii,Confirmed,2020-04-08T04:00:00Z,410
 Hawaii,Confirmed,2020-04-09T04:00:00Z,442
 Hawaii,Confirmed,2020-04-10T04:00:00Z,442
+Hawaii,Confirmed,2020-04-11T04:00:00Z,465
 Hawaii,Confirmed (per 100k),2020-03-22T04:00:00Z,3.74
 Hawaii,Confirmed (per 100k),2020-03-23T04:00:00Z,3.96
 Hawaii,Confirmed (per 100k),2020-03-24T04:00:00Z,6.36
@@ -3509,6 +3685,7 @@ Hawaii,Confirmed (per 100k),2020-04-07T04:00:00Z,28.96
 Hawaii,Confirmed (per 100k),2020-04-08T04:00:00Z,28.96
 Hawaii,Confirmed (per 100k),2020-04-09T04:00:00Z,31.22
 Hawaii,Confirmed (per 100k),2020-04-10T04:00:00Z,31.22
+Hawaii,Confirmed (per 100k),2020-04-11T04:00:00Z,32.84
 Hawaii,Deaths,2020-03-22T04:00:00Z,0
 Hawaii,Deaths,2020-03-23T04:00:00Z,0
 Hawaii,Deaths,2020-03-24T04:00:00Z,1
@@ -3529,6 +3706,7 @@ Hawaii,Deaths,2020-04-07T04:00:00Z,5
 Hawaii,Deaths,2020-04-08T04:00:00Z,5
 Hawaii,Deaths,2020-04-09T04:00:00Z,6
 Hawaii,Deaths,2020-04-10T04:00:00Z,6
+Hawaii,Deaths,2020-04-11T04:00:00Z,8
 Hawaii,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Hawaii,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Hawaii,Deaths (per 100k),2020-03-24T04:00:00Z,0.07
@@ -3549,6 +3727,7 @@ Hawaii,Deaths (per 100k),2020-04-07T04:00:00Z,0.35
 Hawaii,Deaths (per 100k),2020-04-08T04:00:00Z,0.35
 Hawaii,Deaths (per 100k),2020-04-09T04:00:00Z,0.42
 Hawaii,Deaths (per 100k),2020-04-10T04:00:00Z,0.42
+Hawaii,Deaths (per 100k),2020-04-11T04:00:00Z,0.57
 Delaware,Confirmed,2020-03-22T04:00:00Z,56
 Delaware,Confirmed,2020-03-23T04:00:00Z,68
 Delaware,Confirmed,2020-03-24T04:00:00Z,104
@@ -3569,6 +3748,7 @@ Delaware,Confirmed,2020-04-07T04:00:00Z,928
 Delaware,Confirmed,2020-04-08T04:00:00Z,1116
 Delaware,Confirmed,2020-04-09T04:00:00Z,1209
 Delaware,Confirmed,2020-04-10T04:00:00Z,1326
+Delaware,Confirmed,2020-04-11T04:00:00Z,1479
 Delaware,Confirmed (per 100k),2020-03-22T04:00:00Z,5.75
 Delaware,Confirmed (per 100k),2020-03-23T04:00:00Z,6.98
 Delaware,Confirmed (per 100k),2020-03-24T04:00:00Z,10.68
@@ -3589,6 +3769,7 @@ Delaware,Confirmed (per 100k),2020-04-07T04:00:00Z,95.30
 Delaware,Confirmed (per 100k),2020-04-08T04:00:00Z,114.61
 Delaware,Confirmed (per 100k),2020-04-09T04:00:00Z,124.16
 Delaware,Confirmed (per 100k),2020-04-10T04:00:00Z,136.17
+Delaware,Confirmed (per 100k),2020-04-11T04:00:00Z,151.88
 Delaware,Deaths,2020-03-22T04:00:00Z,0
 Delaware,Deaths,2020-03-23T04:00:00Z,0
 Delaware,Deaths,2020-03-24T04:00:00Z,0
@@ -3609,6 +3790,7 @@ Delaware,Deaths,2020-04-07T04:00:00Z,16
 Delaware,Deaths,2020-04-08T04:00:00Z,19
 Delaware,Deaths,2020-04-09T04:00:00Z,23
 Delaware,Deaths,2020-04-10T04:00:00Z,32
+Delaware,Deaths,2020-04-11T04:00:00Z,33
 Delaware,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Delaware,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Delaware,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3629,6 +3811,7 @@ Delaware,Deaths (per 100k),2020-04-07T04:00:00Z,1.64
 Delaware,Deaths (per 100k),2020-04-08T04:00:00Z,1.95
 Delaware,Deaths (per 100k),2020-04-09T04:00:00Z,2.36
 Delaware,Deaths (per 100k),2020-04-10T04:00:00Z,3.29
+Delaware,Deaths (per 100k),2020-04-11T04:00:00Z,3.39
 Vermont,Confirmed,2020-03-22T04:00:00Z,52
 Vermont,Confirmed,2020-03-23T04:00:00Z,75
 Vermont,Confirmed,2020-03-24T04:00:00Z,95
@@ -3649,6 +3832,7 @@ Vermont,Confirmed,2020-04-07T04:00:00Z,575
 Vermont,Confirmed,2020-04-08T04:00:00Z,605
 Vermont,Confirmed,2020-04-09T04:00:00Z,628
 Vermont,Confirmed,2020-04-10T04:00:00Z,679
+Vermont,Confirmed,2020-04-11T04:00:00Z,711
 Vermont,Confirmed (per 100k),2020-03-22T04:00:00Z,8.33
 Vermont,Confirmed (per 100k),2020-03-23T04:00:00Z,12.02
 Vermont,Confirmed (per 100k),2020-03-24T04:00:00Z,15.22
@@ -3669,6 +3853,7 @@ Vermont,Confirmed (per 100k),2020-04-07T04:00:00Z,92.15
 Vermont,Confirmed (per 100k),2020-04-08T04:00:00Z,96.96
 Vermont,Confirmed (per 100k),2020-04-09T04:00:00Z,100.64
 Vermont,Confirmed (per 100k),2020-04-10T04:00:00Z,108.82
+Vermont,Confirmed (per 100k),2020-04-11T04:00:00Z,113.94
 Vermont,Deaths,2020-03-22T04:00:00Z,2
 Vermont,Deaths,2020-03-23T04:00:00Z,5
 Vermont,Deaths,2020-03-24T04:00:00Z,7
@@ -3689,6 +3874,7 @@ Vermont,Deaths,2020-04-07T04:00:00Z,23
 Vermont,Deaths,2020-04-08T04:00:00Z,23
 Vermont,Deaths,2020-04-09T04:00:00Z,23
 Vermont,Deaths,2020-04-10T04:00:00Z,24
+Vermont,Deaths,2020-04-11T04:00:00Z,25
 Vermont,Deaths (per 100k),2020-03-22T04:00:00Z,0.32
 Vermont,Deaths (per 100k),2020-03-23T04:00:00Z,0.80
 Vermont,Deaths (per 100k),2020-03-24T04:00:00Z,1.12
@@ -3709,6 +3895,7 @@ Vermont,Deaths (per 100k),2020-04-07T04:00:00Z,3.69
 Vermont,Deaths (per 100k),2020-04-08T04:00:00Z,3.69
 Vermont,Deaths (per 100k),2020-04-09T04:00:00Z,3.69
 Vermont,Deaths (per 100k),2020-04-10T04:00:00Z,3.85
+Vermont,Deaths (per 100k),2020-04-11T04:00:00Z,4.01
 Nebraska,Confirmed,2020-03-22T04:00:00Z,51
 Nebraska,Confirmed,2020-03-23T04:00:00Z,51
 Nebraska,Confirmed,2020-03-24T04:00:00Z,66
@@ -3729,6 +3916,7 @@ Nebraska,Confirmed,2020-04-07T04:00:00Z,447
 Nebraska,Confirmed,2020-04-08T04:00:00Z,519
 Nebraska,Confirmed,2020-04-09T04:00:00Z,568
 Nebraska,Confirmed,2020-04-10T04:00:00Z,635
+Nebraska,Confirmed,2020-04-11T04:00:00Z,699
 Nebraska,Confirmed (per 100k),2020-03-22T04:00:00Z,2.64
 Nebraska,Confirmed (per 100k),2020-03-23T04:00:00Z,2.64
 Nebraska,Confirmed (per 100k),2020-03-24T04:00:00Z,3.41
@@ -3749,6 +3937,7 @@ Nebraska,Confirmed (per 100k),2020-04-07T04:00:00Z,23.11
 Nebraska,Confirmed (per 100k),2020-04-08T04:00:00Z,26.83
 Nebraska,Confirmed (per 100k),2020-04-09T04:00:00Z,29.36
 Nebraska,Confirmed (per 100k),2020-04-10T04:00:00Z,32.83
+Nebraska,Confirmed (per 100k),2020-04-11T04:00:00Z,36.14
 Nebraska,Deaths,2020-03-22T04:00:00Z,0
 Nebraska,Deaths,2020-03-23T04:00:00Z,0
 Nebraska,Deaths,2020-03-24T04:00:00Z,0
@@ -3769,6 +3958,7 @@ Nebraska,Deaths,2020-04-07T04:00:00Z,10
 Nebraska,Deaths,2020-04-08T04:00:00Z,12
 Nebraska,Deaths,2020-04-09T04:00:00Z,14
 Nebraska,Deaths,2020-04-10T04:00:00Z,15
+Nebraska,Deaths,2020-04-11T04:00:00Z,17
 Nebraska,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Nebraska,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Nebraska,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3789,6 +3979,7 @@ Nebraska,Deaths (per 100k),2020-04-07T04:00:00Z,0.52
 Nebraska,Deaths (per 100k),2020-04-08T04:00:00Z,0.62
 Nebraska,Deaths (per 100k),2020-04-09T04:00:00Z,0.72
 Nebraska,Deaths (per 100k),2020-04-10T04:00:00Z,0.78
+Nebraska,Deaths (per 100k),2020-04-11T04:00:00Z,0.88
 Idaho,Confirmed,2020-03-22T04:00:00Z,42
 Idaho,Confirmed,2020-03-23T04:00:00Z,68
 Idaho,Confirmed,2020-03-24T04:00:00Z,81
@@ -3809,6 +4000,7 @@ Idaho,Confirmed,2020-04-07T04:00:00Z,1170
 Idaho,Confirmed,2020-04-08T04:00:00Z,1210
 Idaho,Confirmed,2020-04-09T04:00:00Z,1232
 Idaho,Confirmed,2020-04-10T04:00:00Z,1354
+Idaho,Confirmed,2020-04-11T04:00:00Z,1396
 Idaho,Confirmed (per 100k),2020-03-22T04:00:00Z,2.35
 Idaho,Confirmed (per 100k),2020-03-23T04:00:00Z,3.81
 Idaho,Confirmed (per 100k),2020-03-24T04:00:00Z,4.53
@@ -3829,6 +4021,7 @@ Idaho,Confirmed (per 100k),2020-04-07T04:00:00Z,65.47
 Idaho,Confirmed (per 100k),2020-04-08T04:00:00Z,67.71
 Idaho,Confirmed (per 100k),2020-04-09T04:00:00Z,68.94
 Idaho,Confirmed (per 100k),2020-04-10T04:00:00Z,75.77
+Idaho,Confirmed (per 100k),2020-04-11T04:00:00Z,78.12
 Idaho,Deaths,2020-03-22T04:00:00Z,0
 Idaho,Deaths,2020-03-23T04:00:00Z,0
 Idaho,Deaths,2020-03-24T04:00:00Z,0
@@ -3849,6 +4042,7 @@ Idaho,Deaths,2020-04-07T04:00:00Z,13
 Idaho,Deaths,2020-04-08T04:00:00Z,15
 Idaho,Deaths,2020-04-09T04:00:00Z,18
 Idaho,Deaths,2020-04-10T04:00:00Z,24
+Idaho,Deaths,2020-04-11T04:00:00Z,25
 Idaho,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Idaho,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Idaho,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3869,6 +4063,7 @@ Idaho,Deaths (per 100k),2020-04-07T04:00:00Z,0.73
 Idaho,Deaths (per 100k),2020-04-08T04:00:00Z,0.84
 Idaho,Deaths (per 100k),2020-04-09T04:00:00Z,1.01
 Idaho,Deaths (per 100k),2020-04-10T04:00:00Z,1.34
+Idaho,Deaths (per 100k),2020-04-11T04:00:00Z,1.40
 Montana,Confirmed,2020-03-22T04:00:00Z,34
 Montana,Confirmed,2020-03-23T04:00:00Z,34
 Montana,Confirmed,2020-03-24T04:00:00Z,51
@@ -3889,6 +4084,7 @@ Montana,Confirmed,2020-04-07T04:00:00Z,319
 Montana,Confirmed,2020-04-08T04:00:00Z,332
 Montana,Confirmed,2020-04-09T04:00:00Z,354
 Montana,Confirmed,2020-04-10T04:00:00Z,365
+Montana,Confirmed,2020-04-11T04:00:00Z,377
 Montana,Confirmed (per 100k),2020-03-22T04:00:00Z,3.18
 Montana,Confirmed (per 100k),2020-03-23T04:00:00Z,3.18
 Montana,Confirmed (per 100k),2020-03-24T04:00:00Z,4.77
@@ -3909,6 +4105,7 @@ Montana,Confirmed (per 100k),2020-04-07T04:00:00Z,29.85
 Montana,Confirmed (per 100k),2020-04-08T04:00:00Z,31.06
 Montana,Confirmed (per 100k),2020-04-09T04:00:00Z,33.12
 Montana,Confirmed (per 100k),2020-04-10T04:00:00Z,34.15
+Montana,Confirmed (per 100k),2020-04-11T04:00:00Z,35.27
 Montana,Deaths,2020-03-22T04:00:00Z,0
 Montana,Deaths,2020-03-23T04:00:00Z,0
 Montana,Deaths,2020-03-24T04:00:00Z,0
@@ -3929,6 +4126,7 @@ Montana,Deaths,2020-04-07T04:00:00Z,6
 Montana,Deaths,2020-04-08T04:00:00Z,6
 Montana,Deaths,2020-04-09T04:00:00Z,6
 Montana,Deaths,2020-04-10T04:00:00Z,6
+Montana,Deaths,2020-04-11T04:00:00Z,6
 Montana,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Montana,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Montana,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -3949,6 +4147,7 @@ Montana,Deaths (per 100k),2020-04-07T04:00:00Z,0.56
 Montana,Deaths (per 100k),2020-04-08T04:00:00Z,0.56
 Montana,Deaths (per 100k),2020-04-09T04:00:00Z,0.56
 Montana,Deaths (per 100k),2020-04-10T04:00:00Z,0.56
+Montana,Deaths (per 100k),2020-04-11T04:00:00Z,0.56
 North Dakota,Confirmed,2020-03-22T04:00:00Z,28
 North Dakota,Confirmed,2020-03-23T04:00:00Z,30
 North Dakota,Confirmed,2020-03-24T04:00:00Z,36
@@ -3969,6 +4168,7 @@ North Dakota,Confirmed,2020-04-07T04:00:00Z,237
 North Dakota,Confirmed,2020-04-08T04:00:00Z,251
 North Dakota,Confirmed,2020-04-09T04:00:00Z,269
 North Dakota,Confirmed,2020-04-10T04:00:00Z,278
+North Dakota,Confirmed,2020-04-11T04:00:00Z,293
 North Dakota,Confirmed (per 100k),2020-03-22T04:00:00Z,3.67
 North Dakota,Confirmed (per 100k),2020-03-23T04:00:00Z,3.94
 North Dakota,Confirmed (per 100k),2020-03-24T04:00:00Z,4.72
@@ -3989,6 +4189,7 @@ North Dakota,Confirmed (per 100k),2020-04-07T04:00:00Z,31.10
 North Dakota,Confirmed (per 100k),2020-04-08T04:00:00Z,32.94
 North Dakota,Confirmed (per 100k),2020-04-09T04:00:00Z,35.30
 North Dakota,Confirmed (per 100k),2020-04-10T04:00:00Z,36.48
+North Dakota,Confirmed (per 100k),2020-04-11T04:00:00Z,38.45
 North Dakota,Deaths,2020-03-22T04:00:00Z,0
 North Dakota,Deaths,2020-03-23T04:00:00Z,0
 North Dakota,Deaths,2020-03-24T04:00:00Z,0
@@ -4009,6 +4210,7 @@ North Dakota,Deaths,2020-04-07T04:00:00Z,4
 North Dakota,Deaths,2020-04-08T04:00:00Z,4
 North Dakota,Deaths,2020-04-09T04:00:00Z,5
 North Dakota,Deaths,2020-04-10T04:00:00Z,6
+North Dakota,Deaths,2020-04-11T04:00:00Z,7
 North Dakota,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 North Dakota,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 North Dakota,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -4029,6 +4231,7 @@ North Dakota,Deaths (per 100k),2020-04-07T04:00:00Z,0.52
 North Dakota,Deaths (per 100k),2020-04-08T04:00:00Z,0.52
 North Dakota,Deaths (per 100k),2020-04-09T04:00:00Z,0.66
 North Dakota,Deaths (per 100k),2020-04-10T04:00:00Z,0.79
+North Dakota,Deaths (per 100k),2020-04-11T04:00:00Z,0.92
 Wyoming,Confirmed,2020-03-22T04:00:00Z,26
 Wyoming,Confirmed,2020-03-23T04:00:00Z,26
 Wyoming,Confirmed,2020-03-24T04:00:00Z,29
@@ -4049,6 +4252,7 @@ Wyoming,Confirmed,2020-04-07T04:00:00Z,216
 Wyoming,Confirmed,2020-04-08T04:00:00Z,221
 Wyoming,Confirmed,2020-04-09T04:00:00Z,230
 Wyoming,Confirmed,2020-04-10T04:00:00Z,239
+Wyoming,Confirmed,2020-04-11T04:00:00Z,261
 Wyoming,Confirmed (per 100k),2020-03-22T04:00:00Z,4.49
 Wyoming,Confirmed (per 100k),2020-03-23T04:00:00Z,4.49
 Wyoming,Confirmed (per 100k),2020-03-24T04:00:00Z,5.01
@@ -4069,6 +4273,7 @@ Wyoming,Confirmed (per 100k),2020-04-07T04:00:00Z,37.32
 Wyoming,Confirmed (per 100k),2020-04-08T04:00:00Z,38.19
 Wyoming,Confirmed (per 100k),2020-04-09T04:00:00Z,39.74
 Wyoming,Confirmed (per 100k),2020-04-10T04:00:00Z,41.30
+Wyoming,Confirmed (per 100k),2020-04-11T04:00:00Z,45.10
 South Dakota,Confirmed,2020-03-22T04:00:00Z,21
 South Dakota,Confirmed,2020-03-23T04:00:00Z,28
 South Dakota,Confirmed,2020-03-24T04:00:00Z,30
@@ -4089,6 +4294,7 @@ South Dakota,Confirmed,2020-04-07T04:00:00Z,320
 South Dakota,Confirmed,2020-04-08T04:00:00Z,393
 South Dakota,Confirmed,2020-04-09T04:00:00Z,447
 South Dakota,Confirmed,2020-04-10T04:00:00Z,536
+South Dakota,Confirmed,2020-04-11T04:00:00Z,626
 South Dakota,Confirmed (per 100k),2020-03-22T04:00:00Z,2.37
 South Dakota,Confirmed (per 100k),2020-03-23T04:00:00Z,3.17
 South Dakota,Confirmed (per 100k),2020-03-24T04:00:00Z,3.39
@@ -4109,6 +4315,7 @@ South Dakota,Confirmed (per 100k),2020-04-07T04:00:00Z,36.17
 South Dakota,Confirmed (per 100k),2020-04-08T04:00:00Z,44.42
 South Dakota,Confirmed (per 100k),2020-04-09T04:00:00Z,50.53
 South Dakota,Confirmed (per 100k),2020-04-10T04:00:00Z,60.59
+South Dakota,Confirmed (per 100k),2020-04-11T04:00:00Z,70.76
 South Dakota,Deaths,2020-03-22T04:00:00Z,1
 South Dakota,Deaths,2020-03-23T04:00:00Z,1
 South Dakota,Deaths,2020-03-24T04:00:00Z,1
@@ -4129,6 +4336,7 @@ South Dakota,Deaths,2020-04-07T04:00:00Z,6
 South Dakota,Deaths,2020-04-08T04:00:00Z,6
 South Dakota,Deaths,2020-04-09T04:00:00Z,6
 South Dakota,Deaths,2020-04-10T04:00:00Z,6
+South Dakota,Deaths,2020-04-11T04:00:00Z,6
 South Dakota,Deaths (per 100k),2020-03-22T04:00:00Z,0.11
 South Dakota,Deaths (per 100k),2020-03-23T04:00:00Z,0.11
 South Dakota,Deaths (per 100k),2020-03-24T04:00:00Z,0.11
@@ -4149,6 +4357,7 @@ South Dakota,Deaths (per 100k),2020-04-07T04:00:00Z,0.68
 South Dakota,Deaths (per 100k),2020-04-08T04:00:00Z,0.68
 South Dakota,Deaths (per 100k),2020-04-09T04:00:00Z,0.68
 South Dakota,Deaths (per 100k),2020-04-10T04:00:00Z,0.68
+South Dakota,Deaths (per 100k),2020-04-11T04:00:00Z,0.68
 Alaska,Confirmed,2020-03-22T04:00:00Z,20
 Alaska,Confirmed,2020-03-23T04:00:00Z,30
 Alaska,Confirmed,2020-03-24T04:00:00Z,34
@@ -4169,6 +4378,7 @@ Alaska,Confirmed,2020-04-07T04:00:00Z,213
 Alaska,Confirmed,2020-04-08T04:00:00Z,226
 Alaska,Confirmed,2020-04-09T04:00:00Z,235
 Alaska,Confirmed,2020-04-10T04:00:00Z,246
+Alaska,Confirmed,2020-04-11T04:00:00Z,257
 Alaska,Confirmed (per 100k),2020-03-22T04:00:00Z,2.73
 Alaska,Confirmed (per 100k),2020-03-23T04:00:00Z,4.10
 Alaska,Confirmed (per 100k),2020-03-24T04:00:00Z,4.65
@@ -4189,6 +4399,7 @@ Alaska,Confirmed (per 100k),2020-04-07T04:00:00Z,29.12
 Alaska,Confirmed (per 100k),2020-04-08T04:00:00Z,30.89
 Alaska,Confirmed (per 100k),2020-04-09T04:00:00Z,32.12
 Alaska,Confirmed (per 100k),2020-04-10T04:00:00Z,33.63
+Alaska,Confirmed (per 100k),2020-04-11T04:00:00Z,35.13
 Alaska,Deaths,2020-03-22T04:00:00Z,0
 Alaska,Deaths,2020-03-23T04:00:00Z,0
 Alaska,Deaths,2020-03-24T04:00:00Z,0
@@ -4209,6 +4420,7 @@ Alaska,Deaths,2020-04-07T04:00:00Z,6
 Alaska,Deaths,2020-04-08T04:00:00Z,7
 Alaska,Deaths,2020-04-09T04:00:00Z,7
 Alaska,Deaths,2020-04-10T04:00:00Z,7
+Alaska,Deaths,2020-04-11T04:00:00Z,8
 Alaska,Deaths (per 100k),2020-03-22T04:00:00Z,0.00
 Alaska,Deaths (per 100k),2020-03-23T04:00:00Z,0.00
 Alaska,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
@@ -4229,6 +4441,7 @@ Alaska,Deaths (per 100k),2020-04-07T04:00:00Z,0.82
 Alaska,Deaths (per 100k),2020-04-08T04:00:00Z,0.96
 Alaska,Deaths (per 100k),2020-04-09T04:00:00Z,0.96
 Alaska,Deaths (per 100k),2020-04-10T04:00:00Z,0.96
+Alaska,Deaths (per 100k),2020-04-11T04:00:00Z,1.09
 West Virginia,Confirmed,2020-03-22T04:00:00Z,16
 West Virginia,Confirmed,2020-03-23T04:00:00Z,16
 West Virginia,Confirmed,2020-03-24T04:00:00Z,22
@@ -4249,6 +4462,7 @@ West Virginia,Confirmed,2020-04-07T04:00:00Z,412
 West Virginia,Confirmed,2020-04-08T04:00:00Z,483
 West Virginia,Confirmed,2020-04-09T04:00:00Z,514
 West Virginia,Confirmed,2020-04-10T04:00:00Z,574
+West Virginia,Confirmed,2020-04-11T04:00:00Z,577
 West Virginia,Confirmed (per 100k),2020-03-22T04:00:00Z,0.89
 West Virginia,Confirmed (per 100k),2020-03-23T04:00:00Z,0.89
 West Virginia,Confirmed (per 100k),2020-03-24T04:00:00Z,1.23
@@ -4269,6 +4483,7 @@ West Virginia,Confirmed (per 100k),2020-04-07T04:00:00Z,22.99
 West Virginia,Confirmed (per 100k),2020-04-08T04:00:00Z,26.95
 West Virginia,Confirmed (per 100k),2020-04-09T04:00:00Z,28.68
 West Virginia,Confirmed (per 100k),2020-04-10T04:00:00Z,32.03
+West Virginia,Confirmed (per 100k),2020-04-11T04:00:00Z,32.20
 West Virginia,Deaths,2020-03-24T04:00:00Z,0
 West Virginia,Deaths,2020-03-25T04:00:00Z,0
 West Virginia,Deaths,2020-03-26T04:00:00Z,0
@@ -4287,6 +4502,7 @@ West Virginia,Deaths,2020-04-07T04:00:00Z,4
 West Virginia,Deaths,2020-04-08T04:00:00Z,4
 West Virginia,Deaths,2020-04-09T04:00:00Z,5
 West Virginia,Deaths,2020-04-10T04:00:00Z,5
+West Virginia,Deaths,2020-04-11T04:00:00Z,5
 West Virginia,Deaths (per 100k),2020-03-24T04:00:00Z,0.00
 West Virginia,Deaths (per 100k),2020-03-25T04:00:00Z,0.00
 West Virginia,Deaths (per 100k),2020-03-26T04:00:00Z,0.00
@@ -4305,6 +4521,7 @@ West Virginia,Deaths (per 100k),2020-04-07T04:00:00Z,0.22
 West Virginia,Deaths (per 100k),2020-04-08T04:00:00Z,0.22
 West Virginia,Deaths (per 100k),2020-04-09T04:00:00Z,0.28
 West Virginia,Deaths (per 100k),2020-04-10T04:00:00Z,0.28
+West Virginia,Deaths (per 100k),2020-04-11T04:00:00Z,0.28
 Wuhan Evacuee,Confirmed,2020-03-22T04:00:00Z,4
 Wuhan Evacuee,Confirmed,2020-03-23T04:00:00Z,4
 Wuhan Evacuee,Confirmed,2020-03-24T04:00:00Z,4
@@ -4328,6 +4545,7 @@ District of Columbia,Confirmed,2020-04-07T04:00:00Z,1211
 District of Columbia,Confirmed,2020-04-08T04:00:00Z,1440
 District of Columbia,Confirmed,2020-04-09T04:00:00Z,1523
 District of Columbia,Confirmed,2020-04-10T04:00:00Z,1660
+District of Columbia,Confirmed,2020-04-11T04:00:00Z,1778
 District of Columbia,Confirmed (per 100k),2020-03-22T04:00:00Z,28.91
 District of Columbia,Confirmed (per 100k),2020-03-23T04:00:00Z,28.91
 District of Columbia,Confirmed (per 100k),2020-03-24T04:00:00Z,28.91
@@ -4348,6 +4566,7 @@ District of Columbia,Confirmed (per 100k),2020-04-07T04:00:00Z,171.59
 District of Columbia,Confirmed (per 100k),2020-04-08T04:00:00Z,204.04
 District of Columbia,Confirmed (per 100k),2020-04-09T04:00:00Z,215.80
 District of Columbia,Confirmed (per 100k),2020-04-10T04:00:00Z,235.21
+District of Columbia,Confirmed (per 100k),2020-04-11T04:00:00Z,251.93
 District of Columbia,Deaths,2020-03-22T04:00:00Z,2
 District of Columbia,Deaths,2020-03-23T04:00:00Z,2
 District of Columbia,Deaths,2020-03-24T04:00:00Z,2
@@ -4368,6 +4587,7 @@ District of Columbia,Deaths,2020-04-07T04:00:00Z,24
 District of Columbia,Deaths,2020-04-08T04:00:00Z,27
 District of Columbia,Deaths,2020-04-09T04:00:00Z,32
 District of Columbia,Deaths,2020-04-10T04:00:00Z,38
+District of Columbia,Deaths,2020-04-11T04:00:00Z,47
 District of Columbia,Deaths (per 100k),2020-03-22T04:00:00Z,0.28
 District of Columbia,Deaths (per 100k),2020-03-23T04:00:00Z,0.28
 District of Columbia,Deaths (per 100k),2020-03-24T04:00:00Z,0.28
@@ -4388,6 +4608,7 @@ District of Columbia,Deaths (per 100k),2020-04-07T04:00:00Z,3.40
 District of Columbia,Deaths (per 100k),2020-04-08T04:00:00Z,3.83
 District of Columbia,Deaths (per 100k),2020-04-09T04:00:00Z,4.53
 District of Columbia,Deaths (per 100k),2020-04-10T04:00:00Z,5.38
+District of Columbia,Deaths (per 100k),2020-04-11T04:00:00Z,6.66
 Recovered,Recovered,2020-03-24T04:00:00Z,348
 Recovered,Recovered,2020-03-25T04:00:00Z,361
 Recovered,Recovered,2020-03-26T04:00:00Z,681
@@ -4406,3 +4627,4 @@ Recovered,Recovered,2020-04-07T04:00:00Z,21763
 Recovered,Recovered,2020-04-08T04:00:00Z,23559
 Recovered,Recovered,2020-04-09T04:00:00Z,25410
 Recovered,Recovered,2020-04-10T04:00:00Z,28790
+Recovered,Recovered,2020-04-11T04:00:00Z,31270
