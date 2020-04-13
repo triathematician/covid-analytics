@@ -39,7 +39,6 @@ object CsseCovid19DailyReports {
 
     /** Gets all time series data. */
     fun allTimeSeriesData(): List<MetricTimeSeries> = (timeSeriesData1() + timeSeriesData2() + timeSeriesData3()).toList().regroupAndMerge()
-            .flatMap { listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }) }
 
     /** Create time series from format 1 files. */
     fun timeSeriesData1() = timeSeriesData(files1) { read1(it) }

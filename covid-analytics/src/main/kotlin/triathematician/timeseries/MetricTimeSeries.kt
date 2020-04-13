@@ -10,9 +10,9 @@ import java.time.temporal.ChronoUnit
  */
 data class MetricTimeSeries(var id: String = "", var metric: String = "", var intSeries: Boolean, val defValue: Double = 0.0, var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
-    constructor(id: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double): this(id, metric, false, defValue, start, listOf(value))
-    constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>): this(id, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
-    constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int): this(id, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
+    constructor(id: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double) : this(id, metric, false, defValue, start, listOf(value))
+    constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
+    constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int) : this(id, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
     val size: Int
         get() = values.size
@@ -29,31 +29,66 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
 
     //region DERIVED SERIES
 
+    fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
+            = copy(metric = metric, start = start.plusDays((this.values.size - values.size).toLong()), values = values, intSeries = intSeries)
+
     operator fun plus(n: Number): MetricTimeSeries = copy(values = values.map { it + n.toDouble() })
     operator fun minus(n: Number): MetricTimeSeries = copy(values = values.map { it - n.toDouble() })
     operator fun times(n: Number): MetricTimeSeries = copy(values = values.map { it * n.toDouble() })
     operator fun div(n: Number): MetricTimeSeries = copy(values = values.map { it / n.toDouble() })
 
-    /** Return copy of this series where values are foerced to be increasing. */
-    fun coerceIncreasing(): MetricTimeSeries {
-        val res = values.toMutableList()
-        for (i in 1 until res.size) {
-            res[i] = maxOf(res[i-1], res[i])
-        }
-        return copy(values = res)
+    /** Return copy with moving averages. */
+    fun movingAverage(bucket: Int) = copyAdjustingStartDay(values = values.movingAverage(bucket))
+
+    /** Return copy with growth percentages. */
+    fun growthPercentages(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.growthPercentages(), intSeries = false)
+            .restrictToRealNumbers()
+
+    /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
+    fun logisticPredictions(days: Int): List<MetricTimeSeries> = with(values.computeLogisticPrediction(days)) {
+        listOf(copyAdjustingStartDay(metric = "$metric (predicted total)", values = map { it.kTotal }),
+                copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = map { it.minKTotal }, intSeries = false),
+                copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = map { it.maxKTotal }, intSeries = false),
+                copyAdjustingStartDay(metric = "$metric (predicted peak)", values = map { it.peakGrowth }),
+                copyAdjustingStartDay(metric = "$metric (days to peak)", values = map { it.daysToPeak }, intSeries = false),
+                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = map { it.slope }, intSeries = false),
+                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = map { it.intercept }, intSeries = false))
+                .map { it.restrictToRealNumbers() }
     }
 
-    fun movingAverage(bucket: Int) = copy(values = values.movingAverage(bucket))
+    /** Copy after dropping first n values. */
+    fun dropFirst(n: Int): MetricTimeSeries {
+        val res = copyAdjustingStartDay(values = values.drop(n))
+        return res
+    }
 
     //endregion
 
     //region CLEANUP UTILS
 
+    /** Return copy of this series where values are forced to be increasing. */
+    fun coerceIncreasing(): MetricTimeSeries {
+        val res = values.toMutableList()
+        for (i in 1 until res.size) {
+            res[i] = maxOf(res[i - 1], res[i])
+        }
+        return copy(values = res)
+    }
+
+    /** Return copy of this series where values are real numbers. */
+    fun restrictToRealNumbers(): MetricTimeSeries {
+        val firstRealNumber = values.indexOfFirst { it.isFinite() }
+        return when {
+            firstRealNumber > 0 -> dropFirst(firstRealNumber)
+            else -> this
+        }
+    }
+
     /** If time series starts with more than max zeros, trim so that it has max zeros. */
     fun restrictNumberOfStartingZerosTo(max: Int): MetricTimeSeries {
-        val firstNonZeroIndex = values.indexOfFirst { it > 0 }
+        val firstNonZeroIndex = values.indexOfFirst { it != 0.0 }
         return when {
-            firstNonZeroIndex > max -> copy(start = start.plusDays((firstNonZeroIndex - max - 1).toLong()), values = values.drop(firstNonZeroIndex - max - 1))
+            firstNonZeroIndex > max -> dropFirst(firstNonZeroIndex - max)
             else -> this
         }
     }
