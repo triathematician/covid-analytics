@@ -22,8 +22,10 @@ class LogisticPrediction(startVal: Double, regression: SimpleRegression) {
     val daysToPeak = if (regression.slope > 0) Double.NaN else ln((kTotal-startVal)/startVal)/intercept
 
     val slopeConfidenceInterval = if (slope > 0) Double.NaN else regression.slopeConfidenceInterval
-    val minSlope = if (regression.slope > 0) Double.NaN else minOf(slope - slopeConfidenceInterval, -1E-10)
-    val maxSlope = if (regression.slope > 0) Double.NaN else minOf(slope + slopeConfidenceInterval, -1E-10)
+    val minSlope = slope - slopeConfidenceInterval
+    val maxSlope = slope + slopeConfidenceInterval
     val minKTotal = if (regression.slope > 0) Double.NaN else maxOf(0.0, minOf(-intercept/minSlope, -intercept/maxSlope))
     val maxKTotal = if (regression.slope > 0) Double.NaN else if (maxOf(minSlope, maxSlope) > 0) Double.POSITIVE_INFINITY else maxOf(-intercept/minSlope, -intercept/maxSlope)
+
+    val hasBoundedConfidence = slope < 0 && minSlope < 0 && maxSlope < 0
 }

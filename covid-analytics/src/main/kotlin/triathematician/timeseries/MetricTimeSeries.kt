@@ -45,14 +45,15 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
             .restrictToRealNumbers()
 
     /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
-    fun logisticPredictions(days: Int): List<MetricTimeSeries> = with(values.computeLogisticPrediction(days)) {
-        listOf(copyAdjustingStartDay(metric = "$metric (predicted total)", values = map { it.kTotal }),
-                copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = map { it.minKTotal }, intSeries = false),
-                copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = map { it.maxKTotal }, intSeries = false),
-                copyAdjustingStartDay(metric = "$metric (predicted peak)", values = map { it.peakGrowth }),
-                copyAdjustingStartDay(metric = "$metric (days to peak)", values = map { it.daysToPeak }, intSeries = false)
-//                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = map { it.slope }, intSeries = false),
-//                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = map { it.intercept }, intSeries = false)
+    fun logisticPredictions(days: Int): List<MetricTimeSeries> {
+        val predictions = values.computeLogisticPrediction(days).filter { it.hasBoundedConfidence }
+        return listOf(copyAdjustingStartDay(metric = "$metric (predicted total)", values = predictions.map { it.kTotal }),
+                copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = predictions.map { it.minKTotal }),
+                copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = predictions.map { it.maxKTotal }),
+                copyAdjustingStartDay(metric = "$metric (predicted peak)", values = predictions.map { it.peakGrowth }),
+                copyAdjustingStartDay(metric = "$metric (days to peak)", values = predictions.map { it.daysToPeak }, intSeries = false)
+//                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = predictions.map { it.slope }, intSeries = false),
+//                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = predictions.map { it.intercept }, intSeries = false)
         ).map { it.restrictToRealNumbers() }
     }
 
