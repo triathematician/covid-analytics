@@ -9,7 +9,7 @@ import triathematician.util.log
 import java.time.LocalDate
 
 fun main() {
-    dailyReports { it == "Italy" }
+    dailyReports { it == "Maryland, US" }
             .forEach {
                 println("${it.id}\t${it.metric}\t${it.start}\t${it.values.joinToString("\t")}")
             }

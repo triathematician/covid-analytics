@@ -50,10 +50,10 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
                 copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = map { it.minKTotal }, intSeries = false),
                 copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = map { it.maxKTotal }, intSeries = false),
                 copyAdjustingStartDay(metric = "$metric (predicted peak)", values = map { it.peakGrowth }),
-                copyAdjustingStartDay(metric = "$metric (days to peak)", values = map { it.daysToPeak }, intSeries = false),
-                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = map { it.slope }, intSeries = false),
-                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = map { it.intercept }, intSeries = false))
-                .map { it.restrictToRealNumbers() }
+                copyAdjustingStartDay(metric = "$metric (days to peak)", values = map { it.daysToPeak }, intSeries = false)
+//                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = map { it.slope }, intSeries = false),
+//                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = map { it.intercept }, intSeries = false)
+        ).map { it.restrictToRealNumbers() }
     }
 
     /** Copy after dropping first n values. */
