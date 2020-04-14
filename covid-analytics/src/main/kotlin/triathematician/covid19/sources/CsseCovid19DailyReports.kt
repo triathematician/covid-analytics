@@ -38,7 +38,9 @@ object CsseCovid19DailyReports {
     private val files3 = allFiles.filter { it.name > "03-21-2020.csv" }
 
     /** Gets all time series data. */
-    fun allTimeSeriesData(): List<MetricTimeSeries> = (timeSeriesData1() + timeSeriesData2() + timeSeriesData3()).toList().regroupAndMerge()
+    val allTimeSeries by lazy {
+        (timeSeriesData1() + timeSeriesData2() + timeSeriesData3()).toList().regroupAndMerge()
+    }
 
     /** Create time series from format 1 files. */
     fun timeSeriesData1() = timeSeriesData(files1) { read1(it) }
