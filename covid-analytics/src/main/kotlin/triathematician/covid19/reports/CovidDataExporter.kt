@@ -36,7 +36,7 @@ fun exportIndicatorData(idFilter: (String) -> Boolean = { true }, idTransform: (
 }
 
 fun MetricTimeSeries.indicators(): List<List<Any>> {
-    return valuesAsMap.map {
+    return valuesAsMap.filter { it.value.isFinite() }.map {
         listOf(id, metric, Instant.from(it.key.atStartOfDay(ZoneId.systemDefault())), if (intSeries) it.value.toInt() else it.value)
     }
 }
