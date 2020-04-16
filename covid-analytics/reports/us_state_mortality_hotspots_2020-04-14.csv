@@ -1,0 +1,52 @@
+location,metric,value,change (avg),growth rate,doubling time (days),severity (change),severity (growth),severity,severity (trend)
+New York,Deaths (per 100k),55.73,3.94,0.07,6.73,4,2,6,0
+New Jersey,Deaths (per 100k),31.58,2.32,0.07,6.07,4,2,6,0
+Connecticut,Deaths (per 100k),18.82,1.59,0.08,5.04,4,2,6,0
+Michigan,Deaths (per 100k),17.70,1.25,0.07,6.48,4,2,6,0
+Massachusetts,Deaths (per 100k),12.25,1.21,0.10,4.60,4,2,6,1
+Louisiana,Deaths (per 100k),21.79,1.14,0.05,9.38,4,1,5,0
+District of Columbia,Deaths (per 100k),9.49,0.57,0.06,6.33,3,2,5,0
+Rhode Island,Deaths (per 100k),7.55,0.49,0.06,6.06,3,2,5,0
+Illinois,Deaths (per 100k),6.85,0.55,0.08,5.33,3,2,5,0
+Indiana,Deaths (per 100k),5.75,0.44,0.08,6.16,3,2,5,0
+Colorado,Deaths (per 100k),5.68,0.39,0.07,6.92,3,2,5,0
+Pennsylvania,Deaths (per 100k),5.40,0.46,0.08,4.68,3,2,5,-1
+Maryland,Deaths (per 100k),5.00,0.40,0.08,4.67,3,2,5,-1
+Delaware,Deaths (per 100k),4.42,0.38,0.09,4.95,3,2,5,0
+Nevada,Deaths (per 100k),4.09,0.32,0.08,6.20,3,2,5,0
+Kentucky,Deaths (per 100k),2.53,0.22,0.09,5.69,3,2,5,1
+Georgia,Deaths (per 100k),4.94,0.32,0.06,7.91,3,1,4,-1
+Mississippi,Deaths (per 100k),3.73,0.23,0.06,8.08,3,1,4,-1
+Florida,Deaths (per 100k),2.66,0.17,0.07,6.85,2,2,4,0
+Missouri,Deaths (per 100k),2.43,0.18,0.07,6.03,2,2,4,0
+Kansas,Deaths (per 100k),2.37,0.18,0.08,5.64,2,2,4,0
+Idaho,Deaths (per 100k),1.85,0.14,0.07,5.72,2,2,4,0
+New Hampshire,Deaths (per 100k),1.84,0.15,0.08,6.18,2,2,4,0
+Virginia,Deaths (per 100k),1.80,0.14,0.08,6.18,2,2,4,0
+New Mexico,Deaths (per 100k),1.48,0.10,0.06,6.08,2,2,4,1
+Puerto Rico,Deaths (per 100k),1.41,0.11,0.08,6.87,2,2,4,0
+Minnesota,Deaths (per 100k),1.40,0.10,0.07,6.30,2,2,4,0
+North Dakota,Deaths (per 100k),1.05,0.09,0.09,5.33,2,2,4,0
+Washington,Deaths (per 100k),6.96,0.25,0.04,16.87,3,0,3,-1
+Wisconsin,Deaths (per 100k),2.92,0.19,0.06,7.55,2,1,3,-2
+Ohio,Deaths (per 100k),2.77,0.16,0.06,7.93,2,1,3,-1
+Oklahoma,Deaths (per 100k),2.73,0.17,0.06,8.36,2,1,3,-1
+Alabama,Deaths (per 100k),2.33,0.15,0.06,7.47,2,1,3,-1
+California,Deaths (per 100k),1.94,0.12,0.06,7.96,2,1,3,0
+South Carolina,Deaths (per 100k),1.88,0.09,0.05,9.54,2,1,3,-1
+Tennessee,Deaths (per 100k),1.82,0.09,0.05,10.13,2,1,3,-1
+Arizona,Deaths (per 100k),1.80,0.11,0.06,7.97,2,1,3,-1
+Iowa,Deaths (per 100k),1.55,0.07,0.05,9.53,2,1,3,-1
+Maine,Deaths (per 100k),1.49,0.10,0.06,8.58,2,1,3,0
+Oregon,Deaths (per 100k),1.30,0.09,0.07,7.73,2,1,3,-1
+Texas,Deaths (per 100k),1.18,0.08,0.06,7.03,2,1,3,-1
+North Carolina,Deaths (per 100k),1.07,0.07,0.06,7.43,2,1,3,-1
+Arkansas,Deaths (per 100k),1.06,0.06,0.06,8.13,2,1,3,0
+Nebraska,Deaths (per 100k),1.03,0.06,0.06,8.49,2,1,3,-1
+West Virginia,Deaths (per 100k),0.50,0.03,0.06,6.06,1,2,3,1
+Vermont,Deaths (per 100k),4.65,0.11,0.02,23.63,2,0,2,0
+Guam,Deaths (per 100k),2.96,0.08,0.03,21.14,2,0,2,0
+Hawaii,Deaths (per 100k),0.64,0.04,0.06,7.97,1,1,2,-2
+Alaska,Deaths (per 100k),1.23,0.04,0.03,17.33,1,0,1,-2
+Montana,Deaths (per 100k),0.65,0.01,0.02,29.46,1,0,1,1
+Utah,Deaths (per 100k),0.56,0.02,0.04,14.90,1,0,1,-2

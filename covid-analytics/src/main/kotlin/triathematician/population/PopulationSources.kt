@@ -25,7 +25,7 @@ object CountyData: PopulationLookup(COUNTY_CENSUS_DATA) {
 
     override fun invoke(input: String): Long? {
         val split = input.split(", ", ",")
-        if (split.size != 3) {
+        if (split.size != 2 && split.size != 3) {
             return null
         }
 
@@ -46,6 +46,7 @@ object StateData: PopulationLookup(STATE_CENSUS_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[12].replace(",", "").toLong() } }
     override fun invoke(input: String) = when (input.split(", ", ",").size) {
         2 -> dataTable[input.removeSuffix(", US").toLowerCase()]
+        1 -> dataTable[input.toLowerCase()]
         else -> null
     }
 }

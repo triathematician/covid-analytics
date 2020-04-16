@@ -1,6 +1,5 @@
 package triathematician.covid19
 
-import triathematician.covid19.sources.dailyReports
 import triathematician.timeseries.changes
 import triathematician.timeseries.doublingTimes
 import triathematician.timeseries.intTimeSeries

@@ -4,7 +4,6 @@ import triathematician.covid19.*
 import triathematician.covid19.COUNTRY_ID_FILTER
 import triathematician.covid19.US_COUNTY_ID_FILTER
 import triathematician.covid19.US_STATE_ID_FILTER
-import triathematician.covid19.sources.dailyReports
 import triathematician.population.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.changes
@@ -31,6 +30,7 @@ fun main() {
     printHotspots("COUNTRY HOTSPOTS", DEATHS_PER_100K, 100000, idFilter = COUNTRY_ID_FILTER, min = 0.01)
 }
 
+/** Print regions where hotspots of given metric have gotten much better or worse. */
 fun printHotspotMovers(header: String,
                        metric: String = DEATHS,
                        minPopulation: Int = 50000,
@@ -41,12 +41,13 @@ fun printHotspotMovers(header: String,
     println("$header ($metric)")
     println("----")
     println(HotspotInfo.header.joinToString("\t"))
-    hotspotInfo(metric, minPopulation, idFilter, { it >= min })
+    hotspotPerCapitaInfo(metric, minPopulation, idFilter, { it >= min })
             .filter { it.severityChange.absoluteValue >= minDelta && it.totalSeverity != it.severityChange }
             .sortedByDescending { it.severityChange }
             .forEach { it.toList().log() }
 }
 
+/** Print hotspots of given metric. */
 fun printHotspots(header: String,
                   metric: String = DEATHS,
                   minPopulation: Int = 50000,
@@ -56,39 +57,44 @@ fun printHotspots(header: String,
     println("$header ($metric)")
     println("----")
     println(HotspotInfo.header.joinToString("\t"))
-    hotspotInfo(metric, minPopulation, idFilter, { it >= min })
+    hotspotPerCapitaInfo(metric, minPopulation, idFilter, { it >= min })
             .sortedByDescending { it.totalSeverity * 10000 + it.value.toDouble() }
             .forEach { it.toList().log() }
 }
 
-fun hotspotInfo(metric: String = DEATHS,
-                minPopulation: Int = 50000,
-                idFilter: (String) -> Boolean = { true },
-                metricFilter: (Double) -> Boolean = { it >= 5 }): List<HotspotInfo> {
-    return dailyReports()
-            .filter { idFilter(it.id) }
-            .filter { lookupPopulation(it.id)?.let { it > minPopulation } ?: false }
-            .filter { it.metric == metric && metricFilter(it.lastValue) }
+/** Compute hotspots of given metric. */
+fun hotspotPerCapitaInfo(metric: String = DEATHS,
+                         minPopulation: Int = 50000,
+                         idFilter: (String) -> Boolean = { true },
+                         valueFilter: (Double) -> Boolean = { it >= 5 })
+        = dailyReports(idFilter).hotspotPerCapitaInfo(metric, minPopulation, valueFilter)
+
+/** Compute hotspots of given metric. */
+fun List<MetricTimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,
+                                                minPopulation: Int = 50000,
+                                                valueFilter: (Double) -> Boolean = { it >= 5 }): List<HotspotInfo> {
+    return filter { lookupPopulation(it.id)?.let { it > minPopulation } ?: false }
+            .filter { it.metric == metric && valueFilter(it.lastValue) }
             .filter { it.values.movingAverage(5).doublingTimes().lastOrNull()?.isFinite() ?: false }
-            .flatMap { it.hotspotInfo() }
+            .flatMap { it.hotspotPerCapitaInfo() }
 }
 
 /** Compute hotspot info given time series data. Uses average changes over the last N days. */
-fun MetricTimeSeries.hotspotInfo(averageDays: Int = 7, includePriorDays: Boolean = false): List<HotspotInfo> {
+fun MetricTimeSeries.hotspotPerCapitaInfo(averageDays: Int = 7, includePriorDays: Boolean = false): List<HotspotInfo> {
     val changes = values.changes().movingAverage(averageDays)
     val doublings = values.movingAverage(averageDays).doublingTimes()
     val cleanId = id.removeSuffix(", US")
 
     val minSize = minOf(changes.size, doublings.size, values.size)
-    val info3 = if (minSize >= 3) hotspotInfo("$cleanId -2", "$metric -2", values.thirdToLast(), changes.thirdToLast(), doublings.thirdToLast()) else null
-    val info2 = if (minSize >= 2) hotspotInfo("$cleanId -1", "$metric -1", values.penultimate(), changes.penultimate(), doublings.penultimate(), info3) else null
-    val info = hotspotInfo(cleanId, metric, values.lastOrNull(), changes.lastOrNull(), doublings.lastOrNull(), info2, info3)
+    val info3 = if (minSize >= 3) hotspotPerCapitaInfo("$cleanId -2", "$metric -2", values.thirdToLast(), changes.thirdToLast(), doublings.thirdToLast()) else null
+    val info2 = if (minSize >= 2) hotspotPerCapitaInfo("$cleanId -1", "$metric -1", values.penultimate(), changes.penultimate(), doublings.penultimate(), info3) else null
+    val info = hotspotPerCapitaInfo(cleanId, metric, values.lastOrNull(), changes.lastOrNull(), doublings.lastOrNull(), info2, info3)
 
     return if (includePriorDays) listOfNotNull(info, info2, info3) else listOfNotNull(info)
 }
 
 /** Compute hotspot info given values and information about the last few days to use when computing trends. */
-private fun hotspotInfo(id: String, metric: String, value: Number?, dailyChange: Double?, doublingTimeDays: Double?, vararg priorInfo: HotspotInfo?): HotspotInfo? {
+private fun hotspotPerCapitaInfo(id: String, metric: String, value: Number?, dailyChange: Double?, doublingTimeDays: Double?, vararg priorInfo: HotspotInfo?): HotspotInfo? {
     if (value == null || dailyChange == null || doublingTimeDays == null) {
         return null
     }
