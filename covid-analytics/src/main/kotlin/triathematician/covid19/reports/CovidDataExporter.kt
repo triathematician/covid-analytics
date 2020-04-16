@@ -73,7 +73,7 @@ fun List<MetricTimeSeries>.exportMortalityHotspots(ps: PrintStream) {
 //region INDICATOR EXPORT
 
 /** Import all data and export as indicators. */
-fun List<MetricTimeSeries>.exportIndicators(target: String) = exportIndicators(File("reports/{$target}_indicators.csv").asPrintStream())
+fun List<MetricTimeSeries>.exportIndicators(target: String) = exportIndicators(File("reports/${target}_indicators.csv").asPrintStream())
 
 /** Import all data and export as indicators. */
 fun List<MetricTimeSeries>.exportIndicators(ps: PrintStream) {
