@@ -17,7 +17,7 @@ fun List<Any>.log(ps: PrintStream = System.out, prefix: String = "", sep: String
 fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: String = ",") = map {
     when (it) {
         is Int -> it
-        is Number -> it.format(2)
+        is Number -> if (it.toDouble() >= 0.1) it.format(3) else it.format(6)
         else -> it
     }.toString()
 }.map { if (',' in it) "\"$it\"" else it }

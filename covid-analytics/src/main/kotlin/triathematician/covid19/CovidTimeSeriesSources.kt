@@ -25,6 +25,6 @@ fun countryData() = dailyReports(COUNTRY_ID_FILTER).sortedBy { it.id }
 fun dailyReports(idFilter: (String) -> Boolean = { true }) = CsseCovid19DailyReports.allTimeSeries
         .filter { idFilter(it.id) }
         .flatMap {
-            listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(7).growthPercentages { "$it (growth) " }
-            ) + it.movingAverage(7).logisticPredictions(9)
+            listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(4).growthPercentages { "$it (growth) " }
+            ) + it.movingAverage(4).logisticPredictions(10)
         }
