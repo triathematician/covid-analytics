@@ -86,15 +86,15 @@ fun MetricTimeSeries.hotspotPerCapitaInfo(averageDays: Int = 7, includePriorDays
     val cleanId = id.removeSuffix(", US")
 
     val minSize = minOf(changes.size, doublings.size, values.size)
-    val info3 = if (minSize >= 3) hotspotPerCapitaInfo("$cleanId -2", "$metric -2", values.thirdToLast(), changes.thirdToLast(), doublings.thirdToLast()) else null
-    val info2 = if (minSize >= 2) hotspotPerCapitaInfo("$cleanId -1", "$metric -1", values.penultimate(), changes.penultimate(), doublings.penultimate(), info3) else null
-    val info = hotspotPerCapitaInfo(cleanId, metric, values.lastOrNull(), changes.lastOrNull(), doublings.lastOrNull(), info2, info3)
+    val info3 = if (minSize >= 3) hotspotPerCapitaInfo("$cleanId -2", id2, "$metric -2", values.thirdToLast(), changes.thirdToLast(), doublings.thirdToLast()) else null
+    val info2 = if (minSize >= 2) hotspotPerCapitaInfo("$cleanId -1", id2, "$metric -1", values.penultimate(), changes.penultimate(), doublings.penultimate(), info3) else null
+    val info = hotspotPerCapitaInfo(cleanId, id2, metric, values.lastOrNull(), changes.lastOrNull(), doublings.lastOrNull(), info2, info3)
 
     return if (includePriorDays) listOfNotNull(info, info2, info3) else listOfNotNull(info)
 }
 
 /** Compute hotspot info given values and information about the last few days to use when computing trends. */
-private fun hotspotPerCapitaInfo(id: String, metric: String, value: Number?, dailyChange: Double?, doublingTimeDays: Double?, vararg priorInfo: HotspotInfo?): HotspotInfo? {
+private fun hotspotPerCapitaInfo(id: String, fips: String, metric: String, value: Number?, dailyChange: Double?, doublingTimeDays: Double?, vararg priorInfo: HotspotInfo?): HotspotInfo? {
     if (value == null || dailyChange == null || doublingTimeDays == null) {
         return null
     }
@@ -108,7 +108,7 @@ private fun hotspotPerCapitaInfo(id: String, metric: String, value: Number?, dai
         minPrior < riskTotal -> riskTotal - minPrior
         else -> riskTotal - maxPrior
     }
-    return HotspotInfo(id, metric, value, dailyChange, doublingTimeDays, severityByChange, severityByDoubling, severityChange)
+    return HotspotInfo(id, fips, metric, value, dailyChange, doublingTimeDays, severityByChange, severityByDoubling, severityChange)
 }
 
 private fun <X> List<X>.penultimate() = getOrNull(size - 2)

@@ -70,17 +70,17 @@ object CsseCovid19DailyReports {
 
         // create time series info by merging records
         return rows.flatMap {
-            listOf(intTimeSeries(it.Combined_Key, CASES, it.Last_Update, it.Confirmed),
-                    intTimeSeries(it.Combined_Key, DEATHS, it.Last_Update, it.Deaths),
-                    intTimeSeries(it.Combined_Key, RECOVERED, it.Last_Update, it.Recovered),
-                    intTimeSeries(it.Combined_Key, ACTIVE, it.Last_Update, it.Active))
+            listOf(intTimeSeries(it.Combined_Key, it.FIPS, CASES, it.Last_Update, it.Confirmed),
+                    intTimeSeries(it.Combined_Key, it.FIPS, DEATHS, it.Last_Update, it.Deaths),
+                    intTimeSeries(it.Combined_Key, it.FIPS, RECOVERED, it.Last_Update, it.Recovered),
+                    intTimeSeries(it.Combined_Key, it.FIPS, ACTIVE, it.Last_Update, it.Active))
         }.regroupAndMerge()
     }
 
     // region LOADING FILES INTO COMMON FORMAT
 
     // ﻿Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered
-    private fun read1(fields: List<String>) = DailyReportRow(null, "", fields[0], fields[1].chinaFix(),
+    private fun read1(fields: List<String>) = DailyReportRow("", "", fields[0], fields[1].chinaFix(),
             fields[2].toLocalDate(*FORMATS), null, null,
             fields[3].toIntOrNull() ?: 0, fields[4].toIntOrNull() ?: 0, fields[5].toIntOrNull() ?: 0, 0,
             combinedKey1(fields[0], fields[1]))
@@ -109,7 +109,7 @@ object CsseCovid19DailyReports {
     private fun String.chinaFix() = if (this == "Mainland China") "China" else this
 
     // Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered,Latitude,Longitude
-    private fun read2(fields: List<String>) = DailyReportRow(null, "", fields[0], fields[1].chinaFix(),
+    private fun read2(fields: List<String>) = DailyReportRow("", "", fields[0], fields[1].chinaFix(),
             fields[2].toLocalDate(*FORMATS), fields[6].toDoubleOrNull(), fields[7].toDoubleOrNull(),
             fields[3].toInt(), fields[4].toInt(), fields[5].toInt(), 0, combinedKey2(fields[0], fields[1]))
 
@@ -119,7 +119,7 @@ object CsseCovid19DailyReports {
     }
 
     // ﻿FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths,Recovered,Active,Combined_Key
-    private fun read3(fields: List<String>) = DailyReportRow(fields[0].toIntOrNull(), fields[1], fields[2], fields[3],
+    private fun read3(fields: List<String>) = DailyReportRow(fields[0], fields[1], fields[2], fields[3],
             fields[4].toLocalDate(*FORMATS), fields[5].toDoubleOrNull(), fields[6].toDoubleOrNull(),
             fields[7].toInt(), fields[8].toInt(), fields[9].toInt(), fields[10].toInt(), combinedKey3(fields[1], fields[2], fields[3]))
 
@@ -136,7 +136,7 @@ object CsseCovid19DailyReports {
 }
 
 /** Daily report row info. */
-data class DailyReportRow(var FIPS: Int?, var Admin2: String, var Province_State: String, var Country_Region: String,
+data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_State: String, var Country_Region: String,
                           var Last_Update: LocalDate, var Lat: Double?, var Long_: Double?,
                           var Confirmed: Int, var Deaths: Int, var Recovered: Int, var Active: Int,
                           var Combined_Key: String) {
@@ -165,15 +165,15 @@ fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
 }
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
-private fun List<DailyReportRow>.sumWithinState() = DailyReportRow(null, "", first().Province_State, first().Country_Region, first().Last_Update, null, null,
+private fun List<DailyReportRow>.sumWithinState() = DailyReportRow("", "", first().Province_State, first().Country_Region, first().Last_Update, null, null,
         sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, "${first().Province_State}, ${first().Country_Region}")
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
-private fun List<DailyReportRow>.sumWithinCountry() = DailyReportRow(null, "", "", first().Country_Region, first().Last_Update, null, null,
+private fun List<DailyReportRow>.sumWithinCountry() = DailyReportRow("", "", "", first().Country_Region, first().Last_Update, null, null,
         sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, first().Country_Region)
 
 /** Sum of all data as a world row. */
-private fun List<DailyReportRow>.global() = DailyReportRow(null, "", "", "Global", first().Last_Update, null, null,
+private fun List<DailyReportRow>.global() = DailyReportRow("", "", "", "Global", first().Last_Update, null, null,
         sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, "Global")
 
 //endregion

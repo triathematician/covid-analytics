@@ -5,7 +5,7 @@ import java.time.LocalDate
 /**
  * Collection of related time series for a single grouping.
  */
-class RegionTimeSeries(var id: String = "", var start: LocalDate = LocalDate.now()) {
+class RegionTimeSeries(var id: String = "", var id2: String, var start: LocalDate = LocalDate.now()) {
 
     /** Stores whether each metric is int series or not. */
     val intSeries = mutableSetOf<String>()
@@ -18,7 +18,7 @@ class RegionTimeSeries(var id: String = "", var start: LocalDate = LocalDate.now
         get() = start.plusDays((size - 1).toLong())
 
     val timeSeries: List<MetricTimeSeries>
-        get() = valuesTable.map { MetricTimeSeries(id, it.key, intSeries.contains(it.key), 0.0, start, it.value) }
+        get() = valuesTable.map { MetricTimeSeries(id, id2, it.key, intSeries.contains(it.key), 0.0, start, it.value) }
 
     val valuesAsMap: Map<String, Map<LocalDate, Double>>
         get() = timeSeries.map { it.metric to it.valuesAsMap }.toMap()

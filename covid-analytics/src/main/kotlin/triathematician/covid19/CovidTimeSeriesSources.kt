@@ -19,12 +19,16 @@ internal val US_COUNTY_ID_FILTER: (String) -> Boolean = { ", US" in it && it.cou
 internal val COUNTRY_ID_FILTER: (String) -> Boolean = { !US_STATE_ID_FILTER(it) && !US_COUNTY_ID_FILTER(it) }
 
 fun usCountyData() = dailyReports(US_COUNTY_ID_FILTER).map { it.copy(id = it.id.removeSuffix(", US")) }.sortedBy { it.id }
-fun usStateData() = dailyReports(US_STATE_ID_FILTER).map { it.copy(id = it.id.removeSuffix(", US")) }.sortedBy { it.id }
-fun countryData() = dailyReports(COUNTRY_ID_FILTER).sortedBy { it.id }
+fun usStateData(includeUS: Boolean = true) = dailyReports(US_STATE_ID_FILTER)
+        .filter { includeUS || it.id != "US" }
+        .map { it.copy(id = it.id.removeSuffix(", US")) }.sortedBy { it.id }
+fun countryData(includeGlobal: Boolean = true) = dailyReports(COUNTRY_ID_FILTER)
+        .filter { includeGlobal || it.id != "Global" }
+        .sortedBy { it.id }
 
-fun dailyReports(idFilter: (String) -> Boolean = { true }) = CsseCovid19DailyReports.allTimeSeries
+fun dailyReports(idFilter: (String) -> Boolean = { true }, bucketGrowthAverage: Int = 3) = CsseCovid19DailyReports.allTimeSeries
         .filter { idFilter(it.id) }
         .flatMap {
-            listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(4).growthPercentages { "$it (growth) " }
-            ) + it.movingAverage(4).logisticPredictions(10)
+            listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(bucketGrowthAverage).growthPercentages { "$it (growth)" }
+            ) + it.movingAverage(bucketGrowthAverage).logisticPredictions(10)
         }

@@ -8,16 +8,18 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric.
  * Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
-data class MetricTimeSeries(var id: String = "", var metric: String = "", var intSeries: Boolean, val defValue: Double = 0.0, var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
+data class MetricTimeSeries(var id: String = "", var id2: String, var metric: String = "", var intSeries: Boolean, val defValue: Double = 0.0, var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
-    constructor(id: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double) : this(id, metric, false, defValue, start, listOf(value))
-    constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
-    constructor(id: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int) : this(id, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
+    constructor(id: String, id2: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double) : this(id, id2, metric, false, defValue, start, listOf(value))
+    constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, id2, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
+    constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int) : this(id, id2, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
     val size: Int
         get() = values.size
     val lastValue: Double
         get() = values.lastOrNull() ?: 0.0
+    val firstPositiveDate: LocalDate
+        get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
     val end: LocalDate
         get() = start.plusDays((values.size - 1).toLong())
     val valuesAsMap: Map<LocalDate, Double>
@@ -99,8 +101,8 @@ data class MetricTimeSeries(var id: String = "", var metric: String = "", var in
 
 //region factories
 
-fun intTimeSeries(id: String, metric: String, start: LocalDate, values: List<Int>) = MetricTimeSeries(id, metric, 0, start, values)
-fun intTimeSeries(id: String, metric: String, date: LocalDate, value: Int) = MetricTimeSeries(id, metric, 0, date, value)
+fun intTimeSeries(id: String, id2: String, metric: String, start: LocalDate, values: List<Int>) = MetricTimeSeries(id, id2, metric, 0, start, values)
+fun intTimeSeries(id: String, id2: String, metric: String, date: LocalDate, value: Int) = MetricTimeSeries(id, id2, metric, 0, date, value)
 
 //endregion
 

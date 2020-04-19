@@ -1,18 +1,12 @@
 package triathematician.covid19.reports
 
 import triathematician.covid19.*
-import triathematician.covid19.COUNTRY_ID_FILTER
-import triathematician.covid19.US_COUNTY_ID_FILTER
-import triathematician.covid19.US_STATE_ID_FILTER
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.logCsv
-import triathematician.util.log
 import java.io.File
 import java.io.PrintStream
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
-import kotlin.math.absoluteValue
 
 //
 // Exports data to file in various formats
@@ -77,14 +71,14 @@ fun List<MetricTimeSeries>.exportIndicators(target: String) = exportIndicators(F
 
 /** Import all data and export as indicators. */
 fun List<MetricTimeSeries>.exportIndicators(ps: PrintStream) {
-    listOf("Region", "Metric", "Date", "Value").logCsv(ps)
+    listOf("Region", "FIPS", "Metric", "Date", "Value").logCsv(ps)
     filter { it.values.any { it > 0.0 } }
             .flatMap { it.indicators() }
             .forEach { it.logCsv(ps) }
 }
 
 fun MetricTimeSeries.indicators() = valuesAsMap.filter { it.value.isFinite() }.map {
-    listOf(id, metric, Instant.from(it.key.atStartOfDay(ZoneId.systemDefault())), if (intSeries) it.value.toInt() else it.value)
+    listOf(id, id2, metric, Instant.from(it.key.atStartOfDay(ZoneId.systemDefault())), if (intSeries) it.value.toInt() else it.value)
 }
 
 //endregion
