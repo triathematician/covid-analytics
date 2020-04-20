@@ -67,7 +67,7 @@ fun hotspotPerCapitaInfo(metric: String = DEATHS,
                          minPopulation: Int = 50000,
                          idFilter: (String) -> Boolean = { true },
                          valueFilter: (Double) -> Boolean = { it >= 5 })
-        = dailyReports(idFilter).hotspotPerCapitaInfo(metric, minPopulation, valueFilter)
+        = CovidTimeSeriesSources.dailyReports(idFilter).hotspotPerCapitaInfo(metric, minPopulation, valueFilter)
 
 /** Compute hotspots of given metric. */
 fun List<MetricTimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,

@@ -1,4 +1,4 @@
-package triathematician.covid19.reports.ui
+package triathematician.covid19.ui
 
 import javafx.beans.property.SimpleBooleanProperty
 import tornadofx.getProperty

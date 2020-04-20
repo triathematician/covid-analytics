@@ -1,5 +1,6 @@
 package triathematician.timeseries
 
+import triathematician.util.DateRange
 import triathematician.util.rangeTo
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -106,6 +107,28 @@ fun intTimeSeries(id: String, id2: String, metric: String, date: LocalDate, valu
 
 //endregion
 
+//region List<MetricTimeSeries> XF
+
+/** First date with a positive number of values for any of the given series. */
+val Collection<MetricTimeSeries>.firstPositiveDate
+    get() = map { it.firstPositiveDate }.min()
+
+/** Last date for any of the given series. */
+val Collection<MetricTimeSeries>.lastDate
+    get() = map { it.end }.max()
+
+/** Last date for any of the given series. */
+val Collection<MetricTimeSeries>.dateRange
+    get() = (firstPositiveDate to lastDate).let {
+        if (it.first != null && it.second != null) DateRange(it.first!!, it.second!!) else null
+    }
+
+/** Merge a bunch of time series by id and metric. */
+fun List<MetricTimeSeries>.regroupAndMerge() = groupBy { listOf(it.id, it.metric) }
+        .map { it.value.merge() }
+        .map { it.coerceIncreasing() }
+        .map { it.restrictNumberOfStartingZerosTo(5) }
+
 /** Merge a bunch of separate time series into a single time series object. */
 private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
     require(s1.id == s2.id)
@@ -116,8 +139,4 @@ private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
     s1.copy(start = minDate, values = series)
 }
 
-/** Merge a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndMerge() = groupBy { listOf(it.id, it.metric) }
-        .map { it.value.merge() }
-        .map { it.coerceIncreasing() }
-        .map { it.restrictNumberOfStartingZerosTo(5) }
+//endregion

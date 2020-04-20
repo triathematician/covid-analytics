@@ -9,13 +9,13 @@ import java.time.format.DateTimeFormatter
 private val FORMAT1 = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
 /** Loads IHME prediction models. */
-object IhmePredictions {
+object IhmeProjections {
     /** All predictions. */
-    val allPredictions by lazy { loadPredictions() }
+    val allProjections by lazy { loadPredictions() }
 
     /** Load predictions from IHME files. */
     private fun loadPredictions(): List<MetricTimeSeries> {
-        val file1 = IhmePredictions::class.java.getResource("resources/ihme-4-12.csv")
+        val file1 = IhmeProjections::class.java.getResource("resources/ihme-4-12.csv")
         val lines = file1.readText().lines()
         val header = CsvLineSplitter.splitLine(lines[0])
         val dataLines = lines.drop(1).map { CsvLineSplitter.splitLine(it) }

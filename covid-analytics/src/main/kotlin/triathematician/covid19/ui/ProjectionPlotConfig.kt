@@ -1,4 +1,4 @@
-package triathematician.covid19.reports.ui
+package triathematician.covid19.ui
 
 import tornadofx.getProperty
 import tornadofx.property

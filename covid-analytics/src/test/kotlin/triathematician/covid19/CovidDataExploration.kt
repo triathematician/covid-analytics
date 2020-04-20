@@ -8,14 +8,14 @@ import triathematician.util.log
 import java.time.LocalDate
 
 fun main() {
-    dailyReports({ it == "Maryland, US" })
+    CovidTimeSeriesSources.dailyReports({ it == "Maryland, US" })
             .forEach {
                 println("${it.id}\t${it.metric}\t${it.start}\t${it.values.joinToString("\t")}")
             }
 }
 
 fun `compute moving average and doubling time series`(metric: String, min: Double) {
-    dailyReports()
+    CovidTimeSeriesSources.dailyReports()
             .filter { COUNTRY_ID_FILTER(it.id) }
             .filter { it.metric == metric && it.lastValue >= min }
             .filter { it.values.movingAverage(3).doublingTimes().lastOrNull()?.isFinite() ?: false }

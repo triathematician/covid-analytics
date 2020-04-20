@@ -1,4 +1,4 @@
-package triathematician.covid19.reports.ui
+package triathematician.covid19.ui
 
 import javafx.event.EventTarget
 import javafx.scene.chart.LineChart
@@ -7,20 +7,21 @@ import javafx.scene.chart.XYChart
 import javafx.scene.layout.Priority
 import tornadofx.*
 import triathematician.covid19.CovidTimeSeriesSources
-import triathematician.population.lookupPopulation
+import triathematician.covid19.DEATHS
+import triathematician.covid19.sources.IhmeProjections
 import triathematician.timeseries.*
 import triathematician.util.DateRange
 import triathematician.util.format
 import java.time.LocalDate
 
-class TimeSeriesReportApp: App(TimeSeriesReportAppView::class)
+class TimeSeriesReportApp : App(TimeSeriesReportAppView::class)
 
 fun main(args: Array<String>) {
     launch<TimeSeriesReportApp>(args)
 }
 
 /** View configuration for the app. */
-class TimeSeriesReportAppView: View() {
+class TimeSeriesReportAppView : View() {
 
     private val plotConfig = PlotConfig { updateHistoricalPlot(); updateHubbertPlot() }
     private val hubbertPlotConfig = HubbertPlotConfig { updateHubbertPlot() }
@@ -29,6 +30,7 @@ class TimeSeriesReportAppView: View() {
     private lateinit var historicalChart: LineChart<Number, Number>
     private lateinit var hubbertChart: LineChart<Number, Number>
     private lateinit var projectionChart: LineChart<Number, Number>
+    private lateinit var projectionChartChange: LineChart<Number, Number>
     private lateinit var projectionChartDays: LineChart<Number, Number>
 
     override val root = vbox {
@@ -68,14 +70,19 @@ class TimeSeriesReportAppView: View() {
                 }
                 item("Projections") {
                     projectionChart = linechart("Projections",
-                            NumberAxis().apply { label = "Day of Prediction" },
+                            NumberAxis().apply { label = "Day (or Day of Projection)" },
                             NumberAxis().apply {
-                                label = "Prediction"
+                                label = "Projection"
+                            })
+                    projectionChartChange = linechart("Projected Change per Day",
+                            NumberAxis().apply { label = "Day" },
+                            NumberAxis().apply {
+                                label = "Projection"
                             })
                     projectionChartDays = linechart("Projected Days to Peak",
-                            NumberAxis().apply { label = "Day of Prediction" },
+                            NumberAxis().apply { label = "Day of Projection" },
                             NumberAxis().apply {
-                                label = "Prediction"
+                                label = "Projection"
                             })
                 }
             }
@@ -201,18 +208,47 @@ class TimeSeriesReportAppView: View() {
     private fun updateProjectionPlot() {
         val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionPlotConfig.region })
                 .filter { plotConfig.selectedMetric in it.metric }
-                .map { it.metric to it}.toMap()
+                .map { it.metric to it }.toMap()
+
+        val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionPlotConfig.region }
+                .map { it.metric to it }.toMap()
+
+        if (ihmeProjections.isEmpty()) {
+            println("No projections found for ${projectionPlotConfig.region}")
+        }
 
         val domain = regionMetrics.values.dateRange
+        domain?.endInclusive = LocalDate.now().plusDays(60L)
 
         projectionChart.data.clear()
+        projectionChartChange.data.clear()
         projectionChartDays.data.clear()
+
         if (domain != null) {
-            regionMetrics.filter { "predicted" in it.key || "(" !in it.key }
+            regionMetrics.filter { ("predicted" in it.key || "(" !in it.key) && "peak" !in it.key }
                     .map { series ->
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
                         projectionChart.series(series.key, values.asObservable())
                     }
+            if (plotConfig.selectedMetric == DEATHS) {
+                ihmeProjections.filter { "change" !in it.key }
+                        .map { series ->
+                            val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
+                            projectionChart.series(series.key, values.asObservable())
+                        }
+            }
+            regionMetrics.filter { "predicted peak" in it.key }
+                    .map { series ->
+                        val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
+                        projectionChartChange.series(series.key, values.asObservable())
+                    }
+            if (plotConfig.selectedMetric == DEATHS) {
+                ihmeProjections.filter { "change" in it.key }
+                        .map { series ->
+                            val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
+                            projectionChartChange.series(series.key, values.asObservable())
+                        }
+            }
             regionMetrics.filter { "days" in it.key }
                     .map { series ->
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
@@ -223,7 +259,7 @@ class TimeSeriesReportAppView: View() {
 
     private fun xy(x: Number, y: Number) = XYChart.Data(x, y)
 
-    private fun LineChart<*,*>.setLineWidth(width: String) {
+    private fun LineChart<*, *>.setLineWidth(width: String) {
         data.forEach {
             it.nodeProperty().get().style = "-fx-stroke-width: $width"
         }

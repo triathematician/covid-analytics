@@ -27,6 +27,6 @@ class DateIterator(val startDate: LocalDate, val endDateInclusive: LocalDate): I
     }
 }
 
-class DateRange(override val start: LocalDate, override val endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
+class DateRange(override var start: LocalDate, override var endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
     override fun iterator() = DateIterator(start, endInclusive)
 }

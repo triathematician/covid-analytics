@@ -23,4 +23,4 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
 }.map { if (',' in it) "\"$it\"" else it }
         .joinToString(sep).log(ps, prefix)
 
-private fun Number.format(digits: Int) = "%.${digits}f".format(this)
+internal fun Number.format(digits: Int) = "%.${digits}f".format(this)
