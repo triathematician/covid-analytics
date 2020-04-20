@@ -1,6 +1,7 @@
 package triathematician.covid19.sources
 
 import triathematician.timeseries.MetricTimeSeries
+import triathematician.timeseries.regroupAndMerge
 import triathematician.util.CsvLineSplitter
 import triathematician.util.toLocalDate
 import java.time.LocalDate
@@ -31,11 +32,11 @@ object IhmeProjections {
                     MetricTimeSeries(it.region, "", "Deaths (change, ihme mean)", 0.0, it.date, it.dailyDeaths.mean),
                     MetricTimeSeries(it.region, "", "Deaths (change, ihme lower)", 0.0, it.date, it.dailyDeaths.lower),
                     MetricTimeSeries(it.region, "", "Deaths (change, ihme upper)", 0.0, it.date, it.dailyDeaths.upper),
-                    MetricTimeSeries(it.region, "", "Deaths (ihme mean)", 0.0, it.date, it.dailyDeaths.mean),
-                    MetricTimeSeries(it.region, "", "Deaths (ihme lower)", 0.0, it.date, it.dailyDeaths.lower),
-                    MetricTimeSeries(it.region, "", "Deaths (ihme upper)", 0.0, it.date, it.dailyDeaths.upper)
+                    MetricTimeSeries(it.region, "", "Deaths (ihme mean)", 0.0, it.date, it.totalDeaths.mean),
+                    MetricTimeSeries(it.region, "", "Deaths (ihme lower)", 0.0, it.date, it.totalDeaths.lower),
+                    MetricTimeSeries(it.region, "", "Deaths (ihme upper)", 0.0, it.date, it.totalDeaths.upper)
             )
-        }
+        }.regroupAndMerge(false)
     }
 }
 

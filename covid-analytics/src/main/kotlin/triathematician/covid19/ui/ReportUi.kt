@@ -209,16 +209,12 @@ class TimeSeriesReportAppView : View() {
         val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionPlotConfig.region })
                 .filter { plotConfig.selectedMetric in it.metric }
                 .map { it.metric to it }.toMap()
+        val domain = regionMetrics.values.dateRange
+        domain?.endInclusive = LocalDate.now().plusDays(60L)
 
         val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionPlotConfig.region }
                 .map { it.metric to it }.toMap()
-
-        if (ihmeProjections.isEmpty()) {
-            println("No projections found for ${projectionPlotConfig.region}")
-        }
-
-        val domain = regionMetrics.values.dateRange
-        domain?.endInclusive = LocalDate.now().plusDays(60L)
+        val ihmeDomain = ihmeProjections.values.dateRange
 
         projectionChart.data.clear()
         projectionChartChange.data.clear()
@@ -233,10 +229,16 @@ class TimeSeriesReportAppView : View() {
             if (plotConfig.selectedMetric == DEATHS) {
                 ihmeProjections.filter { "change" !in it.key }
                         .map { series ->
-                            val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
+                            val values = domain.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
+                                    .filterNotNull()
                             projectionChart.series(series.key, values.asObservable())
                         }
             }
+            regionMetrics.filter { it.key == plotConfig.selectedMetric }
+                    .map { series ->
+                        val values = domain.mapIndexed { i, d -> xy(i, series.value[d]-series.value[d.minusDays(1L)]) }
+                        projectionChartChange.series(series.key, values.asObservable())
+                    }
             regionMetrics.filter { "predicted peak" in it.key }
                     .map { series ->
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
@@ -245,7 +247,8 @@ class TimeSeriesReportAppView : View() {
             if (plotConfig.selectedMetric == DEATHS) {
                 ihmeProjections.filter { "change" in it.key }
                         .map { series ->
-                            val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
+                            val values = domain.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
+                                    .filterNotNull()
                             projectionChartChange.series(series.key, values.asObservable())
                         }
             }

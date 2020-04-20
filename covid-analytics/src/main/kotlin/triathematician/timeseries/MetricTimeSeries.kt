@@ -124,9 +124,9 @@ val Collection<MetricTimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndMerge() = groupBy { listOf(it.id, it.metric) }
+fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.id, it.metric) }
         .map { it.value.merge() }
-        .map { it.coerceIncreasing() }
+        .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge a bunch of separate time series into a single time series object. */

@@ -1,5 +1,6 @@
 package triathematician.covid19
 
+import triathematician.covid19.sources.IhmeProjections
 import triathematician.timeseries.changes
 import triathematician.timeseries.doublingTimes
 import triathematician.timeseries.intTimeSeries
@@ -8,10 +9,16 @@ import triathematician.util.log
 import java.time.LocalDate
 
 fun main() {
-    CovidTimeSeriesSources.dailyReports({ it == "Maryland, US" })
-            .forEach {
-                println("${it.id}\t${it.metric}\t${it.start}\t${it.values.joinToString("\t")}")
-            }
+    `test ihme projections`("Italy")
+//    CovidTimeSeriesSources.dailyReports({ it == "Maryland, US" })
+//            .forEach {
+//                println("${it.id}\t${it.metric}\t${it.start}\t${it.values.joinToString("\t")}")
+//            }
+}
+
+fun `test ihme projections`(region: String) {
+    IhmeProjections.allProjections.filter { it.id == region }
+            .forEach { it.log() }
 }
 
 fun `compute moving average and doubling time series`(metric: String, min: Double) {

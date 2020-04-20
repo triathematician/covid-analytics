@@ -39,7 +39,7 @@ object CsseCovid19DailyReports {
 
     /** Gets all time series data. */
     val allTimeSeries by lazy {
-        (timeSeriesData1() + timeSeriesData2() + timeSeriesData3()).toList().regroupAndMerge()
+        (timeSeriesData1() + timeSeriesData2() + timeSeriesData3()).toList().regroupAndMerge(true)
     }
 
     /** Create time series from format 1 files. */
@@ -74,7 +74,7 @@ object CsseCovid19DailyReports {
                     intTimeSeries(it.Combined_Key, it.FIPS, DEATHS, it.Last_Update, it.Deaths),
                     intTimeSeries(it.Combined_Key, it.FIPS, RECOVERED, it.Last_Update, it.Recovered),
                     intTimeSeries(it.Combined_Key, it.FIPS, ACTIVE, it.Last_Update, it.Active))
-        }.regroupAndMerge()
+        }.regroupAndMerge(true)
     }
 
     // region LOADING FILES INTO COMMON FORMAT
