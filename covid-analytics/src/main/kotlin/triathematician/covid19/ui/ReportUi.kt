@@ -210,11 +210,12 @@ class TimeSeriesReportAppView : View() {
                 .filter { plotConfig.selectedMetric in it.metric }
                 .map { it.metric to it }.toMap()
         val domain = regionMetrics.values.dateRange
-        domain?.endInclusive = LocalDate.now().plusDays(60L)
 
         val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionPlotConfig.region }
                 .map { it.metric to it }.toMap()
         val ihmeDomain = ihmeProjections.values.dateRange
+
+        val totalDomain = if (domain != null) DateRange(domain.start, domain.endInclusive.plusDays(30)) else null
 
         projectionChart.data.clear()
         projectionChartChange.data.clear()
@@ -229,7 +230,7 @@ class TimeSeriesReportAppView : View() {
             if (plotConfig.selectedMetric == DEATHS) {
                 ihmeProjections.filter { "change" !in it.key }
                         .map { series ->
-                            val values = domain.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
+                            val values = totalDomain!!.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
                                     .filterNotNull()
                             projectionChart.series(series.key, values.asObservable())
                         }
@@ -247,7 +248,7 @@ class TimeSeriesReportAppView : View() {
             if (plotConfig.selectedMetric == DEATHS) {
                 ihmeProjections.filter { "change" in it.key }
                         .map { series ->
-                            val values = domain.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
+                            val values = totalDomain!!.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
                                     .filterNotNull()
                             projectionChartChange.series(series.key, values.asObservable())
                         }
@@ -257,6 +258,16 @@ class TimeSeriesReportAppView : View() {
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
                         projectionChartDays.series(series.key, values.asObservable())
                     }
+        }
+
+        listOf(projectionChart, projectionChartChange, projectionChartDays).forEach { chart ->
+            chart.animated = false
+            chart.data.forEach {
+                if ("predicted" in it.name || "ihme" in it.name) {
+                    it.nodeProperty().get().style = "-fx-opacity: 0.5"
+                    it.data.forEach { it.node.isVisible = false }
+                }
+            }
         }
     }
 
