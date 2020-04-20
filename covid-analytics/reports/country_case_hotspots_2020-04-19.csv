@@ -1,0 +1,214 @@
+location,fips,metric,value,change (avg),growth rate,doubling time (days),severity (change),severity (growth),severity,severity (trend)
+Guadeloupe,,Confirmed (per 100k),13.246,1.500,0.113,1.860,4,5,9,1
+Djibouti,,Confirmed (per 100k),85.628,7.880,0.092030,3.923,5,3,8,-1
+Singapore,,Confirmed (per 100k),112.609,9.018,0.080081,4.876,5,2,7,0
+Cabo Verde,,Confirmed (per 100k),10.971,1.285,0.117,3.176,4,3,7,-2
+Martinique,,Confirmed (per 100k),8.527,0.761,0.089286,2.897,3,4,7,0
+Reunion,,Confirmed (per 100k),5.026,0.367,0.073016,2.197,3,4,7,3
+Ireland,,Confirmed (per 100k),308.863,16.867,0.054610,9.914,5,1,6,0
+"Quebec, Canada",,Confirmed (per 100k),210.245,8.749,0.041616,13.660,5,1,6,0
+Qatar,,Confirmed (per 100k),189.098,11.305,0.059786,7.894,5,1,6,0
+United Kingdom,,Confirmed (per 100k),176.866,7.413,0.041912,13.252,5,1,6,0
+"Bermuda, United Kingdom",,Confirmed (per 100k),138.090,8.029,0.058140,9.532,5,1,6,0
+Bahrain,,Confirmed (per 100k),110.545,6.154,0.055669,9.965,5,1,6,0
+Turkey,,Confirmed (per 100k),102.332,5.109,0.049925,10.855,5,1,6,0
+Belarus,,Confirmed (per 100k),50.575,3.860,0.076316,6.779,4,2,6,0
+Peru,,Confirmed (per 100k),47.398,3.281,0.069216,6.923,4,2,6,0
+Russia,,Confirmed (per 100k),29.365,2.272,0.077371,4.914,4,2,6,0
+Saudi Arabia,,Confirmed (per 100k),26.892,1.740,0.064714,6.581,4,2,6,1
+Oman,,Confirmed (per 100k),24.791,1.774,0.071541,6.554,4,2,6,0
+Equatorial Guinea,,Confirmed (per 100k),5.631,0.621,0.110,3.540,3,3,6,1
+Timor-Leste,,Confirmed (per 100k),1.441,0.173,0.120,2.845,2,4,6,-1
+San Marino,,Confirmed (per 100k),1358.640,41.681,0.030679,19.052,5,0,5,0
+Andorra,,Confirmed (per 100k),922.798,19.044,0.020637,31.207,5,0,5,0
+Luxembourg,,Confirmed (per 100k),567.113,6.093,0.010744,61.216,5,0,5,0
+Spain,,Confirmed (per 100k),424.928,8.769,0.020636,29.954,5,0,5,0
+"Isle of Man, United Kingdom",,Confirmed (per 100k),350.452,11.928,0.034036,17.732,5,0,5,-1
+Belgium,,Confirmed (per 100k),332.159,11.297,0.034011,17.277,5,0,5,0
+Italy,,Confirmed (per 100k),296.008,5.589,0.018881,33.668,5,0,5,0
+"Channel Islands, United Kingdom",,Confirmed (per 100k),280.681,6.327,0.022541,28.143,5,0,5,0
+US,,Confirmed (per 100k),229.329,8.882,0.038731,14.738,5,0,5,-1
+Portugal,,Confirmed (per 100k),198.162,5.181,0.026145,23.383,5,0,5,1
+Netherlands,,Confirmed (per 100k),190.576,5.983,0.031393,18.870,5,0,5,0
+Sweden,,Confirmed (per 100k),142.436,5.193,0.036457,15.583,5,0,5,1
+Canada,,Confirmed (per 100k),94.031,4.162,0.044261,12.408,4,1,5,0
+"Ontario, Canada",,Confirmed (per 100k),78.583,4.239,0.053937,9.531,4,1,5,0
+Serbia,,Confirmed (per 100k),72.310,4.274,0.059106,8.671,4,1,5,0
+"Nova Scotia, Canada",,Confirmed (per 100k),69.057,3.230,0.046772,11.628,4,1,5,0
+United Arab Emirates,,Confirmed (per 100k),68.561,3.706,0.054059,9.744,4,1,5,0
+"Alberta, Canada",,Confirmed (per 100k),63.515,3.221,0.050711,9.398,4,1,5,1
+Moldova,,Confirmed (per 100k),61.280,2.897,0.047272,11.643,4,1,5,0
+North Macedonia,,Confirmed (per 100k),57.935,2.811,0.048526,11.369,4,1,5,0
+Kuwait,,Confirmed (per 100k),44.842,1.997,0.044536,11.524,4,1,5,0
+Dominican Republic,,Confirmed (per 100k),43.142,2.075,0.048107,10.755,4,1,5,0
+Brazil,,Confirmed (per 100k),18.185,1.071,0.058878,8.349,4,1,5,1
+Ukraine,,Confirmed (per 100k),12.459,0.848,0.068033,6.845,3,2,5,0
+French Guiana,,Confirmed (per 100k),6.026,0.478,0.079365,4.427,3,2,5,0
+Jamaica,,Confirmed (per 100k),5.842,0.473,0.080925,5.226,3,2,5,0
+Gabon,,Confirmed (per 100k),4.897,0.398,0.081258,5.672,3,2,5,1
+Guinea,,Confirmed (per 100k),4.409,0.292,0.066124,6.809,3,2,5,0
+Bangladesh,,Confirmed (per 100k),1.491,0.144,0.096673,3.488,2,3,5,0
+Somalia,,Confirmed (per 100k),1.032,0.102,0.099303,3.021,2,3,5,-1
+Iceland,,Confirmed (per 100k),518.985,2.972,0.005727,117.898,4,0,4,0
+"Gibraltar, United Kingdom",,Confirmed (per 100k),391.796,1.272,0.003247,210.601,4,0,4,0
+Switzerland,,Confirmed (per 100k),320.522,3.792,0.011829,55.355,4,0,4,0
+France,,Confirmed (per 100k),234.236,4.008,0.017113,36.924,4,0,4,-1
+Germany,,Confirmed (per 100k),173.284,3.143,0.018139,35.241,4,0,4,0
+Austria,,Confirmed (per 100k),163.761,1.372,0.008378,80.018,4,0,4,0
+"Sint Maarten, Netherlands",,Confirmed (per 100k),156.265,4.665,0.029851,18.614,4,0,4,0
+Israel,,Confirmed (per 100k),155.866,4.162,0.026706,23.366,4,0,4,0
+Norway,,Confirmed (per 100k),130.561,1.652,0.012655,52.009,4,0,4,0
+Denmark,,Confirmed (per 100k),127.482,3.073,0.024106,25.730,4,0,4,0
+Estonia,,Confirmed (per 100k),115.187,2.240,0.019447,32.373,4,0,4,0
+"Mayotte, France",,Confirmed (per 100k),99.335,3.037,0.030575,18.402,4,0,4,0
+Panama,,Confirmed (per 100k),99.032,4.092,0.041323,14.039,4,0,4,-1
+Iran,,Confirmed (per 100k),97.878,1.844,0.018835,33.840,4,0,4,0
+Malta,,Confirmed (per 100k),96.706,1.812,0.018735,34.483,4,0,4,0
+"St Martin, France",,Confirmed (per 100k),95.691,1.847,0.019305,32.646,4,0,4,0
+"Cayman Islands, United Kingdom",,Confirmed (per 100k),92.815,3.478,0.037471,16.806,4,0,4,0
+Finland,,Confirmed (per 100k),68.276,2.001,0.029304,20.173,4,0,4,0
+Cyprus,,Confirmed (per 100k),63.527,1.716,0.027007,23.319,4,0,4,0
+Czechia,,Confirmed (per 100k),62.994,1.034,0.016412,38.974,4,0,4,0
+Ecuador,,Confirmed (per 100k),53.664,1.429,0.026631,21.704,4,0,4,-1
+Chile,,Confirmed (per 100k),52.772,2.095,0.039694,14.171,4,0,4,-1
+Montenegro,,Confirmed (per 100k),49.039,1.001,0.020408,31.631,4,0,4,0
+Lithuania,,Confirmed (per 100k),47.680,1.118,0.023443,25.009,4,0,4,1
+Croatia,,Confirmed (per 100k),45.576,1.037,0.022753,27.871,4,0,4,0
+Romania,,Confirmed (per 100k),45.463,1.803,0.039659,14.273,4,0,4,-1
+Armenia,,Confirmed (per 100k),43.567,1.355,0.031094,18.985,4,0,4,0
+Bosnia and Herzegovina,,Confirmed (per 100k),39.167,1.402,0.035798,16.631,4,0,4,0
+"Tasmania, Australia",,Confirmed (per 100k),33.613,1.254,0.037302,16.405,4,0,4,-1
+Global,,Confirmed (per 100k),30.884,1.004,0.032496,18.059,4,0,4,0
+"Turks and Caicos Islands, United Kingdom",,Confirmed (per 100k),28.411,1.107,0.038961,16.287,4,0,4,0
+Slovakia,,Confirmed (per 100k),21.265,0.945,0.044420,11.793,3,1,4,0
+South Korea,,Confirmed (per 100k),14.586,0.997,0.068353,7.819,3,1,4,-2
+Maldives,,Confirmed (per 100k),9.620,0.423,0.043956,7.012,3,1,4,2
+Cuba,,Confirmed (per 100k),9.138,0.462,0.050518,10.532,3,1,4,0
+Kazakhstan,,Confirmed (per 100k),8.926,0.571,0.063928,8.088,3,1,4,0
+Japan,,Confirmed (per 100k),8.537,0.485,0.056775,9.110,3,1,4,0
+Kyrgyzstan,,Confirmed (per 100k),8.491,0.366,0.043063,12.666,3,1,4,0
+Morocco,,Confirmed (per 100k),7.735,0.441,0.057043,8.689,3,1,4,0
+Mexico,,Confirmed (per 100k),5.815,0.336,0.057756,8.410,3,1,4,0
+South Africa,,Confirmed (per 100k),5.325,0.242,0.045508,11.906,3,1,4,2
+Uzbekistan,,Confirmed (per 100k),4.676,0.309,0.065997,7.868,3,1,4,-1
+Bolivia,,Confirmed (per 100k),4.455,0.267,0.059890,8.488,3,1,4,0
+Mali,,Confirmed (per 100k),1.106,0.091002,0.082270,5.438,2,2,4,1
+Sierra Leone,,Confirmed (per 100k),0.439,0.039399,0.089796,3.264,1,3,4,1
+Tanzania,,Confirmed (per 100k),0.285,0.027503,0.096639,3.318,1,3,4,-1
+Sudan,,Confirmed (per 100k),0.151,0.015312,0.102,3.225,1,3,4,3
+Nepal,,Confirmed (per 100k),0.106,0.010787,0.101,3.897,1,3,4,3
+Monaco,,Confirmed (per 100k),239.539,0.728,0.003040,225.966,3,0,3,-1
+"Aruba, Netherlands",,Confirmed (per 100k),90.853,0.535,0.005891,113.329,3,0,3,-1
+Slovenia,,Confirmed (per 100k),63.975,0.886,0.013856,46.797,3,0,3,0
+"Newfoundland and Labrador, Canada",,Confirmed (per 100k),49.294,0.438,0.008894,75.119,3,0,3,0
+"Reunion, France",,Confirmed (per 100k),45.571,0.303,0.006653,100.524,3,0,3,0
+Latvia,,Confirmed (per 100k),38.543,0.621,0.016113,39.365,3,0,3,0
+"British Columbia, Canada",,Confirmed (per 100k),32.225,0.484,0.015006,42.507,3,0,3,0
+"French Guiana, France",,Confirmed (per 100k),32.141,0.622,0.019345,32.817,3,0,3,1
+New Zealand,,Confirmed (per 100k),29.675,0.326,0.010981,60.543,3,0,3,0
+"Saskatchewan, Canada",,Confirmed (per 100k),26.657,0.290,0.010884,61.083,3,0,3,0
+Saint Kitts and Nevis,,Confirmed (per 100k),26.316,0.537,0.020408,32.230,3,0,3,0
+Barbados,,Confirmed (per 100k),26.098,0.348,0.013333,50.450,3,0,3,0
+Poland,,Confirmed (per 100k),24.539,0.901,0.036703,15.173,3,0,3,0
+"Yukon, Canada",,Confirmed (per 100k),21.910,0.348,0.015873,39.162,3,0,3,3
+Greece,,Confirmed (per 100k),21.443,0.211,0.009843,68.459,3,0,3,0
+Hungary,,Confirmed (per 100k),19.834,0.775,0.039069,14.477,3,0,3,-1
+Albania,,Confirmed (per 100k),19.529,0.571,0.029232,20.669,3,0,3,0
+Malaysia,,Confirmed (per 100k),16.650,0.342,0.020544,31.221,3,0,3,0
+Bahamas,,Confirmed (per 100k),13.986,0.327,0.023377,26.839,3,0,3,0
+Azerbaijan,,Confirmed (per 100k),13.788,0.444,0.032189,18.778,3,0,3,0
+"British Virgin Islands, United Kingdom",,Confirmed (per 100k),13.231,0.473,0.035714,15.593,3,0,3,3
+Costa Rica,,Confirmed (per 100k),12.956,0.219,0.016883,38.726,3,0,3,0
+Bulgaria,,Confirmed (per 100k),12.866,0.446,0.034676,16.721,3,0,3,0
+Guyana,,Confirmed (per 100k),8.264,0.327,0.039560,14.014,3,0,3,-1
+Colombia,,Confirmed (per 100k),7.452,0.205,0.027502,20.373,3,0,3,-1
+Tunisia,,Confirmed (per 100k),7.437,0.216,0.029092,20.988,3,0,3,0
+Argentina,,Confirmed (per 100k),6.282,0.247,0.039400,14.760,3,0,3,-1
+Algeria,,Confirmed (per 100k),5.995,0.231,0.038526,14.655,3,0,3,1
+Congo (Kinshasa),,Confirmed (per 100k),5.926,0.217,0.036697,14.710,3,0,3,1
+Philippines,,Confirmed (per 100k),5.712,0.216,0.037865,15.478,3,0,3,0
+Pakistan,,Confirmed (per 100k),3.779,0.170,0.044955,11.399,2,1,3,0
+Georgia,,Confirmed (per 100k),3.711,0.196,0.052937,10.289,2,1,3,0
+Ghana,,Confirmed (per 100k),3.353,0.196,0.058404,7.002,2,1,3,0
+Cote d'Ivoire,,Confirmed (per 100k),3.211,0.145,0.045202,11.596,2,1,3,0
+El Salvador,,Confirmed (per 100k),3.099,0.159,0.051173,10.249,2,1,3,0
+Egypt,,Confirmed (per 100k),3.072,0.153,0.049664,10.849,2,1,3,0
+Paraguay,,Confirmed (per 100k),2.888,0.138,0.047850,11.464,2,1,3,1
+Afghanistan,,Confirmed (per 100k),2.559,0.139,0.054217,9.641,2,1,3,0
+Indonesia,,Confirmed (per 100k),2.404,0.126,0.052276,10.153,2,1,3,0
+Eswatini,,Confirmed (per 100k),1.896,0.123,0.064935,7.481,2,1,3,2
+Liberia,,Confirmed (per 100k),1.799,0.079088,0.043956,10.492,2,1,3,-1
+Guatemala,,Confirmed (per 100k),1.435,0.078144,0.054475,8.865,2,1,3,0
+India,,Confirmed (per 100k),1.276,0.075321,0.059008,7.934,2,1,3,0
+Mongolia,,Confirmed (per 100k),0.976,0.065365,0.066964,8.244,2,1,3,-1
+Libya,,Confirmed (per 100k),0.742,0.051976,0.070028,7.439,2,1,3,-1
+Burma,,Confirmed (per 100k),0.204,0.015753,0.077220,5.550,1,2,3,0
+Chad,,Confirmed (per 100k),0.201,0.019134,0.095238,5.128,1,2,3,0
+Papua New Guinea,,Confirmed (per 100k),0.078238,0.007984,0.102,3.663,0,3,3,-1
+"Hubei, China",,Confirmed (per 100k),115.432,0.078666,0.000681,1013.293,2,0,2,2
+"Martinique, France",,Confirmed (per 100k),43.436,0.114,0.002629,254.038,2,0,2,0
+"Guadeloupe, France",,Confirmed (per 100k),36.989,0.179,0.004826,140.223,2,0,2,0
+"New South Wales, Australia",,Confirmed (per 100k),36.043,0.121,0.003369,202.826,2,0,2,-1
+Mauritius,,Confirmed (per 100k),25.791,0.067398,0.002613,261.778,2,0,2,0
+Australia,,Confirmed (per 100k),25.675,0.137,0.005324,127.635,2,0,2,0
+"Western Australia, Australia",,Confirmed (per 100k),20.566,0.147,0.007130,94.614,2,0,2,-1
+"Victoria, Australia",,Confirmed (per 100k),19.895,0.116,0.005849,115.935,2,0,2,0
+"Queensland, Australia",,Confirmed (per 100k),19.842,0.114,0.005771,117.826,2,0,2,0
+"Manitoba, Canada",,Confirmed (per 100k),18.439,0.104,0.005624,119.845,2,0,2,-1
+"Prince Edward Island, Canada",,Confirmed (per 100k),16.439,0.090326,0.005495,123.726,2,0,2,0
+"New Brunswick, Canada",,Confirmed (per 100k),15.128,0.091576,0.006053,112.497,2,0,2,0
+Uruguay,,Confirmed (per 100k),14.883,0.057575,0.003868,172.346,2,0,2,0
+Lebanon,,Confirmed (per 100k),9.860,0.111,0.011250,59.342,2,0,2,0
+Honduras,,Confirmed (per 100k),4.765,0.093751,0.019673,31.014,2,0,2,0
+Cameroon,,Confirmed (per 100k),3.831,0.106,0.027672,21.977,2,0,2,0
+Iraq,,Confirmed (per 100k),3.826,0.069258,0.018101,35.106,2,0,2,0
+Burkina Faso,,Confirmed (per 100k),2.756,0.055357,0.020089,31.588,2,0,2,0
+Niger,,Confirmed (per 100k),2.677,0.087343,0.032628,18.675,2,0,2,0
+Guinea-Bissau,,Confirmed (per 100k),2.541,0.058072,0.022857,24.692,2,0,2,0
+"Heilongjiang, China",,Confirmed (per 100k),2.370,0.087094,0.036748,16.782,2,0,2,0
+Senegal,,Confirmed (per 100k),2.192,0.061430,0.028026,20.937,2,0,2,0
+"Inner Mongolia, China",,Confirmed (per 100k),0.763,0.036717,0.048113,13.513,1,1,2,0
+Zambia,,Confirmed (per 100k),0.332,0.013210,0.039813,13.432,1,1,2,2
+Nigeria,,Confirmed (per 100k),0.304,0.015523,0.051037,8.694,1,1,2,0
+Central African Republic,,Confirmed (per 100k),0.248,0.011831,0.047619,13.167,1,1,2,0
+Syria,,Confirmed (per 100k),0.223,0.010612,0.047619,11.433,1,1,2,0
+Zimbabwe,,Confirmed (per 100k),0.168,0.010573,0.062857,8.660,1,1,2,-1
+Brunei,,Confirmed (per 100k),31.544,0.032655,0.001035,660.223,1,0,1,1
+"South Australia, Australia",,Confirmed (per 100k),24.765,0.048798,0.001970,349.346,1,0,1,-1
+"Korea, South",,Confirmed (per 100k),20.794,0.048205,0.002318,296.565,1,0,1,-1
+"Hong Kong, China",,Confirmed (per 100k),13.973,0.046740,0.003345,204.825,1,0,1,-1
+Trinidad and Tobago,,Confirmed (per 100k),8.146,0.020416,0.002506,275.179,1,0,1,-1
+Jordan,,Confirmed (per 100k),4.087,0.044804,0.010963,60.303,1,0,1,0
+Thailand,,Confirmed (per 100k),3.961,0.044003,0.011108,59.267,1,0,1,-1
+"Shanghai, China",,Confirmed (per 100k),2.626,0.043129,0.016423,40.947,1,0,1,0
+Fiji,,Confirmed (per 100k),1.896,0.015936,0.008403,79.365,1,0,1,0
+Hong Kong,,Confirmed (per 100k),1.568,0.035055,0.022360,28.110,1,0,1,0
+Sri Lanka,,Confirmed (per 100k),1.266,0.037360,0.029520,19.876,1,0,1,0
+Rwanda,,Confirmed (per 100k),1.135,0.026471,0.023324,27.031,1,0,1,0
+Eritrea,,Confirmed (per 100k),1.100,0.020141,0.018315,33.755,1,0,1,1
+Togo,,Confirmed (per 100k),1.015,0.013805,0.013605,48.086,1,0,1,0
+Venezuela,,Confirmed (per 100k),0.900,0.026124,0.029018,18.193,1,0,1,0
+Botswana,,Confirmed (per 100k),0.850,0.012150,0.014286,33.270,1,0,1,0
+Kenya,,Confirmed (per 100k),0.502,0.018863,0.037566,15.154,1,0,1,0
+Haiti,,Confirmed (per 100k),0.412,0.013781,0.033435,17.421,1,0,1,0
+Mozambique,,Confirmed (per 100k),0.125,0.006856,0.054945,8.845,0,1,1,0
+Ethiopia,,Confirmed (per 100k),0.093943,0.004473,0.047619,11.299,0,1,1,0
+"Beijing, China",,Confirmed (per 100k),2.731,0.002632,0.000964,716.368,0,0,0,0
+"Zhejiang, China",,Confirmed (per 100k),2.241,0.000253,0.000113,6149.948,0,0,0,0
+Taiwan*,,Confirmed (per 100k),1.763,0.007798,0.004422,146.654,0,0,0,0
+"Guangdong, China",,Confirmed (per 100k),1.415,0.003965,0.002803,244.804,0,0,0,0
+"Tianjin, China",,Confirmed (per 100k),1.214,0.005505,0.004535,149.951,0,0,0,0
+"Fujian, China",,Confirmed (per 100k),0.908,0.001461,0.001610,428.018,0,0,0,0
+"Jiangsu, China",,Confirmed (per 100k),0.813,0.000356,0.000438,1582.802,0,0,0,0
+"Shandong, China",,Confirmed (per 100k),0.787,0.000571,0.000726,951.171,0,0,0,0
+"Sichuan, China",,Confirmed (per 100k),0.676,0.000172,0.000255,2717.484,0,0,0,0
+"Shanxi, China",,Confirmed (per 100k),0.535,0.008924,0.016679,36.118,0,0,0,-1
+Madagascar,,Confirmed (per 100k),0.437,0.009286,0.021251,29.611,0,0,0,-1
+"Hebei, China",,Confirmed (per 100k),0.436,0.000190,0.000436,1586.960,0,0,0,0
+"Jilin, China",,Confirmed (per 100k),0.383,0.002103,0.005495,122.167,0,0,0,0
+"Liaoning, China",,Confirmed (per 100k),0.334,0.000654,0.001957,351.772,0,0,0,0
+Vietnam,,Confirmed (per 100k),0.275,0.001468,0.005330,128.856,0,0,0,0
+Taiwan,,Confirmed (per 100k),0.189,0.002999,0.015873,41.796,0,0,0,0
+Uganda,,Confirmed (per 100k),0.122,0.000937,0.007653,88.607,0,0,0,0
+Malawi,,Confirmed (per 100k),0.088866,0.003734,0.042017,15.039,0,0,0,-1
+Angola,,Confirmed (per 100k),0.073023,0.002173,0.029762,18.782,0,0,0,0
