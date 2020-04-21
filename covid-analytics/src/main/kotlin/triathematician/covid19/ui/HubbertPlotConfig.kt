@@ -8,7 +8,7 @@ import java.lang.Math.pow
 /** Additional config for Hubbert plot. */
 class HubbertPlotConfig(var onChange: () -> Unit = {}) {
     var logPeakValue: Number by property(3.0)
-    val peakValue: Number
+    val peakValue: Double
         get() = pow(10.0, logPeakValue.toDouble())
     val showPeakCurve = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
 

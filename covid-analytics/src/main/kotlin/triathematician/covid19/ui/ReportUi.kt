@@ -12,7 +12,6 @@ import triathematician.covid19.sources.IhmeProjections
 import triathematician.timeseries.*
 import triathematician.util.DateRange
 import triathematician.util.format
-import java.time.LocalDate
 
 class TimeSeriesReportApp : App(TimeSeriesReportAppView::class)
 
@@ -23,67 +22,76 @@ fun main(args: Array<String>) {
 /** View configuration for the app. */
 class TimeSeriesReportAppView : View() {
 
-    private val plotConfig = PlotConfig { updateHistoricalPlot(); updateHubbertPlot() }
-    private val hubbertPlotConfig = HubbertPlotConfig { updateHubbertPlot() }
-    private val projectionPlotConfig = ProjectionPlotConfig { updateProjectionPlot() }
+    private val plotConfig = PlotConfig { updateHistoricalPlot(); updateHistoricalHubbert() }
+    private val hubbertPlotConfig = HubbertPlotConfig { updateHistoricalPlot(); updateHistoricalHubbert() }
+    private val projectionConfig = ProjectionPlotConfig { updateProjections() }
 
     private lateinit var historicalChart: LineChart<Number, Number>
     private lateinit var hubbertChart: LineChart<Number, Number>
+
     private lateinit var projectionChart: LineChart<Number, Number>
+    private lateinit var projectionHubbert: LineChart<Number, Number>
     private lateinit var projectionChartChange: LineChart<Number, Number>
     private lateinit var projectionChartDays: LineChart<Number, Number>
 
+    //region UI LAYOUT
+
     override val root = vbox {
-        splitpane {
+        drawer {
             vgrow = Priority.ALWAYS
-            drawer {
-                item("Historical Data", expanded = true) {
-                    dataConfigForm()
-                }
-                item("Projections") {
-                    projectionConfigForm()
+            item("Historical Data", expanded = true) {
+                splitpane {
+                    dataForm()
+                    vbox {
+                        historicalChart = linechart("Historical Data",
+                                NumberAxis().apply { label = "Day" },
+                                NumberAxis().apply {
+                                    label = "Count"
+                                }) {
+                            animated = false
+                            createSymbols = false
+                        }
+                        hubbertChart = linechart("Percent Growth vs Total",
+                                NumberAxis().apply { label = "Total" },
+                                NumberAxis().apply {
+                                    label = "Percent Growth"
+                                    isAutoRanging = false
+                                    lowerBound = 0.0
+                                    tickUnit = 0.05
+                                    upperBound = 0.3
+                                }) {
+                            animated = false
+                            createSymbols = false
+                            axisSortingPolicy = LineChart.SortingPolicy.NONE
+                        }
+                    }
                 }
             }
-            drawer {
-                item("Historical Data", expanded = true) {
-                    historicalChart = linechart("Historical Data",
-                            NumberAxis().apply { label = "Day" },
-                            NumberAxis().apply {
-                                label = "Count"
-                            }) {
-                        animated = false
-                        createSymbols = false
+            item("Projections") {
+                splitpane {
+                    projectionForm()
+                    gridpane {
+                        row {
+                            projectionChart = linechart("Projections", "Day (or Day of Projection)", "Projection" )
+                            projectionChartChange = linechart("Projected Change per Day", "Day", "Projection")
+                        }
+                        row {
+                            projectionHubbert = linechart("Percent Growth vs Total",
+                                    NumberAxis().apply { label = "Total" },
+                                    NumberAxis().apply {
+                                        label = "Percent Growth"
+                                        isAutoRanging = false
+                                        lowerBound = 0.0
+                                        tickUnit = 0.05
+                                        upperBound = 0.3
+                                    }) {
+                                animated = false
+                                createSymbols = false
+                                axisSortingPolicy = LineChart.SortingPolicy.NONE
+                            }
+                            projectionChartDays = linechart("Projected Days to Peak", "Day of Projection", "Projection")
+                        }
                     }
-                    hubbertChart = linechart("Percent Growth vs Total",
-                            NumberAxis().apply { label = "Total" },
-                            NumberAxis().apply {
-                                label = "Percent Growth"
-                                isAutoRanging = false
-                                lowerBound = 0.0
-                                tickUnit = 0.05
-                                upperBound = 0.3
-                            }) {
-                        animated = false
-                        createSymbols = false
-                        axisSortingPolicy = LineChart.SortingPolicy.NONE
-                    }
-                }
-                item("Projections") {
-                    projectionChart = linechart("Projections",
-                            NumberAxis().apply { label = "Day (or Day of Projection)" },
-                            NumberAxis().apply {
-                                label = "Projection"
-                            })
-                    projectionChartChange = linechart("Projected Change per Day",
-                            NumberAxis().apply { label = "Day" },
-                            NumberAxis().apply {
-                                label = "Projection"
-                            })
-                    projectionChartDays = linechart("Projected Days to Peak",
-                            NumberAxis().apply { label = "Day of Projection" },
-                            NumberAxis().apply {
-                                label = "Projection"
-                            })
                 }
             }
         }
@@ -98,7 +106,7 @@ class TimeSeriesReportAppView : View() {
     }
 
     /** Main configuration panel. */
-    fun EventTarget.dataConfigForm() = form {
+    fun EventTarget.dataForm() = form {
         fieldset("Regions") {
             field("Region Category") {
                 combobox(plotConfig.selectedRegionType, plotConfig.regionTypes)
@@ -133,69 +141,87 @@ class TimeSeriesReportAppView : View() {
         fieldset("Growth Plot") {
             field("Peak Curve") {
                 checkbox("show").bind(hubbertPlotConfig.showPeakCurve)
-                slider(-2.0..8.0) {
-                    blockIncrement = 0.01
-                }.bind(hubbertPlotConfig.logPeakValueProperty)
+                slider(-2.0..8.0) { blockIncrement = 0.01 }.bind(hubbertPlotConfig.logPeakValueProperty)
             }
         }
     }
 
     /** Projection configuration panel. */
-    fun EventTarget.projectionConfigForm() = form {
-        fieldset("Logistic Projection") {
+    fun EventTarget.projectionForm() = form {
+        fieldset("Region/Metric") {
             field("Region") {
-                textfield().bind(projectionPlotConfig.regionProperty)
+                textfield().bind(projectionConfig._region)
             }
+            field("Metric") {
+                combobox(projectionConfig._selectedRegion, METRIC_OPTIONS)
+            }
+            field("IHME Projections") {
+                checkbox("Show").bind(projectionConfig._showIhme)
+            }
+        }
+        fieldset("Projection (Manual)") {
+            label("This will let you manually adjust model parameters to fit visually.")
+            field("Model") {
+                checkbox("Show").bind(projectionConfig._showManual)
+                combobox(projectionConfig._manualModel, SIGMOID_MODELS)
+                checkbox("Show R^2").bind(projectionConfig._showR2)
+            }
+            field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(projectionConfig._l) }
+            field("k (steepness)") { slider(0.01..5.0) { blockIncrement = 0.01 }.bind(projectionConfig._k) }
+            field("x0 (midpoint)") { slider(-50.0..250.0) { blockIncrement = 0.01 }.bind(projectionConfig._x0) }
+            field("v (exponent)") { slider(-5.0..5.0) { blockIncrement = 0.01 }.bind(projectionConfig._v) }
+        }
+        fieldset("Projection (Fit)") {
+            label("This will let you automatically adjust model parameters for best statistical fit.")
+            field("Model") {
+                checkbox("Show").bind(projectionConfig._showFit)
+                combobox(projectionConfig._fitModel, SIGMOID_MODELS)
+            }
+        }
+        fieldset("Projection History") {
+            label("This will let you generate projections for data in the past to assess the model.")
             field("Moving Average (days)") {
-                editableSpinner(1..21).bind(projectionPlotConfig.movingAverageProperty)
+                editableSpinner(1..21).bind(projectionConfig._movingAverage)
             }
             field("# of Days for Fit") {
-                editableSpinner(3..99).bind(projectionPlotConfig.predictionDaysProperty)
+                editableSpinner(3..99).bind(projectionConfig._projectionDays)
             }
         }
     }
+
+    //endregion
 
     //region CHART UPDATERS
 
     /** Plot counts by date. */
     private fun updateHistoricalPlot() {
-        var metrics = plotConfig.historicalData()
-        if (plotConfig.bucket != 1) {
-            metrics = metrics.map { it.movingAverage(plotConfig.bucket) }.toSet()
-        }
+        val (domain, series) = plotConfig.historicalDataSeries()
 
-        val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
+        historicalChart.dataSeries = series
+        historicalChart.lineWidth = lineChartWidthForCount(series.size)
 
-        historicalChart.data.clear()
-        metrics.map { series ->
-            val values = domain.mapIndexed { i, d -> xy(i, if (plotConfig.perDay) series[d] - series[d.minusDays(1L)] else series[d]) }
-            historicalChart.series(series.id, values.asObservable())
+        if (hubbertPlotConfig.showPeakCurve.get() && plotConfig.perDay) {
+            val peak = hubbertPlotConfig.peakValue
+            val peakSeries = domain.mapIndexed { i, d -> xy(i, peak) }
+            val label = "Peak at " + if (peak >= 10.0) peak.toInt() else if (peak >= 1.0) peak.format(1) else peak.format(2)
+            historicalChart.series(label, peakSeries.asObservable()).also {
+                it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
+            }
         }
-        historicalChart.setLineWidth(lineChartWidthForCount(plotConfig.regionLimit))
     }
 
     /** Plot growth vs. total. */
-    private fun updateHubbertPlot() {
-        val metrics = plotConfig.historicalData()
-
-        val totals = metrics.map { it.id to it.movingAverage(7) }.toMap()
-        val growths = metrics.map { it.id to it.movingAverage(7).growthPercentages() }.toMap()
-
-        val domain = totals.values.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-
-        hubbertChart.data.clear()
-        totals.map { (id, series) ->
-            val values = domain.map { xy(totals[id]!![it], growths[id]!![it]) }
-            hubbertChart.series(id, values.asObservable())
-        }
-        hubbertChart.setLineWidth(lineChartWidthForCount(plotConfig.regionLimit))
+    private fun updateHistoricalHubbert() {
+        val series = plotConfig.hubbertDataSeries()
+        hubbertChart.dataSeries = series
+        hubbertChart.lineWidth = lineChartWidthForCount(series.size)
 
         if (hubbertPlotConfig.showPeakCurve.get()) {
-            val max = totals.values.map { it.lastValue }.max()
+            val max = series.mapNotNull { it.points.map { it.first.toDouble() }.max() }.max()
             if (max != null) {
-                val peak = hubbertPlotConfig.peakValue.toDouble()
+                val peak = hubbertPlotConfig.peakValue
                 val label = "Peak at " + if (peak >= 10.0) peak.toInt() else if (peak >= 1.0) peak.format(1) else peak.format(2)
-                val min = 0.3 / peak
+                val min = peak / 0.3
                 val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { xy(it, peak / it) }
                 hubbertChart.series(label, peakSeries.asObservable()).also {
                     it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
@@ -205,13 +231,14 @@ class TimeSeriesReportAppView : View() {
     }
 
     /** Plot projected curves: min/avg/max totals predicted by day for a single region. */
-    private fun updateProjectionPlot() {
-        val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionPlotConfig.region })
-                .filter { plotConfig.selectedMetric in it.metric }
+    private fun updateProjections() {
+        val metric = projectionConfig.selectedMetric
+        val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionConfig.region })
+                .filter { metric in it.metric }
                 .map { it.metric to it }.toMap()
         val domain = regionMetrics.values.dateRange
 
-        val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionPlotConfig.region }
+        val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionConfig.region }
                 .map { it.metric to it }.toMap()
         val ihmeDomain = ihmeProjections.values.dateRange
 
@@ -220,14 +247,17 @@ class TimeSeriesReportAppView : View() {
         projectionChart.data.clear()
         projectionChartChange.data.clear()
         projectionChartDays.data.clear()
+        projectionHubbert.data.clear()
 
         if (domain != null) {
+
+            // cumulative chart
             regionMetrics.filter { ("predicted" in it.key || "(" !in it.key) && "peak" !in it.key }
                     .map { series ->
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
                         projectionChart.series(series.key, values.asObservable())
                     }
-            if (plotConfig.selectedMetric == DEATHS) {
+            if (metric == DEATHS) {
                 ihmeProjections.filter { "change" !in it.key }
                         .map { series ->
                             val values = totalDomain!!.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
@@ -235,17 +265,18 @@ class TimeSeriesReportAppView : View() {
                             projectionChart.series(series.key, values.asObservable())
                         }
             }
-            regionMetrics.filter { it.key == plotConfig.selectedMetric }
-                    .map { series ->
-                        val values = domain.mapIndexed { i, d -> xy(i, series.value[d]-series.value[d.minusDays(1L)]) }
-                        projectionChartChange.series(series.key, values.asObservable())
-                    }
+
+            // change chart
+            regionMetrics[metric]!!.apply {
+                val values = domain.mapIndexed { i, d -> xy(i, get(d) - get(d.minusDays(1L))) }
+                projectionChartChange.series(metric, values.asObservable())
+            }
             regionMetrics.filter { "predicted peak" in it.key }
                     .map { series ->
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
                         projectionChartChange.series(series.key, values.asObservable())
                     }
-            if (plotConfig.selectedMetric == DEATHS) {
+            if (metric == DEATHS) {
                 ihmeProjections.filter { "change" in it.key }
                         .map { series ->
                             val values = totalDomain!!.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
@@ -253,6 +284,12 @@ class TimeSeriesReportAppView : View() {
                             projectionChartChange.series(series.key, values.asObservable())
                         }
             }
+
+            // hubbert chart
+            val hubbert = regionMetrics[metric]!!.hubbertSeries(7)
+            projectionHubbert.dataSeries = listOf(DataSeries(hubbert.first.id, domain.map { hubbert.first[it] to hubbert.second[it] }))
+
+            // peak days chart
             regionMetrics.filter { "days" in it.key }
                     .map { series ->
                         val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
@@ -260,7 +297,7 @@ class TimeSeriesReportAppView : View() {
                     }
         }
 
-        listOf(projectionChart, projectionChartChange, projectionChartDays).forEach { chart ->
+        listOf(projectionChart, projectionChartChange, projectionChartDays, projectionHubbert).forEach { chart ->
             chart.animated = false
             chart.data.forEach {
                 if ("predicted" in it.name || "ihme" in it.name) {
@@ -271,13 +308,30 @@ class TimeSeriesReportAppView : View() {
         }
     }
 
+    //endregion
+
+    //region UTILS
+
+    private fun EventTarget.linechart(title: String, xTitle: String, yTitle: String): LineChart<Number, Number> {
+        return linechart(title, NumberAxis().apply { label = xTitle }, NumberAxis().apply { label = yTitle })
+    }
+
     private fun xy(x: Number, y: Number) = XYChart.Data(x, y)
 
-    private fun LineChart<*, *>.setLineWidth(width: String) {
-        data.forEach {
-            it.nodeProperty().get().style = "-fx-stroke-width: $width"
+    private var LineChart<Number, Number>.dataSeries: List<DataSeries>
+        get() = listOf()
+        set(value) {
+            data.clear()
+            value.forEach {
+                series(it.id, it.points.map { xy(it.first, it.second) }.asObservable())
+            }
         }
-    }
+
+    private var LineChart<*, *>.lineWidth: String
+        get() = "1px"
+        set(value) = data.forEach {
+            it.nodeProperty().get().style = "-fx-stroke-width: $value"
+        }
 
     private fun lineChartWidthForCount(count: Int) = when {
         count <= 5 -> "2px"
