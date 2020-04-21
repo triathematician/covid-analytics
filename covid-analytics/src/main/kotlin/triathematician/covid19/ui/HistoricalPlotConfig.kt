@@ -124,7 +124,7 @@ class PlotConfig(var onChange: () -> Unit = {}) {
 
 /** Creates Hubbert series from monotonic metric. */
 fun MetricTimeSeries.hubbertSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
-    val totals = movingAverage(window)
+    val totals = movingAverage(window).restrictNumberOfStartingZerosTo(0)
     val growths = totals.growthPercentages()
     return totals to growths
 }

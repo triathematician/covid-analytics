@@ -6,7 +6,7 @@ import triathematician.covid19.US_COUNTY_ID_FILTER
 import triathematician.covid19.US_STATE_ID_FILTER
 import triathematician.population.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
-import triathematician.timeseries.changes
+import triathematician.timeseries.deltas
 import triathematician.timeseries.doublingTimes
 import triathematician.timeseries.movingAverage
 import triathematician.util.log
@@ -81,7 +81,7 @@ fun List<MetricTimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,
 
 /** Compute hotspot info given time series data. Uses average changes over the last N days. */
 fun MetricTimeSeries.hotspotPerCapitaInfo(averageDays: Int = 7, includePriorDays: Boolean = false): List<HotspotInfo> {
-    val changes = values.changes().movingAverage(averageDays)
+    val changes = values.deltas().movingAverage(averageDays)
     val doublings = values.movingAverage(averageDays).doublingTimes()
     val cleanId = id.removeSuffix(", US")
 

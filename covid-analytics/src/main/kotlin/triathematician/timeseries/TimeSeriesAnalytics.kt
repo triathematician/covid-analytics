@@ -5,12 +5,12 @@ import kotlin.math.max
 
 /** Sliding window of at least n entries. Results in (size-n+1) entries. */
 fun List<Double>.slidingWindow(n: Int, includePartialList: Boolean = false) = when {
-    includePartialList -> (n until size).map { subList(it - n, it) }
+    includePartialList -> (n..size).map { subList(it - n, it) }
     else -> indices.map { subList(max(0, it - n + 1), it + 1) }
 }
 
 /** Compute diffs between entries. */
-fun List<Double>.changes() = (1 until size).map { get(it) - get(it - 1) }
+fun List<Double>.deltas() = (1 until size).map { get(it) - get(it - 1) }
 /** Compute growth rates between entries (ratio of successive entries). Can produce infinity. */
 fun List<Double>.growthRates() = (1 until size).map { get(it) / get(it - 1) }
 /** Compute growth percentage between entries (ratio of change to total). */

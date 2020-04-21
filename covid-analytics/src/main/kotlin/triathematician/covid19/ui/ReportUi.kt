@@ -72,7 +72,7 @@ class TimeSeriesReportAppView : View() {
                     projectionForm()
                     gridpane {
                         row {
-                            projectionChart = linechart("Projections", "Day (or Day of Projection)", "Projection" )
+                            projectionChart = linechart("Projections", "Day (or Day of Projection)", "Projection")
                             projectionChartChange = linechart("Projected Change per Day", "Day", "Projection")
                         }
                         row {
@@ -167,9 +167,9 @@ class TimeSeriesReportAppView : View() {
                 checkbox("Show R^2").bind(projectionConfig._showR2)
             }
             field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(projectionConfig._l) }
-            field("k (steepness)") { slider(0.01..5.0) { blockIncrement = 0.01 }.bind(projectionConfig._k) }
+            field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(projectionConfig._k) }
             field("x0 (midpoint)") { slider(-50.0..250.0) { blockIncrement = 0.01 }.bind(projectionConfig._x0) }
-            field("v (exponent)") { slider(-5.0..5.0) { blockIncrement = 0.01 }.bind(projectionConfig._v) }
+            field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01 }.bind(projectionConfig._v) }
         }
         fieldset("Projection (Fit)") {
             label("This will let you automatically adjust model parameters for best statistical fit.")
@@ -233,68 +233,40 @@ class TimeSeriesReportAppView : View() {
     /** Plot projected curves: min/avg/max totals predicted by day for a single region. */
     private fun updateProjections() {
         val metric = projectionConfig.selectedMetric
-        val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionConfig.region })
-                .filter { metric in it.metric }
-                .map { it.metric to it }.toMap()
-        val domain = regionMetrics.values.dateRange
-
+        val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionConfig.region }).filter { metric in it.metric }
+        val mainSeries = regionMetrics.firstOrNull { it.metric == metric }
         val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionConfig.region }
-                .map { it.metric to it }.toMap()
-        val ihmeDomain = ihmeProjections.values.dateRange
 
+        val domain = regionMetrics.dateRange
+        val ihmeDomain = ihmeProjections.dateRange
         val totalDomain = if (domain != null) DateRange(domain.start, domain.endInclusive.plusDays(30)) else null
+
+        val manualProjection = if (domain != null && totalDomain != null) projectionConfig.manualProjection(totalDomain, domain.start) else null
 
         projectionChart.data.clear()
         projectionChartChange.data.clear()
         projectionChartDays.data.clear()
         projectionHubbert.data.clear()
 
-        if (domain != null) {
-
+        if (domain != null && totalDomain != null && mainSeries != null && manualProjection != null) {
             // cumulative chart
-            regionMetrics.filter { ("predicted" in it.key || "(" !in it.key) && "peak" !in it.key }
-                    .map { series ->
-                        val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
-                        projectionChart.series(series.key, values.asObservable())
-                    }
-            if (metric == DEATHS) {
-                ihmeProjections.filter { "change" !in it.key }
-                        .map { series ->
-                            val values = totalDomain!!.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
-                                    .filterNotNull()
-                            projectionChart.series(series.key, values.asObservable())
-                        }
-            }
+            projectionChart.dataSeries = listOf(DataSeries(domain, mainSeries), DataSeries(totalDomain, manualProjection)) +
+                    regionMetrics.filter { "predicted" in it.metric && "peak" !in it.metric }.map { DataSeries(domain, it) } +
+                    ihmeProjections.filter { metric == DEATHS && "change" !in it.metric }.map { DataSeries(totalDomain, ihmeDomain, it) }
 
             // change chart
-            regionMetrics[metric]!!.apply {
-                val values = domain.mapIndexed { i, d -> xy(i, get(d) - get(d.minusDays(1L))) }
-                projectionChartChange.series(metric, values.asObservable())
-            }
-            regionMetrics.filter { "predicted peak" in it.key }
-                    .map { series ->
-                        val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
-                        projectionChartChange.series(series.key, values.asObservable())
-                    }
-            if (metric == DEATHS) {
-                ihmeProjections.filter { "change" in it.key }
-                        .map { series ->
-                            val values = totalDomain!!.mapIndexed { i, d -> if (ihmeDomain != null && d in ihmeDomain) xy(i, series.value[d]) else null }
-                                    .filterNotNull()
-                            projectionChartChange.series(series.key, values.asObservable())
-                        }
-            }
+            projectionChartChange.dataSeries = listOf(DataSeries(domain, mainSeries.deltas()), DataSeries(totalDomain, manualProjection.deltas())) +
+                    regionMetrics.filter { "predicted peak" in it.id }.map { DataSeries(domain, it) } +
+                    ihmeProjections.filter { "change" in it.metric }.map { DataSeries(totalDomain, ihmeDomain, it) }
 
             // hubbert chart
-            val hubbert = regionMetrics[metric]!!.hubbertSeries(7)
-            projectionHubbert.dataSeries = listOf(DataSeries(hubbert.first.id, domain.map { hubbert.first[it] to hubbert.second[it] }))
+            projectionHubbert.dataSeries = listOf(mainSeries.hubbertSeries(7)).map { DataSeries(domain.plus(1, 0), it.first, it.second) } +
+                    listOf(manualProjection.hubbertSeries(1)).map { DataSeries(totalDomain.plus(1, 0), it.first, it.second) } +
+                    ihmeProjections.filter { metric == DEATHS && "change" !in it.metric }.map { it.hubbertSeries(1) }
+                            .map { DataSeries(totalDomain, ihmeDomain?.plus(1, 0), it.first, it.second) }
 
             // peak days chart
-            regionMetrics.filter { "days" in it.key }
-                    .map { series ->
-                        val values = domain.mapIndexed { i, d -> xy(i, series.value[d]) }
-                        projectionChartDays.series(series.key, values.asObservable())
-                    }
+            projectionChartDays.dataSeries = regionMetrics.filter { "days" in it.id }.map { DataSeries(domain, it) }
         }
 
         listOf(projectionChart, projectionChartChange, projectionChartDays, projectionHubbert).forEach { chart ->
@@ -302,7 +274,7 @@ class TimeSeriesReportAppView : View() {
             chart.data.forEach {
                 if ("predicted" in it.name || "ihme" in it.name) {
                     it.nodeProperty().get().style = "-fx-opacity: 0.5"
-                    it.data.forEach { it.node.isVisible = false }
+                    it.data.forEach { it.node?.isVisible = false }
                 }
             }
         }

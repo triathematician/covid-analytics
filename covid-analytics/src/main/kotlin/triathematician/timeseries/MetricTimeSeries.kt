@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric.
  * Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
-data class MetricTimeSeries(var id: String = "", var id2: String, var metric: String = "", var intSeries: Boolean, val defValue: Double = 0.0, var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
+data class MetricTimeSeries(var id: String = "", var id2: String = "", var metric: String = "", var intSeries: Boolean, val defValue: Double = 0.0, var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
     constructor(id: String, id2: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double) : this(id, id2, metric, false, defValue, start, listOf(value))
     constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, id2, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
@@ -42,6 +42,9 @@ data class MetricTimeSeries(var id: String = "", var id2: String, var metric: St
 
     /** Return copy with moving averages. */
     fun movingAverage(bucket: Int) = copyAdjustingStartDay(values = values.movingAverage(bucket))
+
+    /** Return copy with deltas. */
+    fun deltas(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.deltas())
 
     /** Return copy with growth percentages. */
     fun growthPercentages(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.growthPercentages(), intSeries = false)

@@ -3,11 +3,20 @@ package triathematician.covid19.ui
 import org.apache.commons.math3.special.Erf.erf
 import tornadofx.getProperty
 import tornadofx.property
+import triathematician.timeseries.MetricTimeSeries
+import triathematician.util.DateRange
+import triathematician.util.minus
+import java.lang.IllegalStateException
+import java.time.LocalDate
 import kotlin.math.exp
 import kotlin.math.pow
 import kotlin.reflect.KMutableProperty1
 
-val SIGMOID_MODELS = listOf("Logistic", "General Logistic", "Gaussian", "Gompertz")
+const val LOGISTIC = "Logistic"
+const val GEN_LOGISTIC = "General Logistic"
+const val GAUSSIAN = "Gaussian"
+const val GOMPERTZ = "Gompertz"
+val SIGMOID_MODELS = listOf(LOGISTIC, GEN_LOGISTIC, GAUSSIAN, GOMPERTZ)
 
 /** Config for logistic projection. */
 class ProjectionPlotConfig(var onChange: () -> Unit = {}) {
@@ -57,6 +66,19 @@ class ProjectionPlotConfig(var onChange: () -> Unit = {}) {
     val _projectionDays = property(ProjectionPlotConfig::projectionDays)
 
     //endregion
+
+    /** Generate time series function using given domain. */
+    fun manualProjection(domain: DateRange, zeroDay: LocalDate) = MetricTimeSeries(id = region, metric = "$selectedMetric (curve)",
+            intSeries = false, start = zeroDay, values = domain.map { it.minus(zeroDay) }.map { curve(it) })
+
+    /** Current curve value. */
+    private fun curve(x: Number) = when (manualModel) {
+        LOGISTIC -> logistic(x.toDouble())
+        GEN_LOGISTIC -> generalLogistic(x.toDouble())
+        GAUSSIAN -> gaussianErf(x.toDouble())
+        GOMPERTZ -> gompertz(x.toDouble())
+        else -> throw IllegalStateException()
+    }
 
     /** Compute logistic function at given # of days. */
     fun logistic(x: Double) = l / (1 + exp(-k * (x - x0)))
