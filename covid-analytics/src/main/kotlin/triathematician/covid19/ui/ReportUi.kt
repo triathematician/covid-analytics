@@ -5,13 +5,16 @@ import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.XYChart
 import javafx.scene.layout.Priority
+import javafx.util.StringConverter
 import tornadofx.*
 import triathematician.covid19.CovidTimeSeriesSources
 import triathematician.covid19.DEATHS
 import triathematician.covid19.sources.IhmeProjections
-import triathematician.timeseries.*
+import triathematician.timeseries.dateRange
 import triathematician.util.DateRange
 import triathematician.util.format
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class TimeSeriesReportApp : App(TimeSeriesReportAppView::class)
 
@@ -45,9 +48,7 @@ class TimeSeriesReportAppView : View() {
                     vbox {
                         historicalChart = linechart("Historical Data",
                                 NumberAxis().apply { label = "Day" },
-                                NumberAxis().apply {
-                                    label = "Count"
-                                }) {
+                                NumberAxis().apply { label = "Count" }) {
                             animated = false
                             createSymbols = false
                         }
@@ -198,6 +199,7 @@ class TimeSeriesReportAppView : View() {
         val (domain, series) = plotConfig.historicalDataSeries()
 
         historicalChart.dataSeries = series
+        (historicalChart.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
         historicalChart.lineWidth = lineChartWidthForCount(series.size)
 
         if (hubbertPlotConfig.showPeakCurve.get() && plotConfig.perDay) {
@@ -253,11 +255,13 @@ class TimeSeriesReportAppView : View() {
             projectionChart.dataSeries = listOf(DataSeries(domain, mainSeries), DataSeries(totalDomain, manualProjection)) +
                     regionMetrics.filter { "predicted" in it.metric && "peak" !in it.metric }.map { DataSeries(domain, it) } +
                     ihmeProjections.filter { metric == DEATHS && "change" !in it.metric }.map { DataSeries(totalDomain, ihmeDomain, it) }
+            (projectionChart.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
 
             // change chart
             projectionChartChange.dataSeries = listOf(DataSeries(domain, mainSeries.deltas()), DataSeries(totalDomain, manualProjection.deltas())) +
                     regionMetrics.filter { "predicted peak" in it.id }.map { DataSeries(domain, it) } +
                     ihmeProjections.filter { "change" in it.metric }.map { DataSeries(totalDomain, ihmeDomain, it) }
+            (projectionChartChange.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
 
             // hubbert chart
             projectionHubbert.dataSeries = listOf(mainSeries.hubbertSeries(7)).map { DataSeries(domain.plus(1, 0), it.first, it.second) } +
@@ -267,6 +271,7 @@ class TimeSeriesReportAppView : View() {
 
             // peak days chart
             projectionChartDays.dataSeries = regionMetrics.filter { "days" in it.id }.map { DataSeries(domain, it) }
+            (projectionChartDays.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
         }
 
         listOf(projectionChart, projectionChartChange, projectionChartDays, projectionHubbert).forEach { chart ->
@@ -274,6 +279,10 @@ class TimeSeriesReportAppView : View() {
             chart.data.forEach {
                 if ("predicted" in it.name || "ihme" in it.name) {
                     it.nodeProperty().get().style = "-fx-opacity: 0.5"
+                    it.data.forEach { it.node?.isVisible = false }
+                }
+                if ("curve" in it.name) {
+                    it.nodeProperty().get().style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
                     it.data.forEach { it.node?.isVisible = false }
                 }
             }
@@ -310,6 +319,11 @@ class TimeSeriesReportAppView : View() {
         count <= 10 -> "1.5px"
         count <= 20 -> "1px"
         else -> "0.8px"
+    }
+
+    private fun axisLabeler(day0: LocalDate) = object : StringConverter<Number>() {
+        override fun toString(i: Number) = day0.plusDays(i.toLong()).format(DateTimeFormatter.ofPattern("M/d"))
+        override fun fromString(s: String): Number = TODO()
     }
 
     //endregion

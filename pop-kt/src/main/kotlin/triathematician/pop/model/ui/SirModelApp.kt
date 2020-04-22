@@ -12,9 +12,7 @@ import java.util.*
 
 class SirModelApp: App(SirModelAppView::class)
 
-class InitialValues {
-    var onChange: () -> Unit = {}
-
+class InitialValues(var onChange: () -> Unit = {}) {
     var s by property(99997)
     val sProperty = getProperty(InitialValues::s).also {
         it.addListener { _ -> onChange() }
@@ -33,9 +31,7 @@ class InitialValues {
     }
 }
 
-class Rates {
-    var onChange: () -> Unit = {}
-
+class Rates(var onChange: () -> Unit = {}) {
     var beta: Number by property(0.25)
     val betaProperty = getProperty(Rates::beta).also {
         it.addListener { _ -> onChange() }
@@ -60,8 +56,8 @@ class Results {
 
 class SirModelAppView: View() {
 
-    val inits = InitialValues().apply { onChange = { updateResults() } }
-    val vals = Rates().apply { onChange = { updateResults() } }
+    val inits = InitialValues { updateResults() }
+    val vals = Rates { updateResults() }
     val results = Results()
 
     private var updateTimer: Timer? = null
