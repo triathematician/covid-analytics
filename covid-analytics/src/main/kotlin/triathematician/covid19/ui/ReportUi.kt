@@ -7,11 +7,6 @@ import javafx.scene.chart.XYChart
 import javafx.scene.layout.Priority
 import javafx.util.StringConverter
 import tornadofx.*
-import triathematician.covid19.CovidTimeSeriesSources
-import triathematician.covid19.DEATHS
-import triathematician.covid19.sources.IhmeProjections
-import triathematician.timeseries.dateRange
-import triathematician.util.DateRange
 import triathematician.util.format
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -44,7 +39,7 @@ class TimeSeriesReportAppView : View() {
             vgrow = Priority.ALWAYS
             item("Historical Data", expanded = true) {
                 splitpane {
-                    dataForm()
+                    historicalDataForm()
                     vbox {
                         historicalChart = linechart("Historical Data",
                                 NumberAxis().apply { label = "Day" },
@@ -107,7 +102,7 @@ class TimeSeriesReportAppView : View() {
     }
 
     /** Main configuration panel. */
-    fun EventTarget.dataForm() = form {
+    fun EventTarget.historicalDataForm() = form {
         fieldset("Regions") {
             field("Region Category") {
                 combobox(plotConfig.selectedRegionType, plotConfig.regionTypes)
@@ -150,33 +145,34 @@ class TimeSeriesReportAppView : View() {
     /** Projection configuration panel. */
     fun EventTarget.projectionForm() = form {
         fieldset("Region/Metric") {
-            field("Region") {
-                textfield().bind(projectionConfig._region)
-            }
-            field("Metric") {
-                combobox(projectionConfig._selectedRegion, METRIC_OPTIONS)
-            }
-            field("IHME Projections") {
-                checkbox("Show").bind(projectionConfig._showIhme)
-            }
+            field("Region") { textfield().bind(projectionConfig._region) }
+            field("Metric") { combobox(projectionConfig._selectedRegion, METRIC_OPTIONS) }
         }
         fieldset("Projection (Manual)") {
-            label("This will let you manually adjust model parameters to fit visually.")
+            label("Manually adjust model parameters to fit visually.")
             field("Model") {
                 checkbox("Show").bind(projectionConfig._showManual)
                 combobox(projectionConfig._manualModel, SIGMOID_MODELS)
-                checkbox("Show R^2").bind(projectionConfig._showR2)
+//                checkbox("Show R^2").bind(projectionConfig._showR2)
             }
             field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(projectionConfig._l) }
             field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(projectionConfig._k) }
             field("x0 (midpoint)") { slider(-50.0..250.0) { blockIncrement = 0.01 }.bind(projectionConfig._x0) }
-            field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01 }.bind(projectionConfig._v) }
+            field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01; enableWhen(projectionConfig._vActive) }.bind(projectionConfig._v) }
+            field("Equation") { label("").bind(projectionConfig._manualEquation) }
+            field("Peak") { label("").bind(projectionConfig._manualPeak) }
+            field("Fit") { label("").bind(projectionConfig._manualDeltaStdErr); label("").bind(projectionConfig._manualLogCumStdErr) }
         }
         fieldset("Projection (Fit)") {
             label("This will let you automatically adjust model parameters for best statistical fit.")
             field("Model") {
                 checkbox("Show").bind(projectionConfig._showFit)
                 combobox(projectionConfig._fitModel, SIGMOID_MODELS)
+            }
+        }
+        fieldset("Other Projections") {
+            field("IHME Projections") {
+                checkbox("Show").bind(projectionConfig._showIhme)
             }
         }
         fieldset("Projection History") {
@@ -234,44 +230,17 @@ class TimeSeriesReportAppView : View() {
 
     /** Plot projected curves: min/avg/max totals predicted by day for a single region. */
     private fun updateProjections() {
-        val metric = projectionConfig.selectedMetric
-        val regionMetrics = CovidTimeSeriesSources.dailyReports({ it == projectionConfig.region }).filter { metric in it.metric }
-        val mainSeries = regionMetrics.firstOrNull { it.metric == metric }
-        val ihmeProjections = IhmeProjections.allProjections.filter { it.id == projectionConfig.region }
+        projectionChart.dataSeries = projectionConfig.cumulativeDataSeries()
+        projectionChartChange.dataSeries = projectionConfig.dailyDataSeries()
+        projectionHubbert.dataSeries = projectionConfig.hubbertDataSeries()
+        projectionChartDays.dataSeries = projectionConfig.peakDataSeries()
 
-        val domain = regionMetrics.dateRange
-        val ihmeDomain = ihmeProjections.dateRange
-        val totalDomain = if (domain != null) DateRange(domain.start, domain.endInclusive.plusDays(30)) else null
-
-        val manualProjection = if (domain != null && totalDomain != null) projectionConfig.manualProjection(totalDomain, domain.start) else null
-
-        projectionChart.data.clear()
-        projectionChartChange.data.clear()
-        projectionChartDays.data.clear()
-        projectionHubbert.data.clear()
-
-        if (domain != null && totalDomain != null && mainSeries != null && manualProjection != null) {
-            // cumulative chart
-            projectionChart.dataSeries = listOf(DataSeries(domain, mainSeries), DataSeries(totalDomain, manualProjection)) +
-                    regionMetrics.filter { "predicted" in it.metric && "peak" !in it.metric }.map { DataSeries(domain, it) } +
-                    ihmeProjections.filter { metric == DEATHS && "change" !in it.metric }.map { DataSeries(totalDomain, ihmeDomain, it) }
-            (projectionChart.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
-
-            // change chart
-            projectionChartChange.dataSeries = listOf(DataSeries(domain, mainSeries.deltas()), DataSeries(totalDomain, manualProjection.deltas())) +
-                    regionMetrics.filter { "predicted peak" in it.id }.map { DataSeries(domain, it) } +
-                    ihmeProjections.filter { "change" in it.metric }.map { DataSeries(totalDomain, ihmeDomain, it) }
-            (projectionChartChange.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
-
-            // hubbert chart
-            projectionHubbert.dataSeries = listOf(mainSeries.hubbertSeries(7)).map { DataSeries(domain.plus(1, 0), it.first, it.second) } +
-                    listOf(manualProjection.hubbertSeries(1)).map { DataSeries(totalDomain.plus(1, 0), it.first, it.second) } +
-                    ihmeProjections.filter { metric == DEATHS && "change" !in it.metric }.map { it.hubbertSeries(1) }
-                            .map { DataSeries(totalDomain, ihmeDomain?.plus(1, 0), it.first, it.second) }
-
-            // peak days chart
-            projectionChartDays.dataSeries = regionMetrics.filter { "days" in it.id }.map { DataSeries(domain, it) }
-            (projectionChartDays.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
+        projectionConfig.domain?.let {
+            with(axisLabeler(it.start)) {
+                (projectionChart.xAxis as NumberAxis).tickLabelFormatter = this
+                (projectionChartChange.xAxis as NumberAxis).tickLabelFormatter = this
+                 (projectionChartDays.xAxis as NumberAxis).tickLabelFormatter = this
+            }
         }
 
         listOf(projectionChart, projectionChartChange, projectionChartDays, projectionHubbert).forEach { chart ->

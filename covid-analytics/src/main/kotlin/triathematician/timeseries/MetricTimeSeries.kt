@@ -21,6 +21,8 @@ data class MetricTimeSeries(var id: String = "", var id2: String = "", var metri
         get() = values.lastOrNull() ?: 0.0
     val firstPositiveDate: LocalDate
         get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
+    val dateRange: DateRange
+        get() = DateRange(firstPositiveDate, end)
     val end: LocalDate
         get() = start.plusDays((values.size - 1).toLong())
     val valuesAsMap: Map<LocalDate, Double>
