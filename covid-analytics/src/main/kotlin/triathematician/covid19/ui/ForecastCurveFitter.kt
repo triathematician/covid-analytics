@@ -14,7 +14,6 @@ import org.apache.commons.math3.special.Erf
 import tornadofx.Vector2D
 import tornadofx.property
 import triathematician.timeseries.MetricTimeSeries
-import triathematician.util.DateRange
 import kotlin.math.exp
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -46,6 +45,9 @@ class ForecastCurveFitter: (Number) -> Double {
             GOMPERTZ -> String.format("%.2f * e^(-e^(-%.2f (x - %.2f)))", l, k, x0)
             else -> throw IllegalStateException()
         }
+
+    var days: Number by property(21)
+    var day0: Number by property(0)
 
     //endregion
 
@@ -129,9 +131,11 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param series the series to fit
      * @param range range of dates to use for fitting
      */
-    fun autofitCumulativeSE(series: MetricTimeSeries, range: DateRange) {
+    fun autofitCumulativeSE(series: MetricTimeSeries) {
+        val domain = series.dateRange.shift(day0.toInt(), day0.toInt()).tail(days.toInt())
+
         val observedPoints = series.values.mapIndexed { i, v -> series.date(i) to Vector2D(i.toDouble(), v) }
-                .filter { it.first in range }.map { it.second }
+                .filter { it.first in domain }.map { it.second }
         val observedTarget = observedPoints.map { it.y }.toDoubleArray()
 
         val problem = LeastSquaresBuilder()
@@ -145,8 +149,8 @@ class ForecastCurveFitter: (Number) -> Double {
                 .build()
 
         val optimum = LevenbergMarquardtOptimizer()
-                .withCostRelativeTolerance(1.0e-6)
-                .withParameterRelativeTolerance(1.0e-6)
+                .withCostRelativeTolerance(1.0e-9)
+                .withParameterRelativeTolerance(1.0e-9)
                 .optimize(problem)
 
         val optimalValues = optimum.point.toArray()

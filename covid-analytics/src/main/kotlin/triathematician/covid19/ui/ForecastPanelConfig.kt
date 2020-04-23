@@ -71,6 +71,9 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     internal val _x0 = forecastProperty(ForecastCurveFitter::x0)
     internal val _v = forecastProperty(ForecastCurveFitter::v)
 
+    internal val _autofitDay0 = forecastProperty(ForecastCurveFitter::day0).apply { addListener { _ -> autofit() }}
+    internal val _autofitDays = forecastProperty(ForecastCurveFitter::days).apply { addListener { _ -> autofit() }}
+
     internal val _movingAverage = property(ForecastPanelConfig::movingAverage)
     internal val _projectionDays = property(ForecastPanelConfig::projectionDays)
 
@@ -146,7 +149,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     /** Runs autofit using current config. */
     fun autofit() {
         mainSeries?.let {
-            curveFitter.autofitCumulativeSE(it, it.dateRange.tail(21))
+            curveFitter.autofitCumulativeSE(it)
         }
     }
 

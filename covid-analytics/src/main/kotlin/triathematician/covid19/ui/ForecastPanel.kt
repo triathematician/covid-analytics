@@ -42,6 +42,18 @@ class ForecastPanel : SplitPane() {
             field("Peak") { label("").bind(config._manualPeak) }
             field("Fit") { label("").bind(config._manualLogCumStdErr); label("").bind(config._manualDeltaStdErr) }
         }
+        fieldset("Curve Fitting") {
+            label("Fit curves to different ranges of historical data.")
+            button("Autofit") { action { config.autofit() } }
+            field("First Day for Fit") { slider(-60..0) {
+                blockIncrement = 1.0
+                isShowTickLabels = true
+            }.bind(config._autofitDay0) }
+            field("# Days for Fit") { slider(5..60) {
+                blockIncrement = 1.0
+                isShowTickLabels = true
+            }.bind(config._autofitDays) }
+        }
         fieldset("Other Forecasts") {
             label("View other forecasts")
             field("Statistical") {
