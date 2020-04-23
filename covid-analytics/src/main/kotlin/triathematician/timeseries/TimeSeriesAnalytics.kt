@@ -21,6 +21,3 @@ fun List<Double>.doublingTimes() = growthRates().map { 1/log2(it) }
 
 /** Compute average over n entries. The first n-1 entries have partial averages. */
 fun List<Double>.movingAverage(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.average() }
-
-/** Compute average of list of numbers. */
-fun List<Double>.average() = sumByDouble { it.toDouble() } / size

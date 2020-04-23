@@ -2,10 +2,8 @@ package triathematician.covid19.ui
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
-import tornadofx.asObservable
 import tornadofx.getProperty
 import tornadofx.property
-import tornadofx.series
 import triathematician.covid19.*
 import triathematician.covid19.countryData
 import triathematician.covid19.usCountyData
@@ -14,7 +12,6 @@ import triathematician.population.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.dateRange
 import triathematician.util.DateRange
-import triathematician.util.format
 import java.lang.IllegalStateException
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
@@ -25,7 +22,8 @@ const val COUNTIES = "US Counties"
 val METRIC_OPTIONS = listOf(CASES, DEATHS, RECOVERED, ACTIVE)
 
 /** Config for both plots. */
-class PlotConfig(var onChange: () -> Unit = {}) {
+class HistoryPanelConfig(var onChange: () -> Unit = {}) {
+
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES)
     var regionLimit by property(10)
     var minPopulation by property(100000)
@@ -47,12 +45,12 @@ class PlotConfig(var onChange: () -> Unit = {}) {
 
     private fun <T> property(prop: KMutableProperty1<*, T>) = getProperty(prop).apply { addListener { _ -> onChange() } }
 
-    val regionLimitProperty = property(PlotConfig::regionLimit)
-    val minPopulationProperty = property(PlotConfig::minPopulation)
-    val selectedMetricProperty = property(PlotConfig::selectedMetric)
-    val perCapitaProperty = property(PlotConfig::perCapita)
-    val perDayProperty = property(PlotConfig::perDay)
-    val bucketProperty = property(PlotConfig::bucket)
+    val regionLimitProperty = property(HistoryPanelConfig::regionLimit)
+    val minPopulationProperty = property(HistoryPanelConfig::minPopulation)
+    val selectedMetricProperty = property(HistoryPanelConfig::selectedMetric)
+    val perCapitaProperty = property(HistoryPanelConfig::perCapita)
+    val perDayProperty = property(HistoryPanelConfig::perDay)
+    val bucketProperty = property(HistoryPanelConfig::bucket)
 
     //endregion
 
@@ -98,26 +96,21 @@ class PlotConfig(var onChange: () -> Unit = {}) {
     //region
 
     /** Plot counts by date. */
-    fun historicalDataSeries(): Pair<DateRange, List<DataSeries>> {
+    internal fun historicalDataSeries(): Pair<DateRange, List<DataSeries>> {
         var metrics = historicalData()
         if (bucket != 1) {
-            metrics = metrics.map { it.movingAverage(bucket) }.toSet()
+            metrics = metrics.map { it.movingAverage(bucket, false) }.toSet()
         }
-
+        if (perDay) {
+            metrics = metrics.map { it.deltas() }.toSet()
+        }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return domain to metrics.map { series ->
-            DataSeries(series.id, domain.mapIndexed { i, d -> i to if (perDay) series[d] - series[d.minusDays(1L)] else series[d] })
-        }
+        return domain to metrics.mapNotNull { series(it.id, domain, it) }
     }
 
     /** Plot growth vs counts. */
-    fun hubbertDataSeries(): List<DataSeries> {
-        val hubbert = historicalData().map { it.hubbertSeries(7) }
-        val domain = hubbert.map { it.first }.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return hubbert.map { (totals, growths) ->
-            DataSeries(totals.id, domain.map { totals[it] to growths[it] })
-        }
-    }
+    internal fun hubbertDataSeries() = historicalData().map { it.hubbertSeries(7) }
+            .mapNotNull { series(it.first.id, it.first.dateRange.shift(1, 0), it.first, it.second) }
 
     //endregion
 }

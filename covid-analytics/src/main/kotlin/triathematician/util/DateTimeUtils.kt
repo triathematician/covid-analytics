@@ -1,6 +1,5 @@
 package triathematician.util
 
-import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -31,7 +30,18 @@ class DateIterator(startDate: LocalDate, val endDateInclusive: LocalDate): Itera
 
 data class DateRange(override var start: LocalDate, override var endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
     override fun iterator() = DateIterator(start, endInclusive)
-    fun plus(startDelta: Int, endDelta: Int) = DateRange(start + startDelta, endInclusive + endDelta)
+
+    /** Number of days in range. */
+    val size
+        get() = endInclusive - start + 1
+
+    /** Adds given number of days to start and end of range. */
+    fun shift(startDelta: Int, endDelta: Int) = DateRange(start + startDelta, endInclusive + endDelta)
+    /** Takes the last n days from the range. */
+    fun tail(n: Int) = when {
+        n > size -> shift(size.toInt() - n, 0)
+        else -> this
+    }
 }
 
 operator fun LocalDate.minus(other: LocalDate) = ChronoUnit.DAYS.between(other, this)

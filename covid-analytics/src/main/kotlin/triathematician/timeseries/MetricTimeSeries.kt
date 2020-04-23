@@ -24,10 +24,13 @@ data class MetricTimeSeries(var id: String = "", var id2: String = "", var metri
     val dateRange: DateRange
         get() = DateRange(firstPositiveDate, end)
     val end: LocalDate
-        get() = start.plusDays((values.size - 1).toLong())
+        get() = date(values.size - 1)
     val valuesAsMap: Map<LocalDate, Double>
-        get() = values.mapIndexed { i, d -> start.plusDays(i.toLong()) to d }.toMap()
+        get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
 
+    /** Get date by index. */
+    fun date(i: Int) = start.plusDays(i.toLong())
+    /** Get value on given date. */
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
 
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
@@ -35,7 +38,7 @@ data class MetricTimeSeries(var id: String = "", var id2: String = "", var metri
     //region DERIVED SERIES
 
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
-            = copy(metric = metric, start = start.plusDays((this.values.size - values.size).toLong()), values = values, intSeries = intSeries)
+            = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
 
     operator fun plus(n: Number): MetricTimeSeries = copy(values = values.map { it + n.toDouble() })
     operator fun minus(n: Number): MetricTimeSeries = copy(values = values.map { it - n.toDouble() })
@@ -43,7 +46,7 @@ data class MetricTimeSeries(var id: String = "", var id2: String = "", var metri
     operator fun div(n: Number): MetricTimeSeries = copy(values = values.map { it / n.toDouble() })
 
     /** Return copy with moving averages. */
-    fun movingAverage(bucket: Int) = copyAdjustingStartDay(values = values.movingAverage(bucket))
+    fun movingAverage(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingAverage(bucket, includePartialList))
 
     /** Return copy with deltas. */
     fun deltas(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.deltas())
