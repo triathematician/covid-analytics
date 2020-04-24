@@ -23,4 +23,16 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
 }.map { if (',' in it) "\"$it\"" else it }
         .joinToString(sep).log(ps, prefix)
 
+/** Format number with given number of digits. */
 internal fun Number.format(digits: Int) = "%.${digits}f".format(this)
+
+/** Format a number with digits for presenting to user. */
+internal fun Number.userFormat(): String {
+    val x = toDouble()
+    return when {
+        x >= 10.0 -> toInt().toString()
+        x >= 1.0 -> format(1)
+        x < 0.01 -> format(3)
+        else -> format(2)
+    }
+}

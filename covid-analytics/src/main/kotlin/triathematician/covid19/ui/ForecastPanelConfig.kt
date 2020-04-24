@@ -8,9 +8,8 @@ import triathematician.covid19.CovidTimeSeriesSources
 import triathematician.covid19.DEATHS
 import triathematician.covid19.sources.IhmeProjections
 import triathematician.timeseries.MetricTimeSeries
-import triathematician.timeseries.dateRange
 import triathematician.util.DateRange
-import triathematician.util.minus
+import triathematician.util.userFormat
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
 
@@ -20,6 +19,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     // region and metrics
     internal var region by property("US")
     internal var selectedMetric by property(METRIC_OPTIONS[0])
+    internal var smooth by property(true)
 
     // user forecast
     internal var showForecast by property(true)
@@ -56,6 +56,8 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
 
     internal val _region = property(ForecastPanelConfig::region)
     internal val _selectedRegion = property(ForecastPanelConfig::selectedMetric)
+    internal val _smooth = property(ForecastPanelConfig::smooth)
+
     internal val _showCu80 = property(ForecastPanelConfig::showCu80)
     internal val _showIhme = property(ForecastPanelConfig::showIhme)
     internal val _showLanl = property(ForecastPanelConfig::showLanl)
@@ -65,6 +67,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     internal val _showForecast = property(ForecastPanelConfig::showForecast)
     internal val _vActive = property(ForecastPanelConfig::vActive)
 
+    internal val _fitLabel = forecastProperty(ForecastCurveFitter::fitLabel)
     internal val _curve = forecastProperty(ForecastCurveFitter::curve)
     internal val _l = forecastProperty(ForecastCurveFitter::l)
     internal val _k = forecastProperty(ForecastCurveFitter::k)
@@ -79,75 +82,106 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
 
     //endregion
 
-    //region DATA SERIES
+    //region DATA FOR PROJECTION PLOT
 
-    /** All time series data for the region and selected metric. */
-    var regionMetrics = listOf<MetricTimeSeries>()
+    /** Domain for raw data. */
+    var domain: DateRange? = null
+
     /** The primary time series for the selected metric. */
     var mainSeries: MetricTimeSeries? = null
     /** User's projection. */
     var userForecast: MetricTimeSeries? = null
+
+    /** Past forecasts. */
+    var pastForecasts = PastForecasts()
     /** Other forecasts. */
-    var externalForecasts = listOf<MetricTimeSeries>()
-    /** Domain for raw data. */
-    var domain: DateRange? = null
-    /** Domain for projection data. */
-    var ihmeDomain: DateRange? = null
-    /** Domain for plotted data. */
-    var totalDomain: DateRange? = null
+    var externalForecasts = ExternalForecasts()
 
     private fun updateData() {
-        regionMetrics = CovidTimeSeriesSources.dailyReports({ it == region }).filter { selectedMetric in it.metric }
-        mainSeries = regionMetrics.firstOrNull { it.metric == selectedMetric }
-        externalForecasts = IhmeProjections.allProjections.filter { it.id == region }
+        val regionMetrics = CovidTimeSeriesSources.dailyReports(region, selectedMetric)
+        mainSeries = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
 
-        domain = mainSeries?.dateRange
-        ihmeDomain = externalForecasts.dateRange
-        totalDomain = domain?.let { DateRange(it.start, it.endInclusive.plusDays(30)) }
+        domain = mainSeries?.domain?.shift(0, 30)
 
-        userForecast = if (!showForecast) null else totalDomain?.let { forecastTimeSeries(it, it.start) }
+        val shift = if (smooth) -3.5 else 0.0
+        userForecast = when {
+            !showForecast -> null
+            domain == null -> null
+            else -> MetricTimeSeries(region, "", "$selectedMetric (curve)", false, 0.0, domain!!.start,
+                    domain!!.mapIndexed { i, _ -> curveFitter(i + shift) })
+        }
+
+        pastForecasts.metrics = regionMetrics.filter { "predicted" in it.metric || "peak" in it.metric }
+        externalForecasts.metrics = IhmeProjections.allProjections.filter { it.id == region }
     }
 
-    internal fun cumulativeDataSeries() = listOfNotNull(series(selectedMetric, domain, mainSeries), series(userForecast?.metric, totalDomain, userForecast)) +
-            regionMetrics.filter { "predicted" in it.metric && "peak" !in it.metric }.mapNotNull { series(it.metric, domain, it) } +
-            externalForecasts.filter { showIhme && selectedMetric == DEATHS && "change" !in it.metric }.mapNotNull { series(it.metric, totalDomain, ihmeDomain, it) }
+    /** Get day associated with given number. */
+    fun dayOf(x: Number) = domain?.start?.plusDays(x.toLong())
 
-    internal fun dailyDataSeries() = listOfNotNull(series(mainSeries?.metric, domain, mainSeries?.deltas()), series(userForecast?.metric, totalDomain, userForecast?.deltas())) +
-            regionMetrics.filter { "predicted peak" in it.id }.mapNotNull { series(it.metric, domain, it) } +
-            externalForecasts.filter { showIhme && "change" in it.metric }.mapNotNull { series(it.metric, totalDomain, ihmeDomain, it) }
+    //endregion
 
-    internal fun hubbertDataSeries() = listOfNotNull(mainSeries?.hubbertSeries(7)).mapNotNull { series(it.first.metric, domain?.shift(1, 0), it.first, it.second) } +
-            listOfNotNull(userForecast?.hubbertSeries(1)).mapNotNull { series(it.first.metric, totalDomain?.shift(1, 0), it.first, it.second) } +
-            externalForecasts.filter { showIhme && selectedMetric == DEATHS && "change" !in it.metric }.map { it.hubbertSeries(1) }
-                    .mapNotNull { series(it.first.metric, totalDomain, ihmeDomain?.shift(1, 0), it.first, it.second) }
+    //region SERIES BUILDERS
 
-    internal fun peakDataSeries() = regionMetrics.filter { "days" in it.id }.mapNotNull { series(it.metric, domain, it) }
+    internal fun cumulativeDataSeries() = dataseries {
+        series(mainSeries?.maybeSmoothed())
+        series(userForecast)
+        series(pastForecasts.cumulative)
+        series(externalForecasts.cumulative)
+    }
+
+    internal fun dailyDataSeries() = dataseries {
+        series(mainSeries?.deltas()?.maybeSmoothed())
+        series(userForecast?.deltas())
+        series(pastForecasts.deltas)
+        series(externalForecasts.deltas)
+    }
+
+    internal fun hubbertDataSeries() = dataseries {
+        series(mainSeries?.hubbertSeries(7))
+        series(userForecast?.hubbertSeries(1))
+        series(externalForecasts.cumulative.map { it.hubbertSeries(1) })
+    }
+
+    internal fun peakDataSeries() = dataseries {
+        series(pastForecasts.peakDays)
+    }
+
+    private fun dataseries(op: MutableList<ChartDataSeries>.() -> Unit) = mutableListOf<ChartDataSeries>().apply { op() }
+    private fun MutableList<ChartDataSeries>.series(s: MetricTimeSeries?) { series(listOfNotNull(s)) }
+    private fun MutableList<ChartDataSeries>.series(ss: List<MetricTimeSeries>) {
+        domain?.let { domain -> ss.forEach { this += series(it.metric, domain, it) } }
+    }
+    private fun MutableList<ChartDataSeries>.series(xy: Pair<MetricTimeSeries, MetricTimeSeries>?, idFirst: Boolean = true) { series(listOfNotNull(xy), idFirst) }
+    private fun MutableList<ChartDataSeries>.series(xyxy: List<Pair<MetricTimeSeries, MetricTimeSeries>>, idFirst: Boolean = true) {
+        domain?.let { domain -> xyxy.forEach { this += series(if (idFirst) it.first.metric else it.second.metric, domain, it.first, it.second) } }
+    }
+
+    private fun MetricTimeSeries.maybeSmoothed() = if (smooth) movingAverage(7) else this
 
     //endregion
 
     //region FORECAST CURVE
 
-    /** Generate time series function using given domain. */
-    fun forecastTimeSeries(domain: DateRange, zeroDay: LocalDate) = MetricTimeSeries(id = region, metric = "$selectedMetric (curve)",
-            intSeries = false, start = zeroDay, values = domain.map { it.minus(zeroDay) }.map { curveFitter(it) })
-
-    /** Updates equation label. */
+    /** Updates equation label whenever it changes. */
     private fun updateEquation() {
         _manualEquation.value = curveFitter.equation
         _manualPeak.value = try {
             val (x, y) = curveFitter.equationPeak()
-            String.format("%.2f", y) + " on day " + String.format("%.1f", x)
+            "${y.userFormat()} on day ${dayOf(x) ?: "?"}"
         } catch (x: NoBracketingException) {
             ""
         }
 
-        curveFitter.mainSeries = mainSeries
-        _manualLogCumStdErr.value = "SE = ${curveFitter.calcCumulativeSE} (totals, last 3 weeks)"
-        _manualDeltaStdErr.value = "SE = ${curveFitter.calcDeltaSE} (per day)"
+        val se1 = curveFitter.cumulativeStandardError(mainSeries, 0.0)
+        val se2 = curveFitter.deltaStandardError(mainSeries, 0.0)
+
+        _manualLogCumStdErr.value = "SE = ${se1?.userFormat() ?: "?"} (totals)"
+        _manualDeltaStdErr.value = "SE = ${se2?.userFormat() ?: "?"} (per day)"
     }
 
     /** Runs autofit using current config. */
     fun autofit() {
+        curveFitter.updateFitLabel(mainSeries?.end ?: LocalDate.now())
         mainSeries?.let {
             curveFitter.autofitCumulativeSE(it)
         }
@@ -155,4 +189,26 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
 
     //endregion
 
+    //region DATA MANAGEMENT
+
+    /** Provides access to past forecasts. */
+    class PastForecasts(var metrics: List<MetricTimeSeries> = listOf())
+    /** Provides access to external forecasts. */
+    class ExternalForecasts(var metrics: List<MetricTimeSeries> = listOf())
+
+    val PastForecasts.cumulative
+        get() = metrics.filter { "predicted" in it.metric && "peak" !in it.metric }
+    val PastForecasts.deltas
+        get() = metrics.filter { "predicted peak" in it.id }
+    val PastForecasts.peakDays
+        get() = metrics.filter { "days" in it.id }
+
+    val ExternalForecasts.cumulative
+        get() = metrics.filter { showIhme && selectedMetric == DEATHS && "change" !in it.metric }
+    val ExternalForecasts.deltas
+        get() = metrics.filter { showIhme && "change" in it.metric }
+
+    //endregion
+
 }
+

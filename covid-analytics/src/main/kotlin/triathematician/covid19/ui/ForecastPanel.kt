@@ -25,7 +25,7 @@ class ForecastPanel : SplitPane() {
     private fun EventTarget.configPanel() = form {
         fieldset("Region/Metric") {
             field("Region") { textfield().bind(config._region) }
-            field("Metric") { combobox(config._selectedRegion, METRIC_OPTIONS) }
+            field("Metric") { combobox(config._selectedRegion, METRIC_OPTIONS); checkbox("smooth").bind(config._smooth) }
         }
         fieldset("Forecast (S-Curve)") {
             label("Adjust curve parameters to fit data.")
@@ -43,16 +43,9 @@ class ForecastPanel : SplitPane() {
             field("Fit") { label("").bind(config._manualLogCumStdErr); label("").bind(config._manualDeltaStdErr) }
         }
         fieldset("Curve Fitting") {
-            label("Fit curves to different ranges of historical data.")
-            button("Autofit") { action { config.autofit() } }
-            field("First Day for Fit") { slider(-60..0) {
-                blockIncrement = 1.0
-                isShowTickLabels = true
-            }.bind(config._autofitDay0) }
-            field("# Days for Fit") { slider(5..60) {
-                blockIncrement = 1.0
-                isShowTickLabels = true
-            }.bind(config._autofitDays) }
+            label(config._fitLabel)
+            field("First Day for Fit") { intslider(-60..0) { isShowTickLabels = true }.bind(config._autofitDay0) }
+            field("# Days for Fit") { intslider(5..60) { isShowTickLabels = true }.bind(config._autofitDays) }
         }
         fieldset("Other Forecasts") {
             label("View other forecasts")
@@ -69,10 +62,10 @@ class ForecastPanel : SplitPane() {
         fieldset("Forecast History") {
             label("This will let you generate forecasts for data in the past to assess the model.")
             field("Moving Average (days)") {
-                editableSpinner(1..21).bind(config._movingAverage)
+                editablespinner(1..21).bind(config._movingAverage)
             }
             field("# of Days for Fit") {
-                editableSpinner(3..99).bind(config._projectionDays)
+                editablespinner(3..99).bind(config._projectionDays)
             }
         }
     }
@@ -80,8 +73,8 @@ class ForecastPanel : SplitPane() {
     /** Charts. */
     private fun EventTarget.charts() = gridpane {
         row {
-            forecastTotals = linechart("Projections", "Day (or Day of Projection)", "Projection")
-            forecastDeltas = linechart("Projected Change per Day", "Day", "Projection")
+            forecastTotals = linechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast")
+            forecastDeltas = linechart("Change per Day", "Day", "Actual/Forecast")
         }
         row {
             forecastHubbert = linechart("Percent Growth vs Total",
@@ -97,7 +90,7 @@ class ForecastPanel : SplitPane() {
                 createSymbols = false
                 axisSortingPolicy = LineChart.SortingPolicy.NONE
             }
-            forecastHistory = linechart("Projected Days to Peak", "Day of Projection", "Projection")
+            forecastHistory = linechart("Days to Peak", "Day of Forecast", "Forecasted Days to Peak")
         }
     }
 
@@ -130,14 +123,4 @@ class ForecastPanel : SplitPane() {
             }
         }
     }
-
-    /** Set chart series as list of [DataSeries]. */
-    private var LineChart<Number, Number>.dataSeries: List<DataSeries>
-        get() = listOf()
-        set(value) {
-            data.clear()
-            value.forEach {
-                series(it.id, it.points.map { xy(it.first, it.second) }.asObservable())
-            }
-        }
 }

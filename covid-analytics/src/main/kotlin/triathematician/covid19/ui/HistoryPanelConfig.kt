@@ -5,9 +5,9 @@ import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
 import triathematician.covid19.*
-import triathematician.covid19.countryData
-import triathematician.covid19.usCountyData
-import triathematician.covid19.usStateData
+import triathematician.covid19.CovidTimeSeriesSources.countryData
+import triathematician.covid19.CovidTimeSeriesSources.usCountyData
+import triathematician.covid19.CovidTimeSeriesSources.usStateData
 import triathematician.population.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.dateRange
@@ -96,7 +96,7 @@ class HistoryPanelConfig(var onChange: () -> Unit = {}) {
     //region
 
     /** Plot counts by date. */
-    internal fun historicalDataSeries(): Pair<DateRange, List<DataSeries>> {
+    internal fun historicalDataSeries(): Pair<DateRange, List<ChartDataSeries>> {
         var metrics = historicalData()
         if (bucket != 1) {
             metrics = metrics.map { it.movingAverage(bucket, false) }.toSet()
@@ -105,12 +105,12 @@ class HistoryPanelConfig(var onChange: () -> Unit = {}) {
             metrics = metrics.map { it.deltas() }.toSet()
         }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return domain to metrics.mapNotNull { series(it.id, domain, it) }
+        return domain to metrics.map { series(it.id, domain, it) }
     }
 
     /** Plot growth vs counts. */
     internal fun hubbertDataSeries() = historicalData().map { it.hubbertSeries(7) }
-            .mapNotNull { series(it.first.id, it.first.dateRange.shift(1, 0), it.first, it.second) }
+            .map { series(it.first.id, it.first.domain.shift(1, 0), it.first, it.second) }
 
     //endregion
 }

@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty
 import tornadofx.getProperty
 import tornadofx.property
 import triathematician.util.format
+import triathematician.util.userFormat
 import java.lang.Math.pow
 
 /** Additional config for Hubbert plot. */
@@ -14,7 +15,7 @@ class HistoricalHubbertPlots(var onChange: () -> Unit = {}) {
     val peakLabel: String
         get() {
             val peak = peakValue
-            return "Peak at " + if (peak >= 10.0) peak.toInt() else if (peak >= 1.0) peak.format(1) else peak.format(2)
+            return "Peak at ${peak.userFormat()}"
         }
     val showPeakCurve = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
 

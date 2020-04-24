@@ -1,6 +1,9 @@
 package triathematician.covid19.reports
 
 import triathematician.covid19.*
+import triathematician.covid19.CovidTimeSeriesSources.countryData
+import triathematician.covid19.CovidTimeSeriesSources.usCountyData
+import triathematician.covid19.CovidTimeSeriesSources.usStateData
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.logCsv
 import java.io.File

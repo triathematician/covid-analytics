@@ -9,7 +9,9 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric.
  * Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
-data class MetricTimeSeries(var id: String = "", var id2: String = "", var metric: String = "", var intSeries: Boolean, val defValue: Double = 0.0, var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
+data class MetricTimeSeries(var id: String = "", var id2: String = "", var metric: String = "",
+                            var intSeries: Boolean, val defValue: Double = 0.0,
+                            var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
     constructor(id: String, id2: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double) : this(id, id2, metric, false, defValue, start, listOf(value))
     constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, id2, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
@@ -19,20 +21,25 @@ data class MetricTimeSeries(var id: String = "", var id2: String = "", var metri
         get() = values.size
     val lastValue: Double
         get() = values.lastOrNull() ?: 0.0
+
     val firstPositiveDate: LocalDate
         get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
-    val dateRange: DateRange
-        get() = DateRange(firstPositiveDate, end)
     val end: LocalDate
         get() = date(values.size - 1)
+    val domain: DateRange
+        get() = DateRange(firstPositiveDate, end)
+
     val valuesAsMap: Map<LocalDate, Double>
         get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
 
-    /** Get date by index. */
-    fun date(i: Int) = start.plusDays(i.toLong())
     /** Get value on given date. */
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
+    /** Get value on given date, or null if argument is outside range. */
+    fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
 
+    /** Get date by index. */
+    fun date(i: Int) = start.plusDays(i.toLong())
+    /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
 
     //region DERIVED SERIES

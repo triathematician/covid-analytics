@@ -29,7 +29,7 @@ class HistoryPanel: SplitPane() {
                 combobox(plotConfig.selectedRegionType, plotConfig.regionTypes)
             }
             field("Max # of Regions") {
-                editableSpinner(0..200).bind(plotConfig.regionLimitProperty)
+                editablespinner(0..200).bind(plotConfig.regionLimitProperty)
             }
             field("Include Regions") {
                 checkbox().bind(plotConfig.includeRegionActive)
@@ -40,7 +40,7 @@ class HistoryPanel: SplitPane() {
                 textfield().bind(plotConfig.excludeRegion)
             }
             field("Min Population") {
-                editableSpinner(0..1000000).bind(plotConfig.minPopulationProperty)
+                editablespinner(0..1000000).bind(plotConfig.minPopulationProperty)
             }
         }
 
@@ -51,7 +51,7 @@ class HistoryPanel: SplitPane() {
                 checkbox("per day").bind(plotConfig.perDayProperty)
             }
             field("Smooth (days)") {
-                editableSpinner(1..14).bind(plotConfig.bucketProperty)
+                editablespinner(1..14).bind(plotConfig.bucketProperty)
             }
         }
 
@@ -125,8 +125,8 @@ class HistoryPanel: SplitPane() {
         }
     }
 
-    /** Set chart series as list of [DataSeries]. */
-    private var LineChart<Number, Number>.dataSeries: List<DataSeries>
+    /** Set chart series as list of [ChartDataSeries]. */
+    private var LineChart<Number, Number>.dataSeries: List<ChartDataSeries>
         get() = listOf()
         set(value) {
             data.clear()
