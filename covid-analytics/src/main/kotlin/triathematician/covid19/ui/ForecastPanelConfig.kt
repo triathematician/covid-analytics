@@ -7,10 +7,12 @@ import tornadofx.property
 import triathematician.covid19.CovidTimeSeriesSources
 import triathematician.covid19.DEATHS
 import triathematician.covid19.sources.IhmeProjections
+import triathematician.population.JhuRegionData
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.DateRange
 import triathematician.util.userFormat
 import java.time.LocalDate
+import java.util.*
 import kotlin.reflect.KMutableProperty1
 
 /** Config for logistic projection. */
@@ -84,6 +86,13 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
 
     //region DATA FOR PROJECTION PLOT
 
+    /** List of regions available for panel. */
+    val regions: SortedSet<String> by lazy {
+        val jhuRegions = CovidTimeSeriesSources.dailyReports().map { it.id }.toSet()
+        val ihmeRegions = IhmeProjections.allProjections.map { it.id }.toSet()
+        (jhuRegions + ihmeRegions).toSortedSet()
+    }
+
     /** Domain for raw data. */
     var domain: DateRange? = null
 
@@ -96,8 +105,6 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     var pastForecasts = PastForecasts()
     /** Other forecasts. */
     var externalForecasts = ExternalForecasts()
-
-    internal fun regions() = CovidTimeSeriesSources.dailyReports().map { it.id }.toSortedSet()
 
     private fun updateData() {
         val regionMetrics = CovidTimeSeriesSources.dailyReports(region, selectedMetric)
@@ -208,7 +215,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     val ExternalForecasts.cumulative
         get() = metrics.filter { showIhme && selectedMetric == DEATHS && "change" !in it.metric }
     val ExternalForecasts.deltas
-        get() = metrics.filter { showIhme && "change" in it.metric }
+        get() = metrics.filter { showIhme && selectedMetric == DEATHS && "change" in it.metric }
 
     //endregion
 

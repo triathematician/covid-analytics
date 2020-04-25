@@ -25,7 +25,7 @@ class ForecastPanel : SplitPane() {
     /** Projection configuration panel. */
     private fun EventTarget.configPanel() = form {
         fieldset("Region/Metric") {
-            field("Region") { autotextfield(config.regions()).bind(config._region) }
+            field("Region") { autotextfield(config.regions).bind(config._region) }
             field("Metric") { combobox(config._selectedRegion, METRIC_OPTIONS); checkbox("smooth").bind(config._smooth) }
         }
         fieldset("Forecast (S-Curve)") {

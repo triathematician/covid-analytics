@@ -1,5 +1,6 @@
 package triathematician.covid19.sources
 
+import triathematician.population.UnitedStates
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.regroupAndMerge
 import triathematician.util.CsvLineSplitter
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter
 
 private val FORMAT1 = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-/** Loads IHME prediction models. */
+/** Loads IHME models. */
 object IhmeProjections {
     /** All predictions. */
     val allProjections by lazy { loadPredictions() }
@@ -40,11 +41,19 @@ object IhmeProjections {
     }
 }
 
-private class IhmeDatum(val region: String, val date: LocalDate, val dailyDeaths: UncertaintyRange, val totalDeaths: UncertaintyRange) {
+private class IhmeDatum(_region: String, val date: LocalDate, val dailyDeaths: UncertaintyRange, val totalDeaths: UncertaintyRange) {
+    var region: String = _region.normalizeRegionId()
     val isProjection: Boolean
         get() = totalDeaths.lower != totalDeaths.upper
 }
 
 private class UncertaintyRange(val mean: Double, val lower: Double, val upper: Double) {
     constructor(mean: String?, lower: String?, upper: String?) : this(mean!!.toDouble(), lower!!.toDouble(), upper!!.toDouble())
+}
+
+/** Normalizes ID's by region. */
+private fun String.normalizeRegionId() = when {
+    UnitedStates.stateNames.contains(this) -> "$this, US"
+    this == "United States of America" -> "US"
+    else -> this
 }
