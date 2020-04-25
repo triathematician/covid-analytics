@@ -12,6 +12,7 @@ import triathematician.population.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.dateRange
 import triathematician.util.DateRange
+import triathematician.util.javaTrim
 import java.lang.IllegalStateException
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
@@ -69,7 +70,7 @@ class HistoryPanelConfig(var onChange: () -> Unit = {}) {
     }
 
     private val String.filterOptions: List<String>
-        get() = split(",", " ").filter { it.isNotEmpty() }.map { it.toLowerCase() }
+        get() = split(",").filter { it.isNotEmpty() }.map { it.javaTrim().toLowerCase() }
 
     //endregion
 

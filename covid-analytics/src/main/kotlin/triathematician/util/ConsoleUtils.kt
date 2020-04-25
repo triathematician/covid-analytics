@@ -36,3 +36,5 @@ internal fun Number.userFormat(): String {
         else -> format(2)
     }
 }
+
+fun String.javaTrim() = trim { it <= ' ' }
