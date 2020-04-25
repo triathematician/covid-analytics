@@ -1,5 +1,6 @@
 package triathematician.timeseries
 
+import triathematician.timeseries.analytics.computeLogisticPrediction
 import triathematician.util.DateRange
 import triathematician.util.rangeTo
 import java.time.LocalDate
@@ -155,3 +156,4 @@ private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
 }
 
 //endregion
+

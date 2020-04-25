@@ -1,6 +1,7 @@
 package triathematician.population
 
 import triathematician.util.CsvLineSplitter
+import triathematician.util.csvLines
 
 /** Loads JHU region/population data. */
 object JhuRegionData {
@@ -8,13 +9,11 @@ object JhuRegionData {
     val usStates by lazy { data.filter { Fips.usState(it.fips) } }
     val usCounties by lazy { data.filter { Fips.usCounty(it.fips) } }
 
-    private fun loadData(): List<JhuRegionInfo> {
-        val file1 = JhuRegionData::class.java.getResource("resources/UID_ISO_FIPS_LookUp_Table.csv")
-        val lines = file1.readText().lines()
-        return lines.drop(1).map { CsvLineSplitter.splitLine(it) }
+    private fun loadData() = JhuRegionData::class.java.getResource("resources/UID_ISO_FIPS_LookUp_Table.csv").csvLines()
                 .map { JhuRegionInfo(it[0].toIntOrNull(), it[1], it[2], it[3].toIntOrNull(), it[4].toIntOrNull(),
                         it[5], it[6], it[7], it[8].toFloatOrNull(), it[9].toFloatOrNull(), it[10], it[11].toLongOrNull()) }
-    }
+                .toList()
+
 }
 
 /** Data structure provided by JHU region data. */

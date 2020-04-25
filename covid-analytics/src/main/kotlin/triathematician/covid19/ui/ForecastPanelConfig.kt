@@ -5,9 +5,10 @@ import org.apache.commons.math3.exception.NoBracketingException
 import tornadofx.getProperty
 import tornadofx.property
 import triathematician.covid19.CovidTimeSeriesSources
-import triathematician.covid19.DEATHS
-import triathematician.covid19.sources.IhmeProjections
-import triathematician.population.JhuRegionData
+import triathematician.covid19.data.forecasts.CovidForecasts
+import triathematician.covid19.data.forecasts.Forecast
+import triathematician.covid19.data.forecasts.IHME
+import triathematician.covid19.data.forecasts.LANL
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.DateRange
 import triathematician.util.userFormat
@@ -89,8 +90,8 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     /** List of regions available for panel. */
     val regions: SortedSet<String> by lazy {
         val jhuRegions = CovidTimeSeriesSources.dailyReports().map { it.id }.toSet()
-        val ihmeRegions = IhmeProjections.allProjections.map { it.id }.toSet()
-        (jhuRegions + ihmeRegions).toSortedSet()
+        val forecastRegions = CovidForecasts.allForecasts.map { it.region }.toSet()
+        (jhuRegions + forecastRegions).toSortedSet()
     }
 
     /** Domain for raw data. */
@@ -121,7 +122,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
         }
 
         pastForecasts.metrics = regionMetrics.filter { "predicted" in it.metric || "peak" in it.metric }
-        externalForecasts.metrics = IhmeProjections.allProjections.filter { it.id == region }
+        externalForecasts.forecasts = CovidForecasts.allForecasts.filter { it.region == region && it.metric == selectedMetric }
     }
 
     /** Get day associated with given number. */
@@ -142,7 +143,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
         series(mainSeries?.deltas()?.maybeSmoothed())
         series(userForecast?.deltas())
         series(pastForecasts.deltas)
-        series(externalForecasts.deltas)
+        series(externalForecasts.cumulative.map { it.deltas() })
     }
 
     internal fun hubbertDataSeries() = dataseries {
@@ -203,7 +204,7 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     /** Provides access to past forecasts. */
     class PastForecasts(var metrics: List<MetricTimeSeries> = listOf())
     /** Provides access to external forecasts. */
-    class ExternalForecasts(var metrics: List<MetricTimeSeries> = listOf())
+    class ExternalForecasts(var forecasts: List<Forecast> = listOf())
 
     val PastForecasts.cumulative
         get() = metrics.filter { "predicted" in it.metric && "peak" !in it.metric }
@@ -212,10 +213,12 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     val PastForecasts.peakDays
         get() = metrics.filter { "days" in it.id }
 
+    val ExternalForecasts.filtered
+        get() = forecasts.filter { (showIhme && it.model == IHME || showLanl && it.model == LANL) }.flatMap { it.data }
     val ExternalForecasts.cumulative
-        get() = metrics.filter { showIhme && selectedMetric == DEATHS && "change" !in it.metric }
+        get() = filtered.filter { "change" !in it.metric }
     val ExternalForecasts.deltas
-        get() = metrics.filter { showIhme && selectedMetric == DEATHS && "change" in it.metric }
+        get() = filtered.filter { "change" in it.metric }
 
     //endregion
 

@@ -1,6 +1,6 @@
 package triathematician.population
 
-import triathematician.util.CsvLineSplitter
+import triathematician.util.csvLines
 
 //
 // This file provides access to population data tables.
@@ -15,8 +15,7 @@ private const val CHINA_DATA = "resources/china.csv"
 private const val AUSTRALIA_DATA = "resources/australia.csv"
 
 sealed class PopulationLookup(resource: String): (String) -> Long? {
-    val dataFile = CountyData::class.java.getResource(resource)
-    val dataLines = dataFile.readText().lines().drop(1).map { CsvLineSplitter.splitLine(it) }
+    val dataLines = CountyData::class.java.getResource(resource).csvLines().toList()
     val dataTable: MutableMap<String, Long> = mutableMapOf()
 }
 

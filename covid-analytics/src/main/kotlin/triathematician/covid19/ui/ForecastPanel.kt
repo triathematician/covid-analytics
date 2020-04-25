@@ -5,6 +5,8 @@ import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
 import tornadofx.*
+import triathematician.covid19.data.forecasts.IHME
+import triathematician.covid19.data.forecasts.LANL
 import triathematician.covid19.ui.utils.*
 
 class ForecastPanel : SplitPane() {
@@ -113,8 +115,12 @@ class ForecastPanel : SplitPane() {
         listOf(forecastTotals, forecastDeltas, forecastHistory, forecastHubbert).forEach { chart ->
             chart.animated = false
             chart.data.forEach {
-                if ("predicted" in it.name || "ihme" in it.name) {
-                    it.nodeProperty().get().style = "-fx-opacity: 0.5"
+                if ("predicted" in it.name) {
+                    it.nodeProperty().get().style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
+                    it.data.forEach { it.node?.isVisible = false }
+                }
+                if (IHME in it.name || LANL in it.name) {
+                    it.nodeProperty().get().style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
                     it.data.forEach { it.node?.isVisible = false }
                 }
                 if ("curve" in it.name) {
@@ -123,5 +129,23 @@ class ForecastPanel : SplitPane() {
                 }
             }
         }
+    }
+
+    private fun modelColor(name: String): String {
+        val color = when {
+            IHME in name -> "008000"
+            LANL in name -> "4682b4"
+            else -> "808080"
+        }
+        val opacity = when {
+            "12" in name -> "80"
+            else -> "ff"
+        }
+        return "#$color$opacity"
+    }
+
+    private fun modelStrokeWidth(name: String) = when {
+        "lower" in name || "upper" in name -> "1"
+        else -> "2"
     }
 }

@@ -1,7 +1,7 @@
 package triathematician.covid19
 
-import triathematician.covid19.sources.CsseCovid19DailyReports
-import triathematician.covid19.sources.scaledByPopulation
+import triathematician.covid19.data.CsseCovid19DailyReports
+import triathematician.covid19.data.scaledByPopulation
 
 //
 // This file links to various data sources providing time series information.
