@@ -24,6 +24,7 @@ private val FORMAT1 = DateTimeFormatter.ofPattern("M/d/yy H:mm")
 private val FORMAT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 private val FORMAT3 = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
 private val FORMAT4 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+private val FORMAT5 = DateTimeFormatter.ofPattern("MM-dd-yyyy")
 private val FORMATS = arrayOf(FORMAT1, FORMAT2, FORMAT3, FORMAT4)
 
 private val COUNTRIES_INCORRECTLY_LISTED_AS_REGIONS = listOf("United Kingdom", "Netherlands", "France", "Denmark")
@@ -57,7 +58,9 @@ object CsseCovid19DailyReports {
         val rows = mutableListOf<DailyReportRow>()
         files.forEach { f ->
             f.useLines { seq ->
+                val fileDate = f.nameWithoutExtension.toLocalDate(FORMAT5)
                 val fileRows = seq.drop(1).map { lineReader(CsvLineSplitter.splitLine(it)) }.toList()
+                fileRows.forEach { it.updateTimestampsIfAfter(fileDate) }
                 rows.addAll(fileRows.withAggregations())
             }
         }
@@ -149,6 +152,12 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
     val isWithinCountryData
         get() = Country_Region.isNotBlank() && (Admin2.isNotBlank() || Province_State.isNotBlank())
 
+    /** If the timestamp on the row is after the given name, update the date to match the file name. (If before, leave as is.) */
+    internal fun updateTimestampsIfAfter(fileDate: LocalDate) {
+        if (fileDate.isBefore(Last_Update)) {
+            Last_Update = fileDate
+        }
+    }
 }
 
 //region aggregation across sub-regions

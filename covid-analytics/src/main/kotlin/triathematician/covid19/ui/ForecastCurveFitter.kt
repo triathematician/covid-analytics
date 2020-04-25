@@ -29,6 +29,11 @@ const val GOMPERTZ = "Gompertz"
 
 val SIGMOID_MODELS = listOf(LOGISTIC, GEN_LOGISTIC, GAUSSIAN, GOMPERTZ)
 
+private val K_FIT_RANGE = 0.04..0.25
+private val L_FIT_RANGE = 1E1..1E7
+private val X0_FIT_RANGE = 10.0..100.0
+private val V_FIT_RANGE = 1E-2..1E2
+
 /** Tools for fitting forecast to empirical data. */
 class ForecastCurveFitter: (Number) -> Double {
 
@@ -148,8 +153,8 @@ class ForecastCurveFitter: (Number) -> Double {
                 .target(observedTarget)
                 .maxEvaluations(100000)
                 .maxIterations(100000)
-                .parameterValidator { v -> vec(v[0].coerceIn(0.01, 1E8), v[1].coerceIn(0.01, 0.5),
-                        v[2].coerceIn(0.0, 200.0), v[3].coerceIn(1E-6, 2.0)) }
+                .parameterValidator { v -> vec(v[0].coerceIn(L_FIT_RANGE), v[1].coerceIn(K_FIT_RANGE),
+                        v[2].coerceIn(X0_FIT_RANGE), v[3].coerceIn(V_FIT_RANGE)) }
                 .build()
 
         val optimum = LevenbergMarquardtOptimizer()
