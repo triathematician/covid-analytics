@@ -5,6 +5,7 @@ import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.XYChart
 import javafx.scene.control.Slider
+import javafx.scene.control.TextField
 import javafx.util.StringConverter
 import tornadofx.*
 import triathematician.covid19.ui.ChartDataSeries
@@ -14,6 +15,9 @@ import java.time.LocalDate
 typealias DataPoints = List<Pair<Number, Number>>
 
 //region BUILDER UTILS
+
+/** Text field with autocomplete suppport. */
+fun EventTarget.autotextfield(values: Collection<String> = listOf(), op: TextField.() -> Unit = {}) = AutocompleteTextField(values.toSortedSet()).attachTo(this, op)
 
 /** Creates spinner for editing range of ints. */
 fun EventTarget.editablespinner(range: IntRange) = spinner(range.first, range.last, range.first, 1) {

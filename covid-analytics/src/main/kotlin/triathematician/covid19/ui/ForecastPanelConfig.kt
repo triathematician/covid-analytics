@@ -97,6 +97,8 @@ class ForecastPanelConfig(var onChange: () -> Unit = {}) {
     /** Other forecasts. */
     var externalForecasts = ExternalForecasts()
 
+    internal fun regions() = CovidTimeSeriesSources.dailyReports().map { it.id }.toSortedSet()
+
     private fun updateData() {
         val regionMetrics = CovidTimeSeriesSources.dailyReports(region, selectedMetric)
         mainSeries = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
