@@ -1,4 +1,4 @@
-package triathematician.covid19.ui
+package triathematician.covid19.ui.utils
 
 import javafx.event.EventTarget
 import javafx.scene.chart.LineChart
@@ -7,13 +7,13 @@ import javafx.scene.chart.XYChart
 import javafx.scene.control.Slider
 import javafx.util.StringConverter
 import tornadofx.*
-import triathematician.timeseries.MetricTimeSeries
-import triathematician.util.DateRange
+import triathematician.covid19.ui.ChartDataSeries
 import triathematician.util.monthDay
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 typealias DataPoints = List<Pair<Number, Number>>
+
+//region BUILDER UTILS
 
 /** Creates spinner for editing range of ints. */
 fun EventTarget.editablespinner(range: IntRange) = spinner(range.first, range.last, range.first, 1) {
@@ -28,12 +28,16 @@ fun EventTarget.intslider(range: IntRange, op: Slider.() -> Unit = {}) = slider(
     op()
 }
 
-//region LineChart XF
-
 /** Creates line chart. */
-fun EventTarget.linechart(title: String, xTitle: String, yTitle: String,  op: LineChart<Number, Number>.() -> Unit = {}): LineChart<Number, Number> {
-    return linechart(title, NumberAxis().apply { label = xTitle }, NumberAxis().apply { label = yTitle }, op)
+fun EventTarget.linechart(title: String, xTitle: String, yTitle: String, xLog: Boolean = false, yLog: Boolean = false,
+                          op: LineChart<Number, Number>.() -> Unit = {}): LineChart<Number, Number> {
+    return linechart(title, (if (xLog) LogAxis() else NumberAxis()).apply { label = xTitle },
+            (if (yLog) LogAxis() else NumberAxis()).apply { label = yTitle }, op)
 }
+
+//endregion
+
+//region LineChart XF
 
 /** Set chart series as list of [ChartDataSeries]. */
 var LineChart<Number, Number>.dataSeries: List<ChartDataSeries>

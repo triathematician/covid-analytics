@@ -22,8 +22,8 @@ const val STATES = "US States and Territories"
 const val COUNTIES = "US Counties"
 val METRIC_OPTIONS = listOf(CASES, DEATHS, RECOVERED, ACTIVE)
 
-/** Config for both plots. */
-class HistoryPanelConfig(var onChange: () -> Unit = {}) {
+/** UI model for history panel. */
+class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES)
     var regionLimit by property(10)
@@ -40,18 +40,19 @@ class HistoryPanelConfig(var onChange: () -> Unit = {}) {
         get() = if (perCapita) selectedMetric.perCapita else selectedMetric
     var perDay by property(false)
     var perCapita by property(false)
+    var logScale by property(false)
     var bucket by property(7)
 
     //region JAVAFX UI PROPERTIES
 
     private fun <T> property(prop: KMutableProperty1<*, T>) = getProperty(prop).apply { addListener { _ -> onChange() } }
 
-    val regionLimitProperty = property(HistoryPanelConfig::regionLimit)
-    val minPopulationProperty = property(HistoryPanelConfig::minPopulation)
-    val selectedMetricProperty = property(HistoryPanelConfig::selectedMetric)
-    val perCapitaProperty = property(HistoryPanelConfig::perCapita)
-    val perDayProperty = property(HistoryPanelConfig::perDay)
-    val bucketProperty = property(HistoryPanelConfig::bucket)
+    val _regionLimit = property(HistoryPanelModel::regionLimit)
+    val _minPopulation = property(HistoryPanelModel::minPopulation)
+    val _selectedMetric = property(HistoryPanelModel::selectedMetric)
+    val _perCapita = property(HistoryPanelModel::perCapita)
+    val _perDay = property(HistoryPanelModel::perDay)
+    val _bucket = property(HistoryPanelModel::bucket)
 
     //endregion
 

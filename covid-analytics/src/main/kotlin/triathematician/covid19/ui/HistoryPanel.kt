@@ -5,15 +5,18 @@ import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
 import tornadofx.*
+import triathematician.covid19.ui.utils.*
 
 /** UI for exploring historical COVID time series data. */
 class HistoryPanel: SplitPane() {
 
-    private val plotConfig = HistoryPanelConfig { updateHistoryChart(); updateHubbertChart() }
-    private val hubbertConfig = HistoricalHubbertPlots { updateHistoryChart(); updateHubbertChart() }
+    private val historyPanelModel = HistoryPanelModel { updateBothCharts() }
+    private val hubbertChartModel = HistoricalHubbertPlots { updateBothCharts() }
 
     private lateinit var historicalChart: LineChart<Number, Number>
     private lateinit var hubbertChart: LineChart<Number, Number>
+
+    private val _logScale = historyPanelModel.getProperty(HistoryPanelModel::logScale).apply { addListener { _ -> resetCharts() } }
 
     init {
         configPanel()
@@ -26,49 +29,50 @@ class HistoryPanel: SplitPane() {
     private fun EventTarget.configPanel() = form {
         fieldset("Regions") {
             field("Region Category") {
-                combobox(plotConfig.selectedRegionType, plotConfig.regionTypes)
+                combobox(historyPanelModel.selectedRegionType, historyPanelModel.regionTypes)
             }
             field("Max # of Regions") {
-                editablespinner(0..200).bind(plotConfig.regionLimitProperty)
+                editablespinner(0..200).bind(historyPanelModel._regionLimit)
             }
             field("Include Regions") {
-                checkbox().bind(plotConfig.includeRegionActive)
-                textfield().bind(plotConfig.includeRegion)
+                checkbox().bind(historyPanelModel.includeRegionActive)
+                textfield().bind(historyPanelModel.includeRegion)
             }
             field("Exclude Regions") {
-                checkbox().bind(plotConfig.excludeRegionActive)
-                textfield().bind(plotConfig.excludeRegion)
+                checkbox().bind(historyPanelModel.excludeRegionActive)
+                textfield().bind(historyPanelModel.excludeRegion)
             }
             field("Min Population") {
-                editablespinner(0..1000000).bind(plotConfig.minPopulationProperty)
+                editablespinner(0..1000000).bind(historyPanelModel._minPopulation)
             }
         }
 
         fieldset("Metric") {
             field("Metric") {
-                combobox(plotConfig.selectedMetricProperty, METRIC_OPTIONS)
-                checkbox("per capita").bind(plotConfig.perCapitaProperty)
-                checkbox("per day").bind(plotConfig.perDayProperty)
+                combobox(historyPanelModel._selectedMetric, METRIC_OPTIONS)
+                checkbox("per capita").bind(historyPanelModel._perCapita)
+                checkbox("per day").bind(historyPanelModel._perDay)
             }
             field("Smooth (days)") {
-                editablespinner(1..14).bind(plotConfig.bucketProperty)
+                editablespinner(1..14).bind(historyPanelModel._bucket)
+                checkbox("log scale").bind(_logScale)
             }
         }
 
         fieldset("Growth Plot") {
             field("Peak Curve") {
-                checkbox("show").bind(hubbertConfig.showPeakCurve)
+                checkbox("show").bind(hubbertChartModel.showPeakCurve)
                 slider(-2.0..8.0) {
                     blockIncrement = 0.01
-                    enableWhen(hubbertConfig.showPeakCurve)
-                }.bind(hubbertConfig.logPeakValueProperty)
+                    enableWhen(hubbertChartModel.showPeakCurve)
+                }.bind(hubbertChartModel.logPeakValueProperty)
             }
         }
     }
 
     /** Charts. */
     private fun EventTarget.charts() = vbox {
-        historicalChart = linechart("Historical Data", "Day", "Count") {
+        historicalChart = linechart("Historical Data", "Day","Count", yLog = historyPanelModel.logScale) {
             animated = false
             createSymbols = false
         }
@@ -87,18 +91,37 @@ class HistoryPanel: SplitPane() {
         }
     }
 
+    /** Resets positioning of chart, must do when axes change. */
+    private fun resetCharts() {
+        val parent = historicalChart.parent
+        hubbertChart.removeFromParent()
+        historicalChart.removeFromParent()
+        historicalChart = parent.linechart("Historical Data", "Day","Count", yLog = historyPanelModel.logScale) {
+            animated = false
+            createSymbols = false
+        }
+        parent.add(hubbertChart)
+        updateHistoryChart()
+    }
+
+    /** Update both charts. */
+    private fun updateBothCharts() {
+        updateHistoryChart()
+        updateHubbertChart()
+    }
+
     /** Plot counts by date. */
     private fun updateHistoryChart() {
-        val (domain, series) = plotConfig.historicalDataSeries()
+        val (domain, series) = historyPanelModel.historicalDataSeries()
 
         historicalChart.dataSeries = series
         (historicalChart.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
         historicalChart.lineWidth = lineChartWidthForCount(series.size)
 
-        if (hubbertConfig.showPeakCurve.get() && plotConfig.perDay) {
-            val peak = hubbertConfig.peakValue
-            val label = hubbertConfig.peakLabel
-            val peakSeries = domain.mapIndexed { i, d -> xy(i, peak) }
+        if (hubbertChartModel.showPeakCurve.get() && historyPanelModel.perDay) {
+            val peak = hubbertChartModel.peakValue
+            val label = hubbertChartModel.peakLabel
+            val peakSeries = domain.mapIndexed { i, _ -> xy(i, peak) }
             historicalChart.series(label, peakSeries.asObservable()).also {
                 it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
             }
@@ -107,17 +130,17 @@ class HistoryPanel: SplitPane() {
 
     /** Plot growth vs. total. */
     private fun updateHubbertChart() {
-        val series = plotConfig.hubbertDataSeries()
+        val series = historyPanelModel.hubbertDataSeries()
         hubbertChart.dataSeries = series
         hubbertChart.lineWidth = lineChartWidthForCount(series.size)
 
-        if (hubbertConfig.showPeakCurve.get()) {
+        if (hubbertChartModel.showPeakCurve.get()) {
             val max = series.mapNotNull { it.points.map { it.first.toDouble() }.max() }.max()
             if (max != null) {
-                val peak = hubbertConfig.peakValue
-                val label = hubbertConfig.peakLabel
+                val peak = hubbertChartModel.peakValue
+                val label = hubbertChartModel.peakLabel
                 val min = peak / 0.3
-                val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { xy(it, peak / it) }
+                val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { triathematician.covid19.ui.utils.xy(it, peak / it) }
                 hubbertChart.series(label, peakSeries.asObservable()).also {
                     it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
                 }
@@ -131,7 +154,7 @@ class HistoryPanel: SplitPane() {
         set(value) {
             data.clear()
             value.forEach {
-                series(it.id, it.points.map { xy(it.first, it.second) }.asObservable())
+                series(it.id, it.points.map { triathematician.covid19.ui.utils.xy(it.first, it.second) }.asObservable())
             }
         }
 

@@ -5,6 +5,7 @@ import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
 import tornadofx.*
+import triathematician.covid19.ui.utils.*
 
 class ForecastPanel : SplitPane() {
 
