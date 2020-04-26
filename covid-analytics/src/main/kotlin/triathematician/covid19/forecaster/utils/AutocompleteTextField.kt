@@ -1,4 +1,4 @@
-package triathematician.covid19.ui.utils
+package triathematician.covid19.forecaster.utils
 
 import javafx.event.EventHandler
 import javafx.geometry.Side

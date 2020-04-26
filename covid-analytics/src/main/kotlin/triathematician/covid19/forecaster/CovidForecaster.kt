@@ -1,16 +1,16 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster
 
 import javafx.scene.layout.Priority
 import tornadofx.*
 
-class TimeSeriesReportApp : App(TimeSeriesReportAppView::class)
+class CovidForecaster : App(CovidForecasterView::class)
 
 fun main(args: Array<String>) {
-    launch<TimeSeriesReportApp>(args)
+    launch<CovidForecaster>(args)
 }
 
 /** View configuration for the app. */
-class TimeSeriesReportAppView : View() {
+class CovidForecasterView : View() {
 
     override val root = vbox {
         drawer {
@@ -18,8 +18,12 @@ class TimeSeriesReportAppView : View() {
             item("Historical Data", expanded = true) {
                 this += HistoryPanel()
             }
-            item("Forecasts") {
-                this += ForecastPanel()
+            val forecastPanel = ForecastPanel()
+            item("Forecast Tool") {
+                this += forecastPanel
+            }
+            item("Forecast Table") {
+                this += ForecastTable(forecastPanel.model)
             }
         }
         hbox {

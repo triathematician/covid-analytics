@@ -1,6 +1,5 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster.utils
 
-import triathematician.covid19.ui.utils.DataPoints
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.DateRange
 

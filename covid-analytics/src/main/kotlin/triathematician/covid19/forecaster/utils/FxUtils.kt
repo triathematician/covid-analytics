@@ -1,4 +1,4 @@
-package triathematician.covid19.ui.utils
+package triathematician.covid19.forecaster.utils
 
 import javafx.event.EventTarget
 import javafx.scene.chart.LineChart
@@ -8,7 +8,6 @@ import javafx.scene.control.Slider
 import javafx.scene.control.TextField
 import javafx.util.StringConverter
 import tornadofx.*
-import triathematician.covid19.ui.ChartDataSeries
 import triathematician.util.monthDay
 import java.time.LocalDate
 

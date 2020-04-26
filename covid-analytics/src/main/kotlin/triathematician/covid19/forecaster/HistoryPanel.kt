@@ -1,11 +1,12 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster
 
 import javafx.event.EventTarget
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
+import javafx.scene.layout.Priority
 import tornadofx.*
-import triathematician.covid19.ui.utils.*
+import triathematician.covid19.forecaster.utils.*
 
 /** UI for exploring historical COVID time series data. */
 class HistoryPanel: SplitPane() {
@@ -75,6 +76,9 @@ class HistoryPanel: SplitPane() {
         historicalChart = linechart("Historical Data", "Day","Count", yLog = historyPanelModel.logScale) {
             animated = false
             createSymbols = false
+            vboxConstraints {
+                vGrow = Priority.ALWAYS
+            }
         }
         hubbertChart = linechart("Percent Growth vs Total",
                 NumberAxis().apply { label = "Total" },
@@ -88,6 +92,9 @@ class HistoryPanel: SplitPane() {
             animated = false
             createSymbols = false
             axisSortingPolicy = LineChart.SortingPolicy.NONE
+            vboxConstraints {
+                vGrow = Priority.ALWAYS
+            }
         }
     }
 
@@ -140,7 +147,7 @@ class HistoryPanel: SplitPane() {
                 val peak = hubbertChartModel.peakValue
                 val label = hubbertChartModel.peakLabel
                 val min = peak / 0.3
-                val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { triathematician.covid19.ui.utils.xy(it, peak / it) }
+                val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { triathematician.covid19.forecaster.utils.xy(it, peak / it) }
                 hubbertChart.series(label, peakSeries.asObservable()).also {
                     it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
                 }
@@ -154,7 +161,7 @@ class HistoryPanel: SplitPane() {
         set(value) {
             data.clear()
             value.forEach {
-                series(it.id, it.points.map { triathematician.covid19.ui.utils.xy(it.first, it.second) }.asObservable())
+                series(it.id, it.points.map { triathematician.covid19.forecaster.utils.xy(it.first, it.second) }.asObservable())
             }
         }
 

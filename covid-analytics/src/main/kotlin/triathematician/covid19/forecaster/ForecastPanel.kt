@@ -1,17 +1,19 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster
 
 import javafx.event.EventTarget
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
+import javafx.scene.layout.Priority
 import tornadofx.*
 import triathematician.covid19.data.forecasts.IHME
 import triathematician.covid19.data.forecasts.LANL
-import triathematician.covid19.ui.utils.*
+import triathematician.covid19.forecaster.utils.*
+import triathematician.math.SIGMOID_MODELS
 
 class ForecastPanel : SplitPane() {
 
-    private val config = ForecastPanelConfig { updateForecasts() }
+    val model = ForecastPanelModel { updateForecasts() }
 
     private lateinit var forecastTotals: LineChart<Number, Number>
     private lateinit var forecastDeltas: LineChart<Number, Number>
@@ -27,48 +29,56 @@ class ForecastPanel : SplitPane() {
     /** Projection configuration panel. */
     private fun EventTarget.configPanel() = form {
         fieldset("Region/Metric") {
-            field("Region") { autotextfield(config.regions).bind(config._region) }
-            field("Metric") { combobox(config._selectedRegion, METRIC_OPTIONS); checkbox("smooth").bind(config._smooth) }
+            field("Region") {
+                autotextfield(model.regions) {
+                    contextmenu {
+                        item("Next State") { action { model.goToNextUsState() } }
+                        item("Previous State") { action { model.goToPreviousUsState() } }
+                    }
+                }.bind(model._region)
+            }
+            field("Metric") { combobox(model._selectedRegion, METRIC_OPTIONS); checkbox("smooth").bind(model._smooth) }
         }
         fieldset("Forecast (S-Curve)") {
             label("Adjust curve parameters to fit data.")
             field("Model") {
-                checkbox("Show").bind(config._showForecast)
-                combobox(config._curve, SIGMOID_MODELS)
-                button("Autofit") { action { config.autofit() } }
+                checkbox("Show").bind(model._showForecast)
+                combobox(model._curve, SIGMOID_MODELS)
+                button("Autofit") { action { model.autofit() } }
+                button("Save") { action { model.save() } }
             }
-            field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(config._l) }
-            field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(config._k) }
-            field("x0 (midpoint)") { slider(-50.0..250.0) { blockIncrement = 0.01 }.bind(config._x0) }
-            field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01; enableWhen(config._vActive) }.bind(config._v) }
-            field("Equation") { label("").bind(config._manualEquation) }
-            field("Peak") { label("").bind(config._manualPeak) }
-            field("Fit") { label("").bind(config._manualLogCumStdErr); label("").bind(config._manualDeltaStdErr) }
+            field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l) }
+            field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k) }
+            field("x0 (midpoint)") { slider(-50.0..250.0) { blockIncrement = 0.01 }.bind(model._x0) }
+            field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01; enableWhen(model._vActive) }.bind(model._v) }
+            field("Equation") { label("").bind(model._manualEquation) }
+            field("Peak") { label("").bind(model._manualPeak) }
+            field("Fit") { label("").bind(model._manualLogCumStdErr); label("").bind(model._manualDeltaStdErr) }
         }
         fieldset("Curve Fitting") {
-            label(config._fitLabel)
-            field("First Day for Fit") { intslider(-60..0) { isShowTickLabels = true }.bind(config._autofitDay0) }
-            field("# Days for Fit") { intslider(5..60) { isShowTickLabels = true }.bind(config._autofitDays) }
+            label(model._fitLabel)
+            field("First Day for Fit") { intslider(-60..0) { isShowTickLabels = true; blockIncrement = 7.0 }.bind(model._autofitLastDay) }
+            field("# Days for Fit") { intslider(5..60) { isShowTickLabels = true; blockIncrement = 7.0 }.bind(model._autofitDays) }
         }
         fieldset("Other Forecasts") {
             label("View other forecasts")
             field("Statistical") {
-                checkbox("IHME").bind(config._showIhme)
-                checkbox("LANL").bind(config._showLanl)
-                checkbox("UT").bind(config._showUt)
+                checkbox("IHME").bind(model._showIhme)
+                checkbox("LANL").bind(model._showLanl)
+                checkbox("UT").bind(model._showUt)
             }
             field("Epidemiological") {
-                checkbox("MOBS").bind(config._showMobs)
-                checkbox("CU-80").bind(config._showCu80)
+                checkbox("MOBS").bind(model._showMobs)
+                checkbox("CU-80").bind(model._showCu80)
             }
         }
         fieldset("Forecast History") {
             label("This will let you generate forecasts for data in the past to assess the model.")
             field("Moving Average (days)") {
-                editablespinner(1..21).bind(config._movingAverage)
+                editablespinner(1..21).bind(model._movingAverage)
             }
             field("# of Days for Fit") {
-                editablespinner(3..99).bind(config._projectionDays)
+                editablespinner(3..99).bind(model._projectionDays)
             }
         }
     }
@@ -76,7 +86,9 @@ class ForecastPanel : SplitPane() {
     /** Charts. */
     private fun EventTarget.charts() = gridpane {
         row {
-            forecastTotals = linechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast")
+            forecastTotals = linechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
+                gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            }
             forecastDeltas = linechart("Change per Day", "Day", "Actual/Forecast")
         }
         row {
@@ -93,18 +105,20 @@ class ForecastPanel : SplitPane() {
                 createSymbols = false
                 axisSortingPolicy = LineChart.SortingPolicy.NONE
             }
-            forecastHistory = linechart("Days to Peak", "Day of Forecast", "Forecasted Days to Peak")
+            forecastHistory = linechart("Days to Peak", "Day of Forecast", "Forecasted Days to Peak") {
+                gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            }
         }
     }
 
     /** Plot forecast curves: min/avg/max totals predicted by day for a single region. */
     private fun updateForecasts() {
-        forecastTotals.dataSeries = config.cumulativeDataSeries()
-        forecastDeltas.dataSeries = config.dailyDataSeries()
-        forecastHubbert.dataSeries = config.hubbertDataSeries()
-        forecastHistory.dataSeries = config.peakDataSeries()
+        forecastTotals.dataSeries = model.cumulativeDataSeries()
+        forecastDeltas.dataSeries = model.dailyDataSeries()
+        forecastHubbert.dataSeries = model.hubbertDataSeries()
+        forecastHistory.dataSeries = model.peakDataSeries()
 
-        config.domain?.let {
+        model.domain?.let {
             with(axisLabeler(it.start)) {
                 (forecastTotals.xAxis as NumberAxis).tickLabelFormatter = this
                 (forecastDeltas.xAxis as NumberAxis).tickLabelFormatter = this

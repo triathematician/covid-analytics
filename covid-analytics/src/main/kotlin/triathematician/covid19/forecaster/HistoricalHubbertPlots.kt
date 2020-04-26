@@ -1,9 +1,8 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster
 
 import javafx.beans.property.SimpleBooleanProperty
 import tornadofx.getProperty
 import tornadofx.property
-import triathematician.util.format
 import triathematician.util.userFormat
 import java.lang.Math.pow
 

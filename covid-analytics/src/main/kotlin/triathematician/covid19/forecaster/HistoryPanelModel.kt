@@ -1,4 +1,4 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
@@ -8,6 +8,8 @@ import triathematician.covid19.*
 import triathematician.covid19.CovidTimeSeriesSources.countryData
 import triathematician.covid19.CovidTimeSeriesSources.usCountyData
 import triathematician.covid19.CovidTimeSeriesSources.usStateData
+import triathematician.covid19.forecaster.utils.ChartDataSeries
+import triathematician.covid19.forecaster.utils.series
 import triathematician.population.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.dateRange

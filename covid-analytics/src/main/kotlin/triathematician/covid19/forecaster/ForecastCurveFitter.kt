@@ -1,4 +1,4 @@
-package triathematician.covid19.ui
+package triathematician.covid19.forecaster
 
 import org.apache.commons.math3.analysis.UnivariateFunction
 import org.apache.commons.math3.analysis.solvers.AllowedSolution
@@ -8,26 +8,22 @@ import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer
 import org.apache.commons.math3.fitting.leastsquares.MultivariateJacobianFunction
 import org.apache.commons.math3.linear.Array2DRowRealMatrix
 import org.apache.commons.math3.linear.ArrayRealVector
-import org.apache.commons.math3.linear.RealMatrix
 import org.apache.commons.math3.linear.RealVector
 import org.apache.commons.math3.special.Erf
 import tornadofx.Vector2D
 import tornadofx.property
+import triathematician.math.*
+import triathematician.timeseries.Forecast
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.DateRange
+import triathematician.util.minus
 import triathematician.util.monthDay
 import java.time.LocalDate
 import kotlin.math.exp
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-
-const val LOGISTIC = "Logistic"
-const val GEN_LOGISTIC = "General Logistic"
-const val GAUSSIAN = "Gaussian"
-const val GOMPERTZ = "Gompertz"
-
-val SIGMOID_MODELS = listOf(LOGISTIC, GEN_LOGISTIC, GAUSSIAN, GOMPERTZ)
+private const val MODEL_NAME = "User"
 
 private val K_FIT_RANGE = 0.04..0.25
 private val L_FIT_RANGE = 1E1..1E7
@@ -37,7 +33,7 @@ private val V_FIT_RANGE = 1E-2..1E2
 /** Tools for fitting forecast to empirical data. */
 class ForecastCurveFitter: (Number) -> Double {
 
-    //region CURVE VARS
+    //region PROPERTIES
 
     var curve by property(SIGMOID_MODELS[3])
     var l: Number by property(70000.0)
@@ -45,7 +41,16 @@ class ForecastCurveFitter: (Number) -> Double {
     var x0: Number by property(40.0)
     var v: Number by property(1.0)
 
-    val equation: String
+    var fitDays: Number by property(21)
+    var lastFitDay: Number by property(0)
+
+    var fitLabel by property("Fit curves to different ranges of historical data.")
+
+    //endregion
+
+    //region DERIVED PROPERTIES
+
+    val equation
         get() = when (curve) {
             LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))", l, k, x0)
             GEN_LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))^(1/%.2f)", l, k, x0, v)
@@ -54,24 +59,19 @@ class ForecastCurveFitter: (Number) -> Double {
             else -> throw IllegalStateException()
         }
 
-    var days: Number by property(21)
-    var day0: Number by property(0)
-
-    var fitLabel by property("Fit curves to different ranges of historical data.")
-
     //endregion
 
     //region PROPERTY UPDATES
 
     /** Updates the label property with the range of dates being used for the fit. */
     fun updateFitLabel(lastDate: LocalDate) {
-        val first = lastDate.plusDays(day0.toLong() - days.toLong() + 1)
-        val last = lastDate.plusDays(day0.toLong())
+        val first = lastDate.plusDays(lastFitDay.toLong() - fitDays.toLong() + 1)
+        val last = lastDate.plusDays(lastFitDay.toLong())
         fitLabel = "Fit curves to data from ${first.monthDay} to ${last.monthDay}"
     }
 
     /** Domain used for fitting. */
-    private fun fitDomain(domain: DateRange) = domain.shift(day0.toInt(), day0.toInt()).tail(days.toInt())
+    private fun fitDomain(domain: DateRange) = domain.shift(lastFitDay.toInt(), lastFitDay.toInt()).tail(fitDays.toInt())
 
     /** Compute estimated location of peak. */
     internal fun equationPeak(bracket: IntRange = 0..200): Pair<Double, Double> {
@@ -81,6 +81,39 @@ class ForecastCurveFitter: (Number) -> Double {
         val zero = BracketingNthOrderBrentSolver(1E-8, 5)
                 .solve(100, diffs2, maxDay - 1.0, maxDay + 1.0, AllowedSolution.ANY_SIDE)
         return zero to (invoke(zero + .5) - invoke(zero - .5))
+    }
+
+    /**
+     * Creates new forecast from current settings.
+     * @param day0 starting day for forecast curve
+     * @param empirical empirical data for metrics
+     */
+    fun createUserForecast(day0: LocalDate, empirical: MetricTimeSeries): UserForecast {
+        val forecastDomain = DateRange(day0, JULY1)
+        val forecastValues = forecastDomain.map { invoke(it.minus(day0)) }
+        val series = empirical.copy(id = "${empirical.id} (user forecast)", start = day0, values = forecastValues)
+        val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.id, empirical.metric, listOf(series))
+
+        return UserForecast(f).apply {
+            sigmoidParameters = SigmoidParameters(curve, l.toDouble(), k.toDouble(), x0.toDouble(), v.toDouble())
+            totalValue = l
+
+            val peak = equationPeak()
+            peakDay = day0.plusDays(peak.first.toLong())
+            peakValue = peak.second
+
+            forecastDays[MAY1] = derivative(MAY1.minus(day0).toDouble())
+            forecastDays[JUNE1] = derivative(JUNE1.minus(day0).toDouble())
+            forecastDays[JULY1] = derivative(JULY1.minus(day0).toDouble())
+
+            forecastTotals[MAY1] = invoke(MAY1.minus(day0).toDouble())
+            forecastTotals[JUNE1] = invoke(JUNE1.minus(day0).toDouble())
+            forecastTotals[JULY1] = invoke(JULY1.minus(day0).toDouble())
+
+            fitDayRange = fitDomain(empirical.domain)
+            standardErrorCumulative = cumulativeStandardError(empirical, 0.0)
+            standardErrorDelta = deltaStandardError(empirical, 0.0)
+        }
     }
 
     //endregion
@@ -121,7 +154,7 @@ class ForecastCurveFitter: (Number) -> Double {
     /**
      * Compute standard error for the cumulative (raw) time series data.
      * @param empirical the empirical data
-     * @param numDays # of days to use for fit
+     * @param shift # of days to use for fit
      */
     fun cumulativeStandardError(empirical: MetricTimeSeries?, shift: Double): Double? {
         val observedPoints = empiricalDataForFitting(empirical) ?: return null
@@ -141,7 +174,6 @@ class ForecastCurveFitter: (Number) -> Double {
      * Autofit series data using the cumulative SE.
      * Uses the current curve and the parameter vector [l, k, x0, v].
      * @param series the series to fit
-     * @param range range of dates to use for fitting
      */
     fun autofitCumulativeSE(series: MetricTimeSeries) {
         val observedPoints = empiricalDataForFitting(series)!!
@@ -204,24 +236,9 @@ class ForecastCurveFitter: (Number) -> Double {
 
 //region MATH UTILS
 
-typealias Jacobian = org.apache.commons.math3.util.Pair<RealVector, RealMatrix>
-
-private operator fun RealVector.get(i: Int) = getEntry(i)
-private operator fun RealVector.plus(v2: RealVector) = this.add(v2)
-private operator fun RealVector.minus(v2: RealVector) = this.subtract(v2)
-private operator fun RealVector.div(x: Double) = this.mapDivide(x)
-private operator fun Double.times(v: RealVector) = v.mapMultiply(this)
-
-private fun vec(vararg x: Number) = listOf(*x).map { it.toDouble() }.toDoubleArray().let { ArrayRealVector(it) }
-
-/** Compute logistic function. */
-fun logistic(x: Double, l: Double, k: Double, x0: Double) = l / (1 + exp(-k * (x - x0)))
-/** Compute generalized logistic function. */
-fun generalLogistic(x: Double, l: Double, k: Double, x0: Double, v: Double) = l * (1 + exp(-k * (x - x0))).pow(-1 / v)
-/** Compute error function. */
-fun gaussianErf(x: Double, l: Double, k: Double, x0: Double) = l * (1 + Erf.erf(k * (x - x0))) / 2.0
-/** Compute Gompertz function. */
-fun gompertz(x: Double, l: Double, k: Double, x0: Double) = l * exp(-exp(-k * (x - x0)))
+/** Compute standard error given list of points and given function. */
+fun standardError(points: List<Vector2D>, function: (Double) -> Double)
+        = sqrt(points.map { it.y - function(it.x) }.map { it * it }.sum() / points.size)
 
 operator fun Number.div(x: Double) = toDouble() / x
 operator fun Number.unaryMinus() = -toDouble()
@@ -230,9 +247,5 @@ operator fun Number.plus(x: Double) = toDouble() + x
 operator fun Double.minus(x: Number) = this - x.toDouble()
 operator fun Double.div(x: Number) = this / x.toDouble()
 operator fun Int.div(x: Number) = this / x.toDouble()
-
-/** Compute standard error given list of points and given function. */
-private fun standardError(points: List<Vector2D>, function: (Double) -> Double)
-        = sqrt(points.map { it.y - function(it.x) }.map { it * it }.sum() / points.size)
 
 //endregion
