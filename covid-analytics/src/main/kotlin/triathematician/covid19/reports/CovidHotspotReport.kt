@@ -4,7 +4,7 @@ import triathematician.covid19.*
 import triathematician.covid19.COUNTRY_ID_FILTER
 import triathematician.covid19.US_COUNTY_ID_FILTER
 import triathematician.covid19.US_STATE_ID_FILTER
-import triathematician.population.lookupPopulation
+import triathematician.regions.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.deltas
 import triathematician.timeseries.doublingTimes

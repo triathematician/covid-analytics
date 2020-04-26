@@ -1,43 +1,55 @@
 package triathematician.timeseries
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import triathematician.regions.RegionLookup
+import triathematician.util.format
+import triathematician.util.toLocalDate
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import kotlin.math.absoluteValue
 
 /**
- * Collection of related time series for a single grouping.
+ * Aggregates all time series for a single region.
  */
-class RegionTimeSeries(var id: String = "", var id2: String, var start: LocalDate = LocalDate.now()) {
+class RegionTimeSeries(var region: RegionInfo, var metrics: MutableList<MetricInfo> = mutableListOf()) {
 
-    /** Stores whether each metric is int series or not. */
-    val intSeries = mutableSetOf<String>()
-    /** Stores values for each metric. */
-    val valuesTable = mutableMapOf<String, List<Double>>()
-
-    val size: Int
-        get() = valuesTable.values.map { it.size }.max() ?: 0
-    val end: LocalDate
-        get() = start.plusDays((size - 1).toLong())
-
-    val timeSeries: List<MetricTimeSeries>
-        get() = valuesTable.map { MetricTimeSeries(id, id2, it.key, intSeries.contains(it.key), 0.0, start, it.value) }
-
-    val valuesAsMap: Map<String, Map<LocalDate, Double>>
-        get() = timeSeries.map { it.metric to it.valuesAsMap }.toMap()
-
-    //region MUTATORS
-
-    operator fun plusAssign(mts: MetricTimeSeries) {
-        if (start < mts.start) {
-            // add n 0's to beginning of mts
-        } else if (start > mts.start) {
-            // adjust start date and add n 0's to beginning of all lists in tables
-        } else {
-            if (mts.intSeries) {
-                intSeries.add(mts.metric)
-            }
-            valuesTable[mts.metric] = mts.values
-        }
+    constructor(region: String, metrics: List<MetricTimeSeries>): this(RegionLookup(region)) {
+        metrics.forEach { this += it }
     }
 
-    //endregion
+    operator fun plusAssign(m: MetricTimeSeries) {
+        require(m.id == region.id) { "Expected ${region.id} but was ${m.id}"}
+        metrics.add(MetricInfo(m.metric, m.intSeries, m.start, m.defValue, m.values))
+    }
+
+}
+
+private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
+
+class MetricInfo(var id: String, var intSeries: Boolean, @get:JsonIgnore var start: LocalDate, var defValue: Number, @get:JsonIgnore var values: List<Number>) {
+
+    @get:JsonProperty("start")
+    var dateString: String
+        get() = start.toString()
+        set(value) {
+            start = value.toLocalDate(FORMAT)
+        }
+
+    @get:JsonProperty("values")
+    var simpleValues: List<Any>
+        get() = when {
+            intSeries -> values.map { it.toInt() }
+            else -> values.map { it.toFloat() }
+        }
+        set(value) {
+            values = value.map {
+                when (it) {
+                    is Number -> it
+                    else -> it.toString().toDoubleOrNull() ?: throw IllegalArgumentException("Not a number: $it")
+                }
+            }
+        }
 
 }

@@ -10,7 +10,7 @@ import triathematician.covid19.CovidTimeSeriesSources.usCountyData
 import triathematician.covid19.CovidTimeSeriesSources.usStateData
 import triathematician.covid19.forecaster.utils.ChartDataSeries
 import triathematician.covid19.forecaster.utils.series
-import triathematician.population.lookupPopulation
+import triathematician.regions.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.dateRange
 import triathematician.util.DateRange

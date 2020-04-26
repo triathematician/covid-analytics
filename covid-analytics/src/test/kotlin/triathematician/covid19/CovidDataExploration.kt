@@ -1,19 +1,22 @@
 package triathematician.covid19
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import triathematician.covid19.data.forecasts.CovidForecasts
-import triathematician.timeseries.deltas
-import triathematician.timeseries.doublingTimes
-import triathematician.timeseries.intTimeSeries
-import triathematician.timeseries.movingAverage
+import triathematician.regions.RegionLookup
+import triathematician.timeseries.*
+import triathematician.util.DefaultMapper
 import triathematician.util.log
 import java.time.LocalDate
 
 fun main() {
     printAllForecasts("Michigan, US")
-//    CovidTimeSeriesSources.dailyReports({ it == "Maryland, US" })
-//            .forEach {
-//                println("${it.id}\t${it.metric}\t${it.start}\t${it.values.joinToString("\t")}")
-//            }
+    printRegionTimeSeries("Maryland, US")
+}
+
+fun printRegionTimeSeries(id: String) {
+    val region = RegionTimeSeries(id, CovidTimeSeriesSources.dailyReports({ it == id }))
+    println(DefaultMapper.write(region))
 }
 
 fun printAllForecasts(region: String) {

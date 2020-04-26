@@ -1,7 +1,7 @@
 package triathematician.covid19.data.forecasts
 
 import triathematician.covid19.DEATHS
-import triathematician.population.UnitedStates
+import triathematician.regions.UnitedStates
 import triathematician.timeseries.Forecast
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.UncertaintyRange

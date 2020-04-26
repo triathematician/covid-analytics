@@ -4,7 +4,10 @@ import triathematician.covid19.*
 import triathematician.covid19.CovidTimeSeriesSources.countryData
 import triathematician.covid19.CovidTimeSeriesSources.usCountyData
 import triathematician.covid19.CovidTimeSeriesSources.usStateData
+import triathematician.regions.RegionLookup
 import triathematician.timeseries.MetricTimeSeries
+import triathematician.timeseries.RegionTimeSeries
+import triathematician.util.DefaultMapper
 import triathematician.util.logCsv
 import java.io.File
 import java.io.PrintStream
@@ -20,18 +23,21 @@ fun main() {
         exportCaseHotspots("us_county")
         exportMortalityHotspots("us_county")
         exportIndicators("us_county")
+        exportIndicatorsJson("us_county")
     }
 
     usStateData().apply {
         exportCaseHotspots("us_state")
         exportMortalityHotspots("us_state")
         exportIndicators("us_state")
+        exportIndicatorsJson("us_state")
     }
 
     countryData().apply {
         exportCaseHotspots("country")
         exportMortalityHotspots("country")
         exportIndicators("country")
+        exportIndicatorsJson("country")
     }
 }
 
@@ -73,11 +79,20 @@ fun List<MetricTimeSeries>.exportMortalityHotspots(ps: PrintStream) {
 fun List<MetricTimeSeries>.exportIndicators(target: String) = exportIndicators(File("reports/${target}_indicators.csv").asPrintStream())
 
 /** Import all data and export as indicators. */
+fun List<MetricTimeSeries>.exportIndicatorsJson(target: String) = exportIndicatorsJson(File("reports/${target}_indicators.json").asPrintStream())
+
+/** Import all data and export as indicators. */
 fun List<MetricTimeSeries>.exportIndicators(ps: PrintStream) {
     listOf("Region", "FIPS", "Metric", "Date", "Value").logCsv(ps)
     filter { it.values.any { it > 0.0 } }
             .flatMap { it.indicators() }
             .forEach { it.logCsv(ps) }
+}
+
+/** Import all data and export as indicators. */
+fun List<MetricTimeSeries>.exportIndicatorsJson(ps: PrintStream) {
+    val data = groupBy { it.id }.map { RegionTimeSeries(it.key, it.value.filter { it.values.any { it > 0.0 } }) }
+    DefaultMapper.writerWithDefaultPrettyPrinter().writeValue(ps, data)
 }
 
 fun MetricTimeSeries.indicators() = valuesAsMap.filter { it.value.isFinite() }.map {

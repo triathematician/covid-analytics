@@ -6,13 +6,14 @@ import tornadofx.asObservable
 import tornadofx.getProperty
 import tornadofx.property
 import triathematician.covid19.CovidTimeSeriesSources
+import triathematician.covid19.data.CsseCovid19DailyReports
 import triathematician.covid19.data.forecasts.CovidForecasts
 import triathematician.timeseries.Forecast
 import triathematician.covid19.data.forecasts.IHME
 import triathematician.covid19.data.forecasts.LANL
 import triathematician.covid19.forecaster.utils.ChartDataSeries
 import triathematician.math.GEN_LOGISTIC
-import triathematician.population.UnitedStates
+import triathematician.regions.UnitedStates
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.util.DateRange
 import triathematician.util.minus
@@ -100,7 +101,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     /** List of regions available for panel. */
     val regions: SortedSet<String> by lazy {
-        val jhuRegions = CovidTimeSeriesSources.dailyReports().map { it.id }.toSet()
+        val jhuRegions = CsseCovid19DailyReports.allTimeSeries.map { it.id }.toSet()
         val forecastRegions = CovidForecasts.allForecasts.map { it.region }.toSet()
         (jhuRegions + forecastRegions).toSortedSet()
     }

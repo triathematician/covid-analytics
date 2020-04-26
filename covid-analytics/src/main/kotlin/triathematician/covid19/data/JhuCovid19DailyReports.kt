@@ -4,7 +4,7 @@ import triathematician.covid19.ACTIVE
 import triathematician.covid19.CASES
 import triathematician.covid19.DEATHS
 import triathematician.covid19.RECOVERED
-import triathematician.population.lookupPopulation
+import triathematician.regions.lookupPopulation
 import triathematician.timeseries.MetricTimeSeries
 import triathematician.timeseries.intTimeSeries
 import triathematician.timeseries.regroupAndMerge
