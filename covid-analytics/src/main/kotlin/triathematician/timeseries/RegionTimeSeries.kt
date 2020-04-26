@@ -26,16 +26,7 @@ class RegionTimeSeries(var region: RegionInfo, var metrics: MutableList<MetricIn
 
 }
 
-private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
-
-class MetricInfo(var id: String, var intSeries: Boolean, @get:JsonIgnore var start: LocalDate, var defValue: Number, @get:JsonIgnore var values: List<Number>) {
-
-    @get:JsonProperty("start")
-    var dateString: String
-        get() = start.toString()
-        set(value) {
-            start = value.toLocalDate(FORMAT)
-        }
+class MetricInfo(var id: String, var intSeries: Boolean, var start: LocalDate, var defValue: Number, @get:JsonIgnore var values: List<Number>) {
 
     @get:JsonProperty("values")
     var simpleValues: List<Any>

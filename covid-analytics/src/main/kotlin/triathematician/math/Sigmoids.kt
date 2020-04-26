@@ -1,11 +1,13 @@
 package triathematician.math
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.apache.commons.math3.special.Erf
 import kotlin.math.exp
 import kotlin.math.pow
 
 /** Stores parameters associated with a sigmoid curve. */
 data class SigmoidParameters(val curve: String, val load: Double, val k: Double, val x0: Double, val v: Double?) {
+    @get:JsonIgnore
     val parameters: DoubleArray
         get() = when (curve) {
             GEN_LOGISTIC -> doubleArrayOf(load, k, x0, v!!)

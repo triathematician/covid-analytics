@@ -91,7 +91,7 @@ class ForecastCurveFitter: (Number) -> Double {
     fun createUserForecast(day0: LocalDate, empirical: MetricTimeSeries): UserForecast {
         val forecastDomain = DateRange(day0, JULY1)
         val forecastValues = forecastDomain.map { invoke(it.minus(day0)) }
-        val series = empirical.copy(id = "${empirical.id} (user forecast)", start = day0, values = forecastValues)
+        val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = day0, values = forecastValues)
         val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.id, empirical.metric, listOf(series))
 
         return UserForecast(f).apply {

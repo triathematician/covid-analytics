@@ -1,5 +1,6 @@
 package triathematician.util
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -33,11 +34,16 @@ operator fun LocalDate.rangeTo(other: LocalDate) = DateRange(this, other)
 
 /** Provides a range of dates, with ability to iterate. */
 data class DateRange(override var start: LocalDate, override var endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
+
     override fun iterator() = DateIterator(start, endInclusive)
 
     /** Number of days in range. */
+    @get:JsonIgnore
     val size
         get() = endInclusive - start + 1
+
+    @JsonIgnore
+    override fun isEmpty() = super.isEmpty()
 
     /** Adds given number of days to start and end of range. */
     fun shift(startDelta: Int, endDelta: Int) = DateRange(start + startDelta, endInclusive + endDelta)

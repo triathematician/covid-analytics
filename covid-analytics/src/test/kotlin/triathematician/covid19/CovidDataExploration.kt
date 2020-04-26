@@ -1,9 +1,6 @@
 package triathematician.covid19
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import triathematician.covid19.data.forecasts.CovidForecasts
-import triathematician.regions.RegionLookup
 import triathematician.timeseries.*
 import triathematician.util.DefaultMapper
 import triathematician.util.log

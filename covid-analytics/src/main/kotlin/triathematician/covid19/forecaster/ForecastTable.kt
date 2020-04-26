@@ -4,7 +4,9 @@ import javafx.scene.control.TableView
 import javafx.scene.input.Clipboard
 import javafx.scene.input.ClipboardContent
 import javafx.scene.layout.BorderPane
+import javafx.stage.FileChooser
 import tornadofx.*
+import triathematician.util.DefaultMapper
 import triathematician.util.format
 import triathematician.util.logCsv
 import triathematician.util.userFormat
@@ -82,7 +84,12 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
     }
 
     private fun exportForecastData(forecasts: List<UserForecast>) {
-        TODO("export to alternate formats")
+        val fileChooser = FileChooser()
+        fileChooser.title = "Export forecast data"
+        fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("JSON Files (.json)", "*.json"))
+        fileChooser.showSaveDialog(scene.window)?.run {
+            DefaultMapper.writerWithDefaultPrettyPrinter().writeValue(this, forecasts)
+        }
     }
 
 }

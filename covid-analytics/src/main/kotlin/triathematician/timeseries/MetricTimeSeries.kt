@@ -1,5 +1,6 @@
 package triathematician.timeseries
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import triathematician.timeseries.analytics.computeLogisticPrediction
 import triathematician.util.DateRange
 import triathematician.util.rangeTo
@@ -18,15 +19,20 @@ data class MetricTimeSeries(var id: String = "", var id2: String = "", var metri
     constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, id2, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
     constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int) : this(id, id2, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
+    @get:JsonIgnore
     val size: Int
         get() = values.size
+    @get:JsonIgnore
     val lastValue: Double
         get() = values.lastOrNull() ?: 0.0
 
+    @get:JsonIgnore
     val firstPositiveDate: LocalDate
         get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
+    @get:JsonIgnore
     val end: LocalDate
         get() = date(values.size - 1)
+    @get:JsonIgnore
     val domain: DateRange
         get() = DateRange(firstPositiveDate, end)
 

@@ -1,5 +1,6 @@
 package triathematician.covid19.forecaster
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import triathematician.math.SigmoidParameters
 import triathematician.timeseries.Forecast
 import triathematician.util.DateRange
@@ -37,37 +38,52 @@ class UserForecast(var forecast: Forecast) {
 
     //region DELEGATE PROPERTIES
 
+    @get:JsonIgnore
     val region
         get() = forecast.region
+    @get:JsonIgnore
     val model
         get() = forecast.model
+    @get:JsonIgnore
     val metric
         get() = forecast.metric
+    @get:JsonIgnore
     val forecastDate
         get() = forecast.forecastDate
 
+    @get:JsonIgnore
     val sigmoidCurve
         get() = sigmoidParameters?.curve
+    @get:JsonIgnore
     val parameters
         get() = sigmoidParameters?.parameters
+    @get:JsonIgnore
     val parameterK
         get() = sigmoidParameters?.k
 
+    @get:JsonIgnore
     val fitFirstDay
         get() = fitDayRange?.start
+    @get:JsonIgnore
     val fitLastDay
         get() = fitDayRange?.endInclusive
 
+    @get:JsonIgnore
     val may1
         get() = forecastDays[MAY1]
+    @get:JsonIgnore
     val june1
         get() = forecastDays[JUNE1]
+    @get:JsonIgnore
     val july1
         get() = forecastDays[JULY1]
+    @get:JsonIgnore
     val may1Total
         get() = forecastTotals[MAY1]
+    @get:JsonIgnore
     val june1Total
         get() = forecastTotals[JUNE1]
+    @get:JsonIgnore
     val july1Total
         get() = forecastTotals[JULY1]
 
