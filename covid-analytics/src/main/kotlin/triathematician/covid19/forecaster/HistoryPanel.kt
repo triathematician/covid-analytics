@@ -1,11 +1,14 @@
 package triathematician.covid19.forecaster
 
+import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
+import javafx.scene.control.Tooltip
 import javafx.scene.layout.Priority
 import tornadofx.*
+import triathematician.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import triathematician.covid19.forecaster.utils.*
 
 /** UI for exploring historical COVID time series data. */
@@ -133,6 +136,18 @@ class HistoryPanel: SplitPane() {
                 it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
             }
         }
+
+        historicalChart.data.forEach {
+            it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+            it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+            it.data.forEach {
+                it.node?.run {
+                    Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
+                    onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                    onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                }
+            }
+        }
     }
 
     /** Plot growth vs. total. */
@@ -150,6 +165,18 @@ class HistoryPanel: SplitPane() {
                 val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { triathematician.covid19.forecaster.utils.xy(it, peak / it) }
                 hubbertChart.series(label, peakSeries.asObservable()).also {
                     it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
+                }
+            }
+        }
+
+        hubbertChart.data.forEach {
+            it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+            it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+            it.data.forEach {
+                it.node?.run {
+                    Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
+                    onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                    onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
                 }
             }
         }

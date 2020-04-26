@@ -1,16 +1,23 @@
 package triathematician.covid19.forecaster
 
+import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
+import javafx.scene.Node
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
+import javafx.scene.chart.XYChart
 import javafx.scene.control.SplitPane
+import javafx.scene.control.Tooltip
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.Priority
 import tornadofx.*
 import triathematician.covid19.data.forecasts.IHME
 import triathematician.covid19.data.forecasts.LANL
+import triathematician.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import triathematician.covid19.forecaster.utils.*
 import triathematician.math.SIGMOID_MODELS
+
 
 class ForecastPanel : SplitPane() {
 
@@ -138,16 +145,30 @@ class ForecastPanel : SplitPane() {
             chart.animated = false
             chart.data.forEach {
                 if ("predicted" in it.name) {
-                    it.nodeProperty().get().style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
+                    it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
                     it.data.forEach { it.node?.isVisible = false }
                 }
                 if (IHME in it.name || LANL in it.name) {
-                    it.nodeProperty().get().style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
+                    it.node.style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
                     it.data.forEach { it.node?.isVisible = false }
                 }
                 if ("curve" in it.name) {
-                    it.nodeProperty().get().style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
+                    it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
+                    it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                    it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
                     it.data.forEach { it.node?.isVisible = false }
+                }
+            }
+
+            chart.data.forEach {
+                it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                it.data.forEach {
+                    it.node?.run {
+                        Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
+                        onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                        onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                    }
                 }
             }
         }

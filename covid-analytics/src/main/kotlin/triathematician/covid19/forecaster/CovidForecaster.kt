@@ -1,9 +1,14 @@
 package triathematician.covid19.forecaster
 
+import javafx.scene.effect.BlurType
+import javafx.scene.effect.DropShadow
+import javafx.scene.effect.Effect
+import javafx.scene.effect.Glow
 import javafx.scene.layout.Priority
 import tornadofx.*
+import java.awt.Color
 
-class CovidForecaster : App(CovidForecasterView::class)
+class CovidForecaster : App(CovidForecasterView::class, CovidForecasterStyles::class)
 
 fun main(args: Array<String>) {
     launch<CovidForecaster>(args)
@@ -36,4 +41,16 @@ class CovidForecasterView : View() {
         }
     }
 
+}
+
+class CovidForecasterStyles: Stylesheet() {
+    companion object {
+        val chartHover by cssclass()
+    }
+
+    init {
+        chartHover {
+            effect = DropShadow(BlurType.GAUSSIAN, c("dodgerblue"), 10.0, 0.2, 0.0, 0.0)
+        }
+    }
 }
