@@ -1,13 +1,28 @@
 package triathematician.covid19.forecaster
 
+import javafx.scene.control.TableView
+import javafx.scene.input.Clipboard
+import javafx.scene.input.ClipboardContent
 import javafx.scene.layout.BorderPane
 import tornadofx.*
 import triathematician.util.format
+import triathematician.util.logCsv
 import triathematician.util.userFormat
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
+import java.nio.charset.Charset
+
 
 /** Panel for managing saved forecasts. */
 class ForecastTable(model: ForecastPanelModel) : BorderPane() {
+
+    lateinit var table: TableView<UserForecast>
+
     init {
+        top = toolbar {
+            button("Copy") { action { copyTableDataToClipboard(table) } }
+            button("Export...") { action { exportForecastData(model.userForecasts) } }
+        }
         center = scrollpane(fitToWidth = true, fitToHeight = true) {
             tableview(model.userForecasts) {
                 readonlyColumn("Region", UserForecast::region)
@@ -39,7 +54,35 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
                     separator()
                     item("Remove").action { selectedItem?.apply { model.userForecasts.remove(this) } }
                 }
+
+                table = this
             }
         }
     }
+
+    fun <X> copyTableDataToClipboard(table: TableView<X>) {
+        val stream = ByteArrayOutputStream()
+        val printer = PrintStream(stream)
+        table.columns.map { it.text }.logCsv(printer)
+        table.items.forEach { row ->
+            table.columns.map { it.getCellData(row).forPrinting() }.logCsv(printer)
+        }
+
+        val string = stream.toString(Charset.defaultCharset())
+        val clipboardContent = ClipboardContent().apply { putString(string) }
+        Clipboard.getSystemClipboard().setContent(clipboardContent)
+
+        println(string)
+    }
+
+    private fun Any?.forPrinting() = when (this) {
+        is DoubleArray -> toList().joinToString("; ")
+        is Array<*> -> listOf(*this).joinToString("; ")
+        else -> toString()
+    }
+
+    private fun exportForecastData(forecasts: List<UserForecast>) {
+        TODO("export to alternate formats")
+    }
+
 }

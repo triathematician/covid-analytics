@@ -46,6 +46,11 @@ data class DateRange(override var start: LocalDate, override var endInclusive: L
         size > n -> shift(size.toInt() - n, 0)
         else -> this
     }
+
+    /** Intersects with another domain. */
+    fun intersect(other: DateRange) = DateRange(maxOf(start, other.start), minOf(endInclusive, other.endInclusive)).let {
+        if (size < 0) null else it
+    }
 }
 
 /** Iterates between two dates. */

@@ -69,7 +69,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     }
 
     internal val _region = property(ForecastPanelModel::region)
-    internal val _selectedRegion = property(ForecastPanelModel::selectedMetric)
+    internal val _selectedMetric = property(ForecastPanelModel::selectedMetric)
     internal val _smooth = property(ForecastPanelModel::smooth)
 
     internal val _showCu80 = property(ForecastPanelModel::showCu80)
@@ -163,8 +163,17 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         series(externalForecasts.cumulative.map { it.hubbertSeries(1) })
     }
 
-    internal fun peakDataSeries() = dataseries {
-        series(pastForecasts.peakDays)
+    internal fun residualDataSeries() = dataseries {
+        val daily = mainSeries?.deltas()?.maybeSmoothed()
+        series(userForecast?.deltas()?.residuals(daily))
+        series(externalForecasts.deltas.mapNotNull { it.residuals(daily) })
+    }
+
+    private fun MetricTimeSeries.residuals(empirical: MetricTimeSeries?): MetricTimeSeries? {
+        empirical ?: return null
+        val commonDomain = domain.intersect(empirical.domain)
+        commonDomain ?: return null
+        return copy(start = commonDomain.start, values = commonDomain.map { empirical[it] - get(it) })
     }
 
     private fun dataseries(op: MutableList<ChartDataSeries>.() -> Unit) = mutableListOf<ChartDataSeries>().apply { op() }
@@ -283,7 +292,8 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     val ExternalForecasts.cumulative
         get() = filtered.filter { "change" !in it.metric }
     val ExternalForecasts.deltas
-        get() = filtered.filter { "change" in it.metric }
+        get() = cumulative.map { it.deltas() }
+//            filtered.filter { "change" in it.metric }
 
     //endregion
 

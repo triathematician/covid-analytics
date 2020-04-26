@@ -1,6 +1,7 @@
 package triathematician.covid19.forecaster
 
 import javafx.event.EventTarget
+import javafx.geometry.Insets
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
@@ -18,7 +19,7 @@ class ForecastPanel : SplitPane() {
     private lateinit var forecastTotals: LineChart<Number, Number>
     private lateinit var forecastDeltas: LineChart<Number, Number>
     private lateinit var forecastHubbert: LineChart<Number, Number>
-    private lateinit var forecastHistory: LineChart<Number, Number>
+    private lateinit var forecastResiduals: LineChart<Number, Number>
 
     init {
         configPanel()
@@ -37,7 +38,7 @@ class ForecastPanel : SplitPane() {
                     }
                 }.bind(model._region)
             }
-            field("Metric") { combobox(model._selectedRegion, METRIC_OPTIONS); checkbox("smooth").bind(model._smooth) }
+            field("Metric") { combobox(model._selectedMetric, METRIC_OPTIONS); checkbox("smooth").bind(model._smooth) }
         }
         fieldset("Forecast (S-Curve)") {
             label("Adjust curve parameters to fit data.")
@@ -84,29 +85,36 @@ class ForecastPanel : SplitPane() {
     }
 
     /** Charts. */
-    private fun EventTarget.charts() = gridpane {
-        row {
-            forecastTotals = linechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
-                gridpaneConstraints { vhGrow = Priority.ALWAYS }
-            }
-            forecastDeltas = linechart("Change per Day", "Day", "Actual/Forecast")
+    private fun EventTarget.charts() = borderpane {
+        top = hbox(10) {
+            padding = Insets(10.0, 10.0, 10.0, 10.0)
+            label(model._region) { style = "-fx-font-size: 20; -fx-font-weight: bold" }
+            label(model._selectedMetric) { style = "-fx-font-size: 20; -fx-font-weight: bold" }
         }
-        row {
-            forecastHubbert = linechart("Percent Growth vs Total",
-                    NumberAxis().apply { label = "Total" },
-                    NumberAxis().apply {
-                        label = "Percent Growth"
-                        isAutoRanging = false
-                        lowerBound = 0.0
-                        tickUnit = 0.05
-                        upperBound = 0.3
-                    }) {
-                animated = false
-                createSymbols = false
-                axisSortingPolicy = LineChart.SortingPolicy.NONE
+        center = gridpane {
+            row {
+                forecastTotals = linechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                }
+                forecastDeltas = linechart("Change per Day", "Day", "Actual/Forecast")
             }
-            forecastHistory = linechart("Days to Peak", "Day of Forecast", "Forecasted Days to Peak") {
-                gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            row {
+                forecastHubbert = linechart("Percent Growth vs Total",
+                        NumberAxis().apply { label = "Total" },
+                        NumberAxis().apply {
+                            label = "Percent Growth"
+                            isAutoRanging = false
+                            lowerBound = 0.0
+                            tickUnit = 0.05
+                            upperBound = 0.3
+                        }) {
+                    animated = false
+                    createSymbols = false
+                    axisSortingPolicy = LineChart.SortingPolicy.NONE
+                }
+                forecastResiduals = linechart("Residuals (Daily)", "Day", "# more than forecasted") {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                }
             }
         }
     }
@@ -116,17 +124,17 @@ class ForecastPanel : SplitPane() {
         forecastTotals.dataSeries = model.cumulativeDataSeries()
         forecastDeltas.dataSeries = model.dailyDataSeries()
         forecastHubbert.dataSeries = model.hubbertDataSeries()
-        forecastHistory.dataSeries = model.peakDataSeries()
+        forecastResiduals.dataSeries = model.residualDataSeries()
 
         model.domain?.let {
             with(axisLabeler(it.start)) {
                 (forecastTotals.xAxis as NumberAxis).tickLabelFormatter = this
                 (forecastDeltas.xAxis as NumberAxis).tickLabelFormatter = this
-                (forecastHistory.xAxis as NumberAxis).tickLabelFormatter = this
+                (forecastResiduals.xAxis as NumberAxis).tickLabelFormatter = this
             }
         }
 
-        listOf(forecastTotals, forecastDeltas, forecastHistory, forecastHubbert).forEach { chart ->
+        listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastHubbert).forEach { chart ->
             chart.animated = false
             chart.data.forEach {
                 if ("predicted" in it.name) {
