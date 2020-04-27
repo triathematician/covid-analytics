@@ -4,14 +4,18 @@ import javafx.scene.effect.BlurType
 import javafx.scene.effect.DropShadow
 import javafx.scene.layout.Priority
 import tornadofx.*
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class CovidForecaster : App(CovidForecasterView::class, CovidForecasterStyles::class)
 
+@ExperimentalTime
 fun main(args: Array<String>) {
     launch<CovidForecaster>(args)
 }
 
 /** View configuration for the app. */
+@ExperimentalTime
 class CovidForecasterView : View() {
 
     override val root = vbox {

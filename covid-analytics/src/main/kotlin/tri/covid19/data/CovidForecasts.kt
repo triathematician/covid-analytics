@@ -1,8 +1,10 @@
 package tri.covid19.data
 
 import tri.timeseries.Forecast
+import kotlin.time.ExperimentalTime
 
 /** Access to forecasts by model and date. */
+@ExperimentalTime
 object CovidForecasts {
 
     val allForecasts: List<Forecast> by lazy { ihmeForecasts + lanlForecasts }

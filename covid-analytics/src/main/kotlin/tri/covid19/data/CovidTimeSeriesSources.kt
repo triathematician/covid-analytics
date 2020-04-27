@@ -5,6 +5,8 @@ import tri.covid19.DEATHS
 import tri.covid19.data.CovidHistory
 import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 //
 // This file links to various data sources providing time series information.
@@ -25,6 +27,7 @@ internal val String.perCapita
 //endregion
 
 /** Primary access point for COVID time series data. */
+@ExperimentalTime
 object CovidTimeSeriesSources {
 
     val dailyCountryReports by lazy { dailyReports(COUNTRY_ID_FILTER) }
@@ -48,12 +51,16 @@ object CovidTimeSeriesSources {
             .sortedBy { it.group }
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
-    fun dailyReports(idFilter: (String) -> Boolean = { true }, averageDays: Int = 7) = CovidHistory.allData
-            .filter { idFilter(it.group) }
-            .flatMap {
-                listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(averageDays).growthPercentages { "$it (growth)" }
-                ) + it.movingAverage(averageDays).logisticPredictions(10)
-            }
+    fun dailyReports(idFilter: (String) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
+        CovidHistory.allData
+                .filter { idFilter(it.group) }
+                .flatMap {
+                    listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
+                            it.movingAverage(averageDays).shortTermLogisticForecast(10)
+                }
+    }.also {
+        println("Loaded region group data with predictions in ${it.duration}")
+    }.value
 
     /** Filter daily reports for selected region and metric. */
     fun dailyReports(region: String, metric: String, relatedSeries: Boolean = true) = dailyReports({ it == region })

@@ -1,8 +1,10 @@
 package tri.covid19.data
 
 import tri.timeseries.MetricTimeSeries
+import kotlin.time.ExperimentalTime
 
 /** Access to history by region. */
+@ExperimentalTime
 object CovidHistory {
 
     val allData: List<MetricTimeSeries> by lazy {

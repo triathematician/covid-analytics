@@ -10,8 +10,10 @@ import javafx.scene.layout.Priority
 import tornadofx.*
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
+import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
+@ExperimentalTime
 class HistoryPanel: SplitPane() {
 
     private val historyPanelModel = HistoryPanelModel { updateBothCharts() }

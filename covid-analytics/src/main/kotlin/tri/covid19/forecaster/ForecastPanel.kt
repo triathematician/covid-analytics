@@ -14,8 +14,9 @@ import tri.covid19.data.LANL
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
+import kotlin.time.ExperimentalTime
 
-
+@ExperimentalTime
 class ForecastPanel : SplitPane() {
 
     val model = ForecastPanelModel { updateForecasts() }

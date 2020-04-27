@@ -13,9 +13,11 @@ import tri.util.userFormat
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.charset.Charset
+import kotlin.time.ExperimentalTime
 
 
 /** Panel for managing saved forecasts. */
+@ExperimentalTime
 class ForecastTable(model: ForecastPanelModel) : BorderPane() {
 
     lateinit var table: TableView<UserForecast>

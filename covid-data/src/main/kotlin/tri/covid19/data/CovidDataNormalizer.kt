@@ -12,6 +12,7 @@ import java.net.URL
 import java.time.format.DateTimeFormatter
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
+import kotlin.time.measureTimedValue
 
 @ExperimentalTime
 fun main() {
@@ -85,4 +86,9 @@ abstract class CovidDataNormalizer {
 }
 
 /** Load forecasts from local data. */
-fun loadTimeSeries(path: String) = DefaultMapper.readValue<List<RegionTimeSeries>>(File(path))
+@ExperimentalTime
+fun loadTimeSeries(path: String) = measureTimedValue {
+    DefaultMapper.readValue<List<RegionTimeSeries>>(File(path))
+}.also {
+    println("Loaded data from $path in ${it.duration}")
+}.value

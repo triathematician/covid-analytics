@@ -21,8 +21,10 @@ import triathematician.covid19.CovidTimeSeriesSources
 import java.time.LocalDate
 import java.util.*
 import kotlin.reflect.KMutableProperty1
+import kotlin.time.ExperimentalTime
 
 /** Config for logistic projection. */
+@ExperimentalTime
 class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     //region UI BOUND PROPERTIES
@@ -291,12 +293,17 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     val ExternalForecasts.filtered
         get() = forecasts.filter { (showIhme && it.model == IHME || showLanl && it.model == LANL) }.flatMap { it.data }
     val ExternalForecasts.cumulative
-        get() = filtered.filter { "change" !in it.metric }
+        get() = filtered.filter { "totdea_" in it.metric }.toMutableList() +
+                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95")}
     val ExternalForecasts.deltas
-        get() = cumulative.map { it.deltas() }
+        get() = filtered.filter { "deaths_" in it.metric }.toMutableList() +
+                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95") }.map { it.deltas() }
+//            cumulative.map { it.deltas() }
 //            filtered.filter { "change" in it.metric }
 
     //endregion
+
+    infix fun String.containsOneOf(list: List<String>) = list.any { it in this }
 
 }
 

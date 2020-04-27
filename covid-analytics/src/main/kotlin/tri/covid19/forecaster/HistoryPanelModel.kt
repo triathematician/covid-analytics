@@ -19,6 +19,7 @@ import triathematician.covid19.perCapita
 import java.lang.IllegalStateException
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
+import kotlin.time.ExperimentalTime
 
 const val COUNTRIES = "Countries and Global Regions"
 const val STATES = "US States and Territories"
@@ -26,6 +27,7 @@ const val COUNTIES = "US Counties"
 val METRIC_OPTIONS = listOf(CASES, DEATHS, RECOVERED, ACTIVE)
 
 /** UI model for history panel. */
+@ExperimentalTime
 class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES)

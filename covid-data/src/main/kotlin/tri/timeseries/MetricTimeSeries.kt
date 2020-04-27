@@ -75,7 +75,7 @@ data class MetricTimeSeries(var group: String = "", var subgroup: String = "", v
             .restrictToRealNumbers()
 
     /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
-    fun logisticPredictions(days: Int): List<MetricTimeSeries> {
+    fun shortTermLogisticForecast(days: Int): List<MetricTimeSeries> {
         val predictions = values.computeLogisticPrediction(days).filter { it.hasBoundedConfidence }
         return listOf(copyAdjustingStartDay(metric = "$metric (predicted total)", values = predictions.map { it.kTotal }),
                 copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = predictions.map { it.minKTotal }),
