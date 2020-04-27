@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <main.class>triathematician.pop.model.ui.SirModelAppKt</main.class>
+        <main.class>tri.pop.model.ui.SirModelAppKt</main.class>
         <jackson.version>2.10.2</jackson.version>
         <kotlin.version>1.3.70</kotlin.version>
     </properties>
