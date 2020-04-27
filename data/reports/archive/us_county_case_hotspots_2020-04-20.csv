@@ -1,0 +1,2014 @@
+location,fips,metric,value,change (avg),growth rate,doubling time (days),severity (change),severity (growth),severity,severity (trend)
+"Marion, Ohio",39101,Confirmed (per 100k),3184.674,390.869,0.123,1.131,5,5,10,0
+"Dawson, Nebraska",31047,Confirmed (per 100k),728.968,67.811,0.093023,1.154,5,5,10,2
+"Seward, Kansas",20175,Confirmed (per 100k),368.676,28.001,0.075949,1.910,5,5,10,0
+"Nobles, Minnesota",27105,Confirmed (per 100k),351.380,38.969,0.111,1.000,5,5,10,0
+"Gosper, Nebraska",31073,Confirmed (per 100k),301.508,28.715,0.095238,1.885,5,5,10,10
+"Dakota, Nebraska",31043,Confirmed (per 100k),254.669,20.687,0.081232,1.271,5,5,10,0
+"Moniteau, Missouri",29135,Confirmed (per 100k),241.756,30.994,0.128,1.970,5,5,10,0
+"Roberts, Texas",48393,Confirmed (per 100k),234.192,33.456,0.143,1.710,5,5,10,0
+"Sherman, Texas",48421,Confirmed (per 100k),231.635,33.091,0.143,1.609,5,5,10,0
+"Jasper, Illinois",17079,Confirmed (per 100k),208.117,23.785,0.114,1.666,5,5,10,10
+"Grand Forks, North Dakota",38035,Confirmed (per 100k),198.701,25.095,0.126,1.450,5,5,10,4
+"Box Elder, Utah",49003,Confirmed (per 100k),96.349,10.451,0.108,1.932,5,5,10,7
+"Warren, Illinois",17187,Confirmed (per 100k),89.052,9.329,0.105,1.325,5,5,10,4
+"Fairfax City, Virginia",51600,Confirmed (per 100k),87.431,5.948,0.068027,1.000,5,5,10,5
+"Norman, Minnesota",27107,Confirmed (per 100k),78.431,8.964,0.114,1.357,5,5,10,1
+"Putnam, Ohio",39137,Confirmed (per 100k),62.018,7.172,0.116,1.916,5,5,10,0
+"Saline, Nebraska",31151,Confirmed (per 100k),56.243,7.030,0.125,1.205,5,5,10,1
+"Alpena, Michigan",26007,Confirmed (per 100k),52.808,6.538,0.124,0.832,5,5,10,5
+"Howard, Nebraska",31093,Confirmed (per 100k),46.548,6.650,0.143,1.239,5,5,10,0
+"Chase, Kansas",20017,Confirmed (per 100k),37.764,5.395,0.143,1.710,5,5,10,0
+"Pickaway, Ohio",39129,Confirmed (per 100k),2131.481,102.395,0.048039,2.249,5,4,9,0
+"Butler, Kentucky",21031,Confirmed (per 100k),566.814,68.772,0.121,2.657,5,4,9,-1
+"Ford, Kansas",20057,Confirmed (per 100k),535.412,48.442,0.090476,2.275,5,4,9,-1
+"Wayne, North Carolina",37191,Confirmed (per 100k),464.546,45.712,0.098402,2.145,5,4,9,-1
+"Marshall, Iowa",19127,Confirmed (per 100k),439.432,44.996,0.102,2.347,5,4,9,2
+"Jackson, Kentucky",21109,Confirmed (per 100k),427.639,53.589,0.125,2.661,5,4,9,-1
+"Jackson, West Virginia",54035,Confirmed (per 100k),353.443,38.494,0.109,2.400,5,4,9,3
+"Dunn, North Dakota",38025,Confirmed (per 100k),226.040,22.604,0.100,2.808,5,4,9,2
+"Graves, Kentucky",21083,Confirmed (per 100k),169.055,16.100,0.095238,2.642,5,4,9,0
+"Bremer, Iowa",19017,Confirmed (per 100k),111.723,13.110,0.117,2.864,5,4,9,-1
+"Jefferson, Illinois",17081,Confirmed (per 100k),84.917,9.098,0.107,2.206,5,4,9,4
+"Smith, Kansas",20183,Confirmed (per 100k),55.819,7.974,0.143,2.758,5,4,9,-1
+"Montmorency, Michigan",26119,Confirmed (per 100k),42.882,6.126,0.143,2.409,5,4,9,-1
+"Monroe, West Virginia",54063,Confirmed (per 100k),37.665,4.305,0.114,1.885,4,5,9,3
+"Alexander, Illinois",17003,Confirmed (per 100k),34.716,4.959,0.143,1.000,4,5,9,0
+"Pondera, Montana",30073,Confirmed (per 100k),33.835,4.834,0.143,1.710,4,5,9,1
+"Moore, Tennessee",47127,Confirmed (per 100k),30.826,4.404,0.143,1.357,4,5,9,0
+"Henderson, Illinois",17071,Confirmed (per 100k),30.093,4.299,0.143,1.357,4,5,9,0
+"Nance, Nebraska",31125,Confirmed (per 100k),28.417,4.060,0.143,1.710,4,5,9,0
+"Daviess, Missouri",29061,Confirmed (per 100k),24.160,3.451,0.143,1.710,4,5,9,0
+"Freestone, Texas",48161,Confirmed (per 100k),15.215,2.174,0.143,1.710,4,5,9,1
+"Churchill, Nevada",32001,Confirmed (per 100k),12.044,1.721,0.143,1.475,4,5,9,0
+"Wilson, Kansas",20205,Confirmed (per 100k),11.730,1.676,0.143,1.710,4,5,9,0
+"Washita, Oklahoma",40149,Confirmed (per 100k),9.161,1.309,0.143,1.710,4,5,9,0
+"Zavala, Texas",48507,Confirmed (per 100k),8.446,1.207,0.143,1.710,4,5,9,0
+"Lincoln, Arkansas",5079,Confirmed (per 100k),1980.958,109.688,0.055371,3.433,5,3,8,-1
+"Moore, Texas",48341,Confirmed (per 100k),577.841,57.307,0.099174,3.347,5,3,8,-1
+"Cass, Indiana",18017,Confirmed (per 100k),230.837,18.194,0.078818,3.961,5,3,8,1
+"Habersham, Georgia",13137,Confirmed (per 100k),218.408,18.910,0.086580,3.454,5,3,8,-1
+"Black Hawk, Iowa",19013,Confirmed (per 100k),197.366,15.785,0.079978,3.610,5,3,8,0
+"Caddo, Oklahoma",40015,Confirmed (per 100k),180.794,20.861,0.115,3.752,5,3,8,-1
+"Accomack, Virginia",51001,Confirmed (per 100k),160.911,11.936,0.074176,3.930,5,3,8,1
+"Bedford, Tennessee",47003,Confirmed (per 100k),152.878,14.656,0.095865,3.243,5,3,8,1
+"LaPorte, Indiana",18091,Confirmed (per 100k),127.402,13.910,0.109,3.704,5,3,8,-1
+"Towns, Georgia",13281,Confirmed (per 100k),124.616,11.868,0.095238,3.802,5,3,8,1
+"Merrick, Nebraska",31121,Confirmed (per 100k),116.054,9.211,0.079365,3.663,5,3,8,1
+"Polk, Nebraska",31143,Confirmed (per 100k),115.097,10.962,0.095238,3.628,5,3,8,-1
+"Walker, Texas",48471,Confirmed (per 100k),105.521,11.746,0.111,3.883,5,3,8,0
+"Texas, Oklahoma",40139,Confirmed (per 100k),100.085,7.149,0.071429,3.802,5,3,8,2
+"Tyrrell, North Carolina",37177,Confirmed (per 100k),99.602,14.229,0.143,3.280,5,3,8,-2
+"Southampton, Virginia",51175,Confirmed (per 100k),96.421,8.913,0.092437,3.106,5,3,8,3
+"Dillon, South Carolina",45033,Confirmed (per 100k),72.181,7.031,0.097403,3.106,5,3,8,2
+"Delta, Colorado",8029,Confirmed (per 100k),70.599,7.335,0.104,3.715,5,3,8,2
+"Boone, Illinois",17007,Confirmed (per 100k),61.632,6.136,0.099567,3.862,5,3,8,2
+"Grayson, Kentucky",21085,Confirmed (per 100k),60.544,5.406,0.089286,3.106,5,3,8,2
+"Washington, Illinois",17189,Confirmed (per 100k),50.407,5.144,0.102,3.663,5,3,8,2
+"Bleckley, Georgia",13023,Confirmed (per 100k),46.609,5.549,0.119,3.524,5,3,8,1
+"Jeff Davis, Georgia",13161,Confirmed (per 100k),46.312,4.726,0.102,2.828,4,4,8,0
+"Noble, Ohio",39121,Confirmed (per 100k),41.597,4.952,0.119,2.688,4,4,8,2
+"Grundy, Iowa",19075,Confirmed (per 100k),40.876,3.504,0.085714,2.409,4,4,8,2
+"Marion, Texas",48315,Confirmed (per 100k),30.444,4.349,0.143,2.409,4,4,8,-1
+"Union, Illinois",17181,Confirmed (per 100k),30.025,4.289,0.143,2.409,4,4,8,-1
+"Ellis, Kansas",20051,Confirmed (per 100k),28.018,3.502,0.125,2.609,4,4,8,2
+"Johnston, Oklahoma",40069,Confirmed (per 100k),27.064,3.866,0.143,2.642,4,4,8,1
+"Holt, Missouri",29087,Confirmed (per 100k),22.712,3.245,0.143,2.409,4,4,8,-1
+"Morrill, Nebraska",31123,Confirmed (per 100k),21.542,3.077,0.143,2.409,4,4,8,-1
+"Knox, Illinois",17095,Confirmed (per 100k),20.121,2.012,0.100000,2.110,4,4,8,3
+"Essex, Virginia",51057,Confirmed (per 100k),18.260,2.609,0.143,2.409,4,4,8,-1
+"Garrard, Kentucky",21079,Confirmed (per 100k),16.982,2.426,0.143,2.642,4,4,8,-1
+"Sherman, Kansas",20181,Confirmed (per 100k),16.900,2.414,0.143,2.409,4,4,8,-1
+"Knox, Kentucky",21121,Confirmed (per 100k),16.054,1.835,0.114,2.932,4,4,8,-1
+"Moody, South Dakota",46101,Confirmed (per 100k),15.207,2.172,0.143,2.409,4,4,8,-1
+"Harrison, Ohio",39067,Confirmed (per 100k),13.298,1.900,0.143,2.060,4,4,8,-1
+"La Salle, Texas",48283,Confirmed (per 100k),13.298,1.900,0.143,2.409,4,4,8,-1
+"Sabine, Texas",48403,Confirmed (per 100k),9.486,1.355,0.143,2.409,4,4,8,-1
+"Red River, Texas",48387,Confirmed (per 100k),8.317,1.188,0.143,2.409,4,4,8,-1
+"Kodiak Island, Alaska",2150,Confirmed (per 100k),7.693,1.099,0.143,2.409,4,4,8,-1
+"Aitkin, Minnesota",27001,Confirmed (per 100k),6.295,0.899,0.143,1.710,3,5,8,0
+"Miller, Missouri",29131,Confirmed (per 100k),3.903,0.558,0.143,1.710,3,5,8,0
+"Mille Lacs, Minnesota",27095,Confirmed (per 100k),3.806,0.544,0.143,1.710,3,5,8,0
+"Louisa, Iowa",19115,Confirmed (per 100k),1948.346,176.063,0.090365,5.344,5,2,7,0
+"Tama, Iowa",19171,Confirmed (per 100k),1168.862,85.609,0.073241,5.583,5,2,7,1
+"Hall, Nebraska",31079,Confirmed (per 100k),865.483,69.388,0.080172,4.126,5,2,7,-1
+"Minnehaha, South Dakota",46099,Confirmed (per 100k),727.474,61.763,0.084901,5.636,5,2,7,0
+"Upson, Georgia",13293,Confirmed (per 100k),664.894,62.419,0.093878,5.463,5,2,7,0
+"McKinley, New Mexico",35031,Confirmed (per 100k),582.902,43.838,0.075206,5.353,5,2,7,0
+"Providence, Rhode Island",44007,Confirmed (per 100k),546.381,38.815,0.071040,5.637,5,2,7,0
+"Morgan, Colorado",8087,Confirmed (per 100k),540.113,48.163,0.089172,5.092,5,2,7,0
+"Scott, Mississippi",28123,Confirmed (per 100k),526.241,38.605,0.073359,5.437,5,2,7,0
+"Muscatine, Iowa",19139,Confirmed (per 100k),510.969,37.168,0.072739,6.210,5,2,7,1
+"Bienville, Louisiana",22013,Confirmed (per 100k),498.452,35.604,0.071429,6.999,5,2,7,0
+"Harrisonburg, Virginia",51660,Confirmed (per 100k),475.328,41.766,0.087868,4.497,5,2,7,-1
+"Leake, Mississippi",28079,Confirmed (per 100k),377.425,31.348,0.083056,4.524,5,2,7,0
+"Leflore, Mississippi",28083,Confirmed (per 100k),372.565,23.317,0.062585,6.473,5,2,7,1
+"Golden Valley, Montana",30037,Confirmed (per 100k),365.408,34.801,0.095238,4.149,5,2,7,-3
+"Marion, Georgia",13197,Confirmed (per 100k),346.931,30.762,0.088670,4.998,5,2,7,0
+"Hall, Georgia",13139,Confirmed (per 100k),343.375,23.898,0.069597,6.195,5,2,7,0
+"Lincoln, Mississippi",28085,Confirmed (per 100k),313.296,23.424,0.074766,6.715,5,2,7,0
+"Saline, Missouri",29195,Confirmed (per 100k),294.363,26.361,0.089552,4.943,5,2,7,0
+"Calhoun, Mississippi",28013,Confirmed (per 100k),292.459,20.890,0.071429,6.678,5,2,7,0
+"Otsego, Michigan",26137,Confirmed (per 100k),291.876,22.586,0.077381,5.298,5,2,7,1
+"Adair, Kentucky",21001,Confirmed (per 100k),281.221,31.247,0.111,4.381,5,2,7,-1
+"Apache, Arizona",4001,Confirmed (per 100k),280.997,19.872,0.070721,5.899,5,2,7,1
+"Stewart, Georgia",13259,Confirmed (per 100k),256.759,19.419,0.075630,5.577,5,2,7,0
+"Kit Carson, Colorado",8063,Confirmed (per 100k),253.628,20.129,0.079365,4.913,5,2,7,0
+"Neshoba, Mississippi",28099,Confirmed (per 100k),250.704,16.681,0.066536,5.926,5,2,7,0
+"Fluvanna, Virginia",51065,Confirmed (per 100k),249.358,23.574,0.094538,5.577,5,2,7,-1
+"Muhlenberg, Kentucky",21177,Confirmed (per 100k),248.188,21.926,0.088346,4.999,5,2,7,0
+"Manassas, Virginia",51683,Confirmed (per 100k),233.662,20.515,0.087798,4.956,5,2,7,0
+"Lyon, Kansas",20111,Confirmed (per 100k),231.963,21.518,0.092764,4.135,5,2,7,1
+"Isle of Wight, Virginia",51093,Confirmed (per 100k),231.750,21.173,0.091362,5.368,5,2,7,0
+"Oglethorpe, Georgia",13221,Confirmed (per 100k),222.819,18.724,0.084034,5.816,5,2,7,0
+"Noxubee, Mississippi",28103,Confirmed (per 100k),211.193,21.942,0.104,4.062,5,2,7,-1
+"Crawford, Michigan",26039,Confirmed (per 100k),206.715,17.311,0.083744,5.273,5,2,7,-1
+"Stanton, Kansas",20187,Confirmed (per 100k),199.402,14.243,0.071429,5.538,5,2,7,-2
+"Wayne, West Virginia",54099,Confirmed (per 100k),197.959,22.116,0.112,4.109,5,2,7,-2
+"Franklin City, Virginia",51620,Confirmed (per 100k),188.277,16.138,0.085714,4.728,5,2,7,1
+"Clarke, Mississippi",28023,Confirmed (per 100k),186.603,12.869,0.068966,6.529,5,2,7,1
+"Wilkes, Georgia",13317,Confirmed (per 100k),184.106,16.073,0.087302,4.118,5,2,7,1
+"Jefferson, Florida",12065,Confirmed (per 100k),182.507,14.039,0.076923,6.727,5,2,7,0
+"Beaver, Pennsylvania",42007,Confirmed (per 100k),181.786,12.462,0.068552,6.331,5,2,7,3
+"Covington, Mississippi",28031,Confirmed (per 100k),177.077,11.498,0.064935,6.440,5,2,7,0
+"Manassas Park, Virginia",51685,Confirmed (per 100k),171.644,12.260,0.071429,5.191,5,2,7,0
+"Panola, Texas",48365,Confirmed (per 100k),163.835,15.398,0.093985,5.163,5,2,7,-1
+"Susquehanna, Pennsylvania",42115,Confirmed (per 100k),163.658,13.461,0.082251,5.702,5,2,7,0
+"Wicomico, Maryland",24045,Confirmed (per 100k),160.218,14.202,0.088640,4.153,5,2,7,-1
+"Lawrence, Arkansas",5075,Confirmed (per 100k),158.479,13.061,0.082418,5.191,5,2,7,-1
+"Stephens, Georgia",13257,Confirmed (per 100k),154.291,9.919,0.064286,6.772,5,2,7,1
+"St. Joseph, Indiana",18141,Confirmed (per 100k),151.568,11.036,0.072816,6.761,5,2,7,0
+"Colonial Heights, Virginia",51570,Confirmed (per 100k),149.683,13.981,0.093407,4.783,5,2,7,-1
+"Newton, Mississippi",28101,Confirmed (per 100k),142.735,9.516,0.066667,5.687,5,2,7,1
+"Carroll, Mississippi",28015,Confirmed (per 100k),140.746,10.053,0.071429,6.381,5,2,7,2
+"Grady, Georgia",13131,Confirmed (per 100k),138.026,9.279,0.067227,6.882,5,2,7,1
+"Cass, North Dakota",38017,Confirmed (per 100k),135.222,8.245,0.060976,6.823,5,2,7,1
+"Lawrence, Mississippi",28077,Confirmed (per 100k),135.071,9.080,0.067227,6.232,5,2,7,2
+"Scott, Missouri",29201,Confirmed (per 100k),133.229,13.435,0.101,4.612,5,2,7,0
+"Bibb, Georgia",13021,Confirmed (per 100k),132.542,12.312,0.092892,4.660,5,2,7,-1
+"Greene, Indiana",18055,Confirmed (per 100k),131.571,10.293,0.078231,6.730,5,2,7,0
+"Rockingham, Virginia",51165,Confirmed (per 100k),129.350,9.762,0.075472,6.133,5,2,7,0
+"Sanborn, South Dakota",46111,Confirmed (per 100k),127.986,12.189,0.095238,6.232,5,2,7,-1
+"Jasper, Georgia",13159,Confirmed (per 100k),126.591,11.052,0.087302,4.812,5,2,7,0
+"Rutherford, North Carolina",37161,Confirmed (per 100k),125.319,8.099,0.064626,6.743,5,2,7,1
+"Grenada, Mississippi",28043,Confirmed (per 100k),125.253,6.882,0.054945,6.995,5,2,7,2
+"Gadsden, Florida",12039,Confirmed (per 100k),124.836,10.638,0.085213,5.844,5,2,7,0
+"Lafayette, Mississippi",28071,Confirmed (per 100k),124.030,9.256,0.074627,5.211,5,2,7,3
+"Washington, Colorado",8121,Confirmed (per 100k),122.249,11.643,0.095238,5.364,5,2,7,0
+"Grant, Indiana",18053,Confirmed (per 100k),118.597,8.471,0.071429,5.689,5,2,7,2
+"Hancock, Georgia",13141,Confirmed (per 100k),118.245,6.757,0.057143,6.232,5,2,7,1
+"Ogle, Illinois",17141,Confirmed (per 100k),114.527,8.463,0.073892,5.307,5,2,7,0
+"Appling, Georgia",13001,Confirmed (per 100k),114.217,8.547,0.074830,6.642,5,2,7,1
+"Putnam, Georgia",13237,Confirmed (per 100k),113.025,9.688,0.085714,4.172,5,2,7,0
+"Jasper, Iowa",19099,Confirmed (per 100k),112.949,9.604,0.085034,4.191,5,2,7,-1
+"Crawford, Georgia",13079,Confirmed (per 100k),112.867,11.517,0.102,4.635,5,2,7,-1
+"Edgecombe, North Carolina",37065,Confirmed (per 100k),112.683,9.714,0.086207,5.350,5,2,7,0
+"Finney, Kansas",20055,Confirmed (per 100k),112.430,7.835,0.069686,5.399,5,2,7,0
+"Lamar, Mississippi",28073,Confirmed (per 100k),112.088,7.894,0.070423,6.995,5,2,7,1
+"Itawamba, Mississippi",28057,Confirmed (per 100k),111.159,7.329,0.065934,5.249,5,2,7,2
+"Marlboro, South Carolina",45069,Confirmed (per 100k),111.035,7.658,0.068966,6.678,5,2,7,1
+"Florence, South Carolina",45041,Confirmed (per 100k),110.635,8.057,0.072829,6.312,5,2,7,1
+"Hampton, South Carolina",45049,Confirmed (per 100k),109.250,10.405,0.095238,4.893,5,2,7,0
+"Jones, Mississippi",28067,Confirmed (per 100k),108.667,7.762,0.071429,6.316,5,2,7,0
+"Brown, Wisconsin",55009,Confirmed (per 100k),107.733,7.938,0.073684,4.482,5,2,7,-1
+"Stafford, Virginia",51179,Confirmed (per 100k),105.310,7.475,0.070985,6.865,5,2,7,0
+"Simpson, Mississippi",28127,Confirmed (per 100k),105.034,7.502,0.071429,4.000,5,2,7,1
+"Hendry, Florida",12051,Confirmed (per 100k),104.707,7.139,0.068182,6.546,5,2,7,0
+"Brantley, Georgia",13025,Confirmed (per 100k),104.663,7.476,0.071429,6.787,5,2,7,0
+"Taylor, Texas",48441,Confirmed (per 100k),104.322,8.590,0.082341,5.040,5,2,7,2
+"Daviess, Indiana",18027,Confirmed (per 100k),101.946,10.280,0.101,4.178,5,2,7,-1
+"Crawford, Ohio",39033,Confirmed (per 100k),98.809,8.607,0.087108,4.913,5,2,7,0
+"Coryell, Texas",48099,Confirmed (per 100k),98.748,7.712,0.078095,6.731,5,2,7,0
+"Culpeper, Virginia",51047,Confirmed (per 100k),96.949,6.518,0.067227,5.769,5,2,7,1
+"Shenandoah, Virginia",51171,Confirmed (per 100k),94.002,7.206,0.076655,6.137,5,2,7,0
+"Walworth, South Dakota",46129,Confirmed (per 100k),91.996,10.514,0.114,4.670,5,2,7,-2
+"Perquimans, North Carolina",37143,Confirmed (per 100k),89.133,8.489,0.095238,5.885,5,2,7,-1
+"Barbour, Alabama",1005,Confirmed (per 100k),89.119,5.787,0.064935,6.579,5,2,7,2
+"Allen, Indiana",18003,Confirmed (per 100k),86.212,5.800,0.067278,6.813,5,2,7,0
+"Muskegon, Michigan",26121,Confirmed (per 100k),85.846,6.914,0.080537,5.943,5,2,7,0
+"Walworth, Wisconsin",55127,Confirmed (per 100k),85.686,7.152,0.083467,5.725,5,2,7,0
+"Warren, Indiana",18171,Confirmed (per 100k),84.694,6.914,0.081633,5.191,5,2,7,0
+"Hanover, Virginia",51085,Confirmed (per 100k),84.442,6.098,0.072214,6.247,5,2,7,0
+"Conecuh, Alabama",1035,Confirmed (per 100k),82.871,5.919,0.071429,6.718,5,2,7,1
+"Butler, Alabama",1013,Confirmed (per 100k),82.271,6.611,0.080357,6.116,5,2,7,-1
+"Pemiscot, Missouri",29155,Confirmed (per 100k),82.252,8.135,0.098901,5.114,5,2,7,0
+"Allen, Ohio",39003,Confirmed (per 100k),82.071,6.420,0.078231,5.749,5,2,7,0
+"Rooks, Kansas",20163,Confirmed (per 100k),81.301,5.807,0.071429,6.579,5,2,7,2
+"Arenac, Michigan",26011,Confirmed (per 100k),80.629,5.759,0.071429,5.538,5,2,7,2
+"Noble, Indiana",18113,Confirmed (per 100k),79.591,6.583,0.082707,5.412,5,2,7,1
+"Kennebec, Maine",23011,Confirmed (per 100k),79.312,7.592,0.095729,6.408,5,2,7,0
+"Banks, Georgia",13011,Confirmed (per 100k),77.987,5.199,0.066667,6.876,5,2,7,2
+"Lafayette, Arkansas",5073,Confirmed (per 100k),75.483,6.470,0.085714,6.579,5,2,7,0
+"Brunswick, Virginia",51025,Confirmed (per 100k),73.933,7.921,0.107,4.651,5,2,7,-1
+"Dorchester, Maryland",24019,Confirmed (per 100k),72.035,5.369,0.074534,6.637,5,2,7,0
+"Ottawa, Ohio",39123,Confirmed (per 100k),71.561,5.993,0.083744,4.783,5,2,7,1
+"Lumpkin, Georgia",13187,Confirmed (per 100k),71.407,5.951,0.083333,4.943,5,2,7,1
+"Ohio, Kentucky",21183,Confirmed (per 100k),70.851,5.358,0.075630,5.191,5,2,7,4
+"Harrison, Texas",48203,Confirmed (per 100k),70.620,6.010,0.085106,5.637,5,2,7,0
+"Ashtabula, Ohio",39007,Confirmed (per 100k),69.929,5.876,0.084034,5.330,5,2,7,1
+"Hancock, Kentucky",21091,Confirmed (per 100k),68.792,6.552,0.095238,4.844,5,2,7,-1
+"Bledsoe, Tennessee",47007,Confirmed (per 100k),66.383,5.690,0.085714,6.232,5,2,7,1
+"Musselshell, Montana",30065,Confirmed (per 100k),64.753,6.167,0.095238,4.844,5,2,7,-1
+"Dade, Georgia",13083,Confirmed (per 100k),62.050,5.319,0.085714,4.033,5,2,7,-1
+"Nye, Nevada",32023,Confirmed (per 100k),60.185,5.527,0.091837,4.612,5,2,7,1
+"Pulaski, Missouri",29169,Confirmed (per 100k),58.928,5.160,0.087558,4.862,5,2,7,1
+"Tallahatchie, Mississippi",28135,Confirmed (per 100k),57.933,5.173,0.089286,5.885,5,2,7,0
+"Asotin, Washington",53003,Confirmed (per 100k),57.568,5.061,0.087912,5.017,5,2,7,1
+"Hardin, Ohio",39065,Confirmed (per 100k),54.201,5.466,0.101,4.670,5,2,7,1
+"Lincoln, Colorado",8073,Confirmed (per 100k),52.622,5.012,0.095238,5.191,5,2,7,2
+"Ballard, Kentucky",21007,Confirmed (per 100k),50.710,5.433,0.107,4.497,5,2,7,-1
+"Erie, Ohio",39043,Confirmed (per 100k),49.821,4.424,0.088803,3.983,4,3,7,1
+"Howard, Iowa",19089,Confirmed (per 100k),43.678,4.680,0.107,3.106,4,3,7,1
+"Alcona, Michigan",26001,Confirmed (per 100k),38.443,1.373,0.035714,3.106,4,3,7,-2
+"Murray, Minnesota",27101,Confirmed (per 100k),36.612,3.487,0.095238,3.802,4,3,7,1
+"Marshall, Illinois",17123,Confirmed (per 100k),34.971,3.747,0.107,3.338,4,3,7,2
+"Missaukee, Michigan",26113,Confirmed (per 100k),33.073,2.835,0.085714,3.570,4,3,7,1
+"Staunton, Virginia",51790,Confirmed (per 100k),32.087,2.292,0.071429,3.628,4,3,7,-1
+"Pettis, Missouri",29159,Confirmed (per 100k),30.705,3.037,0.098901,3.956,4,3,7,1
+"Salem, Virginia",51775,Confirmed (per 100k),23.714,2.823,0.119,3.663,4,3,7,-1
+"Benzie, Michigan",26019,Confirmed (per 100k),22.515,1.608,0.071429,3.106,4,3,7,7
+"Knott, Kentucky",21119,Confirmed (per 100k),20.262,1.930,0.095238,3.802,4,3,7,-2
+"Washington, Missouri",29221,Confirmed (per 100k),20.218,1.733,0.085714,3.802,4,3,7,-1
+"Lincoln, Kentucky",21137,Confirmed (per 100k),16.294,1.746,0.107,3.802,4,3,7,-2
+"Johnson, Illinois",17087,Confirmed (per 100k),16.107,2.301,0.143,3.802,4,3,7,-1
+"Geneva, Alabama",1061,Confirmed (per 100k),15.226,1.631,0.107,3.338,4,3,7,2
+"Livingston, Kentucky",21139,Confirmed (per 100k),10.877,1.554,0.143,3.106,4,3,7,-2
+"Nome, Alaska",2180,Confirmed (per 100k),9.996,1.428,0.143,3.106,4,3,7,-2
+"Benton, Minnesota",27009,Confirmed (per 100k),9.783,1.048,0.107,3.338,4,3,7,-2
+"Mingo, West Virginia",54059,Confirmed (per 100k),8.538,1.220,0.143,3.106,4,3,7,-2
+"Washburn, Wisconsin",55129,Confirmed (per 100k),6.361,0.909,0.143,2.409,3,4,7,-1
+"Union, New Jersey",34039,Confirmed (per 100k),1792.426,88.050,0.049123,11.018,5,1,6,0
+"Passaic, New Jersey",34031,Confirmed (per 100k),1689.629,76.805,0.045457,12.569,5,1,6,0
+"Sumter, Georgia",13261,Confirmed (per 100k),1124.509,50.806,0.045181,12.913,5,1,6,1
+"Suffolk, Massachusetts",25025,Confirmed (per 100k),1004.345,48.247,0.048038,11.800,5,1,6,0
+"Mitchell, Georgia",13205,Confirmed (per 100k),974.249,50.313,0.051643,11.298,5,1,6,0
+"Putnam, New York",36079,Confirmed (per 100k),791.294,39.376,0.049761,11.546,5,1,6,0
+"Sullivan, New York",36105,Confirmed (per 100k),742.390,33.900,0.045663,12.127,5,1,6,0
+"Turner, Georgia",13287,Confirmed (per 100k),738.885,32.203,0.043584,12.165,5,1,6,0
+"Mercer, New Jersey",34021,Confirmed (per 100k),705.168,32.193,0.045653,11.372,5,1,6,0
+"Essex, Massachusetts",25009,Confirmed (per 100k),653.077,35.903,0.054975,10.065,5,1,6,0
+"Worth, Georgia",13321,Confirmed (per 100k),632.192,26.106,0.041295,13.926,5,1,6,0
+"New Haven, Connecticut",9009,Confirmed (per 100k),616.783,32.173,0.052162,10.076,5,1,6,0
+"Philadelphia, Pennsylvania",42101,Confirmed (per 100k),603.069,25.504,0.042290,13.430,5,1,6,0
+"Warren, New Jersey",34041,Confirmed (per 100k),582.329,26.735,0.045910,11.905,5,1,6,0
+"Ulster, New York",36111,Confirmed (per 100k),561.459,24.537,0.043703,12.700,5,1,6,0
+"Crisp, Georgia",13081,Confirmed (per 100k),558.734,30.651,0.054857,9.425,5,1,6,0
+"Washington, Iowa",19183,Confirmed (per 100k),550.876,24.064,0.043684,13.345,5,1,6,0
+"Middlesex, Massachusetts",25017,Confirmed (per 100k),542.099,27.274,0.050311,11.116,5,1,6,0
+"Norfolk, Massachusetts",25021,Confirmed (per 100k),536.097,23.042,0.042982,13.768,5,1,6,0
+"Dooly, Georgia",13093,Confirmed (per 100k),530.246,32.007,0.060362,9.376,5,1,6,0
+"Wilcox, Georgia",13315,Confirmed (per 100k),509.554,34.742,0.068182,7.372,5,1,6,-2
+"Hampden, Massachusetts",25013,Confirmed (per 100k),501.102,21.136,0.042179,13.802,5,1,6,0
+"West Feliciana, Louisiana",22125,Confirmed (per 100k),501.028,25.694,0.051282,9.601,5,1,6,0
+"Tallapoosa, Alabama",1123,Confirmed (per 100k),483.068,34.328,0.071062,7.101,5,1,6,-1
+"Wilcox, Alabama",1131,Confirmed (per 100k),472.380,23.412,0.049563,10.536,5,1,6,-1
+"Berks, Pennsylvania",42011,Confirmed (per 100k),461.815,29.273,0.063386,7.948,5,1,6,-1
+"Sussex, Delaware",10005,Confirmed (per 100k),450.422,25.738,0.057143,8.106,5,1,6,-1
+"Delaware, Pennsylvania",42045,Confirmed (per 100k),449.054,21.829,0.048611,11.331,5,1,6,0
+"Camden, New Jersey",34007,Confirmed (per 100k),445.238,24.286,0.054545,9.354,5,1,6,0
+"Cook, Illinois",17031,Confirmed (per 100k),429.126,18.548,0.043224,12.944,5,1,6,0
+"Hartford, Connecticut",9003,Confirmed (per 100k),428.722,23.021,0.053698,9.105,5,1,6,0
+"District of Columbia, District of Columbia",11001,Confirmed (per 100k),414.737,18.582,0.044805,12.105,5,1,6,0
+"Franklin, Louisiana",22041,Confirmed (per 100k),414.689,23.554,0.056799,8.786,5,1,6,0
+"Macon, Georgia",13193,Confirmed (per 100k),409.361,30.895,0.075472,7.297,5,1,6,-1
+"Miller, Georgia",13201,Confirmed (per 100k),402.239,17.489,0.043478,12.226,5,1,6,1
+"Greene, Alabama",1063,Confirmed (per 100k),394.526,21.135,0.053571,8.660,5,1,6,-1
+"Prince George's, Maryland",24033,Confirmed (per 100k),394.028,20.580,0.052231,9.846,5,1,6,0
+"Burlington, New Jersey",34005,Confirmed (per 100k),373.415,15.782,0.042264,12.834,5,1,6,1
+"Worcester, Massachusetts",25027,Confirmed (per 100k),369.482,17.835,0.048271,11.690,5,1,6,0
+"Union, Louisiana",22111,Confirmed (per 100k),357.337,20.032,0.056058,9.599,5,1,6,0
+"Litchfield, Connecticut",9005,Confirmed (per 100k),354.344,15.606,0.044042,12.644,5,1,6,0
+"Lebanon, Pennsylvania",42075,Confirmed (per 100k),354.037,21.561,0.060899,8.417,5,1,6,0
+"Johnson, Georgia",13167,Confirmed (per 100k),352.587,20.740,0.058824,8.660,5,1,6,-1
+"Yakima, Washington",53077,Confirmed (per 100k),332.838,15.318,0.046022,11.841,5,1,6,0
+"Tunica, Mississippi",28143,Confirmed (per 100k),332.226,14.832,0.044643,12.265,5,1,6,0
+"Weld, Colorado",8123,Confirmed (per 100k),327.589,14.308,0.043677,13.430,5,1,6,0
+"Pointe Coupee, Louisiana",22077,Confirmed (per 100k),326.737,17.093,0.052314,10.420,5,1,6,0
+"Sumter, Alabama",1119,Confirmed (per 100k),321.880,18.393,0.057143,8.746,5,1,6,0
+"Butts, Georgia",13035,Confirmed (per 100k),320.821,8.593,0.026786,11.803,5,1,6,0
+"Columbia, Pennsylvania",42037,Confirmed (per 100k),320.177,21.111,0.065934,7.352,5,1,6,-1
+"Yazoo, Mississippi",28163,Confirmed (per 100k),319.973,13.473,0.042105,12.572,5,1,6,0
+"Adams, Nebraska",31001,Confirmed (per 100k),318.847,20.042,0.062857,7.383,5,1,6,0
+"Lowndes, Alabama",1085,Confirmed (per 100k),318.733,20.563,0.064516,7.471,5,1,6,-1
+"Lake, Illinois",17097,Confirmed (per 100k),318.146,14.705,0.046222,11.989,5,1,6,0
+"Colquitt, Georgia",13071,Confirmed (per 100k),317.982,10.965,0.034483,13.890,5,1,6,0
+"Lackawanna, Pennsylvania",42069,Confirmed (per 100k),308.097,14.240,0.046218,12.565,5,1,6,0
+"Talbot, Georgia",13263,Confirmed (per 100k),306.699,16.142,0.052632,8.858,5,1,6,0
+"Bucks, Pennsylvania",42017,Confirmed (per 100k),300.189,14.257,0.047493,11.172,5,1,6,0
+"Middlesex, Connecticut",9007,Confirmed (per 100k),297.964,14.335,0.048111,11.553,5,1,6,0
+"Lauderdale, Mississippi",28075,Confirmed (per 100k),296.796,12.913,0.043506,12.251,5,1,6,0
+"Crittenden, Arkansas",5035,Confirmed (per 100k),296.111,13.703,0.046278,12.624,5,1,6,0
+"Smith, Mississippi",28129,Confirmed (per 100k),295.300,18.849,0.063830,7.999,5,1,6,-1
+"Hendricks, Indiana",18063,Confirmed (per 100k),292.993,13.085,0.044661,11.785,5,1,6,0
+"Pike, Mississippi",28113,Confirmed (per 100k),292.710,18.181,0.062112,7.536,5,1,6,-1
+"Allamakee, Iowa",19005,Confirmed (per 100k),292.248,15.656,0.053571,8.613,5,1,6,1
+"Juniata, Pennsylvania",42067,Confirmed (per 100k),290.756,18.461,0.063492,7.966,5,1,6,-1
+"Baldwin, Georgia",13009,Confirmed (per 100k),289.597,18.458,0.063736,7.261,5,1,6,-1
+"Thomas, Georgia",13275,Confirmed (per 100k),285.708,16.069,0.056243,9.700,5,1,6,0
+"Adams, Mississippi",28001,Confirmed (per 100k),270.420,13.963,0.051635,10.740,5,1,6,0
+"Alexandria, Virginia",51510,Confirmed (per 100k),264.069,16.577,0.062776,7.400,5,1,6,0
+"Chickasaw, Mississippi",28017,Confirmed (per 100k),263.112,15.870,0.060317,8.915,5,1,6,0
+"St. Francis, Arkansas",5123,Confirmed (per 100k),260.062,18.290,0.070330,7.836,5,1,6,-1
+"Baltimore City, Maryland",24510,Confirmed (per 100k),254.596,13.961,0.054836,9.327,5,1,6,0
+"Montgomery, Maryland",24031,Confirmed (per 100k),251.930,11.911,0.047277,11.437,5,1,6,0
+"Arlington, Virginia",51013,Confirmed (per 100k),250.378,12.606,0.050349,10.408,5,1,6,0
+"Lee, South Carolina",45061,Confirmed (per 100k),249.584,11.036,0.044218,13.247,5,1,6,0
+"Harrison, Indiana",18061,Confirmed (per 100k),249.290,11.283,0.045262,9.895,5,1,6,2
+"Red River, Louisiana",22081,Confirmed (per 100k),248.756,15.230,0.061224,8.120,5,1,6,-1
+"Shelby, Indiana",18145,Confirmed (per 100k),248.161,10.859,0.043758,12.249,5,1,6,0
+"Randolph, Alabama",1111,Confirmed (per 100k),246.457,10.688,0.043367,13.146,5,1,6,-1
+"Ware, Georgia",13299,Confirmed (per 100k),246.264,12.793,0.051948,10.415,5,1,6,0
+"Wilkinson, Georgia",13319,Confirmed (per 100k),245.700,14.359,0.058442,8.351,5,1,6,-1
+"Greene, Georgia",13133,Confirmed (per 100k),245.580,14.033,0.057143,9.584,5,1,6,0
+"Denver, Colorado",8031,Confirmed (per 100k),245.321,10.549,0.043001,13.316,5,1,6,0
+"Goochland, Virginia",51075,Confirmed (per 100k),244.180,13.833,0.056650,9.293,5,1,6,-1
+"Lake, Indiana",18089,Confirmed (per 100k),243.464,10.622,0.043631,12.505,5,1,6,0
+"Attala, Mississippi",28007,Confirmed (per 100k),242.104,12.577,0.051948,8.140,5,1,6,0
+"Charles, Maryland",24017,Confirmed (per 100k),240.112,10.238,0.042638,13.022,5,1,6,0
+"Kent, Delaware",10001,Confirmed (per 100k),237.850,10.747,0.045183,12.555,5,1,6,0
+"Pearl River, Mississippi",28109,Confirmed (per 100k),237.688,11.061,0.046537,11.820,5,1,6,0
+"Shelby, Texas",48419,Confirmed (per 100k),237.398,14.696,0.061905,8.873,5,1,6,0
+"Frederick, Maryland",24021,Confirmed (per 100k),237.337,12.274,0.051716,10.435,5,1,6,0
+"San Juan, New Mexico",35045,Confirmed (per 100k),236.370,11.755,0.049732,9.911,5,1,6,1
+"Arapahoe, Colorado",8005,Confirmed (per 100k),233.936,9.856,0.042132,13.495,5,1,6,0
+"Decatur, Georgia",13087,Confirmed (per 100k),231.026,16.772,0.072600,7.563,5,1,6,0
+"Lancaster, Pennsylvania",42071,Confirmed (per 100k),226.488,10.890,0.048081,11.160,5,1,6,0
+"Tift, Georgia",13277,Confirmed (per 100k),226.356,9.490,0.041925,13.359,5,1,6,0
+"Cumberland, New Jersey",34011,Confirmed (per 100k),226.046,13.662,0.060440,7.714,5,1,6,0
+"Albany, New York",36001,Confirmed (per 100k),224.873,9.539,0.042420,13.622,5,1,6,0
+"Kent, Rhode Island",44003,Confirmed (per 100k),222.774,12.782,0.057377,7.877,5,1,6,-1
+"Suwannee, Florida",12121,Confirmed (per 100k),220.636,9.970,0.045190,12.641,5,1,6,1
+"Saginaw, Michigan",26145,Confirmed (per 100k),219.902,9.747,0.044323,12.575,5,1,6,0
+"Meriwether, Georgia",13199,Confirmed (per 100k),217.319,12.823,0.059006,7.784,5,1,6,-1
+"Hamilton, Nebraska",31081,Confirmed (per 100k),214.500,12.257,0.057143,8.313,5,1,6,0
+"Burke, Georgia",13033,Confirmed (per 100k),214.448,12.127,0.056548,8.441,5,1,6,0
+"Monroe, Mississippi",28095,Confirmed (per 100k),212.754,12.968,0.060952,7.511,5,1,6,-1
+"Hale, Alabama",1065,Confirmed (per 100k),211.590,9.751,0.046083,9.423,5,1,6,-1
+"Genesee, New York",36037,Confirmed (per 100k),207.751,11.722,0.056423,8.320,5,1,6,2
+"Franklin, Mississippi",28037,Confirmed (per 100k),207.442,11.113,0.053571,9.931,5,1,6,0
+"Adair, Oklahoma",40001,Confirmed (per 100k),207.263,10.299,0.049689,8.920,5,1,6,2
+"Spalding, Georgia",13255,Confirmed (per 100k),202.390,12.208,0.060317,8.404,5,1,6,-1
+"Pickens, Alabama",1107,Confirmed (per 100k),200.702,11.469,0.057143,8.530,5,1,6,0
+"Franklin, Washington",53021,Confirmed (per 100k),200.584,11.852,0.059088,10.064,5,1,6,0
+"Winston, Mississippi",28159,Confirmed (per 100k),200.501,11.139,0.055556,8.313,5,1,6,0
+"Johnson, Iowa",19103,Confirmed (per 100k),200.476,7.751,0.038661,13.869,5,1,6,1
+"DeKalb, Georgia",13089,Confirmed (per 100k),200.317,10.969,0.054757,10.063,5,1,6,0
+"Delaware, Oklahoma",40041,Confirmed (per 100k),199.958,10.961,0.054817,10.383,5,1,6,-1
+"Tolland, Connecticut",9013,Confirmed (per 100k),198.380,8.910,0.044912,11.869,5,1,6,0
+"St. Helena, Louisiana",22091,Confirmed (per 100k),197.394,8.460,0.042857,12.936,5,1,6,0
+"Hampshire, Massachusetts",25015,Confirmed (per 100k),197.103,8.705,0.044164,12.558,5,1,6,1
+"Forrest, Mississippi",28035,Confirmed (per 100k),196.270,9.346,0.047619,12.282,5,1,6,0
+"Shelby, Tennessee",47157,Confirmed (per 100k),196.230,8.582,0.043735,12.608,5,1,6,1
+"Salem, New Jersey",34033,Confirmed (per 100k),192.354,12.595,0.065476,7.727,5,1,6,-1
+"Lucas, Ohio",39095,Confirmed (per 100k),192.133,9.538,0.049644,10.529,5,1,6,0
+"Marion, Mississippi",28091,Confirmed (per 100k),191.267,12.790,0.066869,7.052,5,1,6,-1
+"DuPage, Illinois",17043,Confirmed (per 100k),190.807,8.250,0.043238,13.020,5,1,6,0
+"Warren, Georgia",13301,Confirmed (per 100k),190.331,10.876,0.057143,10.220,5,1,6,0
+"Schenectady, New York",36093,Confirmed (per 100k),189.956,8.831,0.046489,12.690,5,1,6,0
+"Anne Arundel, Maryland",24003,Confirmed (per 100k),189.561,9.569,0.050481,10.844,5,1,6,0
+"San Juan, Utah",49037,Confirmed (per 100k),189.443,8.399,0.044335,8.043,5,1,6,2
+"Socorro, New Mexico",35053,Confirmed (per 100k),186.332,6.869,0.036866,9.873,5,1,6,-1
+"Custer, Nebraska",31041,Confirmed (per 100k),185.580,9.279,0.050000,12.919,5,1,6,1
+"Greensville, Virginia",51081,Confirmed (per 100k),185.251,12.602,0.068027,7.342,5,1,6,-1
+"Randolph, Illinois",17157,Confirmed (per 100k),182.493,7.641,0.041872,13.228,5,1,6,1
+"Greene, New York",36039,Confirmed (per 100k),182.250,12.412,0.068106,8.135,5,1,6,-1
+"Henrico, Virginia",51087,Confirmed (per 100k),180.764,8.853,0.048973,11.329,5,1,6,0
+"Linn, Iowa",19113,Confirmed (per 100k),180.410,9.578,0.053091,9.271,5,1,6,2
+"Jerome, Idaho",16053,Confirmed (per 100k),180.239,8.778,0.048701,11.480,5,1,6,0
+"Washington, Rhode Island",44009,Confirmed (per 100k),179.173,9.670,0.053968,9.998,5,1,6,-1
+"Columbiana, Ohio",39029,Confirmed (per 100k),178.636,8.693,0.048666,10.494,5,1,6,0
+"Adams, Colorado",8001,Confirmed (per 100k),176.839,7.399,0.041842,13.832,5,1,6,0
+"Rowan, North Carolina",37159,Confirmed (per 100k),175.947,13.774,0.078286,7.556,5,1,6,-1
+"Chester, Pennsylvania",42029,Confirmed (per 100k),174.289,8.572,0.049180,10.736,5,1,6,0
+"Pike, Georgia",13231,Confirmed (per 100k),174.032,12.054,0.069264,7.576,5,1,6,0
+"McDuffie, Georgia",13189,Confirmed (per 100k),173.611,10.055,0.057915,10.047,5,1,6,0
+"Orange, Indiana",18117,Confirmed (per 100k),173.063,9.453,0.054622,7.966,5,1,6,0
+"Marshall, Alabama",1095,Confirmed (per 100k),172.567,7.676,0.044482,10.780,5,1,6,0
+"Dawson, Georgia",13085,Confirmed (per 100k),172.361,9.849,0.057143,9.931,5,1,6,0
+"Chatham, North Carolina",37037,Confirmed (per 100k),170.538,10.743,0.062992,7.211,5,1,6,-1
+"San Augustine, Texas",48405,Confirmed (per 100k),169.965,8.672,0.051020,10.740,5,1,6,0
+"Richland, Louisiana",22083,Confirmed (per 100k),168.969,9.939,0.058824,8.065,5,1,6,0
+"Pulaski, Illinois",17153,Confirmed (per 100k),168.697,10.711,0.063492,7.446,5,1,6,-1
+"Prince William, Virginia",51153,Confirmed (per 100k),168.603,10.691,0.063412,7.812,5,1,6,0
+"Fairfax, Virginia",51059,Confirmed (per 100k),167.751,9.972,0.059443,8.269,5,1,6,0
+"Douglas, Georgia",13097,Confirmed (per 100k),166.048,7.517,0.045267,12.532,5,1,6,0
+"Leavenworth, Kansas",20103,Confirmed (per 100k),165.121,7.513,0.045503,11.917,5,1,6,0
+"Mobile, Alabama",1097,Confirmed (per 100k),164.565,7.157,0.043487,13.115,5,1,6,0
+"Jackson, Michigan",26075,Confirmed (per 100k),164.028,6.940,0.042308,12.847,5,1,6,0
+"Copiah, Mississippi",28029,Confirmed (per 100k),163.905,7.635,0.046584,11.803,5,1,6,1
+"Taylor, Georgia",13269,Confirmed (per 100k),162.095,7.125,0.043956,11.260,5,1,6,1
+"Pulaski, Georgia",13235,Confirmed (per 100k),161.623,8.979,0.055556,8.660,5,1,6,0
+"Humboldt, Nevada",32013,Confirmed (per 100k),160.418,6.790,0.042328,13.340,5,1,6,0
+"Shiawassee, Michigan",26155,Confirmed (per 100k),160.007,8.388,0.052425,8.660,5,1,6,-1
+"Woodson, Kansas",20207,Confirmed (per 100k),159.337,9.105,0.057143,9.353,5,1,6,2
+"Warren, New York",36113,Confirmed (per 100k),157.951,11.170,0.070721,7.467,5,1,6,-1
+"Rockingham, New Hampshire",33015,Confirmed (per 100k),157.860,7.609,0.048203,11.896,5,1,6,0
+"Cobb, Georgia",13067,Confirmed (per 100k),157.339,7.724,0.049092,11.266,5,1,6,0
+"Atlantic, New Jersey",34001,Confirmed (per 100k),155.497,7.856,0.050523,10.965,5,1,6,0
+"Lincoln, South Dakota",46083,Confirmed (per 100k),155.412,10.283,0.066165,7.430,5,1,6,-1
+"Natchitoches, Louisiana",22069,Confirmed (per 100k),152.000,5.990,0.039409,13.947,5,1,6,0
+"Buckingham, Virginia",51029,Confirmed (per 100k),151.621,9.997,0.065934,8.544,5,1,6,-1
+"Kenosha, Wisconsin",55059,Confirmed (per 100k),151.568,6.319,0.041690,13.347,5,1,6,0
+"Clark, Indiana",18019,Confirmed (per 100k),149.617,6.038,0.040355,13.541,5,1,6,0
+"Bradford, Florida",12007,Confirmed (per 100k),148.931,6.585,0.044218,13.460,5,1,6,0
+"Rock Island, Illinois",17161,Confirmed (per 100k),148.718,9.767,0.065674,7.165,5,1,6,-1
+"Jackson, Mississippi",28059,Confirmed (per 100k),145.526,6.466,0.044429,13.268,5,1,6,0
+"Hillsborough, New Hampshire",33011,Confirmed (per 100k),144.835,7.331,0.050615,10.481,5,1,6,0
+"Kent, Maryland",24029,Confirmed (per 100k),144.166,5.149,0.035714,8.759,5,1,6,1
+"Salt Lake, Utah",49035,Confirmed (per 100k),143.997,6.020,0.041806,13.292,5,1,6,0
+"Macon, Alabama",1087,Confirmed (per 100k),143.901,8.697,0.060440,8.912,5,1,6,-1
+"Troup, Georgia",13285,Confirmed (per 100k),143.017,6.129,0.042857,11.641,5,1,6,2
+"Bibb, Alabama",1007,Confirmed (per 100k),142.895,7.655,0.053571,8.429,5,1,6,-1
+"Wilson, North Carolina",37195,Confirmed (per 100k),141.808,8.383,0.059113,8.645,5,1,6,0
+"Lamar, Georgia",13171,Confirmed (per 100k),141.532,6.740,0.047619,11.202,5,1,6,2
+"Washoe, Nevada",32031,Confirmed (per 100k),140.397,6.726,0.047907,11.789,5,1,6,0
+"Jasper, Mississippi",28061,Confirmed (per 100k),140.389,7.848,0.055901,9.430,5,1,6,0
+"Richmond, Georgia",13245,Confirmed (per 100k),139.741,8.747,0.062595,7.619,5,1,6,-1
+"Nacogdoches, Texas",48347,Confirmed (per 100k),139.562,9.202,0.065934,7.718,5,1,6,-1
+"Dauphin, Pennsylvania",42043,Confirmed (per 100k),138.700,7.135,0.051443,9.967,5,1,6,0
+"Lubbock, Texas",48303,Confirmed (per 100k),138.456,6.854,0.049502,11.503,5,1,6,0
+"Bristol, Rhode Island",44001,Confirmed (per 100k),138.204,5.894,0.042644,11.780,5,1,6,0
+"Winn, Louisiana",22127,Confirmed (per 100k),136.651,7.192,0.052632,10.146,5,1,6,-1
+"Putnam, Indiana",18133,Confirmed (per 100k),135.725,7.223,0.053221,10.740,5,1,6,0
+"Durham, North Carolina",37063,Confirmed (per 100k),135.308,5.821,0.043021,13.064,5,1,6,0
+"Concordia, Louisiana",22029,Confirmed (per 100k),135.002,5.934,0.043956,12.993,5,1,6,0
+"Twin Falls, Idaho",16083,Confirmed (per 100k),134.672,6.577,0.048840,11.104,5,1,6,1
+"New London, Connecticut",9011,Confirmed (per 100k),134.235,8.026,0.059791,8.422,5,1,6,0
+"Wagoner, Oklahoma",40145,Confirmed (per 100k),132.859,6.854,0.051587,12.127,5,1,6,0
+"Cecil, Maryland",24015,Confirmed (per 100k),130.280,7.917,0.060768,8.745,5,1,6,-1
+"Daviess, Kentucky",21059,Confirmed (per 100k),128.065,6.192,0.048352,10.724,5,1,6,2
+"Harris, Georgia",13145,Confirmed (per 100k),127.710,8.109,0.063492,7.064,5,1,6,-1
+"Peach, Georgia",13225,Confirmed (per 100k),127.060,5.186,0.040816,13.167,5,1,6,0
+"Bertie, North Carolina",37015,Confirmed (per 100k),126.669,6.786,0.053571,8.814,5,1,6,1
+"Gwinnett, Georgia",13135,Confirmed (per 100k),126.142,6.241,0.049474,10.611,5,1,6,0
+"Newton, Georgia",13217,Confirmed (per 100k),124.391,6.264,0.050360,10.683,5,1,6,0
+"Madison, Florida",12079,Confirmed (per 100k),124.371,5.407,0.043478,11.433,5,1,6,2
+"Pike, Alabama",1109,Confirmed (per 100k),123.815,7.334,0.059233,7.558,5,1,6,1
+"Cherokee, Georgia",13057,Confirmed (per 100k),122.501,5.907,0.048220,10.785,5,1,6,0
+"Coffee, Alabama",1031,Confirmed (per 100k),122.273,7.642,0.062500,7.669,5,1,6,-1
+"Potter, Texas",48375,Confirmed (per 100k),120.939,7.300,0.060362,7.284,5,1,6,0
+"Winona, Minnesota",27169,Confirmed (per 100k),120.830,8.772,0.072600,7.161,5,1,6,-1
+"Kane, Illinois",17089,Confirmed (per 100k),119.834,5.420,0.045231,11.821,5,1,6,0
+"Rensselaer, New York",36083,Confirmed (per 100k),117.192,7.561,0.064516,8.173,5,1,6,1
+"Muscogee, Georgia",13215,Confirmed (per 100k),116.975,5.327,0.045540,12.393,5,1,6,1
+"Caroline, Maryland",24011,Confirmed (per 100k),116.745,6.842,0.058608,7.489,5,1,6,-1
+"Gordon, Georgia",13129,Confirmed (per 100k),115.591,7.147,0.061834,8.086,5,1,6,0
+"Riverside, California",6065,Confirmed (per 100k),115.238,5.892,0.051132,9.987,5,1,6,0
+"Franklin, Ohio",39049,Confirmed (per 100k),114.904,6.184,0.053819,10.126,5,1,6,0
+"Morgan, Georgia",13211,Confirmed (per 100k),114.132,5.188,0.045455,11.731,5,1,6,2
+"Orleans, New York",36073,Confirmed (per 100k),113.997,7.435,0.065217,7.735,5,1,6,1
+"Coweta, Georgia",13077,Confirmed (per 100k),113.798,5.579,0.049028,11.553,5,1,6,0
+"Clay, Florida",12019,Confirmed (per 100k),113.568,5.473,0.048193,10.979,5,1,6,1
+"Jefferson, Kentucky",21111,Confirmed (per 100k),113.074,5.943,0.052562,9.158,5,1,6,1
+"Geauga, Ohio",39055,Confirmed (per 100k),112.121,5.949,0.053061,10.402,5,1,6,0
+"Barrow, Georgia",13013,Confirmed (per 100k),111.725,6.007,0.053763,9.888,5,1,6,0
+"Claiborne, Mississippi",28021,Confirmed (per 100k),111.259,6.358,0.057143,9.353,5,1,6,1
+"Calhoun, Michigan",26025,Confirmed (per 100k),110.317,7.134,0.064672,7.956,5,1,6,-1
+"York, Pennsylvania",42133,Confirmed (per 100k),109.785,5.535,0.050420,11.055,5,1,6,0
+"Henderson, North Carolina",37089,Confirmed (per 100k),109.013,5.353,0.049107,11.229,5,1,6,1
+"Bullock, Alabama",1011,Confirmed (per 100k),108.900,7.071,0.064935,7.273,5,1,6,-1
+"Washington, Ohio",39167,Confirmed (per 100k),108.494,6.200,0.057143,9.300,5,1,6,1
+"St. Mary's, Maryland",24037,Confirmed (per 100k),107.480,5.034,0.046838,12.335,5,1,6,2
+"Manatee, Florida",12081,Confirmed (per 100k),107.377,6.412,0.059716,8.085,5,1,6,1
+"Berrien, Michigan",26021,Confirmed (per 100k),106.909,5.029,0.047038,11.549,5,1,6,0
+"Amelia, Virginia",51007,Confirmed (per 100k),106.504,5.434,0.051020,10.879,5,1,6,1
+"Columbus, North Carolina",37047,Confirmed (per 100k),106.291,6.949,0.065375,8.172,5,1,6,-1
+"Washington, New York",36115,Confirmed (per 100k),106.202,6.769,0.063736,7.488,5,1,6,1
+"Howard, Arkansas",5061,Confirmed (per 100k),106.045,6.493,0.061224,8.660,5,1,6,0
+"Clinch, Georgia",13065,Confirmed (per 100k),105.772,8.634,0.081633,7.793,5,1,6,-1
+"Panola, Mississippi",28107,Confirmed (per 100k),105.288,5.432,0.051587,9.993,5,1,6,2
+"Stone, Mississippi",28131,Confirmed (per 100k),103.621,6.233,0.060150,9.006,5,1,6,-1
+"Darlington, South Carolina",45031,Confirmed (per 100k),103.576,5.361,0.051760,9.492,5,1,6,1
+"Dawson, Texas",48115,Confirmed (per 100k),102.137,5.612,0.054945,9.076,5,1,6,0
+"Montgomery, Alabama",1101,Confirmed (per 100k),101.993,6.749,0.066172,8.167,5,1,6,-1
+"Andrews, Texas",48003,Confirmed (per 100k),101.577,5.346,0.052632,10.938,5,1,6,0
+"Webster, Kentucky",21233,Confirmed (per 100k),100.448,5.519,0.054945,9.908,5,1,6,0
+"Suffolk, Virginia",51800,Confirmed (per 100k),99.883,6.669,0.066770,7.289,5,1,6,-1
+"Delaware, Indiana",18035,Confirmed (per 100k),99.882,5.507,0.055138,9.038,5,1,6,1
+"Echols, Georgia",13101,Confirmed (per 100k),99.850,7.132,0.071429,7.273,5,1,6,-1
+"Jefferson, Missouri",29099,Confirmed (per 100k),98.631,5.712,0.057915,8.413,5,1,6,1
+"Lake, Colorado",8065,Confirmed (per 100k),98.437,7.031,0.071429,7.099,5,1,6,-1
+"Cabarrus, North Carolina",37025,Confirmed (per 100k),97.943,6.006,0.061321,10.199,5,1,6,-1
+"Lorain, Ohio",39093,Confirmed (per 100k),97.795,5.441,0.055634,9.218,5,1,6,1
+"Jackson, Louisiana",22049,Confirmed (per 100k),95.274,5.444,0.057143,9.122,5,1,6,0
+"Tulare, California",6107,Confirmed (per 100k),90.520,5.638,0.062288,8.969,5,1,6,0
+"Ben Hill, Georgia",13017,Confirmed (per 100k),89.820,5.988,0.066667,7.471,5,1,6,1
+"Todd, Kentucky",21219,Confirmed (per 100k),89.475,5.810,0.064935,8.382,5,1,6,-1
+"Imperial, California",6025,Confirmed (per 100k),88.293,5.361,0.060714,8.660,5,1,6,0
+"Elmore, Alabama",1051,Confirmed (per 100k),84.966,5.277,0.062112,7.827,5,1,6,1
+"Russell, Kentucky",21207,Confirmed (per 100k),83.691,5.579,0.066667,7.074,5,1,6,-1
+"Douglas, Washington",53017,Confirmed (per 100k),78.289,5.921,0.075630,7.696,5,1,6,-1
+"Morton, Kansas",20129,Confirmed (per 100k),77.310,5.522,0.071429,7.273,5,1,6,-1
+"Warren, Kentucky",21227,Confirmed (per 100k),75.999,4.945,0.065064,6.790,4,2,6,-1
+"Prince Edward, Virginia",51147,Confirmed (per 100k),74.555,5.012,0.067227,8.920,5,1,6,-1
+"Perry, Tennessee",47135,Confirmed (per 100k),74.294,5.307,0.071429,7.735,5,1,6,-1
+"Kalamazoo, Michigan",26077,Confirmed (per 100k),69.794,4.419,0.063320,6.883,4,2,6,1
+"Abbeville, South Carolina",45001,Confirmed (per 100k),69.311,4.660,0.067227,6.579,4,2,6,2
+"Heard, Georgia",13149,Confirmed (per 100k),67.097,4.793,0.071429,6.405,4,2,6,1
+"Clay, Tennessee",47027,Confirmed (per 100k),65.660,5.628,0.085714,7.041,5,1,6,-1
+"Union, Georgia",13291,Confirmed (per 100k),65.277,4.080,0.062500,6.083,4,2,6,1
+"Morrow, Ohio",39117,Confirmed (per 100k),65.104,4.852,0.074534,5.538,4,2,6,0
+"Clay, Nebraska",31035,Confirmed (per 100k),64.485,4.606,0.071429,5.538,4,2,6,1
+"Clay, Kansas",20027,Confirmed (per 100k),62.484,1.785,0.028571,6.579,4,2,6,0
+"Lee, North Carolina",37105,Confirmed (per 100k),61.510,4.394,0.071429,5.410,4,2,6,-3
+"Page, Virginia",51139,Confirmed (per 100k),58.573,4.184,0.071429,5.687,4,2,6,0
+"Webster, Nebraska",31181,Confirmed (per 100k),57.356,4.097,0.071429,5.191,4,2,6,6
+"Greenwood, South Carolina",45047,Confirmed (per 100k),52.252,3.833,0.073359,6.506,4,2,6,0
+"Iosco, Michigan",26069,Confirmed (per 100k),51.737,3.411,0.065934,5.538,4,2,6,0
+"York, Nebraska",31185,Confirmed (per 100k),51.173,4.177,0.081633,5.885,4,2,6,1
+"Fountain, Indiana",18045,Confirmed (per 100k),48.942,2.622,0.053571,6.116,4,2,6,3
+"Jay, Indiana",18075,Confirmed (per 100k),48.933,3.495,0.071429,6.995,4,2,6,1
+"Marion, South Carolina",45067,Confirmed (per 100k),48.928,3.728,0.076190,6.058,4,2,6,0
+"Trinity, Texas",48455,Confirmed (per 100k),47.778,3.900,0.081633,6.405,4,2,6,0
+"Minidoka, Idaho",16067,Confirmed (per 100k),47.531,4.074,0.085714,6.001,4,2,6,0
+"Ross, Ohio",39141,Confirmed (per 100k),46.957,3.540,0.075397,6.323,4,2,6,0
+"Allegany, Maryland",24001,Confirmed (per 100k),46.864,4.058,0.086580,5.226,4,2,6,0
+"Clark, Wisconsin",55019,Confirmed (per 100k),46.011,3.287,0.071429,6.319,4,2,6,1
+"Caroline, Virginia",51033,Confirmed (per 100k),45.566,3.255,0.071429,6.579,4,2,6,1
+"Grant, Wisconsin",55043,Confirmed (per 100k),44.713,3.333,0.074534,4.149,4,2,6,-1
+"Crenshaw, Alabama",1041,Confirmed (per 100k),43.567,3.112,0.071429,6.810,4,2,6,0
+"Washington, Utah",49053,Confirmed (per 100k),43.367,2.655,0.061224,6.768,4,2,6,1
+"Santa Cruz, Arizona",4023,Confirmed (per 100k),43.013,3.380,0.078571,5.633,4,2,6,1
+"Somerset, Maryland",24039,Confirmed (per 100k),42.942,3.346,0.077922,5.769,4,2,6,0
+"Decatur, Tennessee",47039,Confirmed (per 100k),42.871,3.675,0.085714,5.422,4,2,6,-1
+"Dale, Alabama",1045,Confirmed (per 100k),42.707,3.486,0.081633,5.480,4,2,6,0
+"Woodbury, Iowa",19193,Confirmed (per 100k),42.674,2.632,0.061688,6.177,4,2,6,1
+"Zapata, Texas",48505,Confirmed (per 100k),42.316,3.023,0.071429,6.810,4,2,6,0
+"Barry, Michigan",26015,Confirmed (per 100k),42.242,3.946,0.093407,4.946,4,2,6,0
+"Colfax, New Mexico",35007,Confirmed (per 100k),41.873,3.589,0.085714,4.033,4,2,6,-1
+"Pittsburg, Oklahoma",40121,Confirmed (per 100k),41.233,2.945,0.071429,6.810,4,2,6,1
+"Franklin, Kentucky",21073,Confirmed (per 100k),41.184,3.082,0.074830,5.759,4,2,6,3
+"Dallam, Texas",48111,Confirmed (per 100k),41.169,3.921,0.095238,5.191,4,2,6,-1
+"Wilson, Texas",48493,Confirmed (per 100k),41.120,2.797,0.068027,6.926,4,2,6,0
+"Fulton, Ohio",39051,Confirmed (per 100k),40.355,3.391,0.084034,4.913,4,2,6,0
+"Yates, New York",36123,Confirmed (per 100k),40.140,4.014,0.100000,4.497,4,2,6,-1
+"Johnson, Nebraska",31097,Confirmed (per 100k),39.440,2.817,0.071429,5.885,4,2,6,6
+"Kewaunee, Wisconsin",55061,Confirmed (per 100k),39.150,3.496,0.089286,5.607,4,2,6,-2
+"Keokuk, Iowa",19107,Confirmed (per 100k),39.040,2.789,0.071429,5.885,4,2,6,6
+"Vermillion, Indiana",18165,Confirmed (per 100k),38.715,2.765,0.071429,6.579,4,2,6,1
+"Hutchinson, Texas",48233,Confirmed (per 100k),38.208,3.411,0.089286,4.497,4,2,6,-1
+"Winston, Alabama",1133,Confirmed (per 100k),38.089,3.023,0.079365,6.024,4,2,6,0
+"Humphreys, Tennessee",47085,Confirmed (per 100k),37.671,2.306,0.061224,6.810,4,2,6,6
+"Winkler, Texas",48495,Confirmed (per 100k),37.453,3.567,0.095238,4.497,4,2,6,-1
+"Guthrie, Iowa",19077,Confirmed (per 100k),37.422,4.009,0.107,4.033,4,2,6,-1
+"Pine, Minnesota",27115,Confirmed (per 100k),37.189,2.415,0.064935,6.856,4,2,6,0
+"Leelanau, Michigan",26089,Confirmed (per 100k),36.763,2.626,0.071429,6.752,4,2,6,1
+"Cass, Texas",48067,Confirmed (per 100k),36.635,2.855,0.077922,5.307,4,2,6,2
+"Madison, Louisiana",22065,Confirmed (per 100k),36.526,2.609,0.071429,6.579,4,2,6,0
+"Quay, New Mexico",35037,Confirmed (per 100k),36.350,1.731,0.047619,5.885,4,2,6,-2
+"Allegan, Michigan",26005,Confirmed (per 100k),35.569,2.420,0.068027,6.544,4,2,6,1
+"Caswell, North Carolina",37033,Confirmed (per 100k),35.392,2.528,0.071429,5.538,4,2,6,0
+"Gladwin, Michigan",26051,Confirmed (per 100k),35.365,2.807,0.079365,6.440,4,2,6,0
+"Kiowa, Oklahoma",40075,Confirmed (per 100k),34.451,3.281,0.095238,4.844,4,2,6,1
+"Stanton, Nebraska",31167,Confirmed (per 100k),33.784,2.413,0.071429,5.191,4,2,6,6
+"Jack, Texas",48237,Confirmed (per 100k),33.576,3.198,0.095238,5.885,4,2,6,0
+"Greenwood, Kansas",20073,Confirmed (per 100k),33.434,2.388,0.071429,6.579,4,2,6,0
+"Des Moines, Iowa",19057,Confirmed (per 100k),33.362,2.566,0.076923,4.893,4,2,6,0
+"White, Indiana",18181,Confirmed (per 100k),33.192,2.371,0.071429,6.232,4,2,6,1
+"Essex, Vermont",50009,Confirmed (per 100k),32.452,2.318,0.071429,5.191,4,2,6,6
+"Mercer, Illinois",17131,Confirmed (per 100k),32.390,2.776,0.085714,5.654,4,2,6,0
+"Plymouth, Iowa",19149,Confirmed (per 100k),31.775,2.270,0.071429,6.405,4,2,6,1
+"Coles, Illinois",17029,Confirmed (per 100k),31.607,2.822,0.089286,4.566,4,2,6,0
+"Greenup, Kentucky",21089,Confirmed (per 100k),31.341,2.442,0.077922,6.694,4,2,6,-1
+"Bedford, Pennsylvania",42009,Confirmed (per 100k),31.323,2.983,0.095238,4.635,4,2,6,-1
+"Lyon, Nevada",32019,Confirmed (per 100k),31.299,2.236,0.071429,6.116,4,2,6,1
+"Tazewell, Illinois",17179,Confirmed (per 100k),31.107,2.385,0.076655,5.475,4,2,6,3
+"Richland, North Dakota",38077,Confirmed (per 100k),30.908,2.649,0.085714,5.885,4,2,6,0
+"Anderson, Kentucky",21005,Confirmed (per 100k),30.773,2.512,0.081633,5.538,4,2,6,1
+"Holmes, Florida",12059,Confirmed (per 100k),30.586,2.185,0.071429,6.810,4,2,6,1
+"Cocke, Tennessee",47029,Confirmed (per 100k),30.552,3.174,0.104,4.497,4,2,6,-1
+"Fulton, Indiana",18049,Confirmed (per 100k),30.039,2.146,0.071429,5.885,4,2,6,3
+"Breckinridge, Kentucky",21027,Confirmed (per 100k),29.301,2.093,0.071429,6.579,4,2,6,1
+"Pendleton, West Virginia",54071,Confirmed (per 100k),28.699,2.050,0.071429,6.579,4,2,6,0
+"Tillman, Oklahoma",40141,Confirmed (per 100k),27.586,1.970,0.071429,5.191,4,2,6,6
+"Walker, Georgia",13295,Confirmed (per 100k),27.236,1.843,0.067669,6.039,4,2,6,0
+"Newton, Arkansas",5101,Confirmed (per 100k),25.796,1.843,0.071429,6.579,4,2,6,0
+"Webster, Missouri",29225,Confirmed (per 100k),25.258,1.443,0.057143,6.752,4,2,6,1
+"Pulaski, Virginia",51155,Confirmed (per 100k),23.511,1.679,0.071429,6.752,4,2,6,0
+"Big Horn, Montana",30003,Confirmed (per 100k),22.524,2.145,0.095238,5.538,4,2,6,0
+"Pipestone, Minnesota",27117,Confirmed (per 100k),21.915,1.565,0.071429,5.885,4,2,6,6
+"Williams, Ohio",39171,Confirmed (per 100k),21.803,1.947,0.089286,5.052,4,2,6,0
+"Robeson, North Carolina",37155,Confirmed (per 100k),20.670,1.859,0.089947,4.333,4,2,6,0
+"Tishomingo, Mississippi",28141,Confirmed (per 100k),20.637,1.474,0.071429,5.538,4,2,6,6
+"Story, Iowa",19169,Confirmed (per 100k),20.594,1.618,0.078571,5.822,4,2,6,0
+"Jackson, Minnesota",27063,Confirmed (per 100k),20.313,1.451,0.071429,5.885,4,2,6,6
+"Jones, Texas",48253,Confirmed (per 100k),19.917,1.423,0.071429,6.232,4,2,6,2
+"Iron, Missouri",29093,Confirmed (per 100k),19.753,1.411,0.071429,5.191,4,2,6,6
+"Kings, California",6031,Confirmed (per 100k),19.616,1.681,0.085714,4.033,4,2,6,1
+"Kleberg, Texas",48273,Confirmed (per 100k),19.557,1.863,0.095238,4.149,4,2,6,0
+"Carter, Kentucky",21043,Confirmed (per 100k),18.659,2.132,0.114,4.323,4,2,6,-2
+"Bandera, Texas",48019,Confirmed (per 100k),17.307,1.236,0.071429,6.926,4,2,6,0
+"Hancock, Illinois",17067,Confirmed (per 100k),16.941,1.613,0.095238,5.538,4,2,6,0
+"Nicholas, West Virginia",54067,Confirmed (per 100k),16.329,1.166,0.071429,6.579,4,2,6,2
+"Jackson, Ohio",39079,Confirmed (per 100k),15.426,1.322,0.085714,4.959,4,2,6,2
+"Bee, Texas",48025,Confirmed (per 100k),15.354,1.316,0.085714,5.654,4,2,6,0
+"Gila, Arizona",4007,Confirmed (per 100k),14.810,1.058,0.071429,5.364,4,2,6,2
+"Pend Oreille, Washington",53051,Confirmed (per 100k),14.573,1.041,0.071429,6.579,4,2,6,0
+"Henderson, Tennessee",47077,Confirmed (per 100k),14.226,1.016,0.071429,5.191,4,2,6,6
+"Madison, Texas",48313,Confirmed (per 100k),14.002,1.000,0.071429,5.885,4,2,6,6
+"Anderson, Texas",48001,Confirmed (per 100k),13.856,1.237,0.089286,5.052,4,2,6,2
+"Floyd, Kentucky",21071,Confirmed (per 100k),11.239,1.204,0.107,4.033,4,2,6,-2
+"Henry, Ohio",39069,Confirmed (per 100k),11.109,1.058,0.095238,4.844,4,2,6,-1
+"Cooke, Texas",48097,Confirmed (per 100k),9.695,1.039,0.107,4.033,4,2,6,-2
+"Polk, Minnesota",27119,Confirmed (per 100k),9.565,0.911,0.095238,3.454,3,3,6,1
+"Casey, Kentucky",21045,Confirmed (per 100k),6.189,0.884,0.143,3.106,3,3,6,-2
+"Bosque, Texas",48035,Confirmed (per 100k),5.352,0.765,0.143,3.106,3,3,6,-2
+"Lincoln, West Virginia",54043,Confirmed (per 100k),4.900,0.700,0.143,3.106,3,3,6,-2
+"Rockland, New York",36087,Confirmed (per 100k),2902.799,72.045,0.024819,25.407,5,0,5,0
+"Westchester, New York",36119,Confirmed (per 100k),2512.232,66.297,0.026390,23.149,5,0,5,0
+"Nassau, New York",36059,Confirmed (per 100k),2260.775,68.011,0.030083,20.234,5,0,5,0
+"Randolph, Georgia",13243,Confirmed (per 100k),2139.274,75.876,0.035468,17.634,5,0,5,0
+"Blaine, Idaho",16013,Confirmed (per 100k),2067.677,13.032,0.006303,107.322,5,0,5,0
+"Suffolk, New York",36103,Confirmed (per 100k),1904.848,57.603,0.030240,19.528,5,0,5,0
+"Terrell, Georgia",13273,Confirmed (per 100k),1758.293,68.657,0.039048,15.745,5,0,5,0
+"Early, Georgia",13099,Confirmed (per 100k),1697.743,67.293,0.039637,14.770,5,0,5,-1
+"Orange, New York",36071,Confirmed (per 100k),1692.212,55.185,0.032611,19.726,5,0,5,-1
+"Hudson, New Jersey",34017,Confirmed (per 100k),1658.261,64.100,0.038655,14.326,5,0,5,-1
+"Dougherty, Georgia",13095,Confirmed (per 100k),1632.634,43.528,0.026661,23.883,5,0,5,0
+"Orleans, Louisiana",22071,Confirmed (per 100k),1575.828,14.647,0.009295,70.430,5,0,5,0
+"St. John the Baptist, Louisiana",22095,Confirmed (per 100k),1561.734,32.349,0.020713,29.650,5,0,5,0
+"Bergen, New Jersey",34003,Confirmed (per 100k),1395.728,43.752,0.031347,18.938,5,0,5,0
+"Essex, New Jersey",34013,Confirmed (per 100k),1342.846,51.745,0.038534,14.832,5,0,5,-1
+"Jefferson, Louisiana",22051,Confirmed (per 100k),1332.045,19.885,0.014928,42.828,5,0,5,0
+"St. James, Louisiana",22093,Confirmed (per 100k),1052.332,9.480,0.009009,73.424,5,0,5,0
+"Middlesex, New Jersey",34023,Confirmed (per 100k),1011.560,40.239,0.039780,14.211,5,0,5,-1
+"Greer, Oklahoma",40055,Confirmed (per 100k),997.899,15.006,0.015038,40.664,5,0,5,0
+"Calhoun, Georgia",13037,Confirmed (per 100k),985.620,39.240,0.039813,15.919,5,0,5,-1
+"St. Charles, Louisiana",22089,Confirmed (per 100k),956.685,22.599,0.023622,26.825,5,0,5,0
+"Lee, Georgia",13177,Confirmed (per 100k),920.245,15.718,0.017081,38.574,5,0,5,0
+"St. Bernard, Louisiana",22087,Confirmed (per 100k),895.352,15.119,0.016886,37.651,5,0,5,0
+"Fairfield, Connecticut",9001,Confirmed (per 100k),881.980,28.773,0.032624,16.964,5,0,5,0
+"Eagle, Colorado",8037,Confirmed (per 100k),879.787,8.552,0.009720,69.388,5,0,5,0
+"Iberville, Louisiana",22047,Confirmed (per 100k),867.399,18.455,0.021277,29.672,5,0,5,0
+"Morris, New Jersey",34027,Confirmed (per 100k),861.247,30.120,0.034972,16.908,5,0,5,0
+"Ocean, New Jersey",34029,Confirmed (per 100k),801.731,25.739,0.032105,18.237,5,0,5,0
+"Wayne, Michigan",26163,Confirmed (per 100k),795.270,20.644,0.025959,24.148,5,0,5,0
+"Dutchess, New York",36027,Confirmed (per 100k),776.295,19.519,0.025144,24.707,5,0,5,0
+"Monmouth, New Jersey",34025,Confirmed (per 100k),773.600,20.408,0.026381,23.104,5,0,5,0
+"Chambers, Alabama",1017,Confirmed (per 100k),772.839,20.191,0.026126,23.263,5,0,5,0
+"Somerset, New Jersey",34035,Confirmed (per 100k),756.383,28.317,0.037437,15.264,5,0,5,-1
+"Plaquemines, Louisiana",22075,Confirmed (per 100k),706.988,12.317,0.017422,35.800,5,0,5,0
+"Wilkinson, Mississippi",28157,Confirmed (per 100k),706.837,21.520,0.030445,19.273,5,0,5,0
+"Clay, Georgia",13061,Confirmed (per 100k),705.716,25.204,0.035714,16.980,5,0,5,0
+"Assumption, Louisiana",22007,Confirmed (per 100k),666.941,19.578,0.029354,21.139,5,0,5,0
+"Baker, Georgia",13007,Confirmed (per 100k),658.328,23.512,0.035714,16.564,5,0,5,-1
+"Gunnison, Colorado",8051,Confirmed (per 100k),652.846,10.635,0.016291,39.322,5,0,5,0
+"Decatur, Indiana",18031,Confirmed (per 100k),632.554,22.053,0.034864,18.180,5,0,5,0
+"Toole, Montana",30101,Confirmed (per 100k),612.331,12.066,0.019704,32.750,5,0,5,-1
+"Lehigh, Pennsylvania",42077,Confirmed (per 100k),607.877,20.076,0.033026,18.225,5,0,5,0
+"Lafourche, Louisiana",22057,Confirmed (per 100k),587.006,14.342,0.024433,25.553,5,0,5,0
+"De Soto, Louisiana",22031,Confirmed (per 100k),575.320,16.646,0.028933,20.922,5,0,5,0
+"Coffey, Kansas",20031,Confirmed (per 100k),574.642,15.720,0.027356,23.450,5,0,5,0
+"Monroe, Pennsylvania",42089,Confirmed (per 100k),569.680,14.095,0.024742,25.513,5,0,5,0
+"Luzerne, Pennsylvania",42079,Confirmed (per 100k),556.681,14.852,0.026680,23.320,5,0,5,0
+"Pike, Pennsylvania",42103,Confirmed (per 100k),544.715,22.782,0.041823,14.503,5,0,5,-1
+"Plymouth, Massachusetts",25023,Confirmed (per 100k),543.359,22.147,0.040759,14.422,5,0,5,-1
+"Caddo, Louisiana",22017,Confirmed (per 100k),531.215,14.452,0.027206,22.834,5,0,5,0
+"Macomb, Michigan",26099,Confirmed (per 100k),506.309,18.078,0.035706,16.935,5,0,5,0
+"East Feliciana, Louisiana",22037,Confirmed (per 100k),496.472,16.425,0.033083,18.177,5,0,5,0
+"Oakland, Michigan",26125,Confirmed (per 100k),491.259,13.563,0.027609,22.769,5,0,5,0
+"Sussex, New Jersey",34037,Confirmed (per 100k),484.027,17.897,0.036975,15.593,5,0,5,0
+"Northampton, Pennsylvania",42095,Confirmed (per 100k),481.190,16.799,0.034912,17.076,5,0,5,0
+"Navajo, Arizona",4017,Confirmed (per 100k),426.418,7.083,0.016611,37.057,5,0,5,1
+"Washington, Louisiana",22117,Confirmed (per 100k),422.133,13.607,0.032234,19.075,5,0,5,0
+"Marion, Indiana",18097,Confirmed (per 100k),420.078,14.840,0.035326,15.997,5,0,5,0
+"St. Tammany, Louisiana",22103,Confirmed (per 100k),405.884,8.064,0.019868,30.801,5,0,5,0
+"Ascension, Louisiana",22005,Confirmed (per 100k),404.411,9.027,0.022321,27.664,5,0,5,0
+"Franklin, Indiana",18047,Confirmed (per 100k),395.465,12.554,0.031746,18.990,5,0,5,0
+"Northampton, North Carolina",37131,Confirmed (per 100k),369.553,8.066,0.021825,29.772,5,0,5,0
+"Montgomery, Pennsylvania",42091,Confirmed (per 100k),365.862,12.877,0.035197,16.342,5,0,5,0
+"St. Martin, Louisiana",22099,Confirmed (per 100k),361.214,8.823,0.024426,25.781,5,0,5,0
+"Clarendon, South Carolina",45027,Confirmed (per 100k),355.608,11.430,0.032143,17.365,5,0,5,0
+"Miami-Dade, Florida",12086,Confirmed (per 100k),355.437,12.072,0.033965,17.398,5,0,5,-1
+"Holmes, Mississippi",28051,Confirmed (per 100k),352.734,11.758,0.033333,17.871,5,0,5,0
+"East Baton Rouge, Louisiana",22033,Confirmed (per 100k),348.590,9.382,0.026914,22.902,5,0,5,0
+"West Baton Rouge, Louisiana",22121,Confirmed (per 100k),340.072,10.796,0.031746,19.198,5,0,5,0
+"Ouachita, Louisiana",22073,Confirmed (per 100k),337.946,13.421,0.039713,14.452,5,0,5,-1
+"Hunterdon, New Jersey",34019,Confirmed (per 100k),336.895,10.682,0.031708,18.925,5,0,5,0
+"Tangipahoa, Louisiana",22105,Confirmed (per 100k),335.416,10.389,0.030973,20.163,5,0,5,-1
+"Pitkin, Colorado",8097,Confirmed (per 100k),320.819,6.432,0.020050,30.584,5,0,5,1
+"Claiborne, Louisiana",22027,Confirmed (per 100k),319.081,8.205,0.025714,24.374,5,0,5,0
+"Lincoln, Idaho",16063,Confirmed (per 100k),316.810,7.987,0.025210,24.605,5,0,5,1
+"St. Mary, Louisiana",22101,Confirmed (per 100k),316.122,10.422,0.032967,17.923,5,0,5,0
+"Terrebonne, Louisiana",22109,Confirmed (per 100k),309.612,8.406,0.027151,21.022,5,0,5,0
+"Genesee, Michigan",26049,Confirmed (per 100k),309.502,10.033,0.032416,18.899,5,0,5,-1
+"Seminole, Georgia",13253,Confirmed (per 100k),309.023,10.595,0.034286,14.438,5,0,5,-1
+"Bristol, Massachusetts",25005,Confirmed (per 100k),306.254,10.211,0.033342,18.576,5,0,5,-1
+"Schley, Georgia",13249,Confirmed (per 100k),304.356,10.870,0.035714,16.287,5,0,5,0
+"Summit, Colorado",8117,Confirmed (per 100k),299.894,9.674,0.032258,18.828,5,0,5,-1
+"Barnstable, Massachusetts",25001,Confirmed (per 100k),296.728,8.786,0.029611,20.240,5,0,5,0
+"Washington, Oklahoma",40147,Confirmed (per 100k),287.228,9.981,0.034749,16.248,5,0,5,-1
+"St. Louis City, Missouri",29510,Confirmed (per 100k),285.785,8.840,0.030933,19.309,5,0,5,0
+"Mountrail, North Dakota",38061,Confirmed (per 100k),284.495,12.193,0.042857,15.054,5,0,5,-1
+"Iberia, Louisiana",22045,Confirmed (per 100k),277.818,9.820,0.035346,16.229,5,0,5,-1
+"Bolivar, Mississippi",28011,Confirmed (per 100k),277.524,6.530,0.023529,25.298,5,0,5,0
+"Johnson, Indiana",18081,Confirmed (per 100k),269.336,8.490,0.031522,18.351,5,0,5,0
+"Montour, Pennsylvania",42093,Confirmed (per 100k),268.788,9.404,0.034985,18.193,5,0,5,0
+"Mahoning, Ohio",39099,Confirmed (per 100k),264.121,10.745,0.040681,14.231,5,0,5,-1
+"Gloucester, New Jersey",34015,Confirmed (per 100k),264.028,10.042,0.038033,14.741,5,0,5,-1
+"Madison, Indiana",18095,Confirmed (per 100k),262.408,8.600,0.032773,17.780,5,0,5,-1
+"Wyandotte, Kansas",20209,Confirmed (per 100k),258.117,7.340,0.028438,21.286,5,0,5,-1
+"Franklin, Massachusetts",25011,Confirmed (per 100k),257.908,7.735,0.029992,20.884,5,0,5,0
+"Carroll, Georgia",13045,Confirmed (per 100k),254.184,9.167,0.036066,15.314,5,0,5,0
+"Kankakee, Illinois",17091,Confirmed (per 100k),253.045,9.232,0.036485,16.394,5,0,5,-1
+"Hopkins, Kentucky",21107,Confirmed (per 100k),250.638,7.673,0.030612,19.464,5,0,5,-1
+"Will, Illinois",17197,Confirmed (per 100k),244.954,8.583,0.035039,16.975,5,0,5,-1
+"Davidson, Tennessee",47037,Confirmed (per 100k),241.304,5.948,0.024648,24.022,5,0,5,0
+"Washtenaw, Michigan",26161,Confirmed (per 100k),238.846,5.985,0.025057,25.429,5,0,5,0
+"Erie, New York",36029,Confirmed (per 100k),238.597,9.656,0.040472,14.599,5,0,5,0
+"Milwaukee, Wisconsin",55079,Confirmed (per 100k),231.674,6.646,0.028689,21.049,5,0,5,0
+"Cape May, New Jersey",34009,Confirmed (per 100k),230.337,9.468,0.041105,14.320,5,0,5,-1
+"St. Louis, Missouri",29189,Confirmed (per 100k),230.234,8.650,0.037571,15.699,5,0,5,0
+"Webster, Georgia",13307,Confirmed (per 100k),230.150,5.480,0.023810,20.446,5,0,5,5
+"Boone, Indiana",18011,Confirmed (per 100k),226.995,9.265,0.040816,14.585,5,0,5,-1
+"Baltimore, Maryland",24005,Confirmed (per 100k),226.622,8.219,0.036267,15.239,5,0,5,-1
+"Carbon, Pennsylvania",42025,Confirmed (per 100k),224.362,8.458,0.037698,14.681,5,0,5,-1
+"Newton, Indiana",18111,Confirmed (per 100k),221.682,5.108,0.023041,28.071,5,0,5,-2
+"Coahoma, Mississippi",28027,Confirmed (per 100k),221.479,6.457,0.029155,20.723,5,0,5,0
+"New Castle, Delaware",10003,Confirmed (per 100k),219.954,8.309,0.037778,15.333,5,0,5,-1
+"Sandoval, New Mexico",35043,Confirmed (per 100k),216.017,7.788,0.036052,16.304,5,0,5,-1
+"Coosa, Alabama",1037,Confirmed (per 100k),215.699,5.359,0.024845,23.739,5,0,5,-1
+"Kemper, Mississippi",28069,Confirmed (per 100k),215.561,7.332,0.034014,15.039,5,0,5,1
+"Marion, Alabama",1093,Confirmed (per 100k),212.057,6.251,0.029478,21.726,5,0,5,-1
+"Broward, Florida",12011,Confirmed (per 100k),208.831,7.506,0.035942,16.381,5,0,5,0
+"Fulton, Georgia",13121,Confirmed (per 100k),206.591,8.634,0.041791,14.065,5,0,5,-1
+"Steuben, New York",36101,Confirmed (per 100k),204.448,5.092,0.024908,22.383,5,0,5,-1
+"Jackson, Indiana",18071,Confirmed (per 100k),203.477,6.460,0.031746,18.436,5,0,5,0
+"Webster, Louisiana",22119,Confirmed (per 100k),203.443,5.216,0.025641,24.209,5,0,5,0
+"Carroll, Maryland",24013,Confirmed (per 100k),198.876,6.530,0.032836,17.322,5,0,5,-1
+"Jerauld, South Dakota",46073,Confirmed (per 100k),198.708,7.097,0.035714,16.980,5,0,5,-2
+"Trousdale, Tennessee",47169,Confirmed (per 100k),194.966,6.330,0.032468,19.337,5,0,5,1
+"Coffee, Georgia",13069,Confirmed (per 100k),191.806,7.593,0.039587,14.327,5,0,5,0
+"Routt, Colorado",8107,Confirmed (per 100k),191.123,7.244,0.037901,15.753,5,0,5,0
+"Skagit, Washington",53057,Confirmed (per 100k),189.621,5.860,0.030904,18.968,5,0,5,1
+"Lee, Alabama",1081,Confirmed (per 100k),189.009,6.251,0.033073,18.809,5,0,5,-1
+"Schuylkill, Pennsylvania",42107,Confirmed (per 100k),188.881,7.377,0.039058,14.833,5,0,5,-1
+"Sunflower, Mississippi",28133,Confirmed (per 100k),187.176,6.827,0.036474,17.095,5,0,5,0
+"Chaffee, Colorado",8015,Confirmed (per 100k),186.677,7.018,0.037594,15.108,5,0,5,0
+"Clayton, Georgia",13063,Confirmed (per 100k),184.770,7.674,0.041534,14.065,5,0,5,-1
+"Bossier, Louisiana",22015,Confirmed (per 100k),183.408,5.285,0.028817,22.054,5,0,5,0
+"San Miguel, Colorado",8113,Confirmed (per 100k),183.397,5.240,0.028571,19.984,5,0,5,1
+"Washington, North Carolina",37187,Confirmed (per 100k),181.347,6.168,0.034014,17.396,5,0,5,1
+"Floyd, Indiana",18043,Confirmed (per 100k),180.841,6.368,0.035211,16.861,5,0,5,0
+"Montrose, Colorado",8085,Confirmed (per 100k),180.083,6.682,0.037106,15.801,5,0,5,-1
+"Jefferson Davis, Louisiana",22053,Confirmed (per 100k),175.338,5.010,0.028571,21.706,5,0,5,-1
+"Bacon, Georgia",13005,Confirmed (per 100k),170.190,5.118,0.030075,18.366,5,0,5,1
+"Washington, Texas",48477,Confirmed (per 100k),170.002,5.972,0.035129,14.207,5,0,5,-1
+"Walthall, Mississippi",28147,Confirmed (per 100k),167.997,6.000,0.035714,17.673,5,0,5,0
+"Lapeer, Michigan",26087,Confirmed (per 100k),165.512,6.849,0.041379,14.553,5,0,5,-1
+"Wayne, Pennsylvania",42127,Confirmed (per 100k),165.495,5.841,0.035294,17.409,5,0,5,-1
+"Howard, Maryland",24027,Confirmed (per 100k),165.188,6.316,0.038237,14.871,5,0,5,-1
+"Henry, Georgia",13151,Confirmed (per 100k),162.857,6.517,0.040015,14.557,5,0,5,-1
+"Washington, Mississippi",28151,Confirmed (per 100k),161.698,5.856,0.036217,17.057,5,0,5,-1
+"Robertson, Tennessee",47147,Confirmed (per 100k),161.531,5.769,0.035714,15.689,5,0,5,1
+"Irwin, Georgia",13155,Confirmed (per 100k),159.303,6.069,0.038095,15.593,5,0,5,1
+"Richland, South Carolina",45079,Confirmed (per 100k),158.024,5.429,0.034355,17.401,5,0,5,0
+"Rockdale, Georgia",13247,Confirmed (per 100k),154.022,5.186,0.033673,16.118,5,0,5,1
+"Palm Beach, Florida",12099,Confirmed (per 100k),150.992,5.001,0.033123,17.537,5,0,5,-1
+"Livingston, Michigan",26093,Confirmed (per 100k),150.004,5.208,0.034722,17.515,5,0,5,0
+"Hinds, Mississippi",28049,Confirmed (per 100k),149.672,5.546,0.037052,15.663,5,0,5,-1
+"Humphreys, Mississippi",28053,Confirmed (per 100k),148.810,5.315,0.035714,18.597,5,0,5,0
+"Amite, Mississippi",28005,Confirmed (per 100k),138.245,5.809,0.042017,14.900,5,0,5,-1
+"Macon, Tennessee",47111,Confirmed (per 100k),138.200,5.226,0.037815,15.285,5,0,5,1
+"Henry, Iowa",19087,Confirmed (per 100k),135.311,5.727,0.042328,14.033,5,0,5,-1
+"Clay, Mississippi",28025,Confirmed (per 100k),134.603,5.177,0.038462,14.801,5,0,5,1
+"Newport, Rhode Island",44005,Confirmed (per 100k),130.357,5.047,0.038718,15.043,5,0,5,-1
+"McHenry, Illinois",17111,Confirmed (per 100k),114.045,4.874,0.042735,13.058,4,1,5,-1
+"Freeborn, Minnesota",27047,Confirmed (per 100k),112.282,4.718,0.042017,13.375,4,1,5,1
+"Buffalo, Nebraska",31019,Confirmed (per 100k),110.755,4.890,0.044156,11.760,4,1,5,0
+"Waldo, Maine",23027,Confirmed (per 100k),108.271,4.676,0.043189,13.140,4,1,5,-2
+"St. Clair, Illinois",17163,Confirmed (per 100k),106.282,4.511,0.042443,13.818,4,1,5,-1
+"Porter, Indiana",18127,Confirmed (per 100k),105.641,4.779,0.045238,12.090,4,1,5,-1
+"Henry, Alabama",1067,Confirmed (per 100k),104.621,4.982,0.047619,11.896,4,1,5,-1
+"Broome, New York",36007,Confirmed (per 100k),104.469,4.950,0.047380,11.780,4,1,5,-1
+"Carlton, Minnesota",27017,Confirmed (per 100k),103.147,4.381,0.042471,12.694,4,1,5,-1
+"Richmond City, Virginia",51760,Confirmed (per 100k),102.415,4.774,0.046610,11.803,4,1,5,0
+"Perry, Alabama",1105,Confirmed (per 100k),100.863,4.803,0.047619,12.358,4,1,5,-2
+"Scott, Indiana",18143,Confirmed (per 100k),100.532,4.189,0.041667,13.117,4,1,5,0
+"Inyo, California",6027,Confirmed (per 100k),99.784,4.752,0.047619,12.473,4,1,5,0
+"Richmond, Virginia",51159,Confirmed (per 100k),99.745,4.750,0.047619,11.665,4,1,5,1
+"Prentiss, Mississippi",28117,Confirmed (per 100k),99.499,3.411,0.034286,12.242,4,1,5,1
+"Pulaski, Arkansas",5119,Confirmed (per 100k),99.002,4.411,0.044551,13.244,4,1,5,0
+"White, Georgia",13311,Confirmed (per 100k),97.409,4.175,0.042857,8.429,4,1,5,0
+"Benton, Mississippi",28009,Confirmed (per 100k),96.864,3.459,0.035714,13.167,4,1,5,1
+"Fort Bend, Texas",48157,Confirmed (per 100k),96.466,3.854,0.039956,13.912,4,1,5,1
+"Greenville, South Carolina",45045,Confirmed (per 100k),95.121,4.175,0.043890,13.151,4,1,5,0
+"Telfair, Georgia",13271,Confirmed (per 100k),94.578,4.504,0.047619,11.433,4,1,5,0
+"Teller, Colorado",8119,Confirmed (per 100k),94.533,4.502,0.047619,10.307,4,1,5,1
+"Chesterfield, Virginia",51041,Confirmed (per 100k),93.820,4.130,0.044022,12.460,4,1,5,0
+"Warrick, Indiana",18173,Confirmed (per 100k),93.654,4.989,0.053269,10.204,4,1,5,0
+"Kenton, Kentucky",21117,Confirmed (per 100k),93.414,4.962,0.053114,9.281,4,1,5,-2
+"Windham, Connecticut",9015,Confirmed (per 100k),92.480,4.159,0.044974,12.637,4,1,5,0
+"Dodge, Georgia",13091,Confirmed (per 100k),92.211,4.160,0.045113,13.976,4,1,5,-1
+"Branch, Michigan",26023,Confirmed (per 100k),91.918,3.611,0.039286,13.955,4,1,5,1
+"Petersburg, Alaska",2195,Confirmed (per 100k),91.855,4.374,0.047619,10.047,4,1,5,5
+"Jefferson Davis, Mississippi",28065,Confirmed (per 100k),89.863,3.851,0.042857,10.971,4,1,5,0
+"Pima, Arizona",4019,Confirmed (per 100k),89.852,3.969,0.044178,12.515,4,1,5,0
+"Madison, Tennessee",47113,Confirmed (per 100k),88.790,3.937,0.044335,13.334,4,1,5,1
+"Racine, Wisconsin",55101,Confirmed (per 100k),88.635,3.711,0.041872,13.541,4,1,5,0
+"Harford, Maryland",24025,Confirmed (per 100k),88.474,4.530,0.051201,9.773,4,1,5,0
+"Santa Barbara, California",6083,Confirmed (per 100k),88.242,3.871,0.043872,12.883,4,1,5,0
+"Travis, Texas",48453,Confirmed (per 100k),86.973,3.902,0.044868,13.089,4,1,5,0
+"Ottawa, Oklahoma",40115,Confirmed (per 100k),86.741,4.131,0.047619,12.589,4,1,5,1
+"Forsyth, Georgia",13117,Confirmed (per 100k),86.386,4.094,0.047393,11.315,4,1,5,0
+"Elbert, Colorado",8039,Confirmed (per 100k),86.049,3.741,0.043478,12.226,4,1,5,0
+"Lowndes, Georgia",13185,Confirmed (per 100k),86.026,4.380,0.050919,10.220,4,1,5,0
+"Tipton, Indiana",18159,Confirmed (per 100k),85.820,3.772,0.043956,12.300,4,1,5,2
+"Dickson, Tennessee",47043,Confirmed (per 100k),85.267,3.972,0.046584,11.618,4,1,5,1
+"Strafford, New Hampshire",33017,Confirmed (per 100k),84.971,3.937,0.046332,9.970,4,1,5,0
+"Kent, Michigan",26081,Confirmed (per 100k),83.720,4.697,0.056104,8.531,4,1,5,0
+"Paulding, Georgia",13223,Confirmed (per 100k),83.597,4.489,0.053698,10.648,4,1,5,-1
+"Russell, Alabama",1113,Confirmed (per 100k),82.814,4.683,0.056548,8.331,4,1,5,0
+"Johnson, Arkansas",5071,Confirmed (per 100k),82.775,4.838,0.058442,9.893,4,1,5,0
+"Adams, Pennsylvania",42001,Confirmed (per 100k),82.517,4.438,0.053782,9.917,4,1,5,0
+"Bay, Michigan",26017,Confirmed (per 100k),82.423,3.879,0.047059,11.532,4,1,5,0
+"Washington, Maryland",24043,Confirmed (per 100k),81.431,3.972,0.048780,12.077,4,1,5,0
+"Randall, Texas",48381,Confirmed (per 100k),81.329,4.046,0.049745,10.011,4,1,5,0
+"Northumberland, Pennsylvania",42097,Confirmed (per 100k),80.358,4.718,0.058708,8.845,4,1,5,-2
+"Iowa, Iowa",19095,Confirmed (per 100k),80.326,4.414,0.054945,7.827,4,1,5,2
+"Sanilac, Michigan",26151,Confirmed (per 100k),80.155,3.470,0.043290,12.681,4,1,5,1
+"Elkhart, Indiana",18039,Confirmed (per 100k),79.480,4.777,0.060105,8.157,4,1,5,-2
+"Polk, Iowa",19153,Confirmed (per 100k),78.954,4.547,0.057586,7.606,4,1,5,0
+"Chesterfield, South Carolina",45025,Confirmed (per 100k),78.861,4.381,0.055556,9.997,4,1,5,0
+"Screven, Georgia",13251,Confirmed (per 100k),78.763,4.092,0.051948,11.433,4,1,5,-2
+"Shelby, Iowa",19165,Confirmed (per 100k),78.575,3.742,0.047619,11.896,4,1,5,0
+"Utah, Utah",49049,Confirmed (per 100k),78.273,3.188,0.040734,12.688,4,1,5,1
+"Wyandot, Ohio",39175,Confirmed (per 100k),78.082,3.937,0.050420,11.549,4,1,5,0
+"Hennepin, Minnesota",27053,Confirmed (per 100k),77.024,4.142,0.053773,9.134,4,1,5,0
+"Tioga, New York",36107,Confirmed (per 100k),76.759,3.556,0.046332,10.971,4,1,5,0
+"Clay, Indiana",18021,Confirmed (per 100k),76.263,3.268,0.042857,10.971,4,1,5,1
+"Greene, North Carolina",37079,Confirmed (per 100k),75.941,4.068,0.053571,11.780,4,1,5,0
+"Jackson, Alabama",1071,Confirmed (per 100k),75.543,3.874,0.051282,10.839,4,1,5,0
+"Jackson, Georgia",13157,Confirmed (per 100k),75.366,4.111,0.054545,8.561,4,1,5,0
+"Dyer, Tennessee",47045,Confirmed (per 100k),75.352,3.460,0.045918,12.435,4,1,5,1
+"Cook, Georgia",13075,Confirmed (per 100k),75.275,4.136,0.054945,8.937,4,1,5,-1
+"Juneau, Alaska",2110,Confirmed (per 100k),75.061,3.574,0.047619,12.733,4,1,5,0
+"Toombs, Georgia",13279,Confirmed (per 100k),74.543,4.792,0.064286,8.737,4,1,5,0
+"Nez Perce, Idaho",16069,Confirmed (per 100k),74.243,3.889,0.052381,10.677,4,1,5,0
+"Franklin, Pennsylvania",42055,Confirmed (per 100k),74.181,4.331,0.058385,8.483,4,1,5,0
+"Vance, North Carolina",37181,Confirmed (per 100k),74.099,4.170,0.056277,9.086,4,1,5,0
+"Columbia, Georgia",13073,Confirmed (per 100k),74.020,3.008,0.040640,12.106,4,1,5,0
+"Lee, Mississippi",28081,Confirmed (per 100k),73.739,2.843,0.038549,13.880,4,1,5,1
+"Anson, North Carolina",37007,Confirmed (per 100k),73.632,3.506,0.047619,10.740,4,1,5,0
+"Cumberland, Pennsylvania",42041,Confirmed (per 100k),73.410,4.060,0.055300,9.527,4,1,5,0
+"Stevens, Kansas",20189,Confirmed (per 100k),72.926,2.605,0.035714,12.127,4,1,5,0
+"Fannin, Georgia",13111,Confirmed (per 100k),72.552,3.273,0.045113,10.740,4,1,5,1
+"Jones, Iowa",19105,Confirmed (per 100k),72.530,4.145,0.057143,9.469,4,1,5,0
+"Kanawha, West Virginia",54039,Confirmed (per 100k),71.860,3.529,0.049107,10.488,4,1,5,1
+"Jefferson, Georgia",13163,Confirmed (per 100k),71.605,4.650,0.064935,8.382,4,1,5,-2
+"Jefferson, Texas",48245,Confirmed (per 100k),71.552,4.032,0.056349,9.832,4,1,5,0
+"Kern, California",6029,Confirmed (per 100k),71.428,3.602,0.050433,11.275,4,1,5,0
+"Cameron, Texas",48061,Confirmed (per 100k),70.422,3.477,0.049377,11.433,4,1,5,0
+"Poweshiek, Iowa",19157,Confirmed (per 100k),70.255,2.316,0.032967,11.896,4,1,5,5
+"Wayne, Ohio",39169,Confirmed (per 100k),70.003,3.580,0.051146,10.597,4,1,5,0
+"Madison, Illinois",17119,Confirmed (per 100k),69.971,3.803,0.054348,9.898,4,1,5,0
+"Dallas, Alabama",1047,Confirmed (per 100k),69.900,4.225,0.060440,8.344,4,1,5,0
+"Jones, Georgia",13169,Confirmed (per 100k),69.602,2.983,0.042857,11.780,4,1,5,0
+"Winnebago, Illinois",17201,Confirmed (per 100k),69.009,4.247,0.061538,7.306,4,1,5,-1
+"Union, North Carolina",37179,Confirmed (per 100k),67.957,2.859,0.042068,12.488,4,1,5,1
+"Charlotte, Virginia",51037,Confirmed (per 100k),67.340,4.810,0.071429,7.446,4,1,5,-3
+"Windsor, Vermont",50027,Confirmed (per 100k),67.197,3.113,0.046332,12.127,4,1,5,1
+"Walton, Georgia",13297,Confirmed (per 100k),66.601,3.171,0.047619,12.226,4,1,5,0
+"McKenzie, North Dakota",38053,Confirmed (per 100k),66.560,3.803,0.057143,10.913,4,1,5,0
+"Houston, Alabama",1069,Confirmed (per 100k),66.111,2.968,0.044898,12.379,4,1,5,0
+"Flagler, Florida",12035,Confirmed (per 100k),66.040,3.724,0.056391,8.475,4,1,5,1
+"Halifax, North Carolina",37083,Confirmed (per 100k),65.987,3.142,0.047619,12.442,4,1,5,0
+"Worcester, Maryland",24047,Confirmed (per 100k),65.039,3.553,0.054622,9.300,4,1,5,0
+"Covington, Alabama",1039,Confirmed (per 100k),64.779,3.470,0.053571,9.353,4,1,5,0
+"Deaf Smith, Texas",48117,Confirmed (per 100k),64.704,3.851,0.059524,10.047,4,1,5,0
+"Nash, North Carolina",37127,Confirmed (per 100k),64.689,4.242,0.065574,7.768,4,1,5,0
+"San Bernardino, California",6071,Confirmed (per 100k),64.493,3.119,0.048364,10.388,4,1,5,1
+"DeWitt, Texas",48123,Confirmed (per 100k),64.484,2.834,0.043956,12.473,4,1,5,1
+"York, Virginia",51199,Confirmed (per 100k),64.441,3.138,0.048701,11.665,4,1,5,1
+"DeKalb, Alabama",1049,Confirmed (per 100k),64.324,3.196,0.049689,9.743,4,1,5,0
+"Wood, Ohio",39173,Confirmed (per 100k),64.212,3.276,0.051020,10.809,4,1,5,0
+"Chattahoochee, Georgia",13053,Confirmed (per 100k),64.179,3.929,0.061224,7.966,4,1,5,-1
+"Stark, Ohio",39151,Confirmed (per 100k),63.949,2.698,0.042194,13.246,4,1,5,0
+"Wyoming, Pennsylvania",42131,Confirmed (per 100k),63.447,4.265,0.067227,8.313,4,1,5,-2
+"McCormick, South Carolina",45065,Confirmed (per 100k),63.405,4.529,0.071429,7.273,4,1,5,-1
+"El Paso, Texas",48141,Confirmed (per 100k),63.272,4.017,0.063492,7.781,4,1,5,-1
+"Gibson, Tennessee",47053,Confirmed (per 100k),63.094,3.198,0.050691,10.299,4,1,5,1
+"Leon, Florida",12073,Confirmed (per 100k),62.674,2.725,0.043478,13.798,4,1,5,0
+"Lauderdale, Tennessee",47097,Confirmed (per 100k),62.420,3.901,0.062500,7.471,4,1,5,0
+"Yolo, California",6113,Confirmed (per 100k),62.132,3.175,0.051095,10.966,4,1,5,0
+"Montgomery, Texas",48339,Confirmed (per 100k),62.069,2.963,0.047745,12.594,4,1,5,0
+"Stoddard, Missouri",29207,Confirmed (per 100k),62.016,4.430,0.071429,7.118,4,1,5,0
+"Clinton, Ohio",39027,Confirmed (per 100k),61.952,3.744,0.060440,9.605,4,1,5,0
+"Emanuel, Georgia",13107,Confirmed (per 100k),61.821,2.523,0.040816,12.473,4,1,5,0
+"Volusia, Florida",12127,Confirmed (per 100k),61.813,3.408,0.055138,9.274,4,1,5,0
+"Scotts Bluff, Nebraska",31157,Confirmed (per 100k),61.767,3.209,0.051948,9.613,4,1,5,0
+"Warren, Missouri",29219,Confirmed (per 100k),61.713,3.607,0.058442,9.584,4,1,5,1
+"Bowie, Texas",48037,Confirmed (per 100k),61.129,3.830,0.062657,8.299,4,1,5,0
+"Colleton, South Carolina",45029,Confirmed (per 100k),61.045,2.654,0.043478,13.910,4,1,5,1
+"Boone, Kentucky",21015,Confirmed (per 100k),60.637,3.529,0.058201,9.290,4,1,5,-2
+"Berkeley, South Carolina",45015,Confirmed (per 100k),60.551,3.071,0.050725,10.740,4,1,5,0
+"Newberry, South Carolina",45071,Confirmed (per 100k),59.834,3.716,0.062112,9.006,4,1,5,0
+"Northampton, Virginia",51131,Confirmed (per 100k),59.778,3.660,0.061224,7.273,4,1,5,1
+"Warren, Virginia",51187,Confirmed (per 100k),59.755,3.201,0.053571,10.971,4,1,5,0
+"Monroe, Arkansas",5095,Confirmed (per 100k),59.693,2.132,0.035714,10.047,4,1,5,0
+"Hamilton, Texas",48193,Confirmed (per 100k),59.095,3.377,0.057143,9.006,4,1,5,-2
+"Tarrant, Texas",48439,Confirmed (per 100k),59.072,3.003,0.050840,11.444,4,1,5,0
+"Armstrong, Pennsylvania",42005,Confirmed (per 100k),58.701,2.427,0.041353,13.702,4,1,5,1
+"Clinton, Indiana",18023,Confirmed (per 100k),58.644,3.087,0.052632,9.551,4,1,5,0
+"Saluda, South Carolina",45081,Confirmed (per 100k),58.614,3.489,0.059524,8.244,4,1,5,1
+"Fauquier, Virginia",51061,Confirmed (per 100k),57.566,2.808,0.048780,10.889,4,1,5,0
+"Glynn, Georgia",13127,Confirmed (per 100k),57.450,2.680,0.046647,12.907,4,1,5,0
+"Franklin, Alabama",1059,Confirmed (per 100k),57.394,3.644,0.063492,8.920,4,1,5,-1
+"Orange, Virginia",51137,Confirmed (per 100k),56.679,2.313,0.040816,13.860,4,1,5,1
+"Spotsylvania, Virginia",51177,Confirmed (per 100k),56.528,2.517,0.044527,12.473,4,1,5,0
+"Midland, Michigan",26111,Confirmed (per 100k),56.520,2.405,0.042553,13.167,4,1,5,0
+"Butler, Missouri",29023,Confirmed (per 100k),56.500,3.363,0.059524,9.145,4,1,5,-1
+"Calloway, Kentucky",21035,Confirmed (per 100k),56.409,2.930,0.051948,11.260,4,1,5,-2
+"Montgomery, Illinois",17135,Confirmed (per 100k),56.310,3.017,0.053571,8.197,4,1,5,1
+"San Joaquin, California",6077,Confirmed (per 100k),56.157,2.793,0.049733,11.275,4,1,5,0
+"Columbia, Florida",12023,Confirmed (per 100k),55.799,2.591,0.046429,12.127,4,1,5,0
+"Union, Kentucky",21225,Confirmed (per 100k),55.629,2.980,0.053571,9.584,4,1,5,-1
+"Hays, Texas",48209,Confirmed (per 100k),55.606,2.420,0.043527,12.909,4,1,5,0
+"Liberty, Georgia",13179,Confirmed (per 100k),55.343,3.488,0.063025,8.244,4,1,5,-1
+"Pinal, Arizona",4021,Confirmed (per 100k),55.317,2.593,0.046875,11.334,4,1,5,0
+"Pickens, Georgia",13227,Confirmed (per 100k),55.230,2.630,0.047619,11.549,4,1,5,1
+"Roosevelt, Montana",30085,Confirmed (per 100k),54.526,3.895,0.071429,7.041,4,1,5,-2
+"Sabine, Louisiana",22085,Confirmed (per 100k),54.430,2.393,0.043956,13.340,4,1,5,0
+"Essex, New York",36031,Confirmed (per 100k),54.223,2.324,0.042857,10.856,4,1,5,1
+"Mercer, Pennsylvania",42085,Confirmed (per 100k),53.919,2.481,0.046005,12.638,4,1,5,0
+"Marion, Illinois",17121,Confirmed (per 100k),53.756,2.688,0.050000,11.235,4,1,5,1
+"McCook, South Dakota",46087,Confirmed (per 100k),53.706,2.557,0.047619,12.820,4,1,5,0
+"Richland, Ohio",39139,Confirmed (per 100k),53.651,3.419,0.063736,8.086,4,1,5,0
+"Randolph, North Carolina",37151,Confirmed (per 100k),53.596,2.287,0.042672,12.941,4,1,5,1
+"Macon, Illinois",17115,Confirmed (per 100k),52.880,2.747,0.051948,11.295,4,1,5,-1
+"Gooding, Idaho",16047,Confirmed (per 100k),52.704,2.823,0.053571,9.816,4,1,5,0
+"Nottoway, Virginia",51135,Confirmed (per 100k),52.521,2.814,0.053571,8.660,4,1,5,0
+"DeKalb, Illinois",17037,Confirmed (per 100k),52.432,2.860,0.054545,9.551,4,1,5,0
+"Baldwin, Alabama",1003,Confirmed (per 100k),52.411,2.624,0.050061,11.061,4,1,5,0
+"Grant, New Mexico",35017,Confirmed (per 100k),51.856,2.117,0.040816,13.340,4,1,5,0
+"Pueblo, Colorado",8101,Confirmed (per 100k),51.655,2.460,0.047619,11.529,4,1,5,0
+"Berrien, Georgia",13019,Confirmed (per 100k),51.554,2.946,0.057143,10.220,4,1,5,0
+"Brown, South Dakota",46013,Confirmed (per 100k),51.495,2.207,0.042857,12.705,4,1,5,1
+"Rusk, Texas",48401,Confirmed (per 100k),51.465,3.151,0.061224,8.718,4,1,5,-1
+"Pitt, North Carolina",37147,Confirmed (per 100k),51.455,2.371,0.046083,12.427,4,1,5,0
+"Franklin, Georgia",13119,Confirmed (per 100k),51.394,3.059,0.059524,7.273,4,1,5,-1
+"Auglaize, Ohio",39011,Confirmed (per 100k),50.377,2.503,0.049689,11.000,4,1,5,-1
+"Osceola, Iowa",19143,Confirmed (per 100k),50.352,2.398,0.047619,10.740,4,1,5,-1
+"Carson City, Nevada",32510,Confirmed (per 100k),50.075,3.066,0.061224,9.931,4,1,5,0
+"Bastrop, Texas",48021,Confirmed (per 100k),49.593,2.898,0.058442,9.353,4,1,5,0
+"Warren, Ohio",39165,Confirmed (per 100k),49.445,2.253,0.045567,11.733,4,1,5,1
+"Twiggs, Georgia",13289,Confirmed (per 100k),49.261,3.519,0.071429,7.966,4,1,5,-1
+"Dodge, Nebraska",31053,Confirmed (per 100k),49.227,2.735,0.055556,8.164,4,1,5,0
+"Steuben, Indiana",18151,Confirmed (per 100k),49.141,2.065,0.042017,13.652,4,1,5,1
+"Burleson, Texas",48051,Confirmed (per 100k),48.799,2.324,0.047619,12.358,4,1,5,0
+"Warren, Mississippi",28149,Confirmed (per 100k),48.478,2.204,0.045455,11.037,4,1,5,0
+"Milam, Texas",48331,Confirmed (per 100k),48.342,2.302,0.047619,10.220,4,1,5,1
+"Wise, Virginia",51195,Confirmed (per 100k),48.150,3.821,0.079365,7.550,4,1,5,-1
+"Marquette, Michigan",26103,Confirmed (per 100k),47.977,2.142,0.044643,13.097,4,1,5,1
+"Vanderburgh, Indiana",18163,Confirmed (per 100k),47.947,2.283,0.047619,11.457,4,1,5,0
+"Iroquois, Illinois",17075,Confirmed (per 100k),47.946,2.108,0.043956,12.993,4,1,5,0
+"Gilmer, Georgia",13123,Confirmed (per 100k),47.818,1.822,0.038095,10.047,4,1,5,-1
+"Butler, Ohio",39017,Confirmed (per 100k),46.981,1.827,0.038889,13.994,4,1,5,1
+"Marshall, Tennessee",47117,Confirmed (per 100k),46.545,2.909,0.062500,7.273,4,1,5,1
+"Spencer, Kentucky",21215,Confirmed (per 100k),46.509,2.215,0.047619,12.820,4,1,5,-1
+"Richland, Wisconsin",55103,Confirmed (per 100k),46.371,2.484,0.053571,10.971,4,1,5,0
+"Camp, Texas",48063,Confirmed (per 100k),45.823,3.273,0.071429,8.197,4,1,5,-1
+"Cherokee, Alabama",1019,Confirmed (per 100k),45.809,2.181,0.047619,12.473,4,1,5,0
+"Benton, Indiana",18007,Confirmed (per 100k),45.725,3.266,0.071429,7.619,4,1,5,-2
+"Charlton, Georgia",13049,Confirmed (per 100k),44.803,3.200,0.071429,7.041,4,1,5,0
+"Richmond, North Carolina",37153,Confirmed (per 100k),44.614,2.868,0.064286,7.735,4,1,5,-1
+"Wakulla, Florida",12129,Confirmed (per 100k),44.459,2.541,0.057143,10.393,4,1,5,0
+"Duplin, North Carolina",37061,Confirmed (per 100k),44.262,2.189,0.049451,11.202,4,1,5,0
+"Union, South Dakota",46127,Confirmed (per 100k),43.937,1.793,0.040816,12.127,4,1,5,2
+"Stewart, Tennessee",47161,Confirmed (per 100k),43.748,2.083,0.047619,10.393,4,1,5,1
+"Escambia, Alabama",1053,Confirmed (per 100k),43.676,1.950,0.044643,11.017,4,1,5,-1
+"Van Buren, Michigan",26159,Confirmed (per 100k),43.606,2.076,0.047619,11.370,4,1,5,0
+"Waller, Texas",48473,Confirmed (per 100k),43.442,2.327,0.053571,10.894,4,1,5,0
+"Monroe, Alabama",1099,Confirmed (per 100k),43.409,2.067,0.047619,11.665,4,1,5,2
+"Mifflin, Pennsylvania",42087,Confirmed (per 100k),43.348,2.477,0.057143,10.393,4,1,5,0
+"Franklin, Maine",23007,Confirmed (per 100k),43.048,1.892,0.043956,11.260,4,1,5,0
+"Chowan, North Carolina",37041,Confirmed (per 100k),43.032,3.074,0.071429,7.735,4,1,5,-1
+"Valencia, New Mexico",35061,Confirmed (per 100k),43.032,2.049,0.047619,9.668,4,1,5,-1
+"Cameron, Louisiana",22023,Confirmed (per 100k),43.023,2.049,0.047619,10.047,4,1,5,5
+"Whitfield, Georgia",13313,Confirmed (per 100k),43.010,2.594,0.060317,8.587,4,1,5,0
+"Rock, Minnesota",27133,Confirmed (per 100k),42.941,1.534,0.035714,11.433,4,1,5,-3
+"Lyon, Iowa",19119,Confirmed (per 100k),42.535,2.431,0.057143,10.740,4,1,5,-1
+"Poinsett, Arkansas",5111,Confirmed (per 100k),42.503,1.822,0.042857,13.513,4,1,5,0
+"Wayne, Indiana",18177,Confirmed (per 100k),42.499,2.168,0.051020,10.116,4,1,5,1
+"Cass, Michigan",26027,Confirmed (per 100k),42.482,2.759,0.064935,8.452,4,1,5,0
+"Grady, Oklahoma",40051,Confirmed (per 100k),41.194,2.303,0.055901,7.735,4,1,5,0
+"Rogers, Oklahoma",40131,Confirmed (per 100k),41.099,2.009,0.048872,10.900,4,1,5,2
+"Clarke, Virginia",51043,Confirmed (per 100k),41.042,2.932,0.071429,8.429,4,1,5,0
+"Stanislaus, California",6099,Confirmed (per 100k),41.042,2.594,0.063211,8.181,4,1,5,0
+"Dewey, Oklahoma",40043,Confirmed (per 100k),40.891,2.921,0.071429,7.966,4,1,5,-1
+"Ottawa, Michigan",26139,Confirmed (per 100k),40.777,2.007,0.049220,9.573,4,1,5,0
+"Person, North Carolina",37145,Confirmed (per 100k),40.517,2.894,0.071429,7.619,4,1,5,-1
+"Greene, Virginia",51079,Confirmed (per 100k),40.365,2.883,0.071429,7.099,4,1,5,-1
+"Morris, Texas",48343,Confirmed (per 100k),40.362,2.306,0.057143,8.313,4,1,5,1
+"Martin, North Carolina",37117,Confirmed (per 100k),40.107,1.910,0.047619,11.665,4,1,5,0
+"Caledonia, Vermont",50005,Confirmed (per 100k),40.009,1.905,0.047619,11.433,4,1,5,2
+"Navarro, Texas",48349,Confirmed (per 100k),39.910,2.281,0.057143,10.220,4,1,5,0
+"Hancock, Ohio",39063,Confirmed (per 100k),39.587,1.885,0.047619,11.780,4,1,5,0
+"Cheshire, New Hampshire",33005,Confirmed (per 100k),39.430,2.065,0.052381,10.740,4,1,5,0
+"Rockwall, Texas",48397,Confirmed (per 100k),39.079,2.859,0.073171,7.867,4,1,5,-1
+"Union, Mississippi",28145,Confirmed (per 100k),38.175,1.983,0.051948,10.393,4,1,5,2
+"Blount, Alabama",1009,Confirmed (per 100k),38.045,1.976,0.051948,10.567,4,1,5,0
+"Hertford, North Carolina",37091,Confirmed (per 100k),38.012,2.413,0.063492,7.099,4,1,5,0
+"Jefferson, Wisconsin",55055,Confirmed (per 100k),37.750,1.517,0.040179,13.667,4,1,5,2
+"Bulloch, Georgia",13031,Confirmed (per 100k),37.685,1.974,0.052381,9.921,4,1,5,0
+"Lenoir, North Carolina",37107,Confirmed (per 100k),37.534,1.787,0.047619,11.235,4,1,5,2
+"Juneau, Wisconsin",55057,Confirmed (per 100k),37.471,2.141,0.057143,9.180,4,1,5,1
+"Atchison, Kansas",20005,Confirmed (per 100k),37.330,1.778,0.047619,8.313,4,1,5,2
+"Wood, West Virginia",54107,Confirmed (per 100k),37.118,2.224,0.059908,8.980,4,1,5,0
+"Ionia, Michigan",26067,Confirmed (per 100k),37.096,2.208,0.059524,9.076,4,1,5,0
+"Cabell, West Virginia",54011,Confirmed (per 100k),36.979,1.864,0.050420,10.971,4,1,5,1
+"Logan, Kentucky",21141,Confirmed (per 100k),36.898,2.636,0.071429,7.966,4,1,5,-1
+"Buchanan, Missouri",29021,Confirmed (per 100k),36.628,1.799,0.049107,11.055,4,1,5,0
+"Elbert, Georgia",13105,Confirmed (per 100k),36.470,2.977,0.081633,7.273,4,1,5,-1
+"Chattooga, Georgia",13055,Confirmed (per 100k),36.306,1.729,0.047619,13.051,4,1,5,0
+"Liberty, Texas",48291,Confirmed (per 100k),36.273,2.105,0.058036,8.873,4,1,5,0
+"Brevard, Florida",12009,Confirmed (per 100k),36.216,1.946,0.053735,10.689,4,1,5,0
+"Mahaska, Iowa",19123,Confirmed (per 100k),36.207,2.586,0.071429,7.619,4,1,5,0
+"Coffee, Tennessee",47031,Confirmed (per 100k),35.386,2.275,0.064286,7.581,4,1,5,0
+"Bourbon, Kentucky",21017,Confirmed (per 100k),35.375,2.166,0.061224,8.891,4,1,5,0
+"Lycoming, Pennsylvania",42081,Confirmed (per 100k),35.305,1.765,0.050000,10.641,4,1,5,0
+"Floyd, Texas",48153,Confirmed (per 100k),35.014,2.501,0.071429,7.966,4,1,5,-1
+"Clermont, Ohio",39025,Confirmed (per 100k),34.879,2.145,0.061508,8.660,4,1,5,0
+"Wythe, Virginia",51197,Confirmed (per 100k),34.863,1.494,0.042857,12.127,4,1,5,2
+"Larue, Kentucky",21123,Confirmed (per 100k),34.727,1.984,0.057143,9.700,4,1,5,0
+"San Jacinto, Texas",48407,Confirmed (per 100k),34.651,2.475,0.071429,8.382,4,1,5,-1
+"Umatilla, Oregon",41059,Confirmed (per 100k),34.638,1.833,0.052910,9.700,4,1,5,-1
+"Sampson, North Carolina",37163,Confirmed (per 100k),34.629,2.473,0.071429,7.146,4,1,5,0
+"Grimes, Texas",48185,Confirmed (per 100k),34.626,1.484,0.042857,13.513,4,1,5,0
+"Custer, Oklahoma",40039,Confirmed (per 100k),34.479,1.970,0.057143,8.313,4,1,5,2
+"Oldham, Kentucky",21185,Confirmed (per 100k),34.432,1.497,0.043478,13.910,4,1,5,-1
+"Pendleton, Kentucky",21191,Confirmed (per 100k),34.270,1.958,0.057143,9.700,4,1,5,0
+"Catoosa, Georgia",13047,Confirmed (per 100k),34.034,1.480,0.043478,11.433,4,1,5,0
+"Lee, Arkansas",5077,Confirmed (per 100k),33.872,1.613,0.047619,12.820,4,1,5,0
+"Doña Ana, New Mexico",,Confirmed (per 100k),33.456,1.309,0.039139,13.583,4,1,5,2
+"Sangamon, Illinois",17167,Confirmed (per 100k),32.876,1.394,0.042411,13.477,4,1,5,1
+"Bay, Florida",12005,Confirmed (per 100k),32.626,1.472,0.045113,11.356,4,1,5,2
+"Monterey, California",6053,Confirmed (per 100k),32.484,1.777,0.054711,9.353,4,1,5,0
+"Hunt, Texas",48231,Confirmed (per 100k),32.456,1.159,0.035714,13.773,4,1,5,0
+"Hamlin, South Dakota",46057,Confirmed (per 100k),32.446,2.318,0.071429,7.273,4,1,5,-1
+"Kaufman, Texas",48257,Confirmed (per 100k),32.316,1.679,0.051948,10.393,4,1,5,0
+"Huron, Michigan",26063,Confirmed (per 100k),32.278,1.844,0.057143,9.180,4,1,5,-1
+"Clarke, Iowa",19039,Confirmed (per 100k),31.932,1.521,0.047619,10.740,4,1,5,5
+"Hawaii, Hawaii",15001,Confirmed (per 100k),31.760,1.631,0.051339,9.504,4,1,5,2
+"McLean, North Dakota",38055,Confirmed (per 100k),31.746,1.512,0.047619,12.820,4,1,5,0
+"Somerset, Maine",23025,Confirmed (per 100k),31.693,2.264,0.071429,7.619,4,1,5,-1
+"Pecos, Texas",48371,Confirmed (per 100k),31.600,1.806,0.057143,10.393,4,1,5,-2
+"Fresno, California",6019,Confirmed (per 100k),31.528,1.630,0.051701,10.959,4,1,5,0
+"Saline, Kansas",20169,Confirmed (per 100k),31.351,1.581,0.050420,10.740,4,1,5,0
+"Madison, Nebraska",31119,Confirmed (per 100k),31.340,1.221,0.038961,10.740,4,1,5,2
+"Levy, Florida",12075,Confirmed (per 100k),31.323,1.377,0.043956,10.913,4,1,5,0
+"Perry, Indiana",18123,Confirmed (per 100k),31.301,1.491,0.047619,9.353,4,1,5,2
+"Guernsey, Ohio",39059,Confirmed (per 100k),30.868,1.837,0.059524,8.521,4,1,5,0
+"Sandusky, Ohio",39143,Confirmed (per 100k),30.760,1.709,0.055556,9.849,4,1,5,-1
+"Douglas, Nevada",32005,Confirmed (per 100k),30.672,1.461,0.047619,11.988,4,1,5,1
+"Fayette, Iowa",19065,Confirmed (per 100k),30.534,1.454,0.047619,12.820,4,1,5,0
+"Powhatan, Virginia",51145,Confirmed (per 100k),30.352,1.927,0.063492,7.446,4,1,5,-1
+"Hampshire, West Virginia",54027,Confirmed (per 100k),30.205,1.849,0.061224,9.816,4,1,5,-1
+"Emery, Utah",49015,Confirmed (per 100k),29.964,1.427,0.047619,10.740,4,1,5,5
+"Taylor, West Virginia",54091,Confirmed (per 100k),29.949,1.711,0.057143,10.047,4,1,5,0
+"Yuma, Colorado",8125,Confirmed (per 100k),29.943,1.426,0.047619,10.047,4,1,5,5
+"Preston, West Virginia",54077,Confirmed (per 100k),29.911,1.709,0.057143,7.793,4,1,5,5
+"Osceola, Michigan",26133,Confirmed (per 100k),29.838,1.218,0.040816,13.167,4,1,5,0
+"Mineral, West Virginia",54057,Confirmed (per 100k),29.775,2.127,0.071429,7.446,4,1,5,-1
+"Uinta, Wyoming",56041,Confirmed (per 100k),29.665,1.413,0.047619,11.433,4,1,5,0
+"Laurens, South Carolina",45059,Confirmed (per 100k),29.633,1.270,0.042857,13.282,4,1,5,0
+"Wayne, Kentucky",21231,Confirmed (per 100k),29.509,1.405,0.047619,12.473,4,1,5,0
+"Clare, Michigan",26035,Confirmed (per 100k),29.079,1.846,0.063492,7.099,4,1,5,-1
+"Massac, Illinois",17127,Confirmed (per 100k),29.044,2.075,0.071429,8.313,4,1,5,-1
+"Colbert, Alabama",1033,Confirmed (per 100k),28.964,1.810,0.062500,8.362,4,1,5,0
+"Barnes, North Dakota",38003,Confirmed (per 100k),28.805,1.372,0.047619,10.740,4,1,5,5
+"Leon, Texas",48289,Confirmed (per 100k),28.729,1.642,0.057143,9.353,4,1,5,0
+"Perry, Arkansas",5105,Confirmed (per 100k),28.694,1.366,0.047619,11.433,4,1,5,0
+"Woodford, Illinois",17203,Confirmed (per 100k),28.602,1.486,0.051948,12.473,4,1,5,0
+"Ogemaw, Michigan",26129,Confirmed (per 100k),28.576,1.361,0.047619,11.087,4,1,5,2
+"Logan, Ohio",39091,Confirmed (per 100k),28.464,1.877,0.065934,7.735,4,1,5,0
+"Monroe, Kentucky",21171,Confirmed (per 100k),28.169,1.341,0.047619,12.820,4,1,5,0
+"Monroe, Wisconsin",55081,Confirmed (per 100k),28.106,1.544,0.054945,10.324,4,1,5,0
+"Henry, Tennessee",47079,Confirmed (per 100k),27.825,1.325,0.047619,13.051,4,1,5,2
+"Tyler, Texas",48457,Confirmed (per 100k),27.685,1.318,0.047619,11.780,4,1,5,0
+"Posey, Indiana",18129,Confirmed (per 100k),27.530,1.124,0.040816,13.860,4,1,5,2
+"Henry, Missouri",29083,Confirmed (per 100k),27.493,1.309,0.047619,12.820,4,1,5,-1
+"Titus, Texas",48449,Confirmed (per 100k),27.481,1.309,0.047619,12.127,4,1,5,2
+"Polk, Texas",48373,Confirmed (per 100k),27.262,1.391,0.051020,11.711,4,1,5,0
+"Barton, Kansas",20009,Confirmed (per 100k),27.154,1.108,0.040816,12.127,4,1,5,0
+"Stephenson, Illinois",17177,Confirmed (per 100k),26.968,1.284,0.047619,11.607,4,1,5,2
+"Wayne, Georgia",13305,Confirmed (per 100k),26.732,1.432,0.053571,9.584,4,1,5,0
+"Lancaster, Nebraska",31109,Confirmed (per 100k),26.638,1.298,0.048739,9.999,4,1,5,2
+"Angelina, Texas",48005,Confirmed (per 100k),26.524,1.153,0.043478,13.612,4,1,5,0
+"Mohave, Arizona",4015,Confirmed (per 100k),26.393,1.616,0.061224,9.411,4,1,5,0
+"Calaveras, California",6009,Confirmed (per 100k),26.141,1.245,0.047619,12.127,4,1,5,2
+"Somerset, Pennsylvania",42111,Confirmed (per 100k),25.869,1.167,0.045113,11.665,4,1,5,1
+"Roanoke, Virginia",51161,Confirmed (per 100k),25.481,1.213,0.047619,11.347,4,1,5,0
+"Chickasaw, Iowa",19037,Confirmed (per 100k),25.140,1.197,0.047619,10.047,4,1,5,5
+"Johnson, Texas",48251,Confirmed (per 100k),25.026,1.300,0.051948,10.480,4,1,5,2
+"Menard, Illinois",17129,Confirmed (per 100k),24.598,1.171,0.047619,10.740,4,1,5,5
+"Bureau, Illinois",17011,Confirmed (per 100k),24.519,1.314,0.053571,10.971,4,1,5,0
+"Cherokee, South Carolina",45021,Confirmed (per 100k),24.433,1.247,0.051020,10.047,4,1,5,0
+"McCurtain, Oklahoma",40089,Confirmed (per 100k),24.366,1.740,0.071429,7.793,4,1,5,-1
+"Weakley, Tennessee",47183,Confirmed (per 100k),24.004,1.286,0.053571,9.816,4,1,5,2
+"Winnebago, Wisconsin",55139,Confirmed (per 100k),23.850,1.163,0.048780,11.136,4,1,5,2
+"Surry, North Carolina",37171,Confirmed (per 100k),23.682,1.393,0.058824,8.660,4,1,5,0
+"Washington, Florida",12133,Confirmed (per 100k),23.554,1.122,0.047619,12.473,4,1,5,0
+"Lake, South Dakota",46079,Confirmed (per 100k),23.443,1.116,0.047619,12.127,4,1,5,0
+"Sullivan, New Hampshire",33019,Confirmed (per 100k),23.177,1.324,0.057143,9.353,4,1,5,1
+"Hart, Georgia",13147,Confirmed (per 100k),22.896,1.090,0.047619,11.780,4,1,5,2
+"Boone, Iowa",19015,Confirmed (per 100k),22.871,1.089,0.047619,10.047,4,1,5,5
+"Lewis, Kentucky",21135,Confirmed (per 100k),22.599,1.076,0.047619,10.047,4,1,5,5
+"Erie, Pennsylvania",42049,Confirmed (per 100k),22.245,1.006,0.045238,11.762,4,1,5,2
+"Cochise, Arizona",4003,Confirmed (per 100k),22.236,1.021,0.045918,9.816,4,1,5,0
+"Tillamook, Oregon",41057,Confirmed (per 100k),22.193,1.057,0.047619,12.473,4,1,5,0
+"Caldwell, Missouri",29025,Confirmed (per 100k),22.173,1.584,0.071429,7.273,4,1,5,-1
+"Rockbridge, Virginia",51163,Confirmed (per 100k),22.150,1.266,0.057143,9.006,4,1,5,0
+"Greene, Mississippi",28041,Confirmed (per 100k),22.082,1.052,0.047619,12.820,4,1,5,-1
+"Whitley, Kentucky",21235,Confirmed (per 100k),22.060,1.576,0.071429,7.446,4,1,5,-2
+"Roane, West Virginia",54087,Confirmed (per 100k),21.917,1.044,0.047619,10.047,4,1,5,5
+"Hardy, West Virginia",54031,Confirmed (per 100k),21.777,1.037,0.047619,12.127,4,1,5,0
+"Fentress, Tennessee",47049,Confirmed (per 100k),21.595,1.542,0.071429,7.619,4,1,5,-1
+"Columbia, Arkansas",5027,Confirmed (per 100k),21.316,1.218,0.057143,9.006,4,1,5,2
+"Independence, Arkansas",5063,Confirmed (per 100k),21.150,1.133,0.053571,10.278,4,1,5,2
+"Douglas, Oregon",41019,Confirmed (per 100k),20.724,1.030,0.049689,12.040,4,1,5,0
+"Leslie, Kentucky",21131,Confirmed (per 100k),20.249,1.446,0.071429,7.966,4,1,5,-1
+"Bonneville, Idaho",16019,Confirmed (per 100k),20.158,1.440,0.071429,7.677,4,1,5,-1
+"Madison, Idaho",16065,Confirmed (per 100k),20.047,1.074,0.053571,10.509,4,1,5,0
+"Adams, Wisconsin",55001,Confirmed (per 100k),19.782,1.413,0.071429,7.966,4,1,5,-1
+"Taylor, Kentucky",21217,Confirmed (per 100k),19.403,1.109,0.057143,9.700,4,1,5,2
+"Cass, Nebraska",31025,Confirmed (per 100k),19.049,1.089,0.057143,7.619,4,1,5,5
+"Cherokee, Texas",48073,Confirmed (per 100k),18.995,1.085,0.057143,10.393,4,1,5,0
+"Garfield, Oklahoma",40047,Confirmed (per 100k),18.016,1.170,0.064935,7.827,4,1,5,1
+"Appanoose, Iowa",19007,Confirmed (per 100k),16.095,1.150,0.071429,7.273,4,1,5,-1
+"Rains, Texas",48379,Confirmed (per 100k),15.982,1.142,0.071429,7.966,4,1,5,-1
+"Hardin, Tennessee",47071,Confirmed (per 100k),15.593,1.114,0.071429,7.273,4,1,5,-1
+"Richland, Illinois",17159,Confirmed (per 100k),12.892,0.921,0.071429,6.579,3,2,5,0
+"Le Flore, Oklahoma",40079,Confirmed (per 100k),12.035,0.860,0.071429,6.810,3,2,5,1
+"Scioto, Ohio",39145,Confirmed (per 100k),11.950,0.948,0.079365,4.913,3,2,5,1
+"Rice, Minnesota",27131,Confirmed (per 100k),11.945,0.853,0.071429,6.405,3,2,5,1
+"Marshall, Oklahoma",40095,Confirmed (per 100k),11.813,0.844,0.071429,5.191,3,2,5,5
+"Seward, Nebraska",31159,Confirmed (per 100k),11.571,0.827,0.071429,5.191,3,2,5,5
+"Stearns, Minnesota",27145,Confirmed (per 100k),10.554,0.798,0.075630,5.345,3,2,5,0
+"McDonough, Illinois",17109,Confirmed (per 100k),10.107,0.963,0.095238,5.885,3,2,5,-3
+"Yell, Arkansas",5149,Confirmed (per 100k),9.372,0.669,0.071429,6.579,3,2,5,0
+"Lee, Iowa",19111,Confirmed (per 100k),8.913,0.849,0.095238,5.885,3,2,5,0
+"Rowan, Kentucky",21205,Confirmed (per 100k),8.177,0.584,0.071429,6.579,3,2,5,-3
+"Rhea, Tennessee",47143,Confirmed (per 100k),6.030,0.431,0.071429,5.191,3,2,5,5
+"Douglas, Minnesota",27041,Confirmed (per 100k),5.244,0.375,0.071429,5.191,3,2,5,5
+"Summit, Utah",49043,Confirmed (per 100k),785.384,4.746,0.006042,107.140,4,0,4,-1
+"Wasatch, Utah",49051,Confirmed (per 100k),346.132,3.352,0.009685,63.336,4,0,4,0
+"Berkshire, Massachusetts",25003,Confirmed (per 100k),309.739,4.230,0.013658,48.772,4,0,4,-1
+"Allen, Louisiana",22003,Confirmed (per 100k),308.269,3.345,0.010850,61.689,4,0,4,-1
+"Kershaw, South Carolina",45055,Confirmed (per 100k),302.024,3.864,0.012793,50.714,4,0,4,0
+"Sumner, Tennessee",47165,Confirmed (per 100k),270.803,4.780,0.017650,36.053,4,0,4,-1
+"Teton, Wyoming",56039,Confirmed (per 100k),264.235,3.653,0.013825,47.595,4,0,4,-1
+"Snohomish, Washington",53061,Confirmed (per 100k),263.112,4.796,0.018229,35.236,4,0,4,0
+"Pierce, Georgia",13229,Confirmed (per 100k),262.009,4.404,0.016807,38.700,4,0,4,-1
+"Catahoula, Louisiana",22025,Confirmed (per 100k),252.791,4.514,0.017857,35.927,4,0,4,-1
+"Bartow, Georgia",13015,Confirmed (per 100k),236.685,4.773,0.020168,31.498,4,0,4,0
+"Chittenden, Vermont",50007,Confirmed (per 100k),235.080,1.832,0.007792,86.791,4,0,4,0
+"Coconino, Arizona",4005,Confirmed (per 100k),234.882,4.481,0.019076,32.215,4,0,4,0
+"Jennings, Indiana",18079,Confirmed (per 100k),230.755,4.121,0.017857,36.649,4,0,4,-1
+"King, Washington",53033,Confirmed (per 100k),229.672,4.743,0.020653,30.482,4,0,4,0
+"Perry, Missouri",29157,Confirmed (per 100k),214.256,4.479,0.020906,31.537,4,0,4,-1
+"Tippah, Mississippi",28139,Confirmed (per 100k),213.491,2.596,0.012158,54.585,4,0,4,0
+"Mecklenburg, Virginia",51117,Confirmed (per 100k),212.509,4.671,0.021978,28.972,4,0,4,-1
+"Adams, Washington",53001,Confirmed (per 100k),205.174,3.574,0.017422,37.914,4,0,4,-1
+"Hillsdale, Michigan",26059,Confirmed (per 100k),197.347,4.699,0.023810,26.685,4,0,4,0
+"Island, Washington",53029,Confirmed (per 100k),194.971,1.342,0.006885,98.686,4,0,4,0
+"Hancock, Indiana",18059,Confirmed (per 100k),193.174,4.569,0.023652,24.799,4,0,4,0
+"Caldwell, Louisiana",22021,Confirmed (per 100k),191.571,1.440,0.007519,89.762,4,0,4,0
+"Quitman, Mississippi",28119,Confirmed (per 100k),191.402,2.103,0.010989,61.343,4,0,4,0
+"Jefferson, Arkansas",5069,Confirmed (per 100k),188.555,4.917,0.026077,22.706,4,0,4,0
+"Franklin, Vermont",50011,Confirmed (per 100k),188.251,2.892,0.015361,41.657,4,0,4,-2
+"Columbia, New York",36021,Confirmed (per 100k),186.677,4.805,0.025740,23.877,4,0,4,0
+"Grundy, Tennessee",47061,Confirmed (per 100k),186.192,2.128,0.011429,57.877,4,0,4,-1
+"Granville, North Carolina",37077,Confirmed (per 100k),185.299,4.963,0.026786,23.351,4,0,4,0
+"James City, Virginia",51095,Confirmed (per 100k),184.258,2.800,0.015198,43.044,4,0,4,0
+"Perry, Mississippi",28111,Confirmed (per 100k),183.747,4.773,0.025974,24.605,4,0,4,-1
+"Acadia, Louisiana",22001,Confirmed (per 100k),183.738,2.533,0.013784,46.787,4,0,4,0
+"Lawrence, Indiana",18093,Confirmed (per 100k),178.532,3.464,0.019400,32.608,4,0,4,-1
+"Hamilton, Indiana",18057,Confirmed (per 100k),176.917,4.438,0.025084,24.123,4,0,4,-1
+"Webster, Mississippi",28155,Confirmed (per 100k),175.457,4.423,0.025210,24.605,4,0,4,-1
+"Sumter, South Carolina",45085,Confirmed (per 100k),173.349,4.417,0.025483,24.248,4,0,4,0
+"Lafayette, Louisiana",22055,Confirmed (per 100k),173.084,3.800,0.021952,28.594,4,0,4,0
+"Avoyelles, Louisiana",22009,Confirmed (per 100k),171.881,2.847,0.016563,39.942,4,0,4,0
+"Pawnee, Oklahoma",40117,Confirmed (per 100k),170.982,1.745,0.010204,66.542,4,0,4,0
+"Morgan, Indiana",18109,Confirmed (per 100k),168.821,3.040,0.018007,34.679,4,0,4,0
+"Bartholomew, Indiana",18005,Confirmed (per 100k),167.106,4.433,0.026531,22.206,4,0,4,-2
+"Addison, Vermont",50001,Confirmed (per 100k),165.865,2.331,0.014052,46.209,4,0,4,0
+"St. Landry, Louisiana",22097,Confirmed (per 100k),165.603,3.653,0.022059,27.675,4,0,4,0
+"Chenango, New York",36017,Confirmed (per 100k),165.230,4.539,0.027473,23.126,4,0,4,0
+"Madison, New York",36053,Confirmed (per 100k),164.926,2.416,0.014652,45.342,4,0,4,0
+"Jefferson, Colorado",8059,Confirmed (per 100k),164.184,4.755,0.028960,20.900,4,0,4,-1
+"Rapides, Louisiana",22079,Confirmed (per 100k),161.977,4.958,0.030612,19.999,4,0,4,0
+"Calcasieu, Louisiana",22019,Confirmed (per 100k),159.264,4.494,0.028219,22.006,4,0,4,-1
+"Marengo, Alabama",1091,Confirmed (per 100k),159.042,3.787,0.023810,22.803,4,0,4,-2
+"St. Clair, Michigan",26147,Confirmed (per 100k),158.363,4.040,0.025510,24.158,4,0,4,-1
+"Choctaw, Mississippi",28019,Confirmed (per 100k),158.343,3.480,0.021978,26.685,4,0,4,0
+"Lyon, Kentucky",21143,Confirmed (per 100k),158.343,1.740,0.010989,61.343,4,0,4,-2
+"Charles City, Virginia",51036,Confirmed (per 100k),157.978,4.103,0.025974,23.219,4,0,4,-1
+"Monroe, Michigan",26115,Confirmed (per 100k),156.811,4.746,0.030266,20.363,4,0,4,0
+"Monroe, Illinois",17133,Confirmed (per 100k),155.903,2.887,0.018519,34.211,4,0,4,0
+"Benton, Washington",53005,Confirmed (per 100k),153.628,4.473,0.029117,21.182,4,0,4,0
+"Morehouse, Louisiana",22067,Confirmed (per 100k),152.770,3.446,0.022556,26.916,4,0,4,0
+"Jenkins, Georgia",13165,Confirmed (per 100k),149.839,4.940,0.032967,18.366,4,0,4,-2
+"Williamson, Tennessee",47187,Confirmed (per 100k),149.741,1.798,0.012005,52.609,4,0,4,0
+"Windham, Vermont",50025,Confirmed (per 100k),149.211,3.045,0.020408,31.460,4,0,4,-1
+"Brooks, Georgia",13027,Confirmed (per 100k),148.800,4.621,0.031056,20.446,4,0,4,-1
+"Grant, Washington",53025,Confirmed (per 100k),146.317,4.239,0.028971,21.378,4,0,4,0
+"Wilkin, Minnesota",27167,Confirmed (per 100k),144.998,4.603,0.031746,17.673,4,0,4,0
+"Clay, Alabama",1027,Confirmed (per 100k),143.559,4.318,0.030075,17.846,4,0,4,-2
+"Broomfield, Colorado",8014,Confirmed (per 100k),143.334,4.055,0.028289,21.936,4,0,4,-2
+"Monroe, New York",36055,Confirmed (per 100k),142.093,4.507,0.031716,18.917,4,0,4,0
+"Onondaga, New York",36067,Confirmed (per 100k),140.274,4.436,0.031623,19.195,4,0,4,0
+"Cedar, Iowa",19031,Confirmed (per 100k),139.582,4.602,0.032967,18.251,4,0,4,0
+"Jewell, Kansas",20089,Confirmed (per 100k),138.937,4.962,0.035714,14.900,4,0,4,-1
+"Osage, Oklahoma",40113,Confirmed (per 100k),138.407,4.259,0.030769,20.594,4,0,4,0
+"San Francisco, California",6075,Confirmed (per 100k),137.939,4.618,0.033482,17.474,4,0,4,0
+"Los Angeles, California",,Confirmed (per 100k),137.692,4.905,0.035624,15.057,4,0,4,-2
+"Choctaw, Alabama",1023,Confirmed (per 100k),135.039,4.539,0.033613,14.900,4,0,4,-2
+"Tipton, Tennessee",47167,Confirmed (per 100k),134.742,1.623,0.012048,36.488,4,0,4,0
+"Galveston, Texas",48167,Confirmed (per 100k),132.987,3.967,0.029827,20.329,4,0,4,0
+"Clark, Nevada",32003,Confirmed (per 100k),132.262,3.882,0.029353,20.616,4,0,4,0
+"Yalobusha, Mississippi",28161,Confirmed (per 100k),132.144,1.180,0.008929,68.968,4,0,4,0
+"Madison, Mississippi",28089,Confirmed (per 100k),131.737,4.302,0.032653,17.565,4,0,4,0
+"Pierce, Washington",53053,Confirmed (per 100k),131.274,3.347,0.025493,23.438,4,0,4,0
+"Clinton, Michigan",26037,Confirmed (per 100k),130.661,2.154,0.016484,40.202,4,0,4,0
+"Hardin, Texas",48199,Confirmed (per 100k),130.204,3.472,0.026667,23.021,4,0,4,-2
+"Gage, Nebraska",31067,Confirmed (per 100k),130.154,1.992,0.015306,42.397,4,0,4,0
+"Fremont, Wyoming",56013,Confirmed (per 100k),129.900,3.275,0.025210,23.450,4,0,4,0
+"Nowata, Oklahoma",40105,Confirmed (per 100k),129.019,4.253,0.032967,17.673,4,0,4,0
+"Cumberland, Maine",23005,Confirmed (per 100k),128.812,4.165,0.032331,19.148,4,0,4,0
+"Evangeline, Louisiana",22039,Confirmed (per 100k),128.762,2.994,0.023256,27.972,4,0,4,0
+"DeSoto, Mississippi",28033,Confirmed (per 100k),128.687,4.866,0.037815,15.527,4,0,4,0
+"Floyd, Georgia",13115,Confirmed (per 100k),127.921,2.030,0.015873,41.043,4,0,4,0
+"Wilson, Tennessee",47189,Confirmed (per 100k),127.889,4.543,0.035521,16.241,4,0,4,0
+"Cuyahoga, Ohio",39035,Confirmed (per 100k),127.685,3.632,0.028445,20.291,4,0,4,0
+"Rush, Indiana",18139,Confirmed (per 100k),126.651,4.308,0.034014,17.396,4,0,4,-2
+"Oconee, Georgia",13219,Confirmed (per 100k),126.614,4.256,0.033613,17.846,4,0,4,0
+"Orange, North Carolina",37135,Confirmed (per 100k),125.946,3.560,0.028266,21.795,4,0,4,-2
+"Trumbull, Ohio",39155,Confirmed (per 100k),125.774,4.979,0.039587,14.156,4,0,4,-2
+"Shelby, Alabama",1117,Confirmed (per 100k),125.401,3.675,0.029304,20.916,4,0,4,0
+"Fayette, Georgia",13113,Confirmed (per 100k),124.977,4.994,0.039960,14.744,4,0,4,-2
+"Olmsted, Minnesota",27109,Confirmed (per 100k),124.453,4.603,0.036983,15.158,4,0,4,0
+"Ada, Idaho",16001,Confirmed (per 100k),124.173,2.403,0.019350,33.257,4,0,4,0
+"Stark, North Dakota",38089,Confirmed (per 100k),123.853,3.176,0.025641,24.704,4,0,4,0
+"Cibola, New Mexico",35006,Confirmed (per 100k),123.711,4.284,0.034632,17.326,4,0,4,0
+"Calvert, Maryland",24009,Confirmed (per 100k),123.210,3.551,0.028822,21.621,4,0,4,-2
+"Washington, Georgia",13303,Confirmed (per 100k),122.705,2.104,0.017143,37.544,4,0,4,0
+"Miami, Ohio",39109,Confirmed (per 100k),122.445,1.602,0.013086,50.599,4,0,4,0
+"Collier, Florida",12021,Confirmed (per 100k),122.109,3.786,0.031003,19.576,4,0,4,0
+"Oneida, New York",36065,Confirmed (per 100k),122.009,4.998,0.040963,14.675,4,0,4,-2
+"Niagara, New York",36063,Confirmed (per 100k),121.846,3.550,0.029132,20.673,4,0,4,-1
+"Tuscola, Michigan",26157,Confirmed (per 100k),120.586,4.375,0.036281,15.290,4,0,4,-1
+"Tate, Mississippi",28137,Confirmed (per 100k),120.052,3.531,0.029412,18.366,4,0,4,0
+"San Mateo, California",6081,Confirmed (per 100k),120.015,3.466,0.028882,19.809,4,0,4,0
+"Clinton, Illinois",17027,Confirmed (per 100k),119.802,3.043,0.025397,24.518,4,0,4,0
+"Putnam, Tennessee",47141,Confirmed (per 100k),119.634,1.424,0.011905,55.624,4,0,4,0
+"Phillips, Colorado",8095,Confirmed (per 100k),117.233,3.350,0.028571,20.446,4,0,4,4
+"Beaufort, South Carolina",45013,Confirmed (per 100k),117.113,2.305,0.019683,32.342,4,0,4,0
+"Garfield, Colorado",8045,Confirmed (per 100k),116.548,3.568,0.030612,19.845,4,0,4,0
+"Sumter, Florida",12119,Confirmed (per 100k),115.541,3.992,0.034547,15.893,4,0,4,0
+"Houston, Georgia",13153,Confirmed (per 100k),115.290,4.615,0.040031,14.016,4,0,4,-1
+"Cleveland, Oklahoma",40027,Confirmed (per 100k),114.079,2.465,0.021605,28.708,4,0,4,0
+"St. Charles, Missouri",29183,Confirmed (per 100k),113.924,2.736,0.024017,25.640,4,0,4,0
+"Simpson, Kentucky",21213,Confirmed (per 100k),113.073,3.077,0.027211,22.526,4,0,4,-2
+"Christian, Kentucky",21047,Confirmed (per 100k),112.119,3.447,0.030741,20.446,4,0,4,-2
+"Fairfield, South Carolina",45039,Confirmed (per 100k),111.872,2.557,0.022857,29.284,4,0,4,0
+"Fayette, Tennessee",47047,Confirmed (per 100k),111.832,4.515,0.040373,14.580,4,0,4,-1
+"Darke, Ohio",39037,Confirmed (per 100k),111.518,3.074,0.027569,23.093,4,0,4,0
+"Hancock, Mississippi",28045,Confirmed (per 100k),111.270,3.599,0.032345,19.117,4,0,4,0
+"Delaware, New York",36025,Confirmed (per 100k),111.023,3.237,0.029155,22.248,4,0,4,0
+"Mecklenburg, North Carolina",37119,Confirmed (per 100k),110.865,2.946,0.026575,22.498,4,0,4,0
+"Portage, Ohio",39133,Confirmed (per 100k),110.792,3.429,0.030952,19.557,4,0,4,0
+"Washington, Indiana",18175,Confirmed (per 100k),110.572,2.038,0.018433,32.923,4,0,4,0
+"Saratoga, New York",36091,Confirmed (per 100k),110.501,3.418,0.030934,19.992,4,0,4,0
+"Marshall, Mississippi",28093,Confirmed (per 100k),110.500,2.429,0.021978,29.111,4,0,4,0
+"Wyoming, New York",36121,Confirmed (per 100k),110.389,4.659,0.042208,14.527,4,0,4,-2
+"Osceola, Florida",12097,Confirmed (per 100k),109.115,3.270,0.029965,20.857,4,0,4,0
+"Lincoln, Louisiana",22061,Confirmed (per 100k),109.110,3.056,0.028011,21.208,4,0,4,-1
+"Belmont, Ohio",39013,Confirmed (per 100k),108.945,3.838,0.035225,16.055,4,0,4,-1
+"Garland, Arkansas",5051,Confirmed (per 100k),108.667,3.737,0.034392,19.166,4,0,4,-2
+"Boulder, Colorado",8013,Confirmed (per 100k),107.911,3.854,0.035714,16.720,4,0,4,0
+"Loudoun, Virginia",51107,Confirmed (per 100k),107.850,4.007,0.037156,15.402,4,0,4,0
+"Sussex, Virginia",51183,Confirmed (per 100k),107.537,3.841,0.035714,15.593,4,0,4,0
+"Ingham, Michigan",26065,Confirmed (per 100k),107.385,2.834,0.026388,23.255,4,0,4,0
+"Kendall, Illinois",17093,Confirmed (per 100k),106.985,3.323,0.031056,19.429,4,0,4,0
+"Jefferson, West Virginia",54037,Confirmed (per 100k),106.744,2.750,0.025761,24.353,4,0,4,0
+"Marion, Oregon",41047,Confirmed (per 100k),106.665,3.368,0.031575,18.096,4,0,4,0
+"Washington, Nebraska",31177,Confirmed (per 100k),106.132,1.378,0.012987,51.639,4,0,4,0
+"Livingston, Louisiana",22063,Confirmed (per 100k),105.832,2.841,0.026846,23.268,4,0,4,0
+"Harris, Texas",48201,Confirmed (per 100k),105.594,3.619,0.034272,17.061,4,0,4,0
+"Douglas, Colorado",8035,Confirmed (per 100k),104.797,2.848,0.027174,22.308,4,0,4,0
+"Jefferson, Alabama",1073,Confirmed (per 100k),104.468,1.844,0.017650,36.308,4,0,4,0
+"Bennington, Vermont",50003,Confirmed (per 100k),104.314,2.417,0.023166,26.916,4,0,4,1
+"St. Lawrence, New York",36089,Confirmed (per 100k),102.098,2.254,0.022078,26.766,4,0,4,0
+"Labette, Kansas",20099,Confirmed (per 100k),101.947,1.456,0.014286,47.133,4,0,4,-2
+"Franklin, North Carolina",37069,Confirmed (per 100k),101.887,1.025,0.010060,65.225,4,0,4,-2
+"Lee, Florida",12071,Confirmed (per 100k),101.872,2.818,0.027662,21.960,4,0,4,0
+"Clarke, Alabama",1025,Confirmed (per 100k),101.600,3.024,0.029762,21.416,4,0,4,-2
+"El Paso, Colorado",8041,Confirmed (per 100k),101.471,2.340,0.023060,27.501,4,0,4,0
+"Webb, Texas",48479,Confirmed (per 100k),101.210,3.924,0.038776,14.508,4,0,4,-1
+"Victoria, Texas",48469,Confirmed (per 100k),100.995,2.482,0.024578,26.381,4,0,4,0
+"Ouray, Colorado",8091,Confirmed (per 100k),100.969,2.885,0.028571,20.446,4,0,4,4
+"Owen, Indiana",18119,Confirmed (per 100k),100.966,1.374,0.013605,48.519,4,0,4,0
+"Yankton, South Dakota",46135,Confirmed (per 100k),100.815,1.879,0.018634,36.158,4,0,4,0
+"Cumberland, Virginia",51049,Confirmed (per 100k),100.685,2.877,0.028571,20.446,4,0,4,4
+"Santa Clara, California",,Confirmed (per 100k),99.696,2.253,0.022596,28.308,4,0,4,0
+"Harrison, Iowa",19085,Confirmed (per 100k),99.651,1.017,0.010204,58.570,4,0,4,4
+"Escambia, Florida",12033,Confirmed (per 100k),98.958,3.815,0.038549,15.373,4,0,4,-1
+"Scott, Iowa",19163,Confirmed (per 100k),98.877,3.635,0.036759,15.247,4,0,4,-1
+"Rutherford, Tennessee",47149,Confirmed (per 100k),98.710,2.837,0.028746,19.606,4,0,4,0
+"Calhoun, Texas",48057,Confirmed (per 100k),98.638,4.026,0.040816,15.247,4,0,4,-1
+"Monroe, Florida",12087,Confirmed (per 100k),98.346,2.694,0.027397,23.120,4,0,4,0
+"Washington, Alabama",1129,Confirmed (per 100k),98.003,3.500,0.035714,15.940,4,0,4,0
+"Etowah, Alabama",1055,Confirmed (per 100k),97.782,3.213,0.032857,17.643,4,0,4,0
+"Chelan, Washington",53007,Confirmed (per 100k),97.150,3.331,0.034286,16.826,4,0,4,-1
+"Marion, Tennessee",47115,Confirmed (per 100k),96.862,1.483,0.015306,43.090,4,0,4,0
+"Chilton, Alabama",1021,Confirmed (per 100k),96.786,3.537,0.036545,15.719,4,0,4,0
+"Forest, Pennsylvania",42053,Confirmed (per 100k),96.592,3.943,0.040816,14.553,4,0,4,-1
+"Clay, Minnesota",27027,Confirmed (per 100k),96.540,3.337,0.034562,14.207,4,0,4,-1
+"Martin, Florida",12085,Confirmed (per 100k),96.273,2.573,0.026728,23.314,4,0,4,0
+"Beauregard, Louisiana",22011,Confirmed (per 100k),96.008,3.048,0.031746,19.059,4,0,4,0
+"Cumberland, Tennessee",47035,Confirmed (per 100k),95.836,3.541,0.036946,16.564,4,0,4,0
+"Jones, North Carolina",37103,Confirmed (per 100k),95.552,3.033,0.031746,20.099,4,0,4,-3
+"Dallas, Texas",48113,Confirmed (per 100k),95.313,3.821,0.040093,14.063,4,0,4,-1
+"Fayette, Indiana",18041,Confirmed (per 100k),95.230,1.237,0.012987,49.559,4,0,4,1
+"Franklin, Missouri",29071,Confirmed (per 100k),95.223,2.061,0.021645,28.810,4,0,4,0
+"Creek, Oklahoma",40037,Confirmed (per 100k),95.076,2.597,0.027311,22.259,4,0,4,0
+"Charleston, South Carolina",45019,Confirmed (per 100k),95.040,1.771,0.018634,35.084,4,0,4,0
+"Lincoln, Missouri",29113,Confirmed (per 100k),94.894,2.179,0.022959,17.673,4,0,4,0
+"Kalkaska, Michigan",26079,Confirmed (per 100k),94.245,3.168,0.033613,19.059,4,0,4,-2
+"Duval, Florida",12031,Confirmed (per 100k),93.552,2.774,0.029656,19.909,4,0,4,0
+"Berkeley, West Virginia",54003,Confirmed (per 100k),93.143,2.038,0.021879,28.805,4,0,4,0
+"Brown, Indiana",18013,Confirmed (per 100k),92.764,1.893,0.020408,32.577,4,0,4,-1
+"La Plata, Colorado",8067,Confirmed (per 100k),92.492,2.033,0.021978,28.071,4,0,4,0
+"Johnson, Missouri",29101,Confirmed (per 100k),92.486,1.850,0.020000,31.735,4,0,4,0
+"Moore, North Carolina",37125,Confirmed (per 100k),92.189,1.274,0.013825,47.403,4,0,4,0
+"Lexington, South Carolina",45063,Confirmed (per 100k),91.715,2.917,0.031804,19.196,4,0,4,-1
+"Rankin, Mississippi",28121,Confirmed (per 100k),90.809,3.128,0.034448,16.592,4,0,4,-1
+"Frederick, Virginia",51069,Confirmed (per 100k),90.692,2.559,0.028219,22.222,4,0,4,0
+"Lamoille, Vermont",50015,Confirmed (per 100k),90.687,1.127,0.012422,53.718,4,0,4,0
+"Clinton, Iowa",19045,Confirmed (per 100k),90.461,3.692,0.040816,15.016,4,0,4,-1
+"Laurens, Georgia",13175,Confirmed (per 100k),90.439,3.305,0.036545,16.350,4,0,4,-1
+"Hamilton, Ohio",39061,Confirmed (per 100k),89.911,3.198,0.035569,16.393,4,0,4,0
+"Benton, Iowa",19011,Confirmed (per 100k),89.686,3.342,0.037267,16.402,4,0,4,0
+"Ozaukee, Wisconsin",55089,Confirmed (per 100k),89.665,1.121,0.012500,52.629,4,0,4,0
+"Winchester, Virginia",51840,Confirmed (per 100k),89.038,3.053,0.034286,17.442,4,0,4,0
+"Clarke, Georgia",13059,Confirmed (per 100k),88.833,2.783,0.031328,19.059,4,0,4,0
+"Bryan, Georgia",13029,Confirmed (per 100k),88.324,1.442,0.016327,37.602,4,0,4,1
+"Union, South Carolina",45087,Confirmed (per 100k),87.861,1.046,0.011905,55.451,4,0,4,1
+"Louisa, Virginia",51109,Confirmed (per 100k),87.787,3.040,0.034632,18.020,4,0,4,-1
+"Chemung, New York",36015,Confirmed (per 100k),87.471,2.225,0.025440,25.192,4,0,4,0
+"Orange, Florida",12095,Confirmed (per 100k),87.265,2.553,0.029253,21.323,4,0,4,0
+"Howard, Indiana",18067,Confirmed (per 100k),87.226,3.461,0.039683,14.137,4,0,4,-1
+"York, Maine",23031,Confirmed (per 100k),87.170,2.270,0.026046,23.702,4,0,4,0
+"McLean, Kentucky",21149,Confirmed (per 100k),86.890,1.552,0.017857,34.310,4,0,4,0
+"Charlottesville, Virginia",51540,Confirmed (per 100k),86.743,3.022,0.034843,18.158,4,0,4,-1
+"Oktibbeha, Mississippi",28105,Confirmed (per 100k),86.716,1.729,0.019934,32.577,4,0,4,0
+"Caldwell, Kentucky",21033,Confirmed (per 100k),86.295,1.121,0.012987,50.252,4,0,4,-2
+"Dodge, Minnesota",27039,Confirmed (per 100k),85.985,1.365,0.015873,39.855,4,0,4,0
+"Butler, Pennsylvania",42019,Confirmed (per 100k),85.705,2.129,0.024845,26.091,4,0,4,0
+"Allegheny, Pennsylvania",42003,Confirmed (per 100k),85.688,2.091,0.024404,25.310,4,0,4,0
+"Williamsburg, South Carolina",45089,Confirmed (per 100k),85.616,2.823,0.032967,14.322,4,0,4,0
+"San Juan, Washington",53055,Confirmed (per 100k),85.315,1.625,0.019048,32.577,4,0,4,1
+"Harrison, Kentucky",21097,Confirmed (per 100k),84.719,1.513,0.017857,36.736,4,0,4,0
+"Polk, Georgia",13233,Confirmed (per 100k),84.481,2.682,0.031746,16.200,4,0,4,0
+"Bracken, Kentucky",21023,Confirmed (per 100k),84.307,1.721,0.020408,31.537,4,0,4,-3
+"Brazoria, Texas",48039,Confirmed (per 100k),84.165,3.015,0.035828,16.401,4,0,4,-1
+"Torrance, New Mexico",35057,Confirmed (per 100k),84.083,1.848,0.021978,27.378,4,0,4,-1
+"Bernalillo, New Mexico",35001,Confirmed (per 100k),83.343,2.146,0.025745,22.920,4,0,4,0
+"Otsego, New York",36077,Confirmed (per 100k),82.363,1.201,0.014577,43.182,4,0,4,1
+"Westmoreland, Pennsylvania",42129,Confirmed (per 100k),81.972,2.498,0.030470,19.525,4,0,4,0
+"Wharton, Texas",48481,Confirmed (per 100k),81.817,2.750,0.033613,18.280,4,0,4,-1
+"Eaton, Michigan",26045,Confirmed (per 100k),81.619,1.814,0.022222,28.071,4,0,4,0
+"Scotland, Missouri",29199,Confirmed (per 100k),81.599,2.914,0.035714,16.980,4,0,4,-2
+"Canyon, Idaho",16027,Confirmed (per 100k),81.358,2.548,0.031322,20.260,4,0,4,0
+"Lancaster, South Carolina",45057,Confirmed (per 100k),80.602,2.041,0.025316,24.259,4,0,4,0
+"Pasquotank, North Carolina",37139,Confirmed (per 100k),80.354,1.794,0.022321,16.425,4,0,4,-1
+"Elmore, Idaho",16039,Confirmed (per 100k),79.968,3.116,0.038961,14.553,4,0,4,0
+"Herkimer, New York",36043,Confirmed (per 100k),79.910,2.796,0.034985,17.095,4,0,4,0
+"Chambers, Texas",48071,Confirmed (per 100k),79.841,1.955,0.024490,25.760,4,0,4,-1
+"Marion, West Virginia",54049,Confirmed (per 100k),78.471,2.548,0.032468,19.059,4,0,4,0
+"Randolph, Arkansas",5121,Confirmed (per 100k),77.960,2.387,0.030612,14.900,4,0,4,-1
+"New Kent, Virginia",51127,Confirmed (per 100k),77.952,2.475,0.031746,18.886,4,0,4,0
+"Putnam, Florida",12107,Confirmed (per 100k),77.830,2.492,0.032020,17.993,4,0,4,-1
+"Gray, Texas",48179,Confirmed (per 100k),77.675,2.611,0.033613,17.846,4,0,4,0
+"Chester, South Carolina",45023,Confirmed (per 100k),77.534,2.215,0.028571,21.000,4,0,4,0
+"Jackson, Illinois",17077,Confirmed (per 100k),77.533,2.769,0.035714,16.917,4,0,4,-1
+"Burke, North Carolina",37023,Confirmed (per 100k),77.361,1.105,0.014286,43.816,4,0,4,1
+"Medina, Ohio",39103,Confirmed (per 100k),77.331,1.987,0.025694,23.856,4,0,4,0
+"Buena Vista, Virginia",51530,Confirmed (per 100k),77.184,2.205,0.028571,21.139,4,0,4,0
+"Washakie, Wyoming",56043,Confirmed (per 100k),76.874,1.830,0.023810,26.685,4,0,4,0
+"Monroe, Indiana",18105,Confirmed (per 100k),76.803,2.984,0.038847,15.526,4,0,4,-1
+"Santa Rosa, Florida",12113,Confirmed (per 100k),75.958,2.248,0.029592,20.231,4,0,4,0
+"Logan, Colorado",8075,Confirmed (per 100k),75.862,2.550,0.033613,17.500,4,0,4,0
+"Marin, California",6041,Confirmed (per 100k),75.340,1.932,0.025641,24.447,4,0,4,0
+"Woodford, Kentucky",21239,Confirmed (per 100k),74.811,1.603,0.021429,29.920,4,0,4,-2
+"Jasper, Indiana",18073,Confirmed (per 100k),74.489,2.128,0.028571,19.059,4,0,4,0
+"Isabella, Michigan",26073,Confirmed (per 100k),74.422,2.658,0.035714,16.713,4,0,4,0
+"Whiteside, Illinois",17195,Confirmed (per 100k),74.309,2.589,0.034843,14.969,4,0,4,-1
+"Brazos, Texas",48041,Confirmed (per 100k),74.167,2.181,0.029412,21.199,4,0,4,0
+"Rutland, Vermont",50021,Confirmed (per 100k),73.895,1.718,0.023256,27.774,4,0,4,0
+"Haralson, Georgia",13143,Confirmed (per 100k),73.845,1.439,0.019481,30.844,4,0,4,0
+"Charlotte, Florida",12015,Confirmed (per 100k),73.580,1.891,0.025694,24.605,4,0,4,-1
+"Laramie, Wyoming",56021,Confirmed (per 100k),73.367,1.866,0.025440,24.338,4,0,4,0
+"Tuscaloosa, Alabama",1125,Confirmed (per 100k),73.082,2.252,0.030812,19.795,4,0,4,-1
+"Oklahoma, Oklahoma",40109,Confirmed (per 100k),71.981,2.239,0.031110,18.854,4,0,4,0
+"Turner, South Dakota",46125,Confirmed (per 100k),71.565,1.704,0.023810,24.605,4,0,4,4
+"Alameda, California",6001,Confirmed (per 100k),71.380,2.727,0.038199,15.052,4,0,4,0
+"Klickitat, Washington",53039,Confirmed (per 100k),71.349,1.274,0.017857,36.736,4,0,4,0
+"Camden, Missouri",29029,Confirmed (per 100k),71.267,1.851,0.025974,23.334,4,0,4,0
+"Montgomery, New York",36057,Confirmed (per 100k),71.108,1.741,0.024490,25.876,4,0,4,0
+"Hopewell, Virginia",51670,Confirmed (per 100k),71.020,1.268,0.017857,35.003,4,0,4,4
+"Calhoun, Alabama",1015,Confirmed (per 100k),70.419,1.509,0.021429,25.472,4,0,4,0
+"Fayette, Illinois",17051,Confirmed (per 100k),70.304,2.678,0.038095,14.727,4,0,4,-1
+"Lawrence, Pennsylvania",42073,Confirmed (per 100k),70.166,1.838,0.026190,24.290,4,0,4,0
+"Morton, North Dakota",38059,Confirmed (per 100k),70.144,1.366,0.019481,33.616,4,0,4,1
+"San Benito, California",,Confirmed (per 100k),70.055,2.047,0.029221,21.678,4,0,4,0
+"Danville, Virginia",51590,Confirmed (per 100k),69.923,2.497,0.035714,15.494,4,0,4,1
+"Harrison, Mississippi",28047,Confirmed (per 100k),69.685,2.334,0.033498,18.427,4,0,4,0
+"Hockley, Texas",48219,Confirmed (per 100k),69.502,1.241,0.017857,35.696,4,0,4,0
+"Smith, Tennessee",47159,Confirmed (per 100k),69.455,2.126,0.030612,17.211,4,0,4,-1
+"Snyder, Pennsylvania",42109,Confirmed (per 100k),69.355,2.477,0.035714,16.881,4,0,4,-1
+"Miller, Arkansas",5091,Confirmed (per 100k),69.353,2.312,0.033333,19.059,4,0,4,-1
+"Allendale, South Carolina",45005,Confirmed (per 100k),69.061,1.644,0.023810,25.991,4,0,4,-1
+"Seminole, Florida",12117,Confirmed (per 100k),68.881,1.968,0.028571,21.832,4,0,4,0
+"Portsmouth, Virginia",51740,Confirmed (per 100k),68.857,2.119,0.030769,20.792,4,0,4,0
+"Spartanburg, South Carolina",45083,Confirmed (per 100k),68.484,1.742,0.025440,24.214,4,0,4,0
+"Summit, Ohio",39153,Confirmed (per 100k),68.390,2.456,0.035907,15.690,4,0,4,0
+"Davis, Utah",49011,Confirmed (per 100k),68.077,1.487,0.021842,28.596,4,0,4,0
+"San Diego, California",6073,Confirmed (per 100k),67.938,1.934,0.028471,21.199,4,0,4,0
+"Washington, Oregon",41067,Confirmed (per 100k),67.820,1.211,0.017857,35.465,4,0,4,0
+"Montgomery, Indiana",18107,Confirmed (per 100k),67.818,1.118,0.016484,38.931,4,0,4,0
+"Chesapeake, Virginia",51550,Confirmed (per 100k),67.801,2.392,0.035284,16.692,4,0,4,0
+"Fayette, Kentucky",21067,Confirmed (per 100k),67.770,1.768,0.026093,24.570,4,0,4,-1
+"Marion, Kentucky",21155,Confirmed (per 100k),67.452,1.482,0.021978,28.764,4,0,4,-3
+"Union, Arkansas",5139,Confirmed (per 100k),67.215,2.216,0.032967,15.824,4,0,4,0
+"Lanier, Georgia",13173,Confirmed (per 100k),67.159,1.371,0.020408,25.991,4,0,4,0
+"Sarasota, Florida",12115,Confirmed (per 100k),67.091,1.910,0.028473,21.402,4,0,4,0
+"King George, Virginia",51099,Confirmed (per 100k),67.074,2.129,0.031746,20.273,4,0,4,0
+"Madison, Ohio",39097,Confirmed (per 100k),67.068,2.236,0.033333,18.465,4,0,4,0
+"Petersburg, Virginia",51730,Confirmed (per 100k),66.994,1.823,0.027211,23.739,4,0,4,-1
+"Larimer, Colorado",8069,Confirmed (per 100k),66.966,2.081,0.031082,19.259,4,0,4,0
+"Hampton, Virginia",51650,Confirmed (per 100k),66.910,1.912,0.028571,20.330,4,0,4,0
+"Highlands, Florida",12055,Confirmed (per 100k),66.842,1.883,0.028169,22.179,4,0,4,0
+"Denton, Texas",48121,Confirmed (per 100k),66.839,1.900,0.028427,22.108,4,0,4,0
+"Waukesha, Wisconsin",55133,Confirmed (per 100k),66.552,1.979,0.029740,20.743,4,0,4,0
+"Montgomery, North Carolina",37123,Confirmed (per 100k),66.242,2.629,0.039683,15.316,4,0,4,0
+"Anderson, South Carolina",45007,Confirmed (per 100k),66.154,1.904,0.028785,21.370,4,0,4,0
+"Hillsborough, Florida",12057,Confirmed (per 100k),66.102,1.951,0.029511,21.053,4,0,4,0
+"Lenawee, Michigan",26091,Confirmed (per 100k),66.023,2.467,0.037363,16.083,4,0,4,-1
+"Rockcastle, Kentucky",21203,Confirmed (per 100k),65.888,2.567,0.038961,15.824,4,0,4,-1
+"Teton, Idaho",16081,Confirmed (per 100k),65.887,2.353,0.035714,16.287,4,0,4,0
+"Burleigh, North Dakota",38015,Confirmed (per 100k),65.882,1.942,0.029478,20.286,4,0,4,1
+"Carroll, New Hampshire",33003,Confirmed (per 100k),65.426,1.168,0.017857,36.216,4,0,4,0
+"Goliad, Texas",48175,Confirmed (per 100k),65.291,1.865,0.028571,22.526,4,0,4,0
+"Dunklin, Missouri",29069,Confirmed (per 100k),65.223,2.452,0.037594,16.702,4,0,4,-1
+"Converse, Wyoming",56009,Confirmed (per 100k),65.114,1.034,0.015873,39.162,4,0,4,-1
+"Allegany, New York",36003,Confirmed (per 100k),65.089,1.240,0.019048,34.136,4,0,4,1
+"Candler, Georgia",13043,Confirmed (per 100k),64.797,1.322,0.020408,20.446,4,0,4,4
+"Tulsa, Oklahoma",40143,Confirmed (per 100k),64.768,1.732,0.026743,22.429,4,0,4,0
+"Ontario, New York",36069,Confirmed (per 100k),64.677,1.692,0.026157,23.699,4,0,4,0
+"Henry, Indiana",18065,Confirmed (per 100k),64.621,2.382,0.036866,15.160,4,0,4,0
+"Maui, Hawaii",15009,Confirmed (per 100k),64.510,1.877,0.029101,20.540,4,0,4,-1
+"Multnomah, Oregon",41051,Confirmed (per 100k),63.972,2.460,0.038462,15.346,4,0,4,-1
+"Franklin, Tennessee",47051,Confirmed (per 100k),63.969,1.354,0.021164,27.898,4,0,4,1
+"Chatham, Georgia",13051,Confirmed (per 100k),63.919,1.579,0.024710,24.757,4,0,4,0
+"Grant, Kentucky",21081,Confirmed (per 100k),63.824,1.710,0.026786,23.912,4,0,4,-3
+"St. Clair, Alabama",1115,Confirmed (per 100k),63.679,1.915,0.030075,19.464,4,0,4,0
+"Orange, Texas",48361,Confirmed (per 100k),63.552,1.542,0.024259,25.683,4,0,4,-1
+"Merrimack, New Hampshire",33013,Confirmed (per 100k),63.412,2.170,0.034226,17.251,4,0,4,-1
+"Clinton, New York",36019,Confirmed (per 100k),63.366,1.065,0.016807,37.082,4,0,4,1
+"Cullman, Alabama",1043,Confirmed (per 100k),63.270,2.388,0.037736,15.395,4,0,4,-1
+"Washington, Wisconsin",55131,Confirmed (per 100k),63.219,1.365,0.021595,28.978,4,0,4,0
+"DeSoto, Florida",12027,Confirmed (per 100k),63.156,1.504,0.023810,27.031,4,0,4,0
+"Indiana, Pennsylvania",42063,Confirmed (per 100k),63.040,1.869,0.029650,19.564,4,0,4,-1
+"Fond du Lac, Wisconsin",55039,Confirmed (per 100k),62.861,1.105,0.017582,35.956,4,0,4,0
+"Fairfield, Ohio",39045,Confirmed (per 100k),62.828,1.451,0.023088,27.898,4,0,4,0
+"Johnson, Kansas",20091,Confirmed (per 100k),62.583,1.613,0.025767,24.197,4,0,4,0
+"Union, Pennsylvania",42119,Confirmed (per 100k),62.329,2.544,0.040816,14.553,4,0,4,-1
+"Pinellas, Florida",12103,Confirmed (per 100k),62.257,2.007,0.032243,18.675,4,0,4,0
+"Okaloosa, Florida",12091,Confirmed (per 100k),62.162,2.034,0.032715,18.436,4,0,4,-1
+"St. Lucie, Florida",12111,Confirmed (per 100k),62.139,2.176,0.035014,17.313,4,0,4,0
+"Rio Grande, Colorado",8105,Confirmed (per 100k),62.128,2.536,0.040816,14.553,4,0,4,-1
+"Livingston, New York",36051,Confirmed (per 100k),61.989,1.135,0.018315,33.755,4,0,4,0
+"Campbell, Kentucky",21037,Confirmed (per 100k),61.976,1.374,0.022167,27.378,4,0,4,-1
+"Miami, Indiana",18103,Confirmed (per 100k),61.944,2.413,0.038961,15.593,4,0,4,-1
+"Jefferson, Indiana",18077,Confirmed (per 100k),61.904,2.211,0.035714,15.593,4,0,4,-1
+"Desha, Arkansas",5041,Confirmed (per 100k),61.614,1.257,0.020408,29.457,4,0,4,4
+"Kearney, Nebraska",31099,Confirmed (per 100k),61.586,2.199,0.035714,14.900,4,0,4,4
+"Henry, Illinois",17073,Confirmed (per 100k),61.333,2.337,0.038095,15.593,4,0,4,0
+"Cannon, Tennessee",47015,Confirmed (per 100k),61.316,1.947,0.031746,18.366,4,0,4,1
+"Contra Costa, California",6013,Confirmed (per 100k),61.290,1.907,0.031117,19.348,4,0,4,0
+"Atkinson, Georgia",13003,Confirmed (per 100k),61.237,1.750,0.028571,21.139,4,0,4,0
+"Jessamine, Kentucky",21113,Confirmed (per 100k),60.981,1.848,0.030303,20.446,4,0,4,-1
+"Oscoda, Michigan",26135,Confirmed (per 100k),60.672,1.733,0.028571,19.753,4,0,4,4
+"Clark, Washington",53011,Confirmed (per 100k),60.626,1.668,0.027510,22.063,4,0,4,0
+"Montgomery, Missouri",29139,Confirmed (per 100k),60.601,1.237,0.020408,30.844,4,0,4,0
+"Sacramento, California",6067,Confirmed (per 100k),60.565,2.007,0.033131,18.799,4,0,4,0
+"Madison, Virginia",51113,Confirmed (per 100k),60.327,2.155,0.035714,18.020,4,0,4,-1
+"Cole, Missouri",29051,Confirmed (per 100k),59.939,1.861,0.031056,19.475,4,0,4,0
+"McPherson, Kansas",20113,Confirmed (per 100k),59.561,1.502,0.025210,23.219,4,0,4,0
+"Wayne, Mississippi",28153,Confirmed (per 100k),59.456,2.123,0.035714,15.362,4,0,4,0
+"Carroll, Ohio",39019,Confirmed (per 100k),59.449,1.062,0.017857,34.656,4,0,4,-1
+"Fayette, Texas",48149,Confirmed (per 100k),59.181,2.255,0.038095,15.593,4,0,4,0
+"Talbot, Maryland",24041,Confirmed (per 100k),59.170,1.921,0.032468,15.593,4,0,4,0
+"Delaware, Ohio",39041,Confirmed (per 100k),58.802,1.981,0.033682,18.247,4,0,4,0
+"Comanche, Oklahoma",40031,Confirmed (per 100k),58.800,2.130,0.036217,14.784,4,0,4,1
+"Maricopa, Arizona",4013,Confirmed (per 100k),58.768,2.003,0.034088,17.250,4,0,4,0
+"Talladega, Alabama",1121,Confirmed (per 100k),58.766,2.143,0.036474,16.171,4,0,4,0
+"Johnston, North Carolina",37101,Confirmed (per 100k),58.756,1.774,0.030197,20.526,4,0,4,0
+"Preble, Ohio",39135,Confirmed (per 100k),58.706,2.097,0.035714,15.362,4,0,4,-1
+"Lake, Ohio",39085,Confirmed (per 100k),58.658,1.179,0.020106,31.865,4,0,4,0
+"Fredericksburg, Virginia",51630,Confirmed (per 100k),58.548,2.460,0.042017,14.068,4,0,4,-1
+"Montgomery, Tennessee",47125,Confirmed (per 100k),58.375,1.504,0.025761,22.872,4,0,4,0
+"Madison, Alabama",1089,Confirmed (per 100k),58.191,1.149,0.019750,32.415,4,0,4,0
+"Jackson, Wisconsin",55053,Confirmed (per 100k),58.131,1.384,0.023810,25.645,4,0,4,1
+"Tooele, Utah",49045,Confirmed (per 100k),58.124,2.175,0.037415,16.160,4,0,4,0
+"McCreary, Kentucky",21147,Confirmed (per 100k),58.035,1.658,0.028571,21.139,4,0,4,-2
+"Lowndes, Mississippi",28087,Confirmed (per 100k),58.025,1.950,0.033613,17.066,4,0,4,-1
+"Licking, Ohio",39089,Confirmed (per 100k),57.672,1.535,0.026611,23.073,4,0,4,0
+"Edmonson, Kentucky",21061,Confirmed (per 100k),57.613,1.176,0.020408,32.230,4,0,4,0
+"Lake, Florida",12069,Confirmed (per 100k),57.475,2.218,0.038592,15.496,4,0,4,0
+"Citrus, Florida",12017,Confirmed (per 100k),57.465,1.241,0.021595,28.978,4,0,4,0
+"Newport News, Virginia",51700,Confirmed (per 100k),56.912,1.913,0.033613,19.204,4,0,4,-1
+"York, South Carolina",45091,Confirmed (per 100k),56.588,1.119,0.019766,31.852,4,0,4,0
+"Pontotoc, Mississippi",28115,Confirmed (per 100k),55.946,1.332,0.023810,25.760,4,0,4,0
+"Cherokee, North Carolina",37039,Confirmed (per 100k),55.921,1.997,0.035714,17.153,4,0,4,0
+"Albemarle, Virginia",51003,Confirmed (per 100k),55.794,1.437,0.025761,23.282,4,0,4,0
+"Dallas, Iowa",19049,Confirmed (per 100k),55.643,1.223,0.021978,24.605,4,0,4,0
+"Wayne, New York",36117,Confirmed (per 100k),55.606,1.271,0.022857,28.678,4,0,4,0
+"Westmoreland, Virginia",51193,Confirmed (per 100k),55.509,1.586,0.028571,21.139,4,0,4,1
+"Cheboygan, Michigan",26031,Confirmed (per 100k),55.389,1.696,0.030612,19.984,4,0,4,0
+"Pope, Arkansas",5115,Confirmed (per 100k),54.626,1.115,0.020408,31.398,4,0,4,0
+"Wake, North Carolina",37183,Confirmed (per 100k),54.418,1.568,0.028808,21.327,4,0,4,-1
+"Monroe, Georgia",13207,Confirmed (per 100k),54.391,1.036,0.019048,33.616,4,0,4,0
+"Walla Walla, Washington",53071,Confirmed (per 100k),54.312,1.411,0.025974,19.406,4,0,4,-1
+"Vigo, Indiana",18167,Confirmed (per 100k),54.186,2.002,0.036946,14.854,4,0,4,0
+"Cheatham, Tennessee",47021,Confirmed (per 100k),54.098,1.405,0.025974,23.565,4,0,4,0
+"Dorchester, South Carolina",45035,Confirmed (per 100k),54.051,1.492,0.027597,22.362,4,0,4,0
+"Carroll, Tennessee",47017,Confirmed (per 100k),54.021,2.058,0.038095,15.247,4,0,4,0
+"Washington, Virginia",51191,Confirmed (per 100k),53.964,1.329,0.024631,26.962,4,0,4,-1
+"Anchorage, Alaska",2020,Confirmed (per 100k),53.819,1.339,0.024885,25.427,4,0,4,0
+"Jasper, South Carolina",45053,Confirmed (per 100k),53.204,1.900,0.035714,17.153,4,0,4,0
+"Shawnee, Kansas",20177,Confirmed (per 100k),53.145,1.373,0.025836,23.912,4,0,4,-1
+"Parke, Indiana",18121,Confirmed (per 100k),53.138,1.687,0.031746,18.020,4,0,4,1
+"Orange, California",,Confirmed (per 100k),52.776,1.615,0.030600,19.106,4,0,4,0
+"Sauk, Wisconsin",55111,Confirmed (per 100k),52.761,1.552,0.029412,20.644,4,0,4,0
+"Crook, Wyoming",56011,Confirmed (per 100k),52.743,1.884,0.035714,17.673,4,0,4,0
+"Cortland, New York",36023,Confirmed (per 100k),52.542,1.201,0.022857,28.244,4,0,4,-1
+"Horry, South Carolina",45051,Confirmed (per 100k),52.248,2.058,0.039382,15.036,4,0,4,0
+"Boone, Missouri",29019,Confirmed (per 100k),52.088,1.029,0.019757,33.083,4,0,4,0
+"Smith, Texas",48423,Confirmed (per 100k),51.987,1.534,0.029516,20.640,4,0,4,0
+"Adams, Illinois",17001,Confirmed (per 100k),51.960,1.965,0.037815,15.362,4,0,4,0
+"Nassau, Florida",12089,Confirmed (per 100k),51.904,1.612,0.031056,18.644,4,0,4,0
+"Marshall, Indiana",18099,Confirmed (per 100k),51.883,1.235,0.023810,24.605,4,0,4,-1
+"Fayette, Pennsylvania",42051,Confirmed (per 100k),51.828,1.326,0.025586,24.547,4,0,4,0
+"Queen Anne's, Maryland",24035,Confirmed (per 100k),51.607,1.701,0.032967,16.287,4,0,4,1
+"Camden, Georgia",13039,Confirmed (per 100k),51.220,2.091,0.040816,14.813,4,0,4,-1
+"Douglas, Nebraska",31055,Confirmed (per 100k),50.934,1.025,0.020128,30.337,4,0,4,1
+"Grundy, Illinois",17063,Confirmed (per 100k),50.926,1.399,0.027473,23.080,4,0,4,-1
+"Bexar, Texas",48029,Confirmed (per 100k),50.660,1.918,0.037861,15.472,4,0,4,-1
+"Ventura, California",6111,Confirmed (per 100k),50.591,1.908,0.037717,15.563,4,0,4,0
+"Fulton, New York",36035,Confirmed (per 100k),50.578,1.606,0.031746,19.637,4,0,4,-1
+"Canadian, Oklahoma",40017,Confirmed (per 100k),50.571,1.638,0.032381,17.999,4,0,4,1
+"Morgan, West Virginia",54065,Confirmed (per 100k),50.324,1.598,0.031746,16.633,4,0,4,-1
+"Madison, Georgia",13195,Confirmed (per 100k),50.201,1.912,0.038095,15.420,4,0,4,0
+"Autauga, Alabama",1001,Confirmed (per 100k),50.117,1.790,0.035714,16.485,4,0,4,-1
+"Cass, Missouri",29037,Confirmed (per 100k),50.104,2.161,0.043127,14.163,4,0,4,-1
+"Archuleta, Colorado",8007,Confirmed (per 100k),49.897,1.018,0.020408,29.457,4,0,4,4
+"Gaston, North Carolina",37071,Confirmed (per 100k),49.882,1.909,0.038265,15.570,4,0,4,-1
+"Lee, Illinois",17103,Confirmed (per 100k),49.859,1.676,0.033613,18.540,4,0,4,-1
+"Scott, Tennessee",47151,Confirmed (per 100k),49.846,1.942,0.038961,16.518,4,0,4,0
+"Pottawatomie, Oklahoma",40125,Confirmed (per 100k),49.592,1.968,0.039683,14.484,4,0,4,0
+"Cherokee, Oklahoma",40021,Confirmed (per 100k),49.325,1.762,0.035714,17.095,4,0,4,0
+"Knox, Indiana",18083,Confirmed (per 100k),49.188,1.171,0.023810,25.760,4,0,4,0
+"Jefferson, New York",36045,Confirmed (per 100k),49.165,1.041,0.021164,29.284,4,0,4,1
+"Rock, Wisconsin",55105,Confirmed (per 100k),48.973,1.574,0.032143,16.980,4,0,4,0
+"Houston, Tennessee",47083,Confirmed (per 100k),48.775,1.742,0.035714,16.980,4,0,4,0
+"Cross, Arkansas",5037,Confirmed (per 100k),48.724,1.740,0.035714,17.673,4,0,4,0
+"Ellis, Texas",48139,Confirmed (per 100k),48.694,1.314,0.026984,21.792,4,0,4,0
+"Randolph, Indiana",18135,Confirmed (per 100k),48.652,1.158,0.023810,27.031,4,0,4,-1
+"Sedgwick, Kansas",20173,Confirmed (per 100k),48.446,1.273,0.026286,22.932,4,0,4,0
+"Starke, Indiana",18149,Confirmed (per 100k),47.836,1.243,0.025974,24.259,4,0,4,0
+"Payne, Oklahoma",40119,Confirmed (per 100k),47.687,1.572,0.032967,17.057,4,0,4,0
+"Hawkins, Tennessee",47073,Confirmed (per 100k),47.547,1.006,0.021164,30.497,4,0,4,0
+"Dubuque, Iowa",19061,Confirmed (per 100k),47.271,1.321,0.027950,20.677,4,0,4,0
+"Whitley, Indiana",18183,Confirmed (per 100k),47.109,1.682,0.035714,17.326,4,0,4,-1
+"Shelby, Kentucky",21211,Confirmed (per 100k),46.916,1.457,0.031056,19.614,4,0,4,-1
+"Clarion, Pennsylvania",42031,Confirmed (per 100k),46.829,1.115,0.023810,27.147,4,0,4,-1
+"Macoupin, Illinois",17117,Confirmed (per 100k),46.744,1.590,0.034014,17.257,4,0,4,-1
+"Norfolk, Virginia",51710,Confirmed (per 100k),46.551,1.236,0.026549,23.747,4,0,4,0
+"Mackinac, Michigan",26097,Confirmed (per 100k),46.301,1.323,0.028571,21.139,4,0,4,0
+"Ford, Illinois",17053,Confirmed (per 100k),46.293,1.102,0.023810,20.446,4,0,4,4
+"Lynchburg, Virginia",51680,Confirmed (per 100k),46.247,1.217,0.026316,24.209,4,0,4,0
+"Mayes, Oklahoma",40097,Confirmed (per 100k),46.229,1.738,0.037594,16.564,4,0,4,-1
+"Polk, Florida",12105,Confirmed (per 100k),46.221,1.419,0.030704,19.878,4,0,4,0
+"Cape Girardeau, Missouri",29031,Confirmed (per 100k),45.644,1.449,0.031746,19.579,4,0,4,0
+"Fayette, Ohio",39047,Confirmed (per 100k),45.574,2.003,0.043956,14.207,4,0,4,-2
+"Klamath, Oregon",41035,Confirmed (per 100k),45.429,1.256,0.027650,22.410,4,0,4,-1
+"Cheyenne, Nebraska",31033,Confirmed (per 100k),44.893,1.603,0.035714,15.593,4,0,4,-2
+"Murray, Georgia",13213,Confirmed (per 100k),44.892,1.425,0.031746,20.273,4,0,4,-1
+"Harnett, North Carolina",37085,Confirmed (per 100k),44.861,1.786,0.039813,14.615,4,0,4,-1
+"Cattaraugus, New York",36009,Confirmed (per 100k),44.668,1.126,0.025210,25.760,4,0,4,-1
+"Montgomery, Virginia",51121,Confirmed (per 100k),44.654,1.450,0.032468,17.465,4,0,4,-1
+"Yellowstone, Montana",30111,Confirmed (per 100k),44.637,1.240,0.027778,22.526,4,0,4,0
+"Clay, North Carolina",37043,Confirmed (per 100k),44.520,1.272,0.028571,21.139,4,0,4,0
+"McCracken, Kentucky",21145,Confirmed (per 100k),44.330,1.747,0.039409,15.420,4,0,4,-1
+"Edgefield, South Carolina",45037,Confirmed (per 100k),44.021,1.048,0.023810,24.952,4,0,4,4
+"McDowell, North Carolina",37111,Confirmed (per 100k),43.710,1.249,0.028571,22.872,4,0,4,0
+"Sullivan, Indiana",18153,Confirmed (per 100k),43.543,1.382,0.031746,15.940,4,0,4,-1
+"Perry, Pennsylvania",42099,Confirmed (per 100k),43.223,1.235,0.028571,21.486,4,0,4,1
+"Smyth, Virginia",51173,Confirmed (per 100k),43.184,1.424,0.032967,17.904,4,0,4,1
+"Weber, Utah",49057,Confirmed (per 100k),43.042,1.098,0.025510,24.674,4,0,4,0
+"LaGrange, Indiana",18087,Confirmed (per 100k),42.914,1.442,0.033613,17.500,4,0,4,-1
+"Loudon, Tennessee",47105,Confirmed (per 100k),42.539,1.585,0.037267,14.669,4,0,4,1
+"Calhoun, Florida",12013,Confirmed (per 100k),42.538,1.013,0.023810,25.991,4,0,4,0
+"Belknap, New Hampshire",33001,Confirmed (per 100k),42.412,1.165,0.027473,23.219,4,0,4,1
+"Gregg, Texas",48183,Confirmed (per 100k),41.954,1.383,0.032967,18.944,4,0,4,0
+"Blanco, Texas",48031,Confirmed (per 100k),41.908,1.197,0.028571,21.139,4,0,4,0
+"Payette, Idaho",16075,Confirmed (per 100k),41.752,1.193,0.028571,22.526,4,0,4,0
+"Hoke, North Carolina",37093,Confirmed (per 100k),41.641,1.293,0.031056,20.446,4,0,4,0
+"Mason, West Virginia",54053,Confirmed (per 100k),41.484,1.616,0.038961,15.593,4,0,4,0
+"Bradford, Pennsylvania",42015,Confirmed (per 100k),41.444,1.658,0.040000,14.009,4,0,4,1
+"Northumberland, Virginia",51133,Confirmed (per 100k),41.339,1.181,0.028571,21.832,4,0,4,-1
+"Aiken, South Carolina",45003,Confirmed (per 100k),40.966,1.588,0.038776,15.557,4,0,4,0
+"Clackamas, Oregon",41005,Confirmed (per 100k),40.891,1.230,0.030075,19.425,4,0,4,0
+"Solano, California",6095,Confirmed (per 100k),40.211,1.532,0.038095,14.727,4,0,4,-1
+"Morgan, Alabama",1103,Confirmed (per 100k),40.107,1.074,0.026786,23.450,4,0,4,0
+"Craighead, Arkansas",5031,Confirmed (per 100k),39.880,1.554,0.038961,15.535,4,0,4,0
+"Defiance, Ohio",39039,Confirmed (per 100k),39.384,1.125,0.028571,19.984,4,0,4,1
+"Riley, Kansas",20161,Confirmed (per 100k),39.067,1.347,0.034483,17.079,4,0,4,0
+"Muskogee, Oklahoma",40101,Confirmed (per 100k),38.237,1.050,0.027473,24.189,4,0,4,0
+"Pasco, Florida",12101,Confirmed (per 100k),37.729,1.161,0.030759,19.953,4,0,4,0
+"Dubois, Indiana",18037,Confirmed (per 100k),37.439,1.003,0.026786,22.294,4,0,4,0
+"Mason, Illinois",17125,Confirmed (per 100k),37.428,1.069,0.028571,16.980,4,0,4,0
+"Wabasha, Minnesota",27157,Confirmed (per 100k),36.991,1.321,0.035714,17.326,4,0,4,0
+"Saline, Arkansas",5125,Confirmed (per 100k),36.754,1.167,0.031746,17.465,4,0,4,1
+"Jersey, Illinois",17083,Confirmed (per 100k),36.743,1.312,0.035714,17.673,4,0,4,0
+"Ramsey, Minnesota",27123,Confirmed (per 100k),36.706,1.142,0.031117,18.540,4,0,4,-1
+"Sonoma, California",6097,Confirmed (per 100k),36.615,1.011,0.027624,22.506,4,0,4,1
+"Delta, Michigan",26041,Confirmed (per 100k),36.329,1.198,0.032967,16.055,4,0,4,1
+"Waynesboro, Virginia",51820,Confirmed (per 100k),35.351,1.263,0.035714,15.247,4,0,4,-1
+"Lawrence, Ohio",39087,Confirmed (per 100k),35.316,1.201,0.034014,17.812,4,0,4,0
+"Marion, Florida",12083,Confirmed (per 100k),35.286,1.094,0.031008,18.936,4,0,4,0
+"Craven, North Carolina",37049,Confirmed (per 100k),35.246,1.259,0.035714,16.518,4,0,4,-1
+"Ector, Texas",48135,Confirmed (per 100k),34.893,1.289,0.036946,15.963,4,0,4,-1
+"Napa, California",6055,Confirmed (per 100k),34.847,1.348,0.038690,14.953,4,0,4,-1
+"Lincoln, Maine",23015,Confirmed (per 100k),34.648,1.237,0.035714,18.366,4,0,4,0
+"Scotland, North Carolina",37165,Confirmed (per 100k),34.460,1.231,0.035714,15.824,4,0,4,1
+"Brown, Texas",48049,Confirmed (per 100k),34.333,1.132,0.032967,18.597,4,0,4,1
+"Lewis, New York",36049,Confirmed (per 100k),34.226,1.087,0.031746,17.673,4,0,4,0
+"Cumberland, North Carolina",37051,Confirmed (per 100k),33.680,1.235,0.036662,16.024,4,0,4,0
+"Guilford, North Carolina",37081,Confirmed (per 100k),32.764,1.090,0.033279,18.417,4,0,4,0
+"Campbell, Tennessee",47013,Confirmed (per 100k),32.629,1.076,0.032967,19.291,4,0,4,1
+"Merced, California",6047,Confirmed (per 100k),32.411,1.286,0.039683,14.955,4,0,4,-1
+"Overton, Tennessee",47133,Confirmed (per 100k),31.473,1.285,0.040816,14.553,4,0,4,-1
+"Pickens, South Carolina",45077,Confirmed (per 100k),30.737,1.238,0.040293,15.215,4,0,4,0
+"Nelson, Kentucky",21179,Confirmed (per 100k),30.281,1.236,0.040816,15.593,4,0,4,-1
+"Ripley, Missouri",29181,Confirmed (per 100k),30.102,1.075,0.035714,15.593,4,0,4,4
+"Hidalgo, Texas",48215,Confirmed (per 100k),30.045,1.069,0.035577,16.308,4,0,4,-1
+"Comanche, Texas",48093,Confirmed (per 100k),29.336,1.048,0.035714,14.900,4,0,4,4
+"Cache, Utah",49005,Confirmed (per 100k),28.841,1.002,0.034749,17.827,4,0,4,-1
+"Clinton, Pennsylvania",42035,Confirmed (per 100k),28.474,1.109,0.038961,14.438,4,0,4,-1
+"Rio Arriba, New Mexico",35039,Confirmed (per 100k),28.262,1.101,0.038961,14.438,4,0,4,-1
+"Rusk, Wisconsin",55107,Confirmed (per 100k),28.213,1.008,0.035714,15.593,4,0,4,4
+"Caldwell, North Carolina",37027,Confirmed (per 100k),27.988,1.043,0.037267,16.171,4,0,4,1
+"LaSalle, Illinois",17099,Confirmed (per 100k),27.607,1.052,0.038095,14.813,4,0,4,-1
+"Columbia, Oregon",41009,Confirmed (per 100k),26.741,1.091,0.040816,15.940,4,0,4,0
+"Anoka, Minnesota",27003,Confirmed (per 100k),26.617,1.001,0.037594,14.983,4,0,4,-1
+"Hardin, Kentucky",21093,Confirmed (per 100k),26.136,1.030,0.039409,15.593,4,0,4,-2
+"Peoria, Illinois",17143,Confirmed (per 100k),23.998,0.957,0.039867,13.456,3,1,4,-1
+"Dixie, Florida",12029,Confirmed (per 100k),23.773,0.849,0.035714,12.820,3,1,4,0
+"Sweetwater, Wyoming",56037,Confirmed (per 100k),23.617,1.012,0.042857,15.362,4,0,4,-1
+"Fannin, Texas",48147,Confirmed (per 100k),22.526,0.805,0.035714,13.167,3,1,4,4
+"Laurel, Kentucky",21125,Confirmed (per 100k),21.377,0.940,0.043956,13.513,3,1,4,-2
+"Fremont, Colorado",8043,Confirmed (per 100k),20.903,0.896,0.042857,13.745,3,1,4,-1
+"Hamilton, Florida",12047,Confirmed (per 100k),20.793,0.990,0.047619,11.433,3,1,4,0
+"Brown, Ohio",39015,Confirmed (per 100k),20.722,0.987,0.047619,12.127,3,1,4,-1
+"Las Animas, Colorado",8071,Confirmed (per 100k),20.681,0.985,0.047619,11.433,3,1,4,0
+"Morgan, Ohio",39115,Confirmed (per 100k),20.678,0.985,0.047619,12.127,3,1,4,0
+"Greene, Arkansas",5055,Confirmed (per 100k),19.857,0.946,0.047619,10.740,3,1,4,4
+"Union, Florida",12125,Confirmed (per 100k),19.689,0.938,0.047619,10.047,3,1,4,4
+"Pottawattamie, Iowa",19155,Confirmed (per 100k),19.312,0.920,0.047619,12.242,3,1,4,0
+"Marquette, Wisconsin",55077,Confirmed (per 100k),19.263,0.917,0.047619,12.820,3,1,4,0
+"Clay, Iowa",19041,Confirmed (per 100k),18.731,0.892,0.047619,10.047,3,1,4,4
+"Wright, Minnesota",27171,Confirmed (per 100k),18.067,0.826,0.045714,12.560,3,1,4,0
+"Butler, Kansas",20015,Confirmed (per 100k),17.934,0.854,0.047619,12.300,3,1,4,1
+"Logan, Illinois",17107,Confirmed (per 100k),17.472,0.998,0.057143,10.740,3,1,4,0
+"Giles, Tennessee",47055,Confirmed (per 100k),16.970,0.970,0.057143,9.353,3,1,4,0
+"Uintah, Utah",49047,Confirmed (per 100k),16.791,0.800,0.047619,13.167,3,1,4,-2
+"Okeechobee, Florida",12093,Confirmed (per 100k),16.600,0.678,0.040816,12.820,3,1,4,4
+"Roane, Tennessee",47145,Confirmed (per 100k),14.986,0.803,0.053571,9.816,3,1,4,0
+"Parker, Texas",48367,Confirmed (per 100k),14.698,0.800,0.054422,10.393,3,1,4,0
+"Cambria, Pennsylvania",42021,Confirmed (per 100k),14.594,0.658,0.045113,11.896,3,1,4,1
+"Yuma, Arizona",4027,Confirmed (per 100k),14.500,0.601,0.041475,12.743,3,1,4,0
+"Logan, Arkansas",5083,Confirmed (per 100k),13.976,0.666,0.047619,10.740,3,1,4,0
+"Mason, Michigan",26105,Confirmed (per 100k),13.725,0.980,0.071429,7.966,3,1,4,-2
+"Sumner, Kansas",20191,Confirmed (per 100k),13.137,0.626,0.047619,12.127,3,1,4,0
+"Meeker, Minnesota",27093,Confirmed (per 100k),12.919,0.615,0.047619,12.820,3,1,4,0
+"Wise, Texas",48497,Confirmed (per 100k),12.860,0.817,0.063492,7.966,3,1,4,-1
+"Pender, North Carolina",37141,Confirmed (per 100k),12.686,0.453,0.035714,12.820,3,1,4,1
+"Luna, New Mexico",35029,Confirmed (per 100k),12.653,0.603,0.047619,11.433,3,1,4,-3
+"Marinette, Wisconsin",55075,Confirmed (per 100k),12.392,0.708,0.057143,9.700,3,1,4,1
+"Hamblen, Tennessee",47063,Confirmed (per 100k),12.320,0.660,0.053571,10.509,3,1,4,0
+"Calumet, Wisconsin",55015,Confirmed (per 100k),11.979,0.570,0.047619,12.127,3,1,4,1
+"Fayette, West Virginia",54019,Confirmed (per 100k),11.791,0.674,0.057143,8.313,3,1,4,1
+"Jackson, North Carolina",37099,Confirmed (per 100k),11.380,0.650,0.057143,10.047,3,1,4,0
+"Barry, Missouri",29009,Confirmed (per 100k),11.177,0.399,0.035714,12.127,3,1,4,0
+"McMinn, Tennessee",47107,Confirmed (per 100k),11.154,0.531,0.047619,12.820,3,1,4,0
+"Webster, Iowa",19187,Confirmed (per 100k),11.141,0.398,0.035714,10.740,3,1,4,4
+"Van Wert, Ohio",39161,Confirmed (per 100k),10.610,0.505,0.047619,10.047,3,1,4,4
+"Meade, Kentucky",21163,Confirmed (per 100k),10.500,0.500,0.047619,10.047,3,1,4,4
+"Bryan, Oklahoma",40013,Confirmed (per 100k),10.418,0.595,0.057143,11.087,3,1,4,0
+"Pike, Kentucky",21195,Confirmed (per 100k),10.367,0.494,0.047619,12.820,3,1,4,-3
+"Otter Tail, Minnesota",27111,Confirmed (per 100k),10.213,0.486,0.047619,10.393,3,1,4,1
+"Pittsylvania, Virginia",51143,Confirmed (per 100k),9.941,0.473,0.047619,11.780,3,1,4,0
+"Morgan, Missouri",29141,Confirmed (per 100k),9.696,0.693,0.071429,7.273,3,1,4,-1
+"Boone, West Virginia",54005,Confirmed (per 100k),9.321,0.666,0.071429,7.273,3,1,4,-1
+"Lake, California",6033,Confirmed (per 100k),9.319,0.444,0.047619,12.473,3,1,4,0
+"Beckham, Oklahoma",40009,Confirmed (per 100k),9.150,0.654,0.071429,7.966,3,1,4,-1
+"Bannock, Idaho",16005,Confirmed (per 100k),9.111,0.488,0.053571,10.509,3,1,4,0
+"Carter, Tennessee",47019,Confirmed (per 100k),8.867,0.507,0.057143,9.353,3,1,4,0
+"Manitowoc, Wisconsin",55071,Confirmed (per 100k),8.863,0.362,0.040816,11.433,3,1,4,2
+"Meigs, Ohio",39105,Confirmed (per 100k),8.731,0.624,0.071429,7.966,3,1,4,-1
+"McLeod, Minnesota",27085,Confirmed (per 100k),8.358,0.398,0.047619,10.740,3,1,4,4
+"Haywood, North Carolina",37087,Confirmed (per 100k),8.023,0.458,0.057143,9.700,3,1,4,0
+"Kerr, Texas",48265,Confirmed (per 100k),7.605,0.543,0.071429,7.619,3,1,4,-1
+"San Miguel, New Mexico",35047,Confirmed (per 100k),7.332,0.524,0.071429,7.966,3,1,4,-1
+"Bingham, Idaho",16011,Confirmed (per 100k),6.409,0.305,0.047619,11.433,3,1,4,0
+"Washington, Maine",23029,Confirmed (per 100k),6.374,0.455,0.071429,7.966,3,1,4,-1
+"Aroostook, Maine",23003,Confirmed (per 100k),4.474,0.213,0.047619,12.127,3,1,4,0
+"Matagorda, Texas",48321,Confirmed (per 100k),150.097,0.780,0.005195,121.994,3,0,3,-1
+"Walker, Alabama",1127,Confirmed (per 100k),141.685,0.900,0.006349,101.719,3,0,3,-1
+"Gallatin, Montana",30031,Confirmed (per 100k),124.963,0.624,0.004995,135.926,3,0,3,0
+"Whatcom, Washington",53073,Confirmed (per 100k),121.267,0.872,0.007194,93.525,3,0,3,-1
+"Tompkins, New York",36109,Confirmed (per 100k),116.461,0.839,0.007203,94.268,3,0,3,-1
+"Kay, Oklahoma",40071,Confirmed (per 100k),105.655,0.984,0.009317,73.358,3,0,3,-1
+"Lafayette, Missouri",29107,Confirmed (per 100k),91.721,0.874,0.009524,69.314,3,0,3,0
+"Jefferson, Washington",53031,Confirmed (per 100k),90.003,0.443,0.004926,136.203,3,0,3,3
+"Monongalia, West Virginia",54061,Confirmed (per 100k),85.218,0.812,0.009524,67.350,3,0,3,0
+"Christian, Illinois",17021,Confirmed (per 100k),83.581,0.442,0.005291,117.488,3,0,3,0
+"Le Sueur, Minnesota",,Confirmed (per 100k),76.159,0.495,0.006494,103.625,3,0,3,0
+"Prince George, Virginia",51149,Confirmed (per 100k),73.006,0.745,0.010204,66.195,3,0,3,0
+"St. Johns, Florida",12109,Confirmed (per 100k),72.543,0.918,0.012649,51.761,3,0,3,-1
+"Greene, Pennsylvania",42059,Confirmed (per 100k),68.998,0.394,0.005714,114.022,3,0,3,-1
+"Mower, Minnesota",27099,Confirmed (per 100k),67.396,0.713,0.010582,61.343,3,0,3,-1
+"Dane, Wisconsin",55025,Confirmed (per 100k),66.582,0.706,0.010597,62.960,3,0,3,-1
+"Virginia Beach, Virginia",51810,Confirmed (per 100k),62.448,0.952,0.015252,41.842,3,0,3,-1
+"Boyd, Kentucky",21019,Confirmed (per 100k),62.075,0.917,0.014778,44.014,3,0,3,-2
+"Douglas, Illinois",17041,Confirmed (per 100k),61.649,0.734,0.011905,55.798,3,0,3,0
+"Grant, Arkansas",5053,Confirmed (per 100k),60.224,0.782,0.012987,51.639,3,0,3,-2
+"Spokane, Washington",53063,Confirmed (per 100k),59.870,0.902,0.015062,42.144,3,0,3,-1
+"Shelby, Ohio",39149,Confirmed (per 100k),59.683,0.588,0.009852,66.888,3,0,3,-1
+"Sevier, Arkansas",5133,Confirmed (per 100k),58.799,0.840,0.014286,39.162,3,0,3,-1
+"Santa Fe, New Mexico",35049,Confirmed (per 100k),57.197,0.760,0.013289,47.393,3,0,3,0
+"Jo Daviess, Illinois",17085,Confirmed (per 100k),56.510,0.673,0.011905,54.411,3,0,3,-1
+"Gloucester, Virginia",51073,Confirmed (per 100k),56.228,0.383,0.006803,98.080,3,0,3,0
+"Davidson, North Carolina",37057,Confirmed (per 100k),56.083,0.767,0.013678,48.481,3,0,3,-1
+"Vermilion, Louisiana",22113,Confirmed (per 100k),55.452,0.960,0.017316,33.616,3,0,3,-1
+"Gem, Idaho",16045,Confirmed (per 100k),55.212,0.789,0.014286,46.093,3,0,3,-1
+"Washington, Vermont",50023,Confirmed (per 100k),54.786,0.978,0.017857,35.696,3,0,3,-1
+"McClain, Oklahoma",40087,Confirmed (per 100k),54.356,0.706,0.012987,47.133,3,0,3,0
+"Georgetown, South Carolina",45043,Confirmed (per 100k),54.244,0.456,0.008403,80.751,3,0,3,-1
+"Pulaski, Kentucky",21199,Confirmed (per 100k),53.864,0.440,0.008163,81.444,3,0,3,-1
+"Davie, North Carolina",37059,Confirmed (per 100k),53.681,0.333,0.006211,109.863,3,0,3,0
+"Indian River, Florida",12061,Confirmed (per 100k),53.151,0.983,0.018487,35.570,3,0,3,-1
+"New Madrid, Missouri",29143,Confirmed (per 100k),52.706,0.837,0.015873,39.162,3,0,3,-1
+"Fillmore, Minnesota",27045,Confirmed (per 100k),52.214,0.678,0.012987,49.559,3,0,3,3
+"Lincoln, Nebraska",31111,Confirmed (per 100k),51.555,0.409,0.007937,83.524,3,0,3,3
+"Orangeburg, South Carolina",45075,Confirmed (per 100k),51.059,0.995,0.019481,31.768,3,0,3,0
+"Collin, Texas",48085,Confirmed (per 100k),50.931,0.953,0.018704,34.561,3,0,3,-1
+"Kitsap, Washington",53035,Confirmed (per 100k),50.834,0.316,0.006211,107.784,3,0,3,0
+"Greene, Tennessee",47059,Confirmed (per 100k),50.674,0.827,0.016327,33.963,3,0,3,0
+"Livingston, Illinois",17105,Confirmed (per 100k),50.494,0.801,0.015873,41.934,3,0,3,-1
+"McLean, Illinois",17113,Confirmed (per 100k),50.141,0.666,0.013289,49.473,3,0,3,0
+"Montezuma, Colorado",8083,Confirmed (per 100k),49.651,0.546,0.010989,59.957,3,0,3,-2
+"Faulkner, Arkansas",5045,Confirmed (per 100k),49.204,0.340,0.006912,96.000,3,0,3,0
+"Polk, North Carolina",37149,Confirmed (per 100k),48.253,0.689,0.014286,44.707,3,0,3,0
+"Natrona, Wyoming",56025,Confirmed (per 100k),47.584,0.894,0.018797,34.587,3,0,3,-1
+"Linn, Oregon",41043,Confirmed (per 100k),47.014,0.771,0.016393,37.874,3,0,3,-1
+"Cayuga, New York",36011,Confirmed (per 100k),47.012,0.933,0.019841,33.478,3,0,3,-1
+"Columbia, Wisconsin",55021,Confirmed (per 100k),46.930,0.497,0.010582,63.769,3,0,3,0
+"San Luis Obispo, California",6079,Confirmed (per 100k),46.625,0.908,0.019481,33.116,3,0,3,-1
+"Chester, Tennessee",47023,Confirmed (per 100k),46.251,0.826,0.017857,34.310,3,0,3,3
+"Jefferson, Ohio",39081,Confirmed (per 100k),45.924,0.875,0.019048,29.804,3,0,3,0
+"Charlevoix, Michigan",26029,Confirmed (per 100k),45.901,0.546,0.011905,54.411,3,0,3,0
+"Roscommon, Michigan",26143,Confirmed (per 100k),45.797,0.595,0.012987,44.014,3,0,3,0
+"Wichita, Texas",48485,Confirmed (per 100k),45.375,0.324,0.007143,91.842,3,0,3,0
+"Champaign, Illinois",17019,Confirmed (per 100k),45.305,0.613,0.013534,48.558,3,0,3,0
+"Iredell, North Carolina",37097,Confirmed (per 100k),45.103,0.786,0.017422,36.666,3,0,3,-1
+"Marshall, Kentucky",21157,Confirmed (per 100k),45.016,0.459,0.010204,56.491,3,0,3,-2
+"Centre, Pennsylvania",42027,Confirmed (per 100k),44.955,0.264,0.005871,116.102,3,0,3,-1
+"Cleveland, North Carolina",37045,Confirmed (per 100k),44.922,0.875,0.019481,32.808,3,0,3,-1
+"Manistee, Michigan",26101,Confirmed (per 100k),44.792,0.582,0.012987,50.946,3,0,3,-1
+"Sagadahoc, Maine",23023,Confirmed (per 100k),44.623,0.398,0.008929,73.126,3,0,3,3
+"Harrison, West Virginia",54033,Confirmed (per 100k),44.606,0.212,0.004762,141.055,3,0,3,3
+"Oswego, New York",36075,Confirmed (per 100k),44.397,0.610,0.013736,42.212,3,0,3,-1
+"Montgomery, Ohio",39113,Confirmed (per 100k),44.199,0.914,0.020669,30.497,3,0,3,-1
+"Hernando, Florida",12053,Confirmed (per 100k),43.317,0.958,0.022109,28.711,3,0,3,-1
+"Walton, Florida",12131,Confirmed (per 100k),43.202,0.579,0.013393,48.404,3,0,3,0
+"Piatt, Illinois",17147,Confirmed (per 100k),42.829,0.874,0.020408,31.537,3,0,3,0
+"Effingham, Georgia",13103,Confirmed (per 100k),41.993,0.889,0.021164,29.631,3,0,3,-1
+"Carroll, Illinois",17015,Confirmed (per 100k),41.943,0.999,0.023810,25.298,3,0,3,3
+"Knox, Tennessee",47093,Confirmed (per 100k),41.249,0.759,0.018409,34.864,3,0,3,0
+"St. Joseph, Michigan",26149,Confirmed (per 100k),41.008,0.937,0.022857,27.378,3,0,3,0
+"Goodhue, Minnesota",27049,Confirmed (per 100k),41.001,0.617,0.015038,42.628,3,0,3,-1
+"Montcalm, Michigan",26117,Confirmed (per 100k),40.696,0.447,0.010989,56.144,3,0,3,0
+"Limestone, Alabama",1083,Confirmed (per 100k),40.439,0.433,0.010714,61.805,3,0,3,0
+"Washington, Pennsylvania",42125,Confirmed (per 100k),40.123,0.967,0.024096,25.348,3,0,3,0
+"Honolulu, Hawaii",15003,Confirmed (per 100k),39.505,0.513,0.012987,50.906,3,0,3,0
+"Okmulgee, Oklahoma",40111,Confirmed (per 100k),38.996,0.743,0.019048,33.963,3,0,3,0
+"Warren, Iowa",19181,Confirmed (per 100k),38.861,0.555,0.014286,40.548,3,0,3,0
+"Santa Cruz, California",6087,Confirmed (per 100k),38.798,0.837,0.021563,28.981,3,0,3,-1
+"Morgan, Illinois",17137,Confirmed (per 100k),38.624,0.849,0.021978,27.031,3,0,3,0
+"Antrim, Michigan",26009,Confirmed (per 100k),38.587,0.612,0.015873,41.934,3,0,3,-2
+"Jackson, Missouri",29095,Confirmed (per 100k),38.548,0.874,0.022667,28.055,3,0,3,-1
+"Humboldt, California",6023,Confirmed (per 100k),38.360,0.211,0.005495,124.073,3,0,3,0
+"Polk, Oregon",41053,Confirmed (per 100k),38.334,0.332,0.008658,74.166,3,0,3,0
+"Willacy, Texas",48489,Confirmed (per 100k),37.457,0.669,0.017857,35.003,3,0,3,3
+"Sheboygan, Wisconsin",55117,Confirmed (per 100k),37.281,0.743,0.019934,30.035,3,0,3,0
+"Colorado, Texas",48089,Confirmed (per 100k),37.221,0.665,0.017857,35.003,3,0,3,0
+"Washington, Minnesota",27163,Confirmed (per 100k),36.961,0.762,0.020619,30.250,3,0,3,-1
+"Nevada, California",6057,Confirmed (per 100k),36.088,0.286,0.007937,83.524,3,0,3,3
+"Hale, Texas",48189,Confirmed (per 100k),35.922,0.428,0.011905,53.718,3,0,3,3
+"St. Francois, Missouri",29187,Confirmed (per 100k),35.706,0.213,0.005952,113.329,3,0,3,0
+"Flathead, Montana",30029,Confirmed (per 100k),35.643,0.413,0.011583,59.032,3,0,3,0
+"Washington, Tennessee",47179,Confirmed (per 100k),35.556,0.442,0.012422,53.891,3,0,3,0
+"Blue Earth, Minnesota",27013,Confirmed (per 100k),35.475,0.211,0.005952,109.863,3,0,3,0
+"Maury, Tennessee",47119,Confirmed (per 100k),35.274,0.296,0.008403,80.405,3,0,3,1
+"Douglas, Kansas",20045,Confirmed (per 100k),35.171,0.467,0.013289,50.079,3,0,3,0
+"Bradley, Tennessee",47011,Confirmed (per 100k),35.149,0.925,0.026316,23.615,3,0,3,0
+"Mason, Kentucky",21161,Confirmed (per 100k),35.149,0.837,0.023810,27.378,3,0,3,-2
+"Cherokee, Kansas",20021,Confirmed (per 100k),35.107,0.716,0.020408,32.230,3,0,3,-1
+"Polk, Arkansas",5113,Confirmed (per 100k),35.063,0.716,0.020408,30.844,3,0,3,0
+"Tuscarawas, Ohio",39157,Confirmed (per 100k),34.788,0.621,0.017857,35.349,3,0,3,0
+"Guadalupe, Texas",48187,Confirmed (per 100k),34.762,0.685,0.019704,31.277,3,0,3,0
+"Bell, Texas",48027,Confirmed (per 100k),34.718,0.984,0.028345,22.082,3,0,3,-2
+"Tom Green, Texas",48451,Confirmed (per 100k),34.396,0.719,0.020906,32.115,3,0,3,0
+"Huron, Ohio",39077,Confirmed (per 100k),34.325,0.245,0.007143,75.206,3,0,3,-2
+"Alleghany, Virginia",51005,Confirmed (per 100k),33.647,0.961,0.028571,19.753,3,0,3,3
+"Stanly, North Carolina",37167,Confirmed (per 100k),33.436,0.910,0.027211,22.179,3,0,3,-2
+"Mitchell, North Carolina",37121,Confirmed (per 100k),33.414,0.955,0.028571,21.139,3,0,3,-2
+"Orleans, Vermont",50019,Confirmed (per 100k),33.288,0.528,0.015873,39.855,3,0,3,3
+"Placer, California",6061,Confirmed (per 100k),33.138,0.287,0.008658,78.238,3,0,3,0
+"Forsyth, North Carolina",37067,Confirmed (per 100k),32.959,0.411,0.012472,54.222,3,0,3,0
+"Mason, Washington",53045,Confirmed (per 100k),32.950,0.642,0.019481,32.461,3,0,3,0
+"Otero, Colorado",8089,Confirmed (per 100k),32.826,0.782,0.023810,25.298,3,0,3,3
+"Yamhill, Oregon",41071,Confirmed (per 100k),32.680,0.667,0.020408,31.814,3,0,3,0
+"Chaves, New Mexico",35005,Confirmed (per 100k),32.500,0.442,0.013605,47.133,3,0,3,0
+"Chippewa, Wisconsin",55017,Confirmed (per 100k),32.479,0.221,0.006803,98.080,3,0,3,0
+"Deschutes, Oregon",41017,Confirmed (per 100k),32.374,0.723,0.022321,28.140,3,0,3,0
+"Kenai Peninsula, Alaska",2122,Confirmed (per 100k),32.364,0.973,0.030075,19.926,3,0,3,0
+"Thurston, Washington",53067,Confirmed (per 100k),32.354,0.590,0.018237,34.367,3,0,3,0
+"Androscoggin, Maine",23001,Confirmed (per 100k),32.325,0.924,0.028571,21.634,3,0,3,-1
+"Wabash, Indiana",18169,Confirmed (per 100k),32.262,0.922,0.028571,19.059,3,0,3,0
+"Hamilton, Tennessee",47065,Confirmed (per 100k),32.082,0.350,0.010896,59.648,3,0,3,0
+"Montgomery, Kentucky",21173,Confirmed (per 100k),31.964,0.507,0.015873,41.241,3,0,3,-1
+"Missoula, Montana",30063,Confirmed (per 100k),31.773,0.956,0.030075,19.579,3,0,3,0
+"Augusta, Virginia",51015,Confirmed (per 100k),31.764,0.945,0.029762,18.228,3,0,3,0
+"Jefferson, Kansas",20087,Confirmed (per 100k),31.508,0.750,0.023810,25.991,3,0,3,0
+"Los Alamos, New Mexico",35028,Confirmed (per 100k),30.977,0.738,0.023810,27.378,3,0,3,-2
+"Kootenai, Idaho",16055,Confirmed (per 100k),30.779,0.517,0.016807,38.007,3,0,3,0
+"Crow Wing, Minnesota",27035,Confirmed (per 100k),30.743,0.659,0.021429,27.378,3,0,3,0
+"Greene, Missouri",29077,Confirmed (per 100k),30.708,0.536,0.017460,36.515,3,0,3,0
+"Yavapai, Arizona",4025,Confirmed (per 100k),30.625,0.547,0.017857,37.313,3,0,3,0
+"Lawrence, Alabama",1079,Confirmed (per 100k),30.373,0.434,0.014286,39.855,3,0,3,3
+"Benton, Oregon",41003,Confirmed (per 100k),30.090,0.614,0.020408,30.844,3,0,3,0
+"Winneshiek, Iowa",19191,Confirmed (per 100k),30.014,0.715,0.023810,24.605,3,0,3,3
+"Whitman, Washington",53075,Confirmed (per 100k),29.938,0.855,0.028571,21.139,3,0,3,0
+"Obion, Tennessee",47131,Confirmed (per 100k),29.931,0.950,0.031746,19.753,3,0,3,-2
+"Mecosta, Michigan",26107,Confirmed (per 100k),29.917,0.329,0.010989,55.104,3,0,3,0
+"Tippecanoe, Indiana",18157,Confirmed (per 100k),29.632,0.803,0.027094,21.832,3,0,3,0
+"McLennan, Texas",48309,Confirmed (per 100k),29.615,0.390,0.013158,50.946,3,0,3,0
+"Kendall, Texas",48259,Confirmed (per 100k),29.517,0.904,0.030612,21.139,3,0,3,-1
+"Halifax, Virginia",51083,Confirmed (per 100k),29.489,0.421,0.014286,35.003,3,0,3,0
+"Sarpy, Nebraska",31153,Confirmed (per 100k),29.381,0.916,0.031169,18.540,3,0,3,0
+"Lincoln, Tennessee",47103,Confirmed (per 100k),29.099,0.831,0.028571,21.832,3,0,3,0
+"Medina, Texas",48325,Confirmed (per 100k),29.079,0.554,0.019048,33.963,3,0,3,-2
+"New Hanover, North Carolina",37129,Confirmed (per 100k),29.001,0.548,0.018908,34.772,3,0,3,0
+"Cowlitz, Washington",53015,Confirmed (per 100k),28.935,0.775,0.026786,21.139,3,0,3,0
+"Penobscot, Maine",23019,Confirmed (per 100k),28.919,0.845,0.029221,20.061,3,0,3,0
+"Dakota, Minnesota",27037,Confirmed (per 100k),28.903,0.699,0.024194,24.176,3,0,3,0
+"Huntingdon, Pennsylvania",42061,Confirmed (per 100k),28.797,0.949,0.032967,18.828,3,0,3,-2
+"Sullivan, Tennessee",47163,Confirmed (per 100k),28.418,0.722,0.025397,26.165,3,0,3,0
+"McIntosh, Georgia",13191,Confirmed (per 100k),27.820,0.994,0.035714,16.980,3,0,3,0
+"Kosciusko, Indiana",18085,Confirmed (per 100k),27.688,0.719,0.025974,24.432,3,0,3,0
+"Hood, Texas",48221,Confirmed (per 100k),27.578,0.927,0.033613,18.540,3,0,3,-2
+"Comal, Texas",48091,Confirmed (per 100k),27.527,0.549,0.019934,33.270,3,0,3,0
+"Iron, Utah",49021,Confirmed (per 100k),27.353,0.521,0.019048,33.270,3,0,3,0
+"Hill, Texas",48217,Confirmed (per 100k),27.286,0.780,0.028571,21.486,3,0,3,0
+"Catawba, North Carolina",37035,Confirmed (per 100k),26.951,0.895,0.033223,18.782,3,0,3,-2
+"Williams, North Dakota",38105,Confirmed (per 100k),26.604,0.760,0.028571,20.446,3,0,3,0
+"Page, Iowa",19145,Confirmed (per 100k),26.478,0.946,0.035714,14.900,3,0,3,3
+"Sevier, Tennessee",47155,Confirmed (per 100k),26.463,0.436,0.016484,36.158,3,0,3,1
+"Williamson, Texas",48491,Confirmed (per 100k),26.247,0.919,0.035023,16.524,3,0,3,0
+"Marshall, West Virginia",54051,Confirmed (per 100k),26.203,0.936,0.035714,16.980,3,0,3,0
+"St. Louis, Minnesota",27137,Confirmed (per 100k),26.121,0.718,0.027473,20.792,3,0,3,0
+"Lewis, Washington",53041,Confirmed (per 100k),26.020,0.354,0.013605,45.400,3,0,3,1
+"Lauderdale, Alabama",1077,Confirmed (per 100k),25.882,0.308,0.011905,54.065,3,0,3,0
+"Platte, Missouri",29165,Confirmed (per 100k),25.858,0.274,0.010582,63.769,3,0,3,0
+"Iowa, Wisconsin",55049,Confirmed (per 100k),25.340,0.603,0.023810,25.991,3,0,3,-2
+"Jasper, Texas",48241,Confirmed (per 100k),25.331,0.804,0.031746,18.020,3,0,3,0
+"Brunswick, North Carolina",37019,Confirmed (per 100k),25.207,0.200,0.007937,85.950,3,0,3,0
+"Crawford, Missouri",29055,Confirmed (per 100k),25.084,0.597,0.023810,25.991,3,0,3,0
+"Perry, Ohio",39127,Confirmed (per 100k),24.907,0.395,0.015873,39.855,3,0,3,0
+"Nueces, Texas",48355,Confirmed (per 100k),24.842,0.552,0.022222,28.715,3,0,3,0
+"Putnam, West Virginia",54079,Confirmed (per 100k),24.801,0.759,0.030612,20.677,3,0,3,-1
+"Pottawatomie, Kansas",20149,Confirmed (per 100k),24.607,0.586,0.023810,25.298,3,0,3,3
+"Midland, Texas",48329,Confirmed (per 100k),24.317,0.808,0.033223,17.742,3,0,3,0
+"Roanoke City, Virginia",51770,Confirmed (per 100k),24.207,0.576,0.023810,27.378,3,0,3,-2
+"Oxford, Maine",23017,Confirmed (per 100k),24.148,0.246,0.010204,63.422,3,0,3,3
+"Conway, Arkansas",5029,Confirmed (per 100k),23.985,0.685,0.028571,22.526,3,0,3,0
+"La Paz, Arizona",4012,Confirmed (per 100k),23.688,0.677,0.028571,22.526,3,0,3,0
+"Monroe, Tennessee",47123,Confirmed (per 100k),23.633,0.614,0.025974,21.832,3,0,3,0
+"Clay, Missouri",29047,Confirmed (per 100k),23.605,0.514,0.021792,28.379,3,0,3,0
+"Seneca, Ohio",39147,Confirmed (per 100k),23.560,0.777,0.032967,16.980,3,0,3,0
+"Lyon, Minnesota",27083,Confirmed (per 100k),23.553,0.561,0.023810,25.991,3,0,3,0
+"Atascosa, Texas",48013,Confirmed (per 100k),23.459,0.838,0.035714,15.362,3,0,3,0
+"Transylvania, North Carolina",37175,Confirmed (per 100k),23.266,0.415,0.017857,30.151,3,0,3,3
+"Lincoln, North Carolina",37109,Confirmed (per 100k),23.226,0.829,0.035714,16.702,3,0,3,-2
+"Greene, Ohio",39057,Confirmed (per 100k),23.086,0.930,0.040293,14.522,3,0,3,-2
+"Jasper, Missouri",29097,Confirmed (per 100k),23.078,0.706,0.030612,21.717,3,0,3,0
+"Bedford, Virginia",51019,Confirmed (per 100k),22.786,0.543,0.023810,26.454,3,0,3,0
+"Elko, Nevada",32007,Confirmed (per 100k),22.737,0.271,0.011905,55.104,3,0,3,0
+"Madison, Kentucky",21151,Confirmed (per 100k),22.584,0.461,0.020408,32.692,3,0,3,-2
+"Washington, Arkansas",5143,Confirmed (per 100k),22.576,0.538,0.023810,23.527,3,0,3,0
+"Williamson, Illinois",17199,Confirmed (per 100k),22.524,0.858,0.038095,14.207,3,0,3,0
+"Benton, Arkansas",5007,Confirmed (per 100k),22.211,0.716,0.032258,20.446,3,0,3,0
+"Young, Texas",48503,Confirmed (per 100k),22.210,0.793,0.035714,16.980,3,0,3,0
+"Mississippi, Arkansas",5093,Confirmed (per 100k),22.140,0.351,0.015873,36.389,3,0,3,0
+"Union, Ohio",39159,Confirmed (per 100k),22.038,0.484,0.021978,27.378,3,0,3,0
+"Alcorn, Mississippi",28003,Confirmed (per 100k),21.649,0.387,0.017857,34.310,3,0,3,3
+"Oconee, South Carolina",45073,Confirmed (per 100k),21.371,0.539,0.025210,23.450,3,0,3,0
+"Van Zandt, Texas",48467,Confirmed (per 100k),21.205,0.505,0.023810,25.991,3,0,3,0
+"Platte, Nebraska",31141,Confirmed (per 100k),20.914,0.427,0.020408,29.457,3,0,3,3
+"Rockingham, North Carolina",37157,Confirmed (per 100k),20.877,0.628,0.030075,20.446,3,0,3,-2
+"Knox, Ohio",39083,Confirmed (per 100k),20.859,0.229,0.010989,50.946,3,0,3,0
+"Anderson, Tennessee",47001,Confirmed (per 100k),20.785,0.742,0.035714,18.540,3,0,3,-1
+"Champaign, Ohio",39021,Confirmed (per 100k),20.573,0.735,0.035714,15.247,3,0,3,3
+"Maverick, Texas",48323,Confirmed (per 100k),20.435,0.730,0.035714,16.980,3,0,3,-1
+"Henry, Virginia",51089,Confirmed (per 100k),19.780,0.565,0.028571,21.139,3,0,3,-2
+"Spencer, Indiana",18147,Confirmed (per 100k),19.727,0.705,0.035714,17.673,3,0,3,-3
+"Chautauqua, New York",36013,Confirmed (per 100k),19.700,0.225,0.011429,58.224,3,0,3,0
+"Gratiot, Michigan",26057,Confirmed (per 100k),19.651,0.351,0.017857,34.310,3,0,3,3
+"Adams, Indiana",18001,Confirmed (per 100k),19.566,0.799,0.040816,14.553,3,0,3,-2
+"Vernon, Missouri",29217,Confirmed (per 100k),19.452,0.695,0.035714,16.980,3,0,3,0
+"Clallam, Washington",53009,Confirmed (per 100k),19.397,0.554,0.028571,22.063,3,0,3,0
+"Clark, Ohio",39023,Confirmed (per 100k),19.391,0.639,0.032967,18.251,3,0,3,-2
+"Jackson, Florida",12063,Confirmed (per 100k),19.391,0.616,0.031746,16.980,3,0,3,-1
+"Logan, Oklahoma",40083,Confirmed (per 100k),18.746,0.595,0.031746,18.366,3,0,3,0
+"Onslow, North Carolina",37133,Confirmed (per 100k),18.693,0.217,0.011583,58.108,3,0,3,0
+"Burnet, Texas",48053,Confirmed (per 100k),18.690,0.593,0.031746,16.980,3,0,3,0
+"El Dorado, California",6017,Confirmed (per 100k),18.668,0.296,0.015873,41.934,3,0,3,0
+"Outagamie, Wisconsin",55087,Confirmed (per 100k),18.628,0.456,0.024490,24.952,3,0,3,1
+"Scott, Virginia",51169,Confirmed (per 100k),18.548,0.662,0.035714,15.593,3,0,3,3
+"Douglas, Wisconsin",55031,Confirmed (per 100k),18.540,0.331,0.017857,35.003,3,0,3,3
+"Caldwell, Texas",48055,Confirmed (per 100k),18.322,0.327,0.017857,31.537,3,0,3,0
+"Scott, Minnesota",27139,Confirmed (per 100k),18.119,0.479,0.026455,20.585,3,0,3,0
+"Buncombe, North Carolina",37021,Confirmed (per 100k),17.994,0.547,0.030395,20.307,3,0,3,0
+"Wells, Indiana",18179,Confirmed (per 100k),17.670,0.505,0.028571,21.139,3,0,3,-2
+"Matanuska-Susitna, Alaska",2170,Confirmed (per 100k),17.541,0.528,0.030075,18.540,3,0,3,-1
+"Stevens, Washington",53065,Confirmed (per 100k),17.497,0.312,0.017857,35.003,3,0,3,0
+"Curry, Oregon",41015,Confirmed (per 100k),17.448,0.623,0.035714,15.593,3,0,3,3
+"Eddy, New Mexico",35015,Confirmed (per 100k),17.106,0.489,0.028571,18.020,3,0,3,-1
+"Jefferson, Idaho",16051,Confirmed (per 100k),16.739,0.478,0.028571,21.832,3,0,3,0
+"Upshur, West Virginia",54097,Confirmed (per 100k),16.545,0.591,0.035714,16.287,3,0,3,0
+"Malheur, Oregon",41045,Confirmed (per 100k),16.355,0.467,0.028571,21.832,3,0,3,-3
+"Taney, Missouri",29213,Confirmed (per 100k),16.092,0.511,0.031746,19.753,3,0,3,0
+"Henderson, Texas",48213,Confirmed (per 100k),15.712,0.518,0.032967,18.366,3,0,3,-1
+"Albany, Wyoming",56001,Confirmed (per 100k),15.432,0.367,0.023810,25.991,3,0,3,-1
+"Oceana, Michigan",26127,Confirmed (per 100k),15.113,0.540,0.035714,16.287,3,0,3,0
+"Marion, Iowa",19125,Confirmed (per 100k),15.036,0.430,0.028571,15.593,3,0,3,0
+"Gibson, Indiana",18051,Confirmed (per 100k),14.855,0.424,0.028571,20.446,3,0,3,3
+"Hardee, Florida",12049,Confirmed (per 100k),14.849,0.530,0.035714,16.980,3,0,3,0
+"Isanti, Minnesota",27059,Confirmed (per 100k),14.780,0.352,0.023810,20.446,3,0,3,3
+"Grayson, Texas",48181,Confirmed (per 100k),13.949,0.210,0.015038,44.361,3,0,3,0
+"Clearfield, Pennsylvania",42033,Confirmed (per 100k),13.879,0.361,0.025974,22.179,3,0,3,3
+"Barren, Kentucky",21009,Confirmed (per 100k),13.560,0.323,0.023810,26.685,3,0,3,-3
+"Sherburne, Minnesota",27141,Confirmed (per 100k),13.369,0.441,0.032967,17.904,3,0,3,0
+"Franklin, Illinois",17055,Confirmed (per 100k),12.997,0.371,0.028571,21.139,3,0,3,-1
+"Lane, Oregon",41039,Confirmed (per 100k),12.563,0.411,0.032738,19.312,3,0,3,0
+"Marathon, Wisconsin",55073,Confirmed (per 100k),12.528,0.421,0.033613,18.020,3,0,3,0
+"Howell, Missouri",29091,Confirmed (per 100k),12.464,0.356,0.028571,21.832,3,0,3,0
+"St. Croix, Wisconsin",55109,Confirmed (per 100k),12.130,0.315,0.025974,25.298,3,0,3,-1
+"Warren, Tennessee",47177,Confirmed (per 100k),12.113,0.346,0.028571,19.753,3,0,3,3
+"Baxter, Arkansas",5005,Confirmed (per 100k),11.924,0.341,0.028571,20.446,3,0,3,3
+"Effingham, Illinois",17049,Confirmed (per 100k),11.762,0.420,0.035714,16.980,3,0,3,0
+"Blair, Pennsylvania",42013,Confirmed (per 100k),11.492,0.469,0.040816,15.073,3,0,3,-1
+"Ashland, Ohio",39005,Confirmed (per 100k),11.218,0.267,0.023810,27.378,3,0,3,0
+"Hancock, Maine",23009,Confirmed (per 100k),10.912,0.260,0.023810,25.991,3,0,3,-1
+"Pennington, South Dakota",46103,Confirmed (per 100k),9.668,0.251,0.025974,22.872,3,0,3,0
+"Raleigh, West Virginia",54081,Confirmed (per 100k),9.542,0.389,0.040816,14.900,3,0,3,-1
+"Polk, Wisconsin",55095,Confirmed (per 100k),9.136,0.326,0.035714,16.287,3,0,3,-2
+"White, Arkansas",5145,Confirmed (per 100k),36.824,0.181,0.004926,137.589,2,0,2,-1
+"Dodge, Wisconsin",55027,Confirmed (per 100k),22.769,0.163,0.007143,93.921,2,0,2,-1
+"Jackson, Oregon",41029,Confirmed (per 100k),22.178,0.194,0.008746,76.823,2,0,2,-1
+"Madera, California",6039,Confirmed (per 100k),21.611,0.182,0.008403,80.058,2,0,2,-1
+"Eau Claire, Wisconsin",55035,Confirmed (per 100k),21.023,0.137,0.006494,104.318,2,0,2,0
+"Grand Traverse, Michigan",26055,Confirmed (per 100k),20.411,0.153,0.007519,83.524,2,0,2,0
+"Yuba, California",6115,Confirmed (per 100k),20.339,0.182,0.008929,73.126,2,0,2,2
+"Grays Harbor, Washington",53027,Confirmed (per 100k),15.987,0.190,0.011905,56.491,2,0,2,-2
+"Shasta, California",6089,Confirmed (per 100k),14.438,0.159,0.010989,60.996,2,0,2,0
+"Carver, Minnesota",27019,Confirmed (per 100k),13.322,0.136,0.010204,66.195,2,0,2,-1
+"Vermilion, Illinois",17183,Confirmed (per 100k),11.880,0.189,0.015873,39.855,2,0,2,-1
+"Butte, California",6007,Confirmed (per 100k),7.300,0.130,0.017857,37.429,2,0,2,0
+"Mendocino, California",6045,Confirmed (per 100k),5.764,0.165,0.028571,20.446,2,0,2,2

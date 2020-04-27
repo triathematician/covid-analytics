@@ -1,0 +1,54 @@
+location,fips,metric,value,change (avg),growth rate,doubling time (days),severity (change),severity (growth),severity,severity (trend)
+Iowa,,Confirmed (per 100k),161.391,11.677,0.072354,6.880,5,2,7,1
+Nebraska,,Confirmed (per 100k),140.560,10.856,0.077234,6.232,5,2,7,0
+Massachusetts,,Confirmed (per 100k),774.000,35.185,0.045459,12.334,5,1,6,0
+Rhode Island,,Confirmed (per 100k),672.953,35.574,0.052863,10.481,5,1,6,0
+Illinois,,Confirmed (per 100k),329.684,14.224,0.043144,13.297,5,1,6,0
+Maryland,,Confirmed (per 100k),293.863,12.855,0.043743,13.108,5,1,6,0
+Colorado,,Confirmed (per 100k),225.188,9.727,0.043194,13.320,5,1,6,1
+Mississippi,,Confirmed (per 100k),192.127,8.371,0.043572,13.442,5,1,6,0
+Virginia,,Confirmed (per 100k),144.877,7.219,0.049826,11.283,5,1,6,0
+Ohio,,Confirmed (per 100k),133.346,6.557,0.049171,12.287,5,1,6,0
+New Mexico,,Confirmed (per 100k),126.858,5.873,0.046294,12.160,5,1,6,0
+Kansas,,Confirmed (per 100k),107.609,6.443,0.059877,8.755,5,1,6,0
+North Dakota,,Confirmed (per 100k),105.372,5.155,0.048924,11.736,5,1,6,0
+Arkansas,,Confirmed (per 100k),96.461,5.524,0.057270,9.354,5,1,6,1
+New York,,Confirmed (per 100k),1450.341,37.853,0.026099,24.101,5,0,5,0
+New Jersey,,Confirmed (per 100k),1187.748,38.726,0.032605,18.940,5,0,5,0
+Connecticut,,Confirmed (per 100k),689.510,28.180,0.040870,14.653,5,0,5,-1
+Louisiana,,Confirmed (per 100k),570.298,9.010,0.015799,41.486,5,0,5,0
+District of Columbia,,Confirmed (per 100k),524.124,20.910,0.039895,14.823,5,0,5,-1
+Michigan,,Confirmed (per 100k),371.228,8.988,0.024210,26.026,5,0,5,0
+Delaware,,Confirmed (per 100k),367.235,15.228,0.041467,14.168,5,0,5,-1
+Pennsylvania,,Confirmed (per 100k),321.458,10.602,0.032981,18.465,5,0,5,0
+South Dakota,,Confirmed (per 100k),242.692,9.770,0.040256,14.632,5,0,5,-1
+Georgia,,Confirmed (per 100k),218.716,7.472,0.034161,17.925,5,0,5,0
+Indiana,,Confirmed (per 100k),213.882,7.974,0.037284,15.984,5,0,5,0
+Tennessee,,Confirmed (per 100k),134.555,5.439,0.040421,14.388,5,0,5,1
+Kentucky,,Confirmed (per 100k),87.630,3.863,0.044080,13.287,4,1,5,0
+Wyoming,,Confirmed (per 100k),84.837,4.492,0.052953,10.835,4,1,5,0
+Minnesota,,Confirmed (per 100k),61.103,3.133,0.051281,10.682,4,1,5,0
+Washington,,Confirmed (per 100k),174.907,2.895,0.016550,39.430,4,0,4,0
+Nevada,,Confirmed (per 100k),147.363,4.234,0.028735,21.456,4,0,4,0
+Florida,,Confirmed (per 100k),143.586,3.557,0.024769,25.652,4,0,4,0
+New Hampshire,,Confirmed (per 100k),132.160,4.780,0.036171,16.564,4,0,4,-2
+Utah,,Confirmed (per 100k),123.146,4.594,0.037306,16.032,4,0,4,0
+Alabama,,Confirmed (per 100k),122.900,3.828,0.031151,20.098,4,0,4,0
+Missouri,,Confirmed (per 100k),112.995,3.156,0.027933,22.248,4,0,4,0
+California,,Confirmed (per 100k),107.228,4.294,0.040047,14.895,4,0,4,-1
+Idaho,,Confirmed (per 100k),105.592,1.855,0.017564,36.804,4,0,4,0
+South Carolina,,Confirmed (per 100k),102.025,2.788,0.027331,22.598,4,0,4,0
+Wisconsin,,Confirmed (per 100k),97.674,3.651,0.037378,15.680,4,0,4,0
+Arizona,,Confirmed (per 100k),86.361,3.066,0.035498,16.883,4,0,4,0
+North Carolina,,Confirmed (per 100k),83.600,3.323,0.039755,14.708,4,0,4,0
+Texas,,Confirmed (per 100k),83.298,2.685,0.032229,18.904,4,0,4,0
+Oklahoma,,Confirmed (per 100k),80.718,2.632,0.032606,18.934,4,0,4,0
+Maine,,Confirmed (per 100k),71.789,1.254,0.017469,37.270,4,0,4,0
+West Virginia,,Confirmed (per 100k),56.357,1.794,0.031825,20.107,4,0,4,0
+Oregon,,Confirmed (per 100k),53.417,1.385,0.025934,24.203,4,0,4,0
+Puerto Rico,,Confirmed (per 100k),44.337,1.333,0.030065,21.304,4,0,4,0
+Vermont,,Confirmed (per 100k),135.099,0.916,0.006779,99.553,3,0,3,-1
+Guam,,Confirmed (per 100k),83.543,0.423,0.005066,133.431,3,0,3,0
+Alaska,,Confirmed (per 100k),46.340,0.488,0.010535,63.949,3,0,3,0
+Hawaii,,Confirmed (per 100k),42.730,0.313,0.007320,92.311,3,0,3,0
+Montana,,Confirmed (per 100k),41.636,0.254,0.006100,111.761,3,0,3,0

@@ -1,1 +1,0 @@
-package triathematician.covid19

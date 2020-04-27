@@ -1,0 +1,142 @@
+location,metric,value,change (avg),growth rate,doubling time (days),severity (change),severity (growth),severity,severity (trend)
+Belgium,Deaths (per 100k),35.87,2.80,0.08,5.95,4,2,6,0
+United Kingdom,Deaths (per 100k),17.83,1.25,0.07,6.86,4,2,6,0
+Malta,Deaths (per 100k),0.68,0.10,0.14,2.87,2,4,6,-1
+France,Deaths (per 100k),24.10,1.33,0.06,9.93,4,1,5,0
+Ireland,Deaths (per 100k),8.22,0.55,0.07,6.96,3,2,5,0
+"Bermuda, United Kingdom",Deaths (per 100k),8.03,0.69,0.09,5.65,3,2,5,-2
+US,Deaths (per 100k),7.80,0.55,0.07,6.64,3,2,5,0
+"Quebec, Canada",Deaths (per 100k),5.10,0.40,0.08,4.75,3,2,5,-1
+"Nova Scotia, Canada",Deaths (per 100k),0.31,0.04,0.14,2.41,1,4,5,0
+Martinique,Deaths (per 100k),0.27,0.04,0.14,2.41,1,4,5,-1
+Djibouti,Deaths (per 100k),0.20,0.03,0.14,2.06,1,4,5,-1
+New Zealand,Deaths (per 100k),0.19,0.01,0.06,2.76,1,4,5,1
+San Marino,Deaths (per 100k),106.10,1.26,0.01,55.34,4,0,4,0
+Andorra,Deaths (per 100k),40.12,1.48,0.04,15.25,4,0,4,-1
+Spain,Deaths (per 100k),38.62,1.35,0.03,17.22,4,0,4,0
+"Sint Maarten, Netherlands",Deaths (per 100k),20.99,1.00,0.05,11.90,3,1,4,-2
+Netherlands,Deaths (per 100k),17.19,0.80,0.05,12.31,3,1,4,0
+Switzerland,Deaths (per 100k),13.57,0.62,0.05,12.56,3,1,4,0
+Luxembourg,Deaths (per 100k),11.02,0.64,0.06,9.38,3,1,4,0
+Sweden,Deaths (per 100k),10.23,0.63,0.06,8.50,3,1,4,-1
+Portugal,Deaths (per 100k),5.56,0.31,0.06,9.17,3,1,4,0
+Denmark,Deaths (per 100k),5.16,0.24,0.05,11.84,3,1,4,0
+Austria,Deaths (per 100k),4.26,0.23,0.06,9.88,3,1,4,0
+Germany,Deaths (per 100k),3.93,0.24,0.06,9.03,3,1,4,0
+Canada,Deaths (per 100k),2.37,0.17,0.07,5.92,2,2,4,0
+"Isle of Man, United Kingdom",Deaths (per 100k),2.35,0.17,0.07,6.58,2,2,4,0
+Dominican Republic,Deaths (per 100k),1.69,0.12,0.07,6.77,2,2,4,1
+Hungary,Deaths (per 100k),1.26,0.10,0.08,4.93,2,2,4,0
+Finland,Deaths (per 100k),1.16,0.08,0.07,6.98,2,2,4,1
+"Tasmania, Australia",Deaths (per 100k),1.12,0.08,0.07,5.65,2,2,4,0
+"Alberta, Canada",Deaths (per 100k),1.09,0.07,0.07,6.79,2,2,4,1
+Brazil,Deaths (per 100k),0.72,0.05,0.07,6.17,2,2,4,1
+Peru,Deaths (per 100k),0.70,0.05,0.08,5.94,2,2,4,1
+Poland,Deaths (per 100k),0.69,0.05,0.07,6.32,2,2,4,1
+"Newfoundland and Labrador, Canada",Deaths (per 100k),0.58,0.05,0.10,5.19,2,2,4,-1
+Latvia,Deaths (per 100k),0.27,0.03,0.11,3.63,1,3,4,1
+"South Australia, Australia",Deaths (per 100k),0.23,0.03,0.14,3.11,1,3,4,-1
+Somalia,Deaths (per 100k),0.01,0.00,0.14,2.06,0,4,4,1
+Italy,Deaths (per 100k),34.84,0.93,0.03,22.82,3,0,3,0
+Slovenia,Deaths (per 100k),2.69,0.17,0.06,8.58,2,1,3,-1
+Norway,Deaths (per 100k),2.56,0.15,0.06,9.11,2,1,3,0
+Estonia,Deaths (per 100k),2.34,0.10,0.04,12.74,2,1,3,0
+"Ontario, Canada",Deaths (per 100k),2.27,0.14,0.06,7.25,2,1,3,-1
+Panama,Deaths (per 100k),2.18,0.11,0.05,9.79,2,1,3,0
+North Macedonia,Deaths (per 100k),2.11,0.10,0.05,9.95,2,1,3,0
+Ecuador,Deaths (per 100k),2.09,0.13,0.06,8.12,2,1,3,0
+Bahamas,Deaths (per 100k),2.03,0.11,0.05,11.90,2,1,3,0
+Romania,Deaths (per 100k),1.82,0.12,0.06,8.02,2,1,3,-1
+Turkey,Deaths (per 100k),1.66,0.11,0.07,7.20,2,1,3,-1
+Global,Deaths (per 100k),1.62,0.08,0.05,10.61,2,1,3,0
+Czechia,Deaths (per 100k),1.50,0.09,0.06,8.48,2,1,3,-1
+Israel,Deaths (per 100k),1.42,0.10,0.07,7.15,2,1,3,-1
+Barbados,Deaths (per 100k),1.39,0.10,0.07,8.31,2,1,3,-2
+"British Columbia, Canada",Deaths (per 100k),1.35,0.09,0.06,7.81,2,1,3,0
+"Mayotte, France",Deaths (per 100k),1.10,0.05,0.05,11.43,2,1,3,0
+Moldova,Deaths (per 100k),0.99,0.06,0.06,8.44,2,1,3,-1
+Chile,Deaths (per 100k),0.48,0.03,0.07,6.55,1,2,3,0
+Belarus,Deaths (per 100k),0.35,0.02,0.07,5.67,1,2,3,-1
+United Arab Emirates,Deaths (per 100k),0.28,0.02,0.07,5.64,1,2,3,0
+Mexico,Deaths (per 100k),0.26,0.02,0.09,4.57,1,2,3,-1
+Colombia,Deaths (per 100k),0.25,0.02,0.07,5.67,1,2,3,0
+Bolivia,Deaths (per 100k),0.24,0.02,0.08,5.58,1,2,3,1
+Ukraine,Deaths (per 100k),0.22,0.02,0.08,5.59,1,2,3,0
+Cuba,Deaths (per 100k),0.19,0.02,0.08,5.88,1,2,3,0
+Malawi,Deaths (per 100k),0.01,0.00,0.14,3.11,0,3,3,-2
+"Channel Islands, United Kingdom",Deaths (per 100k),7.48,0.16,0.02,20.10,2,0,2,-2
+Iran,Deaths (per 100k),5.58,0.14,0.03,23.92,2,0,2,0
+Iceland,Deaths (per 100k),2.34,0.08,0.04,16.63,2,0,2,-1
+Serbia,Deaths (per 100k),1.08,0.04,0.04,12.54,1,1,2,0
+Lithuania,Deaths (per 100k),1.07,0.05,0.04,10.28,1,1,2,-2
+Croatia,Deaths (per 100k),0.76,0.03,0.04,10.97,1,1,2,0
+Algeria,Deaths (per 100k),0.74,0.05,0.06,8.41,1,1,2,-1
+Montenegro,Deaths (per 100k),0.64,0.02,0.04,10.74,1,1,2,2
+Armenia,Deaths (per 100k),0.54,0.03,0.05,8.78,1,1,2,0
+Bulgaria,Deaths (per 100k),0.50,0.02,0.04,12.47,1,1,2,0
+Belize,Deaths (per 100k),0.50,0.04,0.07,7.27,1,1,2,-4
+Bahrain,Deaths (per 100k),0.41,0.02,0.04,13.17,1,1,2,0
+Morocco,Deaths (per 100k),0.34,0.02,0.05,10.83,1,1,2,0
+Philippines,Deaths (per 100k),0.31,0.02,0.06,7.14,1,1,2,-1
+"Manitoba, Canada",Deaths (per 100k),0.29,0.02,0.07,7.97,1,1,2,-1
+Tunisia,Deaths (per 100k),0.29,0.01,0.05,10.62,1,1,2,0
+Australia,Deaths (per 100k),0.24,0.01,0.05,12.13,1,1,2,0
+Qatar,Deaths (per 100k),0.24,0.01,0.06,9.82,1,1,2,0
+Argentina,Deaths (per 100k),0.23,0.02,0.07,7.33,1,1,2,0
+Saudi Arabia,Deaths (per 100k),0.21,0.01,0.05,8.61,1,1,2,1
+Egypt,Deaths (per 100k),0.17,0.01,0.06,7.71,1,1,2,-1
+Russia,Deaths (per 100k),0.12,0.01,0.08,4.28,0,2,2,0
+South Korea,Deaths (per 100k),0.10,0.01,0.09,5.15,0,2,2,0
+Oman,Deaths (per 100k),0.08,0.01,0.07,6.93,0,2,2,1
+Kazakhstan,Deaths (per 100k),0.07,0.00,0.06,6.93,0,2,2,1
+Kuwait,Deaths (per 100k),0.07,0.00,0.05,5.19,0,2,2,2
+Mali,Deaths (per 100k),0.06,0.00,0.05,6.86,0,2,2,1
+South Africa,Deaths (per 100k),0.05,0.00,0.08,6.58,0,2,2,0
+India,Deaths (per 100k),0.03,0.00,0.08,5.19,0,2,2,0
+Bangladesh,Deaths (per 100k),0.03,0.00,0.08,4.47,0,2,2,-1
+Haiti,Deaths (per 100k),0.03,0.00,0.10,4.50,0,2,2,-1
+Cote d'Ivoire,Deaths (per 100k),0.02,0.00,0.07,5.88,0,2,2,1
+Sudan,Deaths (per 100k),0.01,0.00,0.06,5.19,0,2,2,2
+Burma,Deaths (per 100k),0.01,0.00,0.11,4.50,0,2,2,-1
+Tanzania,Deaths (per 100k),0.01,0.00,0.10,4.84,0,2,2,-1
+Bosnia and Herzegovina,Deaths (per 100k),1.22,0.04,0.04,17.19,1,0,1,-2
+Cyprus,Deaths (per 100k),0.99,0.01,0.01,53.72,1,0,1,1
+Greece,Deaths (per 100k),0.97,0.03,0.03,21.59,1,0,1,0
+Mauritius,Deaths (per 100k),0.71,0.02,0.03,19.41,1,0,1,0
+"Saskatchewan, Canada",Deaths (per 100k),0.34,0.01,0.04,16.29,1,0,1,0
+"New South Wales, Australia",Deaths (per 100k),0.31,0.01,0.04,15.20,1,0,1,-1
+Singapore,Deaths (per 100k),0.17,0.01,0.04,11.20,0,1,1,1
+Indonesia,Deaths (per 100k),0.17,0.01,0.06,7.48,0,1,1,0
+Burkina Faso,Deaths (per 100k),0.14,0.01,0.04,12.82,0,1,1,0
+Azerbaijan,Deaths (per 100k),0.13,0.01,0.05,9.21,0,1,1,-1
+Liberia,Deaths (per 100k),0.12,0.01,0.07,7.04,0,1,1,-2
+Japan,Deaths (per 100k),0.11,0.00,0.04,12.56,0,1,1,1
+El Salvador,Deaths (per 100k),0.09,0.00,0.05,13.17,0,1,1,0
+Afghanistan,Deaths (per 100k),0.06,0.00,0.06,7.62,0,1,1,-1
+Thailand,Deaths (per 100k),0.06,0.00,0.05,11.28,0,1,1,0
+Pakistan,Deaths (per 100k),0.04,0.00,0.06,8.64,0,1,1,-1
+Hong Kong,Deaths (per 100k),0.04,0.00,0.05,10.05,0,1,1,1
+Guatemala,Deaths (per 100k),0.03,0.00,0.06,8.31,0,1,1,-1
+Ghana,Deaths (per 100k),0.03,0.00,0.05,10.51,0,1,1,0
+Kenya,Deaths (per 100k),0.02,0.00,0.05,11.20,0,1,1,0
+Uzbekistan,Deaths (per 100k),0.01,0.00,0.07,7.62,0,1,1,-1
+Zambia,Deaths (per 100k),0.01,0.00,0.07,7.27,0,1,1,-1
+Nigeria,Deaths (per 100k),0.01,0.00,0.06,7.41,0,1,1,-1
+Ethiopia,Deaths (per 100k),0.00,0.00,0.05,12.13,0,1,1,-2
+"Hubei, China",Deaths (per 100k),5.46,0.00,0.00,1733.68,0,0,0,0
+Albania,Deaths (per 100k),0.83,0.01,0.01,54.76,0,0,0,-1
+"Korea, South",Deaths (per 100k),0.43,0.01,0.02,31.98,0,0,0,0
+Congo (Kinshasa),Deaths (per 100k),0.36,0.01,0.01,46.09,0,0,0,0
+Lebanon,Deaths (per 100k),0.31,0.00,0.01,94.61,0,0,0,0
+Honduras,Deaths (per 100k),0.26,0.00,0.02,37.54,0,0,0,-2
+Malaysia,Deaths (per 100k),0.25,0.01,0.03,22.34,0,0,0,0
+Uruguay,Deaths (per 100k),0.23,0.01,0.04,16.98,0,0,0,0
+"Victoria, Australia",Deaths (per 100k),0.21,0.01,0.04,15.25,0,0,0,-2
+Iraq,Deaths (per 100k),0.19,0.00,0.03,24.36,0,0,0,0
+Paraguay,Deaths (per 100k),0.10,0.00,0.02,26.68,0,0,0,-1
+"Queensland, Australia",Deaths (per 100k),0.10,0.00,0.03,21.14,0,0,0,0
+Kyrgyzstan,Deaths (per 100k),0.08,0.00,0.03,21.83,0,0,0,-2
+Jordan,Deaths (per 100k),0.07,0.00,0.02,32.23,0,0,0,0
+Niger,Deaths (per 100k),0.06,0.00,0.02,27.03,0,0,0,0
+Cameroon,Deaths (per 100k),0.05,0.00,0.03,17.44,0,0,0,0
+Taiwan*,Deaths (per 100k),0.03,0.00,0.02,26.68,0,0,0,0

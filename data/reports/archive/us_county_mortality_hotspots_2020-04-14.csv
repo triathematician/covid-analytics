@@ -1,0 +1,593 @@
+location,metric,value,change (avg),growth rate,doubling time (days),severity (change),severity (growth),severity,severity (trend)
+"Ouray, Colorado",Deaths (per 100k),20.19,2.88,0.14,1.71,4,5,9,0
+"Upson, Georgia",Deaths (per 100k),19.00,1.09,0.06,1.00,4,5,9,0
+"Washington, North Carolina",Deaths (per 100k),17.27,2.47,0.14,1.36,4,5,9,0
+"Hale, Texas",Deaths (per 100k),14.97,2.14,0.14,1.14,4,5,9,1
+"Henrico, Virginia",Deaths (per 100k),12.70,1.73,0.14,1.25,4,5,9,9
+"Alamosa, Colorado",Deaths (per 100k),12.32,1.76,0.14,1.71,4,5,9,0
+"Jones, North Carolina",Deaths (per 100k),10.62,1.52,0.14,1.71,4,5,9,0
+"Burke, Georgia",Deaths (per 100k),8.94,1.28,0.14,1.00,4,5,9,0
+"Randolph, Georgia",Deaths (per 100k),88.52,12.65,0.14,3.45,5,3,8,-1
+"Red River, Louisiana",Deaths (per 100k),23.69,3.38,0.14,2.76,4,4,8,1
+"Jefferson Davis, Louisiana",Deaths (per 100k),22.32,2.73,0.12,2.76,4,4,8,-1
+"Pointe Coupee, Louisiana",Deaths (per 100k),18.41,1.31,0.07,2.76,4,4,8,-1
+"Tallapoosa, Alabama",Deaths (per 100k),17.34,1.42,0.08,2.93,4,4,8,1
+"Van Buren, Arkansas",Deaths (per 100k),12.09,1.73,0.14,2.41,4,4,8,-1
+"Lincoln, Mississippi",Deaths (per 100k),11.71,1.67,0.14,2.76,4,4,8,-1
+"Wilkinson, Georgia",Deaths (per 100k),11.17,1.60,0.14,2.41,4,4,8,-1
+"Johnson, Georgia",Deaths (per 100k),10.37,1.48,0.14,2.41,4,4,8,-1
+"Wyandot, Ohio",Deaths (per 100k),9.19,1.31,0.14,2.41,4,4,8,-1
+"Jerome, Idaho",Deaths (per 100k),8.19,1.17,0.14,2.41,4,4,8,-1
+"Morehouse, Louisiana",Deaths (per 100k),8.04,1.15,0.14,2.41,4,4,8,-1
+"Lamoille, Vermont",Deaths (per 100k),7.89,1.13,0.14,2.41,4,4,8,-1
+"Jefferson, Arkansas",Deaths (per 100k),7.48,0.86,0.11,1.53,3,5,8,0
+"Drew, Arkansas",Deaths (per 100k),5.49,0.78,0.14,1.71,3,5,8,0
+"Monroe, Michigan",Deaths (per 100k),5.32,0.66,0.13,1.91,3,5,8,0
+"Sumner, Kansas",Deaths (per 100k),4.38,0.63,0.14,1.71,3,5,8,0
+"Wayne, Ohio",Deaths (per 100k),4.32,0.62,0.14,1.71,3,5,8,0
+"Allen, Ohio",Deaths (per 100k),3.91,0.56,0.14,1.53,3,5,8,3
+"Clinton, New York",Deaths (per 100k),3.73,0.53,0.14,1.24,3,5,8,0
+"Union, Mississippi",Deaths (per 100k),3.47,0.50,0.14,1.71,3,5,8,0
+"Palo Pinto, Texas",Deaths (per 100k),3.43,0.49,0.14,1.71,3,5,8,0
+"Wexford, Michigan",Deaths (per 100k),2.97,0.42,0.14,1.71,3,5,8,0
+"Nicollet, Minnesota",Deaths (per 100k),2.92,0.42,0.14,1.71,3,5,8,0
+"Cowley, Kansas",Deaths (per 100k),2.86,0.41,0.14,1.71,3,5,8,0
+"Howard, Texas",Deaths (per 100k),2.73,0.39,0.14,1.71,3,5,8,0
+"Champaign, Ohio",Deaths (per 100k),2.57,0.37,0.14,1.71,3,5,8,0
+"Tioga, Pennsylvania",Deaths (per 100k),2.46,0.35,0.14,1.71,3,5,8,0
+"Richmond, North Carolina",Deaths (per 100k),2.23,0.32,0.14,1.71,3,5,8,0
+"Habersham, Georgia",Deaths (per 100k),2.21,0.32,0.14,1.71,3,5,8,0
+"Auglaize, Ohio",Deaths (per 100k),2.19,0.31,0.14,1.71,3,5,8,0
+"Bedford, Pennsylvania",Deaths (per 100k),2.09,0.30,0.14,1.71,3,5,8,0
+"Armstrong, Pennsylvania",Deaths (per 100k),1.54,0.22,0.14,1.71,3,5,8,0
+"Lebanon, Pennsylvania",Deaths (per 100k),1.41,0.20,0.14,1.36,3,5,8,1
+"Terrell, Georgia",Deaths (per 100k),128.94,11.72,0.09,6.28,5,2,7,0
+"Dougherty, Georgia",Deaths (per 100k),88.68,7.47,0.08,6.58,5,2,7,0
+"Mitchell, Georgia",Deaths (per 100k),86.90,9.15,0.11,4.20,5,2,7,-1
+"Nassau, New York",Deaths (per 100k),73.77,7.87,0.11,4.19,5,2,7,-1
+"Westchester, New York",Deaths (per 100k),61.60,5.11,0.08,5.20,5,2,7,-1
+"Early, Georgia",Deaths (per 100k),58.88,7.01,0.12,4.91,5,2,7,-1
+"Warren, New Jersey",Deaths (per 100k),23.75,2.31,0.10,3.88,4,3,7,0
+"East Feliciana, Louisiana",Deaths (per 100k),20.90,1.49,0.07,3.45,4,3,7,-1
+"St. Landry, Louisiana",Deaths (per 100k),19.48,1.57,0.08,3.88,4,3,7,-1
+"Wyandotte, Kansas",Deaths (per 100k),18.13,1.90,0.10,3.42,4,3,7,0
+"Gunnison, Colorado",Deaths (per 100k),17.18,1.64,0.10,3.45,4,3,7,7
+"Hartford, Connecticut",Deaths (per 100k),17.16,1.63,0.10,3.78,4,3,7,0
+"Pearl River, Mississippi",Deaths (per 100k),14.41,1.54,0.11,3.69,4,3,7,-1
+"Philadelphia, Pennsylvania",Deaths (per 100k),13.00,1.31,0.10,3.72,4,3,7,-1
+"McCormick, South Carolina",Deaths (per 100k),10.57,1.51,0.14,3.11,4,3,7,-2
+"Pierce, Georgia",Deaths (per 100k),10.27,1.47,0.14,3.45,4,3,7,-1
+"Franklin, Louisiana",Deaths (per 100k),9.99,0.71,0.07,2.41,3,4,7,-1
+"Hunterdon, New Jersey",Deaths (per 100k),8.84,1.03,0.12,3.34,4,3,7,-2
+"Macon, Tennessee",Deaths (per 100k),8.13,1.16,0.14,3.45,4,3,7,-1
+"Dawson, Texas",Deaths (per 100k),7.86,1.12,0.14,3.11,4,3,7,-2
+"Dawson, Georgia",Deaths (per 100k),7.66,1.09,0.14,3.11,4,3,7,-2
+"Charles, Maryland",Deaths (per 100k),7.35,0.70,0.10,2.67,3,4,7,1
+"Jackson, Illinois",Deaths (per 100k),7.05,0.76,0.11,2.41,3,4,7,2
+"Sussex, Delaware",Deaths (per 100k),6.83,0.73,0.11,2.35,3,4,7,1
+"Shelby, Indiana",Deaths (per 100k),6.71,0.96,0.14,2.41,3,4,7,0
+"Jefferson, Georgia",Deaths (per 100k),6.51,0.93,0.14,2.41,3,4,7,-1
+"Stark, North Dakota",Deaths (per 100k),6.35,0.91,0.14,2.76,3,4,7,-1
+"Smith, Mississippi",Deaths (per 100k),6.28,0.90,0.14,2.41,3,4,7,-1
+"Susquehanna, Pennsylvania",Deaths (per 100k),4.96,0.71,0.14,2.76,3,4,7,-1
+"Tift, Georgia",Deaths (per 100k),4.92,0.70,0.14,2.41,3,4,7,1
+"Owen, Indiana",Deaths (per 100k),4.81,0.69,0.14,2.41,3,4,7,-1
+"Columbia, Pennsylvania",Deaths (per 100k),4.62,0.66,0.14,2.87,3,4,7,0
+"Boulder, Colorado",Deaths (per 100k),4.29,0.39,0.09,2.87,3,4,7,1
+"St. Mary, Louisiana",Deaths (per 100k),4.05,0.58,0.14,2.41,3,4,7,-1
+"Bedford, Tennessee",Deaths (per 100k),4.02,0.29,0.07,2.41,3,4,7,-1
+"Brown, Minnesota",Deaths (per 100k),4.00,0.57,0.14,2.41,3,4,7,-1
+"Sandusky, Ohio",Deaths (per 100k),3.42,0.49,0.14,2.76,3,4,7,-1
+"Clare, Michigan",Deaths (per 100k),3.23,0.46,0.14,2.41,3,4,7,-1
+"Geauga, Ohio",Deaths (per 100k),3.20,0.31,0.10,2.76,3,4,7,-1
+"Warrick, Indiana",Deaths (per 100k),3.17,0.45,0.14,2.41,3,4,7,-1
+"Greene, Indiana",Deaths (per 100k),3.13,0.45,0.14,2.41,3,4,7,-1
+"Wood, Ohio",Deaths (per 100k),3.06,0.44,0.14,2.41,3,4,7,-1
+"Effingham, Illinois",Deaths (per 100k),2.94,0.42,0.14,2.41,3,4,7,-1
+"Livingston, Louisiana",Deaths (per 100k),2.84,0.20,0.07,2.76,3,4,7,7
+"Harris, Georgia",Deaths (per 100k),2.84,0.41,0.14,2.41,3,4,7,-1
+"Sagadahoc, Maine",Deaths (per 100k),2.79,0.40,0.14,2.41,3,4,7,-1
+"Chippewa, Michigan",Deaths (per 100k),2.68,0.38,0.14,2.41,3,4,7,-1
+"St. Louis, Minnesota",Deaths (per 100k),2.51,0.36,0.14,2.27,3,4,7,-1
+"Niagara, New York",Deaths (per 100k),2.39,0.34,0.14,2.83,3,4,7,0
+"Kenosha, Wisconsin",Deaths (per 100k),2.36,0.25,0.11,2.18,3,4,7,3
+"Tazewell, Illinois",Deaths (per 100k),2.28,0.33,0.14,2.64,3,4,7,1
+"Rock Island, Illinois",Deaths (per 100k),2.11,0.30,0.14,2.41,3,4,7,-1
+"Laurens, Georgia",Deaths (per 100k),2.10,0.30,0.14,2.41,3,4,7,-1
+"Muscogee, Georgia",Deaths (per 100k),2.04,0.29,0.14,2.93,3,4,7,-1
+"Grant, Wisconsin",Deaths (per 100k),1.94,0.28,0.14,2.41,3,4,7,-1
+"Edgecombe, North Carolina",Deaths (per 100k),1.94,0.28,0.14,2.41,3,4,7,-1
+"Martin, Florida",Deaths (per 100k),1.86,0.27,0.14,2.41,3,4,7,-1
+"Westmoreland, Pennsylvania",Deaths (per 100k),1.72,0.25,0.14,2.29,3,4,7,-1
+"Garfield, Oklahoma",Deaths (per 100k),1.64,0.23,0.14,2.41,3,4,7,-1
+"Schuylkill, Pennsylvania",Deaths (per 100k),1.41,0.20,0.14,2.41,3,4,7,-1
+"Hancock, Ohio",Deaths (per 100k),1.32,0.19,0.14,1.71,2,5,7,0
+"Yuba, California",Deaths (per 100k),1.27,0.18,0.14,1.71,2,5,7,0
+"Bulloch, Georgia",Deaths (per 100k),1.26,0.18,0.14,1.71,2,5,7,0
+"Porter, Indiana",Deaths (per 100k),1.17,0.17,0.14,1.36,2,5,7,0
+"Brevard, Florida",Deaths (per 100k),1.00,0.14,0.14,1.71,2,5,7,2
+"Wright, Minnesota",Deaths (per 100k),0.72,0.10,0.14,1.71,2,5,7,0
+"Washington, Maryland",Deaths (per 100k),0.66,0.09,0.14,1.71,2,5,7,0
+"Dorchester, South Carolina",Deaths (per 100k),0.61,0.09,0.14,1.71,2,5,7,0
+"Harford, Maryland",Deaths (per 100k),0.39,0.06,0.14,1.71,2,5,7,0
+"Stanislaus, California",Deaths (per 100k),0.36,0.05,0.14,1.36,2,5,7,0
+"St. John the Baptist, Louisiana",Deaths (per 100k),112.05,5.34,0.05,10.78,5,1,6,1
+"Rockland, New York",Deaths (per 100k),80.73,5.35,0.07,7.05,5,1,6,-1
+"Essex, New Jersey",Deaths (per 100k),66.96,4.42,0.07,6.53,4,2,6,0
+"Bergen, New Jersey",Deaths (per 100k),59.00,4.32,0.07,6.24,4,2,6,0
+"Iberville, Louisiana",Deaths (per 100k),52.29,4.39,0.08,5.05,4,2,6,0
+"Wayne, Michigan",Deaths (per 100k),46.87,3.38,0.07,6.47,4,2,6,0
+"Orange, New York",Deaths (per 100k),46.24,3.53,0.08,6.05,4,2,6,0
+"Bienville, Louisiana",Deaths (per 100k),45.31,1.08,0.02,5.19,4,2,6,6
+"Union, New Jersey",Deaths (per 100k),42.78,3.57,0.08,5.37,4,2,6,0
+"Hudson, New Jersey",Deaths (per 100k),41.20,3.06,0.07,5.25,4,2,6,0
+"Suffolk, New York",Deaths (per 100k),41.18,3.57,0.09,5.10,4,2,6,0
+"Morris, New Jersey",Deaths (per 100k),39.04,2.96,0.08,5.88,4,2,6,0
+"Decatur, Indiana",Deaths (per 100k),37.65,3.23,0.09,6.12,4,2,6,0
+"Macomb, Michigan",Deaths (per 100k),33.53,2.29,0.07,6.03,4,2,6,0
+"Passaic, New Jersey",Deaths (per 100k),31.09,2.36,0.08,5.51,4,2,6,0
+"Fairfield, Connecticut",Deaths (per 100k),30.42,2.44,0.08,5.57,4,2,6,0
+"Sussex, New Jersey",Deaths (per 100k),27.76,2.75,0.10,4.34,4,2,6,-1
+"Somerset, New Jersey",Deaths (per 100k),27.67,2.35,0.08,5.50,4,2,6,0
+"Middlesex, New Jersey",Deaths (per 100k),26.18,2.03,0.08,6.36,4,2,6,0
+"Hampden, Massachusetts",Deaths (per 100k),21.87,1.96,0.09,5.46,4,2,6,0
+"Blaine, Idaho",Deaths (per 100k),21.72,1.86,0.09,6.81,4,2,6,0
+"Ascension, Louisiana",Deaths (per 100k),21.33,1.47,0.07,6.53,4,2,6,0
+"Genesee, Michigan",Deaths (per 100k),21.19,1.80,0.08,4.86,4,2,6,-1
+"St. Tammany, Louisiana",Deaths (per 100k),21.12,1.70,0.08,4.12,4,2,6,1
+"Hillsdale, Michigan",Deaths (per 100k),19.73,1.25,0.06,6.41,4,2,6,2
+"Washington, Louisiana",Deaths (per 100k),19.48,1.86,0.10,5.08,4,2,6,-1
+"Mercer, New Jersey",Deaths (per 100k),19.32,1.32,0.07,5.33,4,2,6,-1
+"New Haven, Connecticut",Deaths (per 100k),17.67,1.57,0.09,4.49,4,2,6,-1
+"Randolph, Alabama",Deaths (per 100k),17.60,1.89,0.11,4.50,4,2,6,-1
+"Tuscola, Michigan",Deaths (per 100k),17.23,1.37,0.08,4.08,4,2,6,-1
+"Carroll, Maryland",Deaths (per 100k),17.22,1.53,0.09,5.38,4,2,6,-1
+"Weld, Colorado",Deaths (per 100k),16.95,1.19,0.07,6.24,4,2,6,0
+"Steuben, New York",Deaths (per 100k),16.78,1.05,0.06,4.60,4,2,6,-2
+"Litchfield, Connecticut",Deaths (per 100k),16.08,1.27,0.08,4.63,4,2,6,-1
+"Monroe, Pennsylvania",Deaths (per 100k),15.86,1.09,0.07,6.90,4,2,6,1
+"Coconino, Arizona",Deaths (per 100k),15.33,1.10,0.07,6.26,4,2,6,2
+"Columbia, New York",Deaths (per 100k),15.14,1.44,0.10,4.38,4,2,6,1
+"Dooly, Georgia",Deaths (per 100k),14.94,1.07,0.07,5.19,4,2,6,6
+"Nez Perce, Idaho",Deaths (per 100k),14.85,1.06,0.07,5.65,4,2,6,0
+"Lauderdale, Mississippi",Deaths (per 100k),14.84,1.16,0.08,4.61,4,2,6,-2
+"Marion, Indiana",Deaths (per 100k),14.62,1.27,0.09,4.95,4,2,6,-1
+"Johnson, Indiana",Deaths (per 100k),13.28,1.26,0.10,4.65,4,2,6,-1
+"Middlesex, Connecticut",Deaths (per 100k),12.93,1.06,0.08,5.42,4,2,6,-1
+"Norfolk, Massachusetts",Deaths (per 100k),12.88,1.25,0.10,4.33,4,2,6,-1
+"Essex, Massachusetts",Deaths (per 100k),12.80,1.30,0.10,4.25,4,2,6,-1
+"Portage, Ohio",Deaths (per 100k),12.31,1.06,0.09,4.79,4,2,6,1
+"Winona, Minnesota",Deaths (per 100k),11.88,1.13,0.10,5.54,4,2,6,0
+"Chittenden, Vermont",Deaths (per 100k),11.60,1.22,0.11,4.05,4,2,6,-1
+"Thomas, Georgia",Deaths (per 100k),11.25,0.96,0.09,3.34,3,3,6,-2
+"Cape May, New Jersey",Deaths (per 100k),10.86,0.93,0.09,3.92,3,3,6,-2
+"Plymouth, Massachusetts",Deaths (per 100k),10.55,1.10,0.10,4.60,4,2,6,-2
+"Hancock, Mississippi",Deaths (per 100k),10.50,1.20,0.11,4.32,4,2,6,-2
+"Lapeer, Michigan",Deaths (per 100k),10.27,0.98,0.10,3.92,3,3,6,-1
+"Saginaw, Michigan",Deaths (per 100k),8.92,0.82,0.09,3.17,3,3,6,-1
+"Tangipahoa, Louisiana",Deaths (per 100k),8.16,0.95,0.12,3.03,3,3,6,0
+"Bristol, Massachusetts",Deaths (per 100k),7.61,0.88,0.12,3.80,3,3,6,-1
+"Coffee, Georgia",Deaths (per 100k),6.93,0.99,0.14,3.11,3,3,6,0
+"Calcasieu, Louisiana",Deaths (per 100k),6.88,0.70,0.10,3.04,3,3,6,-1
+"Baker, Florida",Deaths (per 100k),6.85,0.98,0.14,3.45,3,3,6,-1
+"Berks, Pennsylvania",Deaths (per 100k),6.41,0.61,0.10,3.49,3,3,6,-1
+"Floyd, Indiana",Deaths (per 100k),6.37,0.73,0.11,3.45,3,3,6,-1
+"Lawrence, Arkansas",Deaths (per 100k),6.10,0.87,0.14,3.11,3,3,6,-2
+"Franklin, Vermont",Deaths (per 100k),6.07,0.87,0.14,3.11,3,3,6,-2
+"Haywood, Tennessee",Deaths (per 100k),5.78,0.83,0.14,3.11,3,3,6,-2
+"Anne Arundel, Maryland",Deaths (per 100k),5.52,0.52,0.09,3.70,3,3,6,0
+"Waldo, Maine",Deaths (per 100k),5.04,0.72,0.14,3.45,3,3,6,-1
+"Clinton, Michigan",Deaths (per 100k),5.03,0.54,0.11,3.34,3,3,6,1
+"Hempstead, Arkansas",Deaths (per 100k),4.64,0.66,0.14,3.11,3,3,6,-2
+"Christian, Kentucky",Deaths (per 100k),4.26,0.61,0.14,3.11,3,3,6,-2
+"Atlantic, New Jersey",Deaths (per 100k),4.17,0.38,0.09,3.70,3,3,6,-1
+"Crittenden, Arkansas",Deaths (per 100k),4.17,0.60,0.14,3.11,3,3,6,-2
+"Union, Georgia",Deaths (per 100k),4.08,0.58,0.14,3.11,3,3,6,-2
+"Manatee, Florida",Deaths (per 100k),3.97,0.43,0.11,3.92,3,3,6,0
+"Chester, Pennsylvania",Deaths (per 100k),3.81,0.38,0.10,3.45,3,3,6,-1
+"Adams, Mississippi",Deaths (per 100k),3.26,0.47,0.14,3.11,3,3,6,-2
+"Stanly, North Carolina",Deaths (per 100k),3.18,0.23,0.07,3.11,3,3,6,-2
+"Ionia, Michigan",Deaths (per 100k),3.09,0.44,0.14,3.45,3,3,6,-1
+"Clinton, Indiana",Deaths (per 100k),3.09,0.44,0.14,3.11,3,3,6,-2
+"St. Clair, Illinois",Deaths (per 100k),3.08,0.33,0.11,3.80,3,3,6,-1
+"Rutherford, North Carolina",Deaths (per 100k),2.98,0.21,0.07,3.11,3,3,6,-2
+"Marshall, Tennessee",Deaths (per 100k),2.91,0.42,0.14,3.11,3,3,6,-2
+"Bennington, Vermont",Deaths (per 100k),2.82,0.40,0.14,3.11,3,3,6,-2
+"Delta, Michigan",Deaths (per 100k),2.79,0.40,0.14,3.11,3,3,6,-2
+"Williams, Ohio",Deaths (per 100k),2.73,0.39,0.14,3.11,3,3,6,-2
+"Dare, North Carolina",Deaths (per 100k),2.70,0.39,0.14,3.11,3,3,6,-2
+"Cass, Indiana",Deaths (per 100k),2.65,0.38,0.14,3.11,3,3,6,-2
+"Charlotte, Florida",Deaths (per 100k),2.65,0.30,0.11,3.45,3,3,6,-1
+"Galveston, Texas",Deaths (per 100k),2.63,0.29,0.11,3.80,3,3,6,-1
+"Newberry, South Carolina",Deaths (per 100k),2.60,0.37,0.14,3.11,3,3,6,-2
+"Calloway, Kentucky",Deaths (per 100k),2.56,0.37,0.14,3.11,3,3,6,-2
+"Pulaski, Arkansas",Deaths (per 100k),2.55,0.29,0.11,3.80,3,3,6,-1
+"Lewis, Washington",Deaths (per 100k),2.48,0.35,0.14,3.80,3,3,6,-1
+"Preble, Ohio",Deaths (per 100k),2.45,0.35,0.14,3.11,3,3,6,-2
+"Windham, Vermont",Deaths (per 100k),2.37,0.34,0.14,3.11,3,3,6,-2
+"Montgomery, Alabama",Deaths (per 100k),2.21,0.25,0.11,3.45,3,3,6,1
+"Kittitas, Washington",Deaths (per 100k),2.09,0.30,0.14,3.11,3,3,6,-2
+"Forsyth, Georgia",Deaths (per 100k),2.05,0.23,0.11,3.11,3,3,6,1
+"Canadian, Oklahoma",Deaths (per 100k),2.02,0.19,0.10,2.76,2,4,6,6
+"Medina, Texas",Deaths (per 100k),1.94,0.28,0.14,3.11,3,3,6,-2
+"Fairfax, Virginia",Deaths (per 100k),1.74,0.22,0.13,3.72,3,3,6,-1
+"Wayne, North Carolina",Deaths (per 100k),1.62,0.12,0.07,2.41,2,4,6,-1
+"Hamblen, Tennessee",Deaths (per 100k),1.54,0.22,0.14,3.11,3,3,6,-2
+"Laurens, South Carolina",Deaths (per 100k),1.48,0.21,0.14,3.11,3,3,6,-2
+"Orange, North Carolina",Deaths (per 100k),1.35,0.19,0.14,2.06,2,4,6,-1
+"Berkeley, South Carolina",Deaths (per 100k),1.32,0.06,0.05,2.41,2,4,6,-1
+"Ector, Texas",Deaths (per 100k),1.20,0.17,0.14,2.76,2,4,6,1
+"Buchanan, Missouri",Deaths (per 100k),1.14,0.16,0.14,2.41,2,4,6,-1
+"Clay, Missouri",Deaths (per 100k),0.80,0.11,0.14,2.76,2,4,6,1
+"Ottawa, Michigan",Deaths (per 100k),0.69,0.10,0.14,2.41,2,4,6,-1
+"Indian River, Florida",Deaths (per 100k),0.63,0.09,0.14,2.41,2,4,6,-1
+"Brown, Wisconsin",Deaths (per 100k),0.38,0.05,0.14,2.41,2,4,6,-1
+"St. James, Louisiana",Deaths (per 100k),61.62,3.39,0.05,7.83,4,1,5,0
+"Jefferson, Louisiana",Deaths (per 100k),48.56,2.15,0.04,11.74,4,1,5,0
+"Plaquemines, Louisiana",Deaths (per 100k),47.42,3.08,0.06,8.38,4,1,5,-1
+"St. Charles, Louisiana",Deaths (per 100k),47.08,2.69,0.06,10.53,4,1,5,0
+"Sumter, Georgia",Deaths (per 100k),40.64,2.42,0.06,7.13,4,1,5,-1
+"Franklin, Massachusetts",Deaths (per 100k),35.62,2.44,0.07,8.49,4,1,5,0
+"Calhoun, Georgia",Deaths (per 100k),32.32,2.31,0.07,7.97,4,1,5,-1
+"Allen, Louisiana",Deaths (per 100k),31.22,1.11,0.04,13.86,4,1,5,-1
+"Oakland, Michigan",Deaths (per 100k),28.94,1.84,0.06,8.03,4,1,5,-1
+"Tippah, Mississippi",Deaths (per 100k),27.25,1.95,0.07,8.20,4,1,5,-1
+"Ocean, New Jersey",Deaths (per 100k),24.54,1.65,0.07,7.94,4,1,5,-1
+"Monmouth, New Jersey",Deaths (per 100k),23.43,1.50,0.06,7.40,4,1,5,-1
+"Caddo, Louisiana",Deaths (per 100k),23.31,1.07,0.05,8.66,4,1,5,-1
+"Worth, Georgia",Deaths (per 100k),19.76,1.41,0.07,8.31,4,1,5,-1
+"Osage, Oklahoma",Deaths (per 100k),17.03,1.22,0.07,7.10,4,1,5,-1
+"Cleburne, Arkansas",Deaths (per 100k),16.05,1.15,0.07,7.97,4,1,5,-1
+"Berkshire, Massachusetts",Deaths (per 100k),16.01,1.03,0.06,9.66,4,1,5,-1
+"Bartow, Georgia",Deaths (per 100k),15.78,1.19,0.08,7.04,4,1,5,-1
+"East Baton Rouge, Louisiana",Deaths (per 100k),13.18,0.88,0.07,6.96,3,2,5,-1
+"Lackawanna, Pennsylvania",Deaths (per 100k),11.45,0.95,0.08,5.34,3,2,5,-1
+"Cook, Illinois",Deaths (per 100k),11.20,0.93,0.08,5.27,3,2,5,0
+"Will, Illinois",Deaths (per 100k),11.15,0.91,0.08,4.76,3,2,5,-1
+"Suffolk, Massachusetts",Deaths (per 100k),10.70,0.98,0.09,5.13,3,2,5,-1
+"Milwaukee, Wisconsin",Deaths (per 100k),10.68,0.82,0.08,6.24,3,2,5,0
+"Lancaster, Pennsylvania",Deaths (per 100k),10.26,0.34,0.03,6.95,3,2,5,-1
+"District of Columbia, District of Columbia",Deaths (per 100k),9.49,0.57,0.06,6.33,3,2,5,0
+"Middlesex, Massachusetts",Deaths (per 100k),9.24,0.90,0.10,4.69,3,2,5,-1
+"Kay, Oklahoma",Deaths (per 100k),9.19,0.98,0.11,4.50,3,2,5,0
+"Montgomery, Pennsylvania",Deaths (per 100k),9.15,0.81,0.09,4.69,3,2,5,-1
+"Kankakee, Illinois",Deaths (per 100k),9.10,0.65,0.07,6.30,3,2,5,0
+"Linn, Iowa",Deaths (per 100k),8.38,0.57,0.07,5.42,3,2,5,-1
+"Lake, Illinois",Deaths (per 100k),8.33,0.62,0.07,4.68,3,2,5,-1
+"Luzerne, Pennsylvania",Deaths (per 100k),8.19,0.72,0.09,4.02,3,2,5,-1
+"Delaware, Pennsylvania",Deaths (per 100k),8.12,0.66,0.08,5.46,3,2,5,0
+"Camden, New Jersey",Deaths (per 100k),8.10,0.76,0.09,4.32,3,2,5,-1
+"Dearborn, Indiana",Deaths (per 100k),8.09,0.58,0.07,5.54,3,2,5,0
+"Acadia, Louisiana",Deaths (per 100k),8.06,0.69,0.09,5.42,3,2,5,0
+"Hamilton, Indiana",Deaths (per 100k),7.99,0.80,0.10,4.35,3,2,5,-1
+"St. Louis City, Missouri",Deaths (per 100k),7.98,0.62,0.08,5.46,3,2,5,0
+"Putnam, Indiana",Deaths (per 100k),7.98,0.76,0.10,5.19,3,2,5,-1
+"Erie, New York",Deaths (per 100k),7.95,0.56,0.07,6.66,3,2,5,1
+"Dickinson, Michigan",Deaths (per 100k),7.92,0.57,0.07,6.58,3,2,5,0
+"Prince George's, Maryland",Deaths (per 100k),7.92,0.63,0.08,4.88,3,2,5,-1
+"Teller, Colorado",Deaths (per 100k),7.88,0.56,0.07,6.58,3,2,5,0
+"Bossier, Louisiana",Deaths (per 100k),7.87,0.79,0.10,4.79,3,2,5,-1
+"Denver, Colorado",Deaths (per 100k),7.70,0.69,0.09,4.68,3,2,5,0
+"Hancock, Indiana",Deaths (per 100k),7.68,0.73,0.10,4.50,3,2,5,-1
+"Montezuma, Colorado",Deaths (per 100k),7.64,0.55,0.07,5.88,3,2,5,5
+"Barnstable, Massachusetts",Deaths (per 100k),7.51,0.60,0.08,6.58,3,2,5,0
+"Marquette, Michigan",Deaths (per 100k),7.50,0.43,0.06,5.88,3,2,5,1
+"Ulster, New York",Deaths (per 100k),7.32,0.56,0.08,5.39,3,2,5,1
+"Etowah, Alabama",Deaths (per 100k),6.84,0.56,0.08,6.06,3,2,5,0
+"Delaware, New York",Deaths (per 100k),6.80,0.65,0.10,4.50,3,2,5,-1
+"Sumter, Florida",Deaths (per 100k),6.80,0.65,0.10,5.77,3,2,5,0
+"Lubbock, Texas",Deaths (per 100k),6.76,0.46,0.07,4.57,3,2,5,-1
+"Lee, Alabama",Deaths (per 100k),6.69,0.43,0.06,5.88,3,2,5,0
+"DuPage, Illinois",Deaths (per 100k),6.61,0.53,0.08,5.25,3,2,5,0
+"Arapahoe, Colorado",Deaths (per 100k),6.55,0.52,0.08,4.81,3,2,5,-1
+"Bucks, Pennsylvania",Deaths (per 100k),6.53,0.48,0.07,6.35,3,2,5,0
+"Hall, Nebraska",Deaths (per 100k),6.52,0.70,0.11,4.03,3,2,5,-2
+"Hendricks, Indiana",Deaths (per 100k),6.46,0.50,0.08,6.12,3,2,5,0
+"Lake, Indiana",Deaths (per 100k),6.39,0.53,0.08,5.08,3,2,5,-1
+"Lehigh, Pennsylvania",Deaths (per 100k),6.23,0.43,0.07,6.20,3,2,5,0
+"Lafayette, Louisiana",Deaths (per 100k),6.14,0.47,0.08,6.49,3,2,5,0
+"Floyd, Georgia",Deaths (per 100k),6.09,0.44,0.07,6.81,3,2,5,1
+"Jefferson, Kentucky",Deaths (per 100k),6.00,0.47,0.08,4.91,3,2,5,2
+"Worcester, Massachusetts",Deaths (per 100k),5.90,0.53,0.09,5.21,3,2,5,0
+"Panola, Mississippi",Deaths (per 100k),5.85,0.42,0.07,6.58,3,2,5,0
+"Isabella, Michigan",Deaths (per 100k),5.72,0.41,0.07,5.88,3,2,5,1
+"Monroe, Mississippi",Deaths (per 100k),5.67,0.41,0.07,6.58,3,2,5,0
+"Marshall, Mississippi",Deaths (per 100k),5.67,0.40,0.07,6.58,3,2,5,0
+"Washington, Texas",Deaths (per 100k),5.57,0.40,0.07,5.88,3,2,5,5
+"Frederick, Maryland",Deaths (per 100k),5.39,0.44,0.08,4.50,3,2,5,-1
+"St. Louis, Missouri",Deaths (per 100k),5.33,0.42,0.08,4.98,3,2,5,-2
+"Adams, Colorado",Deaths (per 100k),5.22,0.39,0.07,6.03,3,2,5,0
+"Montgomery, Maryland",Deaths (per 100k),5.14,0.39,0.08,5.31,3,2,5,0
+"Henderson, North Carolina",Deaths (per 100k),5.11,0.36,0.07,6.12,3,2,5,-1
+"Medina, Ohio",Deaths (per 100k),5.01,0.40,0.08,5.05,3,2,5,-1
+"Baltimore, Maryland",Deaths (per 100k),4.96,0.35,0.07,4.77,3,2,5,-2
+"Harrison, Indiana",Deaths (per 100k),4.94,0.35,0.07,6.58,3,2,5,0
+"Baltimore City, Maryland",Deaths (per 100k),4.89,0.43,0.09,4.27,3,2,5,-1
+"Livingston, New York",Deaths (per 100k),4.77,0.45,0.10,4.84,3,2,5,1
+"Highlands, Florida",Deaths (per 100k),4.71,0.40,0.09,5.88,3,2,5,0
+"Lee, Mississippi",Deaths (per 100k),4.68,0.33,0.07,6.23,3,2,5,-1
+"Lawrence, Pennsylvania",Deaths (per 100k),4.68,0.33,0.07,6.93,3,2,5,0
+"Citrus, Florida",Deaths (per 100k),4.68,0.48,0.10,4.36,3,2,5,-1
+"Clark, Nevada",Deaths (per 100k),4.68,0.38,0.08,5.90,3,2,5,1
+"Carbon, Pennsylvania",Deaths (per 100k),4.67,0.45,0.10,5.19,3,2,5,-1
+"Miami-Dade, Florida",Deaths (per 100k),4.60,0.38,0.08,4.68,3,2,5,0
+"Ouachita, Louisiana",Deaths (per 100k),4.57,0.37,0.08,4.50,3,2,5,-1
+"Eaton, Michigan",Deaths (per 100k),4.53,0.39,0.09,5.42,3,2,5,1
+"Belmont, Ohio",Deaths (per 100k),4.48,0.21,0.05,6.58,3,2,5,-2
+"Baldwin, Georgia",Deaths (per 100k),4.46,0.32,0.07,5.19,3,2,5,5
+"St. Clair, Michigan",Deaths (per 100k),4.40,0.36,0.08,5.02,3,2,5,2
+"Lauderdale, Alabama",Deaths (per 100k),4.31,0.31,0.07,6.93,3,2,5,0
+"Morgan, Indiana",Deaths (per 100k),4.26,0.41,0.10,5.19,3,2,5,-1
+"Creek, Oklahoma",Deaths (per 100k),4.19,0.40,0.10,5.88,3,2,5,0
+"Pottawatomie, Oklahoma",Deaths (per 100k),4.13,0.39,0.10,4.50,3,2,5,-3
+"Mobile, Alabama",Deaths (per 100k),4.11,0.38,0.09,4.88,3,2,5,0
+"Kent, Delaware",Deaths (per 100k),3.87,0.24,0.06,6.58,3,2,5,3
+"Comal, Texas",Deaths (per 100k),3.84,0.37,0.10,4.32,3,2,5,2
+"Rensselaer, New York",Deaths (per 100k),3.78,0.36,0.10,5.19,3,2,5,-2
+"Gloucester, New Jersey",Deaths (per 100k),3.77,0.29,0.08,6.00,3,2,5,0
+"Hampshire, Massachusetts",Deaths (per 100k),3.73,0.27,0.07,6.35,3,2,5,2
+"Wilson, North Carolina",Deaths (per 100k),3.67,0.35,0.10,6.23,3,2,5,0
+"Los Angeles, California",Deaths (per 100k),3.59,0.25,0.07,6.25,3,2,5,2
+"New Castle, Delaware",Deaths (per 100k),3.58,0.28,0.08,5.57,3,2,5,-1
+"Hawkins, Tennessee",Deaths (per 100k),3.52,0.25,0.07,6.58,3,2,5,0
+"Hardin, Texas",Deaths (per 100k),3.47,0.25,0.07,6.58,3,2,5,0
+"Richmond, Georgia",Deaths (per 100k),3.46,0.21,0.06,5.65,3,2,5,0
+"Douglas, Colorado",Deaths (per 100k),3.42,0.33,0.10,4.67,3,2,5,-1
+"Garfield, Colorado",Deaths (per 100k),3.33,0.24,0.07,6.58,3,2,5,0
+"Burke, North Carolina",Deaths (per 100k),3.32,0.32,0.10,4.84,3,2,5,2
+"Berrien, Michigan",Deaths (per 100k),3.26,0.28,0.09,4.03,3,2,5,1
+"Sarasota, Florida",Deaths (per 100k),3.23,0.23,0.07,6.58,3,2,5,2
+"Hennepin, Minnesota",Deaths (per 100k),3.16,0.23,0.07,6.02,3,2,5,0
+"Livingston, Michigan",Deaths (per 100k),3.13,0.22,0.07,4.50,3,2,5,2
+"Hamilton, Ohio",Deaths (per 100k),2.94,0.21,0.07,5.88,3,2,5,-1
+"Tulare, California",Deaths (per 100k),2.79,0.21,0.08,6.48,3,2,5,1
+"Pima, Arizona",Deaths (per 100k),2.77,0.22,0.08,5.49,3,2,5,2
+"Howard, Maryland",Deaths (per 100k),2.76,0.22,0.08,4.64,3,2,5,1
+"Washoe, Nevada",Deaths (per 100k),2.54,0.24,0.10,5.02,3,2,5,1
+"Multnomah, Oregon",Deaths (per 100k),2.46,0.21,0.09,5.13,3,2,5,-1
+"Jefferson, Texas",Deaths (per 100k),2.39,0.23,0.10,4.84,3,2,5,1
+"Paulding, Georgia",Deaths (per 100k),2.37,0.17,0.07,3.45,2,3,5,-1
+"Fayette, Pennsylvania",Deaths (per 100k),2.32,0.22,0.10,4.15,3,2,5,-2
+"Canyon, Idaho",Deaths (per 100k),2.18,0.25,0.11,4.50,3,2,5,-1
+"Rowan, North Carolina",Deaths (per 100k),2.11,0.20,0.10,4.50,3,2,5,2
+"Allegheny, Pennsylvania",Deaths (per 100k),1.97,0.20,0.10,3.92,2,3,5,-1
+"Dauphin, Pennsylvania",Deaths (per 100k),1.80,0.15,0.09,3.80,2,3,5,0
+"Montgomery, Ohio",Deaths (per 100k),1.50,0.13,0.09,3.66,2,3,5,1
+"Jackson, Georgia",Deaths (per 100k),1.37,0.20,0.14,3.11,2,3,5,-2
+"Cayuga, New York",Deaths (per 100k),1.31,0.19,0.14,3.11,2,3,5,-2
+"Kosciusko, Indiana",Deaths (per 100k),1.26,0.18,0.14,3.11,2,3,5,-2
+"Union, North Carolina",Deaths (per 100k),1.25,0.06,0.05,3.11,2,3,5,-2
+"Loudoun, Virginia",Deaths (per 100k),1.21,0.14,0.11,3.63,2,3,5,-1
+"Hernando, Florida",Deaths (per 100k),1.03,0.15,0.14,3.11,2,3,5,-2
+"Craven, North Carolina",Deaths (per 100k),0.98,0.14,0.14,3.11,2,3,5,-2
+"Adams, Pennsylvania",Deaths (per 100k),0.97,0.14,0.14,3.11,2,3,5,-2
+"Champaign, Illinois",Deaths (per 100k),0.95,0.14,0.14,3.45,2,3,5,-1
+"Hinds, Mississippi",Deaths (per 100k),0.86,0.12,0.14,3.45,2,3,5,-1
+"Tom Green, Texas",Deaths (per 100k),0.84,0.12,0.14,3.11,2,3,5,-2
+"Richland, Ohio",Deaths (per 100k),0.83,0.12,0.14,3.11,2,3,5,-2
+"Saline, Arkansas",Deaths (per 100k),0.82,0.12,0.14,3.11,2,3,5,-2
+"Cameron, Texas",Deaths (per 100k),0.71,0.10,0.14,3.11,2,3,5,-2
+"Wilson, Tennessee",Deaths (per 100k),0.69,0.10,0.14,3.11,2,3,5,-2
+"El Paso, Texas",Deaths (per 100k),0.24,0.03,0.14,2.06,1,4,5,-1
+"Orleans, Louisiana",Deaths (per 100k),70.74,2.67,0.04,14.40,4,0,4,-1
+"Claiborne, Louisiana",Deaths (per 100k),25.53,0.91,0.04,11.43,3,1,4,0
+"Darke, Ohio",Deaths (per 100k),19.56,0.84,0.04,11.66,3,1,4,-2
+"Lee, South Carolina",Deaths (per 100k),17.83,0.85,0.05,12.82,3,1,4,-2
+"Clarendon, South Carolina",Deaths (per 100k),17.78,0.85,0.05,7.27,3,1,4,-3
+"Miami, Ohio",Deaths (per 100k),17.76,0.67,0.04,13.37,3,1,4,0
+"St. Martin, Louisiana",Deaths (per 100k),16.84,0.80,0.05,10.05,3,1,4,0
+"Mahoning, Ohio",Deaths (per 100k),15.31,0.87,0.06,9.35,3,1,4,-2
+"Orange, Indiana",Deaths (per 100k),15.27,0.73,0.05,11.43,3,1,4,-2
+"Chaffee, Colorado",Deaths (per 100k),14.74,0.70,0.05,11.43,3,1,4,0
+"Benton, Washington",Deaths (per 100k),14.19,0.70,0.05,11.09,3,1,4,0
+"Sumner, Tennessee",Deaths (per 100k),14.12,0.82,0.06,8.72,3,1,4,0
+"Marion, Alabama",Deaths (per 100k),13.46,0.96,0.07,7.27,3,1,4,0
+"Lafourche, Louisiana",Deaths (per 100k),13.32,0.88,0.07,9.01,3,1,4,-2
+"Bolivar, Mississippi",Deaths (per 100k),13.06,0.47,0.04,12.82,3,1,4,-1
+"Madison, Indiana",Deaths (per 100k),12.35,0.66,0.05,9.82,3,1,4,0
+"Pawnee, Oklahoma",Deaths (per 100k),12.21,0.87,0.07,7.27,3,1,4,-1
+"Montrose, Colorado",Deaths (per 100k),11.69,0.67,0.06,7.27,3,1,4,-2
+"Ozaukee, Wisconsin",Deaths (per 100k),10.09,0.48,0.05,13.05,3,1,4,0
+"Yakima, Washington",Deaths (per 100k),9.97,0.51,0.05,9.51,3,1,4,-1
+"Northampton, Pennsylvania",Deaths (per 100k),8.19,0.51,0.06,8.53,3,1,4,-1
+"Monroe, New York",Deaths (per 100k),7.55,0.46,0.06,7.59,3,1,4,-1
+"Kershaw, South Carolina",Deaths (per 100k),7.51,0.43,0.06,7.27,3,1,4,-1
+"Clark, Indiana",Deaths (per 100k),6.76,0.48,0.07,8.83,3,1,4,-1
+"Madison, Ohio",Deaths (per 100k),6.71,0.32,0.05,11.43,3,1,4,0
+"Chelan, Washington",Deaths (per 100k),6.48,0.37,0.06,9.01,3,1,4,0
+"Salem, New Jersey",Deaths (per 100k),6.41,0.46,0.07,7.62,3,1,4,-1
+"Burlington, New Jersey",Deaths (per 100k),6.29,0.42,0.07,7.22,3,1,4,-1
+"Palm Beach, Florida",Deaths (per 100k),6.21,0.41,0.07,8.06,3,1,4,-1
+"Nacogdoches, Texas",Deaths (per 100k),6.13,0.22,0.04,12.13,3,1,4,0
+"Cleveland, Oklahoma",Deaths (per 100k),5.99,0.30,0.05,11.78,3,1,4,-1
+"Lucas, Ohio",Deaths (per 100k),5.84,0.30,0.05,9.43,3,1,4,-1
+"Washtenaw, Michigan",Deaths (per 100k),5.71,0.31,0.05,9.01,3,1,4,-1
+"Madison, Nebraska",Deaths (per 100k),5.70,0.41,0.07,7.27,3,1,4,-3
+"El Paso, Colorado",Deaths (per 100k),5.69,0.22,0.04,13.95,3,1,4,0
+"Fulton, Georgia",Deaths (per 100k),5.64,0.32,0.06,8.95,3,1,4,0
+"Yamhill, Oregon",Deaths (per 100k),5.60,0.40,0.07,7.27,3,1,4,-1
+"Jefferson, Colorado",Deaths (per 100k),5.32,0.29,0.06,9.53,3,1,4,0
+"Albany, New York",Deaths (per 100k),5.24,0.28,0.05,8.54,3,1,4,1
+"Brazos, Texas",Deaths (per 100k),5.24,0.37,0.07,7.04,3,1,4,0
+"Carroll, Georgia",Deaths (per 100k),5.00,0.36,0.07,7.04,3,1,4,-1
+"Sequoyah, Oklahoma",Deaths (per 100k),4.81,0.34,0.07,7.97,3,1,4,-1
+"Skagit, Washington",Deaths (per 100k),4.64,0.22,0.05,12.47,3,1,4,0
+"Twin Falls, Idaho",Deaths (per 100k),4.60,0.16,0.04,5.88,2,2,4,4
+"Branch, Michigan",Deaths (per 100k),4.60,0.33,0.07,7.27,3,1,4,-3
+"Kane, Illinois",Deaths (per 100k),4.51,0.24,0.05,10.74,3,1,4,0
+"Broome, New York",Deaths (per 100k),4.20,0.22,0.05,9.82,3,1,4,2
+"Cumberland, Maine",Deaths (per 100k),4.07,0.34,0.08,7.27,3,1,4,-1
+"Broward, Florida",Deaths (per 100k),3.99,0.23,0.06,10.20,3,1,4,-1
+"Navarro, Texas",Deaths (per 100k),3.99,0.29,0.07,7.97,3,1,4,-1
+"Jackson, Alabama",Deaths (per 100k),3.87,0.28,0.07,7.27,3,1,4,-1
+"Cass, Missouri",Deaths (per 100k),3.78,0.14,0.04,6.58,2,2,4,0
+"Windsor, Vermont",Deaths (per 100k),3.63,0.26,0.07,7.97,3,1,4,-1
+"St. Charles, Missouri",Deaths (per 100k),3.48,0.21,0.06,7.97,3,1,4,1
+"Benton, Oregon",Deaths (per 100k),3.22,0.15,0.05,6.58,2,2,4,0
+"Gwinnett, Georgia",Deaths (per 100k),3.10,0.18,0.06,6.41,2,2,4,0
+"Linn, Oregon",Deaths (per 100k),3.08,0.22,0.07,7.97,3,1,4,-1
+"Kalamazoo, Michigan",Deaths (per 100k),3.02,0.22,0.07,7.27,3,1,4,-1
+"Tulsa, Oklahoma",Deaths (per 100k),2.92,0.22,0.08,7.55,3,1,4,1
+"Butler, Pennsylvania",Deaths (per 100k),2.66,0.15,0.06,6.58,2,2,4,1
+"Delaware, Indiana",Deaths (per 100k),2.63,0.13,0.05,6.58,2,2,4,0
+"McHenry, Illinois",Deaths (per 100k),2.60,0.19,0.07,6.06,2,2,4,1
+"Davidson, Tennessee",Deaths (per 100k),2.59,0.19,0.07,6.58,2,2,4,1
+"Lowndes, Georgia",Deaths (per 100k),2.56,0.12,0.05,6.58,2,2,4,0
+"Racine, Wisconsin",Deaths (per 100k),2.55,0.15,0.06,6.23,2,2,4,-2
+"Rock, Wisconsin",Deaths (per 100k),2.45,0.17,0.07,6.23,2,2,4,0
+"Onondaga, New York",Deaths (per 100k),2.39,0.19,0.08,6.00,2,2,4,1
+"Bernalillo, New Mexico",Deaths (per 100k),2.36,0.19,0.08,6.12,2,2,4,1
+"Calhoun, Michigan",Deaths (per 100k),2.24,0.11,0.05,5.19,2,2,4,4
+"Santa Rosa, Florida",Deaths (per 100k),2.17,0.16,0.07,6.23,2,2,4,1
+"Kent, Michigan",Deaths (per 100k),2.13,0.17,0.08,6.15,2,2,4,-2
+"York, Maine",Deaths (per 100k),1.93,0.14,0.07,5.54,2,2,4,0
+"Greenville, South Carolina",Deaths (per 100k),1.91,0.16,0.09,4.03,2,2,4,-1
+"Monongalia, West Virginia",Deaths (per 100k),1.89,0.14,0.07,5.19,2,2,4,4
+"Yolo, California",Deaths (per 100k),1.81,0.13,0.07,5.54,2,2,4,0
+"Maui, Hawaii",Deaths (per 100k),1.79,0.17,0.10,4.15,2,2,4,-4
+"Flagler, Florida",Deaths (per 100k),1.74,0.12,0.07,5.88,2,2,4,4
+"Potter, Texas",Deaths (per 100k),1.70,0.12,0.07,6.58,2,2,4,-3
+"Bexar, Texas",Deaths (per 100k),1.65,0.13,0.08,5.54,2,2,4,0
+"St. Joseph, Indiana",Deaths (per 100k),1.47,0.11,0.07,4.50,2,2,4,-1
+"Randall, Texas",Deaths (per 100k),1.45,0.10,0.07,6.58,2,2,4,-3
+"San Bernardino, California",Deaths (per 100k),1.42,0.12,0.08,5.73,2,2,4,1
+"Winnebago, Illinois",Deaths (per 100k),1.42,0.15,0.11,4.73,2,2,4,-1
+"San Diego, California",Deaths (per 100k),1.41,0.11,0.08,6.58,2,2,4,0
+"Polk, Florida",Deaths (per 100k),1.38,0.10,0.07,6.44,2,2,4,1
+"Ingham, Michigan",Deaths (per 100k),1.37,0.10,0.07,6.58,2,2,4,2
+"Johnson, Iowa",Deaths (per 100k),1.32,0.09,0.07,5.19,2,2,4,4
+"Collier, Florida",Deaths (per 100k),1.30,0.11,0.09,5.42,2,2,4,1
+"Volusia, Florida",Deaths (per 100k),1.27,0.13,0.10,4.64,2,2,4,-1
+"Spartanburg, South Carolina",Deaths (per 100k),1.25,0.13,0.11,4.73,2,2,4,-2
+"Hillsborough, Florida",Deaths (per 100k),1.15,0.11,0.09,4.43,2,2,4,-1
+"Washington, Minnesota",Deaths (per 100k),1.14,0.11,0.10,4.84,2,2,4,-1
+"Midland, Texas",Deaths (per 100k),1.13,0.08,0.07,5.88,2,2,4,4
+"Cass, North Dakota",Deaths (per 100k),1.10,0.08,0.07,6.58,2,2,4,0
+"Lake, Florida",Deaths (per 100k),1.09,0.08,0.07,6.58,2,2,4,0
+"DeSoto, Mississippi",Deaths (per 100k),1.08,0.08,0.07,6.58,2,2,4,0
+"Collin, Texas",Deaths (per 100k),0.97,0.08,0.09,4.84,2,2,4,0
+"Escambia, Florida",Deaths (per 100k),0.94,0.09,0.10,5.88,2,2,4,0
+"York, Pennsylvania",Deaths (per 100k),0.67,0.06,0.10,6.23,2,2,4,0
+"Fresno, California",Deaths (per 100k),0.50,0.06,0.11,4.15,2,2,4,-2
+"Lancaster, Nebraska",Deaths (per 100k),0.31,0.04,0.14,3.11,1,3,4,-2
+"Washington, Iowa",Deaths (per 100k),18.21,0.65,0.04,15.59,3,0,3,0
+"King, Washington",Deaths (per 100k),13.14,0.44,0.03,18.24,3,0,3,-1
+"Tolland, Connecticut",Deaths (per 100k),11.94,0.38,0.03,17.33,3,0,3,-1
+"Sullivan, New York",Deaths (per 100k),11.93,0.38,0.03,16.98,3,0,3,0
+"Ware, Georgia",Deaths (per 100k),11.19,0.40,0.04,17.67,3,0,3,0
+"Eagle, Colorado",Deaths (per 100k),10.88,0.26,0.02,24.61,3,0,3,3
+"Whatcom, Washington",Deaths (per 100k),10.03,0.25,0.02,25.82,3,0,3,-2
+"Island, Washington",Deaths (per 100k),9.40,0.34,0.04,15.59,3,0,3,-1
+"Snohomish, Washington",Deaths (per 100k),9.37,0.26,0.03,21.00,3,0,3,-1
+"Clarke, Georgia",Deaths (per 100k),9.35,0.33,0.04,15.82,3,0,3,0
+"Dutchess, New York",Deaths (per 100k),5.78,0.19,0.03,12.65,2,1,3,-1
+"Rockdale, Georgia",Deaths (per 100k),5.50,0.16,0.03,10.05,2,1,3,3
+"Florence, South Carolina",Deaths (per 100k),5.06,0.21,0.04,14.21,3,0,3,-1
+"Stark, Ohio",Deaths (per 100k),4.59,0.19,0.04,8.52,2,1,3,-2
+"Jackson, Michigan",Deaths (per 100k),4.42,0.18,0.04,10.05,2,1,3,1
+"Clay, Florida",Deaths (per 100k),4.10,0.20,0.05,11.66,2,1,3,1
+"Beaufort, South Carolina",Deaths (per 100k),3.64,0.15,0.04,12.13,2,1,3,-1
+"Allen, Indiana",Deaths (per 100k),3.43,0.19,0.05,7.97,2,1,3,-3
+"Santa Clara, California",Deaths (per 100k),3.11,0.16,0.05,10.97,2,1,3,1
+"Sutter, California",Deaths (per 100k),3.09,0.15,0.05,11.43,2,1,3,-2
+"Daviess, Kentucky",Deaths (per 100k),2.96,0.14,0.05,7.27,2,1,3,-1
+"Shawnee, Kansas",Deaths (per 100k),2.83,0.16,0.06,7.27,2,1,3,0
+"Vigo, Indiana",Deaths (per 100k),2.80,0.13,0.05,10.05,2,1,3,3
+"Shelby, Tennessee",Deaths (per 100k),2.77,0.20,0.07,7.65,2,1,3,-2
+"Summit, Ohio",Deaths (per 100k),2.77,0.13,0.05,12.27,2,1,3,0
+"Lexington, South Carolina",Deaths (per 100k),2.68,0.14,0.05,8.89,2,1,3,0
+"Cuyahoga, Ohio",Deaths (per 100k),2.67,0.10,0.04,11.82,2,1,3,0
+"Forrest, Mississippi",Deaths (per 100k),2.67,0.19,0.07,7.97,2,1,3,-1
+"Johnson, Kansas",Deaths (per 100k),2.66,0.12,0.04,11.16,2,1,3,0
+"New London, Connecticut",Deaths (per 100k),2.64,0.16,0.06,9.35,2,1,3,-2
+"Lake, Ohio",Deaths (per 100k),2.61,0.19,0.07,7.97,2,1,3,-1
+"Jefferson, Alabama",Deaths (per 100k),2.43,0.11,0.04,13.24,2,1,3,0
+"Harrison, Mississippi",Deaths (per 100k),2.40,0.14,0.06,9.35,2,1,3,0
+"Johnston, North Carolina",Deaths (per 100k),2.39,0.14,0.06,10.74,2,1,3,0
+"Oklahoma, Oklahoma",Deaths (per 100k),2.38,0.14,0.06,9.61,2,1,3,0
+"Pueblo, Colorado",Deaths (per 100k),2.37,0.08,0.04,10.74,2,1,3,3
+"Chautauqua, New York",Deaths (per 100k),2.36,0.11,0.05,11.43,2,1,3,-2
+"Lee, Florida",Deaths (per 100k),2.34,0.11,0.05,12.13,2,1,3,0
+"Lorain, Ohio",Deaths (per 100k),2.26,0.14,0.06,7.27,2,1,3,-1
+"Blount, Tennessee",Deaths (per 100k),2.25,0.11,0.05,12.82,2,1,3,-3
+"San Joaquin, California",Deaths (per 100k),2.23,0.09,0.04,13.37,2,1,3,1
+"Waukesha, Wisconsin",Deaths (per 100k),2.23,0.11,0.05,9.35,2,1,3,0
+"Pierce, Washington",Deaths (per 100k),2.21,0.13,0.06,10.48,2,1,3,-1
+"Rockingham, North Carolina",Deaths (per 100k),2.20,0.16,0.07,7.97,2,1,3,-1
+"St. Lucie, Florida",Deaths (per 100k),2.13,0.13,0.06,9.35,2,1,3,0
+"Sacramento, California",Deaths (per 100k),2.13,0.14,0.06,9.26,2,1,3,-2
+"Marshall, Alabama",Deaths (per 100k),2.07,0.15,0.07,7.27,2,1,3,-4
+"Sandoval, New Mexico",Deaths (per 100k),2.04,0.10,0.05,11.43,2,1,3,0
+"Riverside, California",Deaths (per 100k),2.02,0.09,0.05,10.70,2,1,3,-1
+"Cumberland, New Jersey",Deaths (per 100k),2.01,0.10,0.05,12.82,2,1,3,0
+"Ada, Idaho",Deaths (per 100k),1.87,0.09,0.05,7.73,2,1,3,-1
+"Guilford, North Carolina",Deaths (per 100k),1.86,0.13,0.07,7.69,2,1,3,0
+"Rutherford, Tennessee",Deaths (per 100k),1.81,0.13,0.07,7.97,2,1,3,-1
+"Oneida, New York",Deaths (per 100k),1.75,0.06,0.04,12.82,2,1,3,-1
+"Chatham, Georgia",Deaths (per 100k),1.73,0.10,0.06,10.74,2,1,3,0
+"San Francisco, California",Deaths (per 100k),1.70,0.10,0.06,9.35,2,1,3,0
+"Dallas, Texas",Deaths (per 100k),1.59,0.08,0.05,8.36,2,1,3,1
+"Cumberland, Pennsylvania",Deaths (per 100k),1.58,0.06,0.04,11.43,2,1,3,0
+"Sangamon, Illinois",Deaths (per 100k),1.54,0.07,0.05,10.05,2,1,3,3
+"Fort Bend, Texas",Deaths (per 100k),1.48,0.09,0.06,8.24,2,1,3,-2
+"Denton, Texas",Deaths (per 100k),1.47,0.10,0.07,7.27,2,1,3,-1
+"Pinellas, Florida",Deaths (per 100k),1.44,0.07,0.05,10.05,2,1,3,0
+"Tarrant, Texas",Deaths (per 100k),1.38,0.08,0.06,8.49,2,1,3,-1
+"Alameda, California",Deaths (per 100k),1.38,0.09,0.06,8.94,2,1,3,0
+"Franklin, Ohio",Deaths (per 100k),1.37,0.07,0.05,10.62,2,1,3,-1
+"Duval, Florida",Deaths (per 100k),1.36,0.06,0.04,13.17,2,1,3,2
+"Mecklenburg, North Carolina",Deaths (per 100k),1.35,0.06,0.05,9.77,2,1,3,-1
+"Jefferson, Missouri",Deaths (per 100k),1.33,0.06,0.05,11.43,2,1,3,-3
+"Jackson, Missouri",Deaths (per 100k),1.28,0.06,0.05,8.66,2,1,3,-1
+"Ramsey, Minnesota",Deaths (per 100k),1.27,0.08,0.06,7.50,2,1,3,-1
+"Placer, California",Deaths (per 100k),1.26,0.07,0.06,9.35,2,1,3,2
+"Maricopa, Arizona",Deaths (per 100k),1.20,0.07,0.06,9.42,2,1,3,0
+"Davidson, North Carolina",Deaths (per 100k),1.19,0.09,0.07,7.97,2,1,3,-3
+"Ventura, California",Deaths (per 100k),1.18,0.07,0.06,10.05,2,1,3,0
+"Dakota, Minnesota",Deaths (per 100k),1.17,0.07,0.06,8.31,2,1,3,-1
+"Washington, Oregon",Deaths (per 100k),1.16,0.07,0.06,9.35,2,1,3,1
+"Buncombe, North Carolina",Deaths (per 100k),1.15,0.05,0.05,7.27,2,1,3,-1
+"Harris, Texas",Deaths (per 100k),1.10,0.07,0.07,7.13,2,1,3,-1
+"York, South Carolina",Deaths (per 100k),1.07,0.05,0.05,11.43,2,1,3,0
+"Outagamie, Wisconsin",Deaths (per 100k),1.06,0.08,0.07,7.97,2,1,3,-2
+"Forsyth, North Carolina",Deaths (per 100k),1.05,0.07,0.07,7.27,2,1,3,-2
+"Montgomery, Texas",Deaths (per 100k),0.99,0.07,0.07,7.04,2,1,3,1
+"Delaware, Ohio",Deaths (per 100k),0.96,0.07,0.07,7.97,2,1,3,-1
+"Orange, Florida",Deaths (per 100k),0.93,0.05,0.05,11.02,2,1,3,0
+"McLennan, Texas",Deaths (per 100k),0.78,0.06,0.07,7.27,2,1,3,-1
+"Trumbull, Ohio",Deaths (per 100k),6.57,0.14,0.02,19.75,2,0,2,0
+"Houston, Georgia",Deaths (per 100k),5.70,0.18,0.03,16.63,2,0,2,0
+"Cobb, Georgia",Deaths (per 100k),5.39,0.19,0.03,14.97,2,0,2,-2
+"Schenectady, New York",Deaths (per 100k),5.15,0.09,0.02,34.31,2,0,2,2
+"Fayette, Georgia",Deaths (per 100k),4.37,0.12,0.03,19.75,2,0,2,2
+"Clayton, Georgia",Deaths (per 100k),4.11,0.15,0.04,17.44,2,0,2,0
+"Rapides, Louisiana",Deaths (per 100k),3.86,0.11,0.03,21.14,2,0,2,0
+"Sumter, South Carolina",Deaths (per 100k),3.75,0.13,0.04,16.29,2,0,2,0
+"Spokane, Washington",Deaths (per 100k),3.25,0.14,0.04,14.48,2,0,2,-1
+"Clark, Washington",Deaths (per 100k),3.07,0.12,0.04,16.46,2,0,2,-1
+"Webb, Texas",Deaths (per 100k),2.89,0.10,0.04,14.90,2,0,2,2
+"Cherokee, Georgia",Deaths (per 100k),2.71,0.11,0.04,15.25,2,0,2,-1
+"Richland, South Carolina",Deaths (per 100k),2.65,0.10,0.04,14.44,2,0,2,-1
+"Anderson, South Carolina",Deaths (per 100k),2.47,0.07,0.03,22.53,2,0,2,-1
+"Dane, Wisconsin",Deaths (per 100k),2.20,0.08,0.04,18.37,2,0,2,-1
+"Williamson, Tennessee",Deaths (per 100k),2.10,0.06,0.03,16.98,2,0,2,0
+"DeKalb, Georgia",Deaths (per 100k),1.98,0.08,0.04,14.90,2,0,2,-1
+"Henry, Georgia",Deaths (per 100k),1.71,0.06,0.04,14.90,2,0,2,2
+"Contra Costa, California",Deaths (per 100k),0.95,0.05,0.05,10.74,1,1,2,-2
+"Travis, Texas",Deaths (per 100k),0.86,0.03,0.04,12.13,1,1,2,-2
+"Bell, Texas",Deaths (per 100k),0.83,0.04,0.05,12.82,1,1,2,-2
+"Marion, Florida",Deaths (per 100k),0.82,0.04,0.05,10.74,1,1,2,-2
+"Madison, Alabama",Deaths (per 100k),0.80,0.04,0.05,12.82,1,1,2,-2
+"Monterey, California",Deaths (per 100k),0.69,0.03,0.05,12.13,1,1,2,0
+"Honolulu, Hawaii",Deaths (per 100k),0.62,0.03,0.05,11.09,1,1,2,0
+"Sedgwick, Kansas",Deaths (per 100k),0.58,0.03,0.05,7.97,1,1,2,-1
+"Pasco, Florida",Deaths (per 100k),0.54,0.03,0.05,10.74,1,1,2,2
+"Brazoria, Texas",Deaths (per 100k),0.53,0.04,0.07,7.27,1,1,2,-1
+"Seminole, Florida",Deaths (per 100k),0.42,0.03,0.07,7.27,1,1,2,-1
+"Kern, California",Deaths (per 100k),0.33,0.02,0.05,12.13,1,1,2,0
+"Hamilton, Tennessee",Deaths (per 100k),2.99,0.04,0.01,46.79,1,0,1,-1
+"Greene, Missouri",Deaths (per 100k),2.73,0.05,0.02,36.39,1,0,1,0
+"Larimer, Colorado",Deaths (per 100k),2.52,0.04,0.02,40.55,1,0,1,-1
+"Horry, South Carolina",Deaths (per 100k),2.26,0.04,0.02,32.23,1,0,1,-2
+"Osceola, Florida",Deaths (per 100k),1.33,0.04,0.03,21.83,1,0,1,0
+"Orange, California",Deaths (per 100k),0.60,0.02,0.04,16.56,1,0,1,0
