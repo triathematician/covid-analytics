@@ -3,10 +3,10 @@ package tri.util
 import java.text.NumberFormat
 
 /** Format number with given number of digits. */
-internal fun Number.format(digits: Int) = "%.${digits}f".format(this)
+fun Number.format(digits: Int) = "%.${digits}f".format(this)
 
 /** Format a number with digits for presenting to user. */
-internal fun Number.userFormat(): String {
+fun Number.userFormat(): String {
     val x = toDouble()
     return when {
         x >= 10.0 -> toInt().toString()

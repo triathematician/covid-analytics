@@ -11,13 +11,18 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric.
  * Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
-data class MetricTimeSeries(var id: String = "", var id2: String = "", var metric: String = "",
+data class MetricTimeSeries(var group: String = "", var subgroup: String = "", var metric: String = "",
                             var intSeries: Boolean, val defValue: Double = 0.0,
                             var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
-    constructor(id: String, id2: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double) : this(id, id2, metric, false, defValue, start, listOf(value))
-    constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>) : this(id, id2, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
-    constructor(id: String, id2: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int) : this(id, id2, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
+    constructor(group: String, subgroup: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double)
+            : this(group, subgroup, metric, false, defValue, start, listOf(value))
+
+    constructor(group: String, subgroup: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>)
+            : this(group, subgroup, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
+
+    constructor(group: String, subgroup: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int)
+            : this(group, subgroup, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
     @get:JsonIgnore
     val size: Int
@@ -146,14 +151,14 @@ val Collection<MetricTimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.id, it.metric) }
+fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.group, it.metric) }
         .map { it.value.merge() }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge a bunch of separate time series into a single time series object. */
 private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
-    require(s1.id == s2.id)
+    require(s1.group == s2.group)
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)

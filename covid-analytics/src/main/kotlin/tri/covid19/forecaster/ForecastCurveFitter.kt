@@ -92,7 +92,7 @@ class ForecastCurveFitter: (Number) -> Double {
         val forecastDomain = DateRange(day0, JULY1)
         val forecastValues = forecastDomain.map { invoke(it.minus(day0)) }
         val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = day0, values = forecastValues)
-        val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.id, empirical.metric, listOf(series))
+        val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.group, empirical.metric, listOf(series))
 
         return UserForecast(f).apply {
             sigmoidParameters = SigmoidParameters(curve, l.toDouble(), k.toDouble(), x0.toDouble(), v.toDouble())

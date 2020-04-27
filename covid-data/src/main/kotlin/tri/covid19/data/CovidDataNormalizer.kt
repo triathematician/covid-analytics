@@ -1,5 +1,6 @@
 package tri.covid19.data
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import tri.regions.UnitedStates
 import tri.timeseries.MetricTimeSeries
 import tri.timeseries.RegionTimeSeries
@@ -40,7 +41,7 @@ abstract class CovidDataNormalizer {
 
     /** Combine results of multiple files into series grouped by region. */
     open fun processTimeSeries(data: List<MetricTimeSeries>, coerceIncreasing: Boolean = false): List<RegionTimeSeries> {
-        return data.groupBy { it.id }.map { (region, data) ->
+        return data.groupBy { it.group }.map { (region, data) ->
             val metrics = data.regroupAndMerge(coerceIncreasing).filter { it.values.any { it > 0.0 } }
             RegionTimeSeries(region, metrics)
         }
@@ -82,3 +83,6 @@ abstract class CovidDataNormalizer {
     }
 
 }
+
+/** Load forecasts from local data. */
+fun loadTimeSeries(path: String) = DefaultMapper.readValue<List<RegionTimeSeries>>(File(path))

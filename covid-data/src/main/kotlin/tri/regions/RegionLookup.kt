@@ -6,8 +6,12 @@ import tri.timeseries.RegionInfo
 object RegionLookup {
 
     operator fun invoke(id: String): RegionInfo {
-        val found = JhuRegionData.data.firstOrNull { it.combinedKey == id }
-        return found?.toRegionInfo() ?: RegionInfo(id)
+        val useId = when {
+            UnitedStates.stateNames.contains(id) -> "$id, US"
+            else -> id
+        }
+        val found = JhuRegionData.data.firstOrNull { it.combinedKey == useId }
+        return found?.toRegionInfo() ?: RegionInfo(useId)
     }
 
 }

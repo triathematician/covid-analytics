@@ -5,9 +5,8 @@ import org.apache.commons.math3.exception.NoBracketingException
 import tornadofx.asObservable
 import tornadofx.getProperty
 import tornadofx.property
-import tri.covid19.CovidTimeSeriesSources
-import tri.covid19.data.CsseCovid19DailyReports
 import tri.covid19.data.CovidForecasts
+import tri.covid19.data.CovidHistory
 import tri.timeseries.Forecast
 import tri.covid19.data.IHME
 import tri.covid19.data.LANL
@@ -18,6 +17,7 @@ import tri.timeseries.MetricTimeSeries
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
+import triathematician.covid19.CovidTimeSeriesSources
 import java.time.LocalDate
 import java.util.*
 import kotlin.reflect.KMutableProperty1
@@ -101,7 +101,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     /** List of regions available for panel. */
     val regions: SortedSet<String> by lazy {
-        val jhuRegions = CsseCovid19DailyReports.allTimeSeries.map { it.id }.toSet()
+        val jhuRegions = CovidHistory.allData.map { it.group }.toSet()
         val forecastRegions = CovidForecasts.allForecasts.map { it.region }.toSet()
         (jhuRegions + forecastRegions).toSortedSet()
     }
@@ -284,9 +284,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     val PastForecasts.cumulative
         get() = metrics.filter { "predicted" in it.metric && "peak" !in it.metric }
     val PastForecasts.deltas
-        get() = metrics.filter { "predicted peak" in it.id }
+        get() = metrics.filter { "predicted peak" in it.group }
     val PastForecasts.peakDays
-        get() = metrics.filter { "days" in it.id }
+        get() = metrics.filter { "days" in it.group }
 
     val ExternalForecasts.filtered
         get() = forecasts.filter { (showIhme && it.model == IHME || showLanl && it.model == LANL) }.flatMap { it.data }

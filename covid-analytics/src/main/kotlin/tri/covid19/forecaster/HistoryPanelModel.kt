@@ -5,9 +5,6 @@ import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
 import tri.covid19.*
-import tri.covid19.CovidTimeSeriesSources.countryData
-import tri.covid19.CovidTimeSeriesSources.usCountyData
-import tri.covid19.CovidTimeSeriesSources.usStateData
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.covid19.forecaster.utils.series
 import tri.regions.lookupPopulation
@@ -15,6 +12,10 @@ import tri.timeseries.MetricTimeSeries
 import tri.timeseries.dateRange
 import tri.util.DateRange
 import tri.util.javaTrim
+import triathematician.covid19.CovidTimeSeriesSources.countryData
+import triathematician.covid19.CovidTimeSeriesSources.usCountyData
+import triathematician.covid19.CovidTimeSeriesSources.usStateData
+import triathematician.covid19.perCapita
 import java.lang.IllegalStateException
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
@@ -82,10 +83,10 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     /** Get historical data for current config. Matching "includes" are first. */
     internal fun historicalData(): Set<MetricTimeSeries> {
         val sMetrics = data().filter { it.metric == mainPlotMetric }
-                .filter { lookupPopulation(it.id).let { it != null && it >= minPopulation } }
-                .filter { exclude(it.id) }
+                .filter { lookupPopulation(it.group).let { it != null && it >= minPopulation } }
+                .filter { exclude(it.group) }
                 .sortedByDescending { it.lastValue }
-        return (sMetrics.filter { include(it.id) } + sMetrics).take(regionLimit).toSet()
+        return (sMetrics.filter { include(it.group) } + sMetrics).take(regionLimit).toSet()
     }
 
     internal fun data() = when (selectedRegionType.get()) {
@@ -109,12 +110,12 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             metrics = metrics.map { it.deltas() }.toSet()
         }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return domain to metrics.map { series(it.id, domain, it) }
+        return domain to metrics.map { series(it.group, domain, it) }
     }
 
     /** Plot growth vs counts. */
     internal fun hubbertDataSeries() = historicalData().map { it.hubbertSeries(7) }
-            .map { series(it.first.id, it.first.domain.shift(1, 0), it.first, it.second) }
+            .map { series(it.first.group, it.first.domain.shift(1, 0), it.first, it.second) }
 
     //endregion
 }

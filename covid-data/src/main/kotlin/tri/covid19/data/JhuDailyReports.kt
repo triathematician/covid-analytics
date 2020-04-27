@@ -3,9 +3,7 @@ package tri.covid19.data
 import tri.covid19.*
 import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
-import tri.timeseries.RegionTimeSeries
 import tri.timeseries.intTimeSeries
-import tri.timeseries.regroupAndMerge
 import tri.util.csvKeyValues
 import tri.util.toLocalDate
 import java.net.URL
@@ -16,7 +14,9 @@ private val FORMAT1 = DateTimeFormatter.ofPattern("M/d/yy H:mm")
 private val FORMAT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 private val FORMAT3 = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
 private val FORMAT4 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-private val MM_DD_YYYY = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+
+val M_D_YYYY = DateTimeFormatter.ofPattern("M-d-yyyy")
+
 private val FORMATS = arrayOf(FORMAT1, FORMAT2, FORMAT3, FORMAT4)
 
 /** Processes daily time series reports into a unified time series structure. */
@@ -26,7 +26,7 @@ object JhuDailyReports: CovidDataNormalizer() {
 
     override fun readSource(url: URL): List<MetricTimeSeries> {
         val name = url.path.substringAfterLast("/")
-        val date = name.substringBeforeLast(".").toLocalDate(MM_DD_YYYY)
+        val date = name.substringBeforeLast(".").toLocalDate(M_D_YYYY)
 
         val lineReader: (Map<String, String>) -> DailyReportRow = when {
             name < "03-01-2020.csv" -> { m -> m.read1() }
@@ -171,7 +171,7 @@ private fun List<DailyReportRow>.global() = DailyReportRow("", "", "", "Global",
 
 //region population lookups
 
-fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = lookupPopulation(id)) {
+fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = lookupPopulation(group)) {
     null -> null
     else -> (this / (pop.toDouble() / 100000)).also {
         it.intSeries = false

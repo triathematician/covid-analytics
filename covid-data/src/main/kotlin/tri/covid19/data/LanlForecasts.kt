@@ -1,8 +1,11 @@
 package tri.covid19.data
 
-import tri.covid19.DEATHS
+import tri.covid19.*
+import tri.timeseries.ForecastId
 import tri.timeseries.MetricTimeSeries
 import tri.util.csvKeyValues
+import tri.util.toLocalDate
+import java.lang.IllegalStateException
 import java.net.URL
 
 const val LANL = "LANL"
@@ -21,6 +24,12 @@ object LanlForecasts: CovidDataNormalizer() {
                             metricFieldPattern = { it.startsWith("q.") },
                             metricPrefix = "$DEATHS $LANL-$date")
                 }
+    }
+
+    fun forecastId(region: String, fullMetricId: String): ForecastId {
+        val s = fullMetricId.substringAfter(" ").substringBefore(" ")
+        val date = s.substringAfter("-")
+        return ForecastId(LANL, "$date-2000".toLocalDate(M_D_YYYY), region, DEATHS)
     }
 
 }

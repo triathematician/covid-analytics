@@ -4,18 +4,22 @@ import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 object DefaultMapper: ObjectMapper() {
 
     init {
+        registerModule(KotlinModule())
         registerModule(SimpleModule()
                 .addSerializer(LocalDate::class.java, LocalDateSerializer)
                 .addDeserializer(LocalDate::class.java, LocalDateDeserializer))
     }
 
     fun write(x: Any) = writerWithDefaultPrettyPrinter().writeValueAsString(x)
+
+    fun prettyPrint(x: Any) = write(x).also { println(it) }
 
 }
 
