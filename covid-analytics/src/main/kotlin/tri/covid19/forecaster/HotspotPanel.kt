@@ -1,21 +1,20 @@
 package tri.covid19.forecaster
 
 import javafx.beans.property.SimpleStringProperty
-import javafx.event.EventTarget
-import javafx.scene.control.SplitPane
-import javafx.scene.control.TableView
 import javafx.scene.layout.BorderPane
 import tornadofx.*
+import tri.covid19.DEATHS
 import tri.covid19.reports.HotspotInfo
 import tri.covid19.reports.hotspotPerCapitaInfo
+import tri.util.userFormat
 import triathematician.covid19.CovidTimeSeriesSources
-import java.lang.IllegalStateException
 import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
 @ExperimentalTime
 class HotspotPanel: BorderPane() {
 
+    val selectedMetric = SimpleStringProperty(DEATHS).apply { addListener { _ -> updateTableData() } }
     val hotspotData = mutableListOf<HotspotInfo>().asObservable()
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES)
@@ -24,15 +23,18 @@ class HotspotPanel: BorderPane() {
     init {
         top = toolbar {
             combobox(selectedRegionType, regionTypes)
+            combobox(selectedMetric, METRIC_OPTIONS)
         }
         center = scrollpane(fitToWidth = true, fitToHeight = true) {
             tableview(hotspotData) {
                 readonlyColumn("Region", HotspotInfo::region)
+                readonlyColumn("FIPS", HotspotInfo::fips)
                 readonlyColumn("Metric", HotspotInfo::metric)
-                readonlyColumn("Latest", HotspotInfo::dailyChange)
-                readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays)
+                readonlyColumn("Latest", HotspotInfo::dailyChange).cellFormat { text = it.userFormat() }
+                readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays).cellFormat { text = it.userFormat() }
                 readonlyColumn("Severity (#)", HotspotInfo::severityByChange)
                 readonlyColumn("Severity (rate)", HotspotInfo::severityByDoubling)
+                readonlyColumn("Severity (total)", HotspotInfo::totalSeverity)
                 readonlyColumn("Trend", HotspotInfo::severityChange)
             }
         }
@@ -40,10 +42,10 @@ class HotspotPanel: BorderPane() {
     }
 
     private fun updateTableData() {
-        hotspotData.setAll(data().hotspotPerCapitaInfo())
+        hotspotData.setAll(data().hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = 0))
     }
 
-    internal fun data() = when (selectedRegionType.get()) {
+    internal fun data() = when (selectedRegionType.value) {
         COUNTRIES -> CovidTimeSeriesSources.countryData(includeGlobal = false)
         STATES -> CovidTimeSeriesSources.usStateData(includeUS = false)
         COUNTIES -> CovidTimeSeriesSources.usCountyData()
