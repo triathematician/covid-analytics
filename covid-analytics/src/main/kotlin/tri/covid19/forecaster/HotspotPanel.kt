@@ -29,8 +29,12 @@ class HotspotPanel: BorderPane() {
             tableview(hotspotData) {
                 readonlyColumn("Region", HotspotInfo::region)
                 readonlyColumn("FIPS", HotspotInfo::fips)
+                readonlyColumn("Population", HotspotInfo::population)
                 readonlyColumn("Metric", HotspotInfo::metric)
+                readonlyColumn("Total", HotspotInfo::value).cellFormat { text = it.userFormat() }
+                readonlyColumn("(per 100k)", HotspotInfo::valuePerCapita).cellFormat { text = it?.userFormat() }
                 readonlyColumn("Latest", HotspotInfo::dailyChange).cellFormat { text = it.userFormat() }
+                readonlyColumn("(per 100k)", HotspotInfo::dailyChangePerCapita).cellFormat { text = it?.userFormat() }
                 readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays).cellFormat { text = it.userFormat() }
                 readonlyColumn("Severity (#)", HotspotInfo::severityByChange)
                 readonlyColumn("Severity (rate)", HotspotInfo::severityByDoubling)
