@@ -50,8 +50,8 @@ class HotspotPanel: BorderPane() {
     }
 
     internal fun data() = when (selectedRegionType.value) {
-        COUNTRIES -> CovidTimeSeriesSources.countryData(includeGlobal = false)
-        STATES -> CovidTimeSeriesSources.usStateData(includeUS = false)
+        COUNTRIES -> CovidTimeSeriesSources.countryData(includeGlobal = true)
+        STATES -> CovidTimeSeriesSources.usStateData(includeUS = true)
         COUNTIES -> CovidTimeSeriesSources.usCountyData()
         else -> throw IllegalStateException()
     }

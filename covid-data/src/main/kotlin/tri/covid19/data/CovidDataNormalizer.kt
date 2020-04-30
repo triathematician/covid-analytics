@@ -1,6 +1,7 @@
 package tri.covid19.data
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import tri.regions.RegionLookup
 import tri.regions.UnitedStates
 import tri.timeseries.MetricTimeSeries
 import tri.timeseries.RegionTimeSeries
@@ -44,7 +45,7 @@ abstract class CovidDataNormalizer {
     open fun processTimeSeries(data: List<MetricTimeSeries>, coerceIncreasing: Boolean = false): List<RegionTimeSeries> {
         return data.groupBy { it.group }.map { (region, data) ->
             val metrics = data.regroupAndMerge(coerceIncreasing).filter { it.values.any { it > 0.0 } }
-            RegionTimeSeries(region, metrics)
+            RegionTimeSeries(RegionLookup(region, lookupUs = region != "Georgia"), *metrics.toTypedArray())
         }
     }
 

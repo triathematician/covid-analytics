@@ -21,7 +21,7 @@ class JhuRegionInfo(var uid: Int?, var iso2: String, var iso3: String, var code3
                     var region3: String, var region2: String, var region1: String,
                     val latitude: Float?, val longitude: Float?, var combinedKey: String, val pop: Long?) {
 
-    fun toRegionInfo() = RegionInfo(combinedKey, fips, region2, pop, latitude, longitude)
+    fun toRegionInfo() = RegionInfo(combinedKey, fips, combinedKey, pop, latitude, longitude)
 
 }
 
