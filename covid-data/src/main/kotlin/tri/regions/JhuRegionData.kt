@@ -9,7 +9,7 @@ object JhuRegionData {
     val usStates by lazy { data.filter { Fips.usState(it.fips) } }
     val usCounties by lazy { data.filter { Fips.usCounty(it.fips) } }
 
-    private fun loadData() = JhuRegionData::class.java.getResource("resources/UID_ISO_FIPS_LookUp_Table.csv").csvLines()
+    private fun loadData() = JhuRegionData::class.java.getResource("resources/jhu-iso-fips-lookup.csv").csvLines()
                 .map { JhuRegionInfo(it[0].toIntOrNull(), it[1], it[2], it[3].toIntOrNull(), it[4].toIntOrNull(),
                         it[5], it[6], it[7], it[8].toFloatOrNull(), it[9].toFloatOrNull(), it[10], it[11].toLongOrNull()) }
                 .toList()

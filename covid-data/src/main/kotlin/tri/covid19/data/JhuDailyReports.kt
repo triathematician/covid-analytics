@@ -1,6 +1,9 @@
 package tri.covid19.data
 
 import tri.covid19.*
+import tri.regions.CbsaInfo
+import tri.regions.Fips
+import tri.regions.UnitedStates
 import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
 import tri.timeseries.intTimeSeries
@@ -146,14 +149,21 @@ private val COUNTRIES_TO_NOT_AGGREGATE = listOf("United Kingdom", "Netherlands",
 
 /** Add state and country aggregate information to the rows. */
 fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
+    val cbsaAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
+            .groupBy { UnitedStates.cbsa(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", emptyList()) }
+            .mapValues { it.value.sumWithinCbsa(it.key) }.values
     val stateAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
             .groupBy { it.Province_State + "__" + it.Country_Region }
             .mapValues { it.value.sumWithinState() }.values
     val countryAggregates = filter { it.isWithinCountryData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
             .groupBy { it.Country_Region }
             .mapValues { it.value.sumWithinCountry() }.values
-    return this + stateAggregates + countryAggregates + global()
+    return this + cbsaAggregates + stateAggregates + countryAggregates + global()
 }
+
+/** Sums all counts within CBSA. */
+private fun List<DailyReportRow>.sumWithinCbsa(region: CbsaInfo) = DailyReportRow("", "", region.cbsaTitle, first().Country_Region, first().Last_Update, null, null,
+        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active })
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
 private fun List<DailyReportRow>.sumWithinState() = DailyReportRow("", "", first().Province_State, first().Country_Region, first().Last_Update, null, null,
