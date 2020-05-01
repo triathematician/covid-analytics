@@ -3,7 +3,6 @@ package tri.timeseries
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import tri.regions.RegionLookup
 import java.time.LocalDate
 
 /**
@@ -11,11 +10,8 @@ import java.time.LocalDate
  */
 class RegionTimeSeries @JsonCreator constructor(var region: RegionInfo, var metrics: MutableList<MetricInfo> = mutableListOf()) {
 
-    constructor(region: String, metrics: List<MetricTimeSeries>): this(RegionLookup(region)) {
-        metrics.forEach { this += it }
-    }
 
-    constructor(region: String, vararg metrics: MetricTimeSeries): this(RegionLookup(region)) {
+    constructor(region: RegionInfo, vararg metrics: MetricTimeSeries): this(region) {
         metrics.forEach { this += it }
     }
 

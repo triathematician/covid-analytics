@@ -17,7 +17,7 @@ object CovidForecasts {
         }
 
     val lanlForecasts: List<Forecast>
-        get() = loadTimeSeries("../data/normalized/lanl-death-forecasts.json").flatMap { regionData ->
+        get() = loadTimeSeries("../data/normalized/lanl-forecasts.json").flatMap { regionData ->
             regionData.metrics.groupBy { LanlForecasts.forecastId(regionData.region.id, it.id) }.map {
                 Forecast(it.key, it.value)
             }

@@ -179,9 +179,9 @@ class ForecastPanel : SplitPane() {
             else -> "808080"
         }
         val opacity = when {
-            "-0" in name -> "40"
-            "12" in name -> "80"
-            else -> "ff"
+            "4-26" in name || "4-28" in name -> "ff"
+            "4-19" in name || "4-20" in name -> "80"
+            else -> "40"
         }
         return "#$color$opacity"
     }
