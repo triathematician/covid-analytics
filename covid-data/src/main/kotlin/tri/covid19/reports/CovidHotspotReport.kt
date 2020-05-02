@@ -83,7 +83,7 @@ import tri.timeseries.movingAverage
 fun List<MetricTimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,
                                                 minPopulation: Int = 50000,
                                                 valueFilter: (Double) -> Boolean = { it >= 5 }): List<HotspotInfo> {
-    return filter { lookupPopulation(it.group)?.let { it > minPopulation } ?: false }
+    return filter { lookupPopulation(it.group)?.let { it > minPopulation } ?: true }
             .filter { it.metric == metric && valueFilter(it.lastValue) }
             .filter { it.values.movingAverage(5).doublingTimes().lastOrNull()?.isFinite() ?: false }
             .flatMap { it.hotspotPerCapitaInfo() }

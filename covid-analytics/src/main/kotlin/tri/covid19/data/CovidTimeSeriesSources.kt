@@ -3,6 +3,7 @@ package triathematician.covid19
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.data.CovidHistory
+import tri.regions.UnitedStates.stateNames
 import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
 import kotlin.time.ExperimentalTime
@@ -17,9 +18,10 @@ import kotlin.time.measureTimedValue
 val DEATHS_PER_100K = DEATHS.perCapita
 val CASES_PER_100K = CASES.perCapita
 
-internal val US_STATE_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 1 }
-internal val US_COUNTY_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 2 }
-internal val COUNTRY_ID_FILTER: (String) -> Boolean = { !US_STATE_ID_FILTER(it) && !US_COUNTY_ID_FILTER(it) }
+internal val US_STATE_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 1 && it in stateNames }
+internal val US_CBSA_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 2 && it.substringAfter(", ") !in stateNames }
+internal val US_COUNTY_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 2 && it.substringAfter(", ") in stateNames }
+internal val COUNTRY_ID_FILTER: (String) -> Boolean = { !US_STATE_ID_FILTER(it) && !US_COUNTY_ID_FILTER(it) && !US_CBSA_ID_FILTER(it) }
 
 internal val String.perCapita
     get() = "$this (per 100k)"
@@ -33,9 +35,15 @@ object CovidTimeSeriesSources {
     val dailyCountryReports by lazy { dailyReports(COUNTRY_ID_FILTER) }
     val dailyUsCountyReports by lazy { dailyReports(US_COUNTY_ID_FILTER) }
     val dailyUsStateReports by lazy { dailyReports(US_STATE_ID_FILTER) }
+    val dailyUsCbsaReports by lazy { dailyReports(US_CBSA_ID_FILTER) }
 
     /** Easy access to county data. */
     fun usCountyData() = dailyUsCountyReports
+            .map { it.copy(group = it.group.removeSuffix(", US")) }
+            .sortedBy { it.group }
+
+    /** Easy access to county data. */
+    fun usCbsaData() = dailyUsCbsaReports
             .map { it.copy(group = it.group.removeSuffix(", US")) }
             .sortedBy { it.group }
 

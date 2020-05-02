@@ -25,7 +25,7 @@ class CovidForecasterView : View() {
                 this += HistoryPanel()
             }
             item("Hotspots") {
-                this += HotspotPanel()
+                this += HotspotTable()
             }
             val forecastPanel = ForecastPanel()
             item("Forecast Tool") {

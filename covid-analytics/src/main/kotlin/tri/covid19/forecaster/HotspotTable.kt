@@ -12,12 +12,12 @@ import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
 @ExperimentalTime
-class HotspotPanel: BorderPane() {
+class HotspotTable: BorderPane() {
 
     val selectedMetric = SimpleStringProperty(DEATHS).apply { addListener { _ -> updateTableData() } }
     val hotspotData = mutableListOf<HotspotInfo>().asObservable()
 
-    val regionTypes = listOf(COUNTRIES, STATES, COUNTIES)
+    val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> updateTableData() } }
 
     init {
@@ -53,6 +53,7 @@ class HotspotPanel: BorderPane() {
         COUNTRIES -> CovidTimeSeriesSources.countryData(includeGlobal = true)
         STATES -> CovidTimeSeriesSources.usStateData(includeUS = true)
         COUNTIES -> CovidTimeSeriesSources.usCountyData()
+        CBSA -> CovidTimeSeriesSources.usCbsaData()
         else -> throw IllegalStateException()
     }
 

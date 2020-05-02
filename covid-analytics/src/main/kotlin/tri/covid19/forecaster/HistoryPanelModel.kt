@@ -13,6 +13,7 @@ import tri.timeseries.dateRange
 import tri.util.DateRange
 import tri.util.javaTrim
 import triathematician.covid19.CovidTimeSeriesSources.countryData
+import triathematician.covid19.CovidTimeSeriesSources.usCbsaData
 import triathematician.covid19.CovidTimeSeriesSources.usCountyData
 import triathematician.covid19.CovidTimeSeriesSources.usStateData
 import triathematician.covid19.perCapita
@@ -24,13 +25,14 @@ import kotlin.time.ExperimentalTime
 const val COUNTRIES = "Countries and Global Regions"
 const val STATES = "US States and Territories"
 const val COUNTIES = "US Counties"
+const val CBSA = "US CBSA"
 val METRIC_OPTIONS = listOf(CASES, DEATHS, RECOVERED, ACTIVE)
 
 /** UI model for history panel. */
 @ExperimentalTime
 class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
-    val regionTypes = listOf(COUNTRIES, STATES, COUNTIES)
+    val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     var regionLimit by property(10)
     var minPopulation by property(100000)
 
@@ -85,16 +87,17 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     /** Get historical data for current config. Matching "includes" are first. */
     internal fun historicalData(): Set<MetricTimeSeries> {
         val sMetrics = data().filter { it.metric == mainPlotMetric }
-                .filter { lookupPopulation(it.group).let { it != null && it >= minPopulation } }
+                .filter { lookupPopulation(it.group).let { it == null || it >= minPopulation } }
                 .filter { exclude(it.group) }
                 .sortedByDescending { it.lastValue }
         return (sMetrics.filter { include(it.group) } + sMetrics).take(regionLimit).toSet()
     }
 
     internal fun data() = when (selectedRegionType.get()) {
-        COUNTRIES -> countryData(includeGlobal = false)
-        STATES -> usStateData(includeUS = false)
+        COUNTRIES -> countryData(includeGlobal = true)
+        STATES -> usStateData(includeUS = true)
         COUNTIES -> usCountyData()
+        CBSA -> usCbsaData()
         else -> throw IllegalStateException()
     }
 
