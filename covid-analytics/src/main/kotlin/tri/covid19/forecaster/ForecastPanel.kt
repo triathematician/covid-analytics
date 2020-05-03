@@ -14,6 +14,9 @@ import tri.covid19.data.LANL
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.pow
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -98,13 +101,13 @@ class ForecastPanel : SplitPane() {
         }
         center = gridpane {
             row {
-                forecastTotals = linechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
+                forecastTotals = linechartRangedOnFirstSeries("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
                     gridpaneConstraints { vhGrow = Priority.ALWAYS }
                 }
-                forecastDeltas = linechart("Change per Day", "Day", "Actual/Forecast")
+                forecastDeltas = linechartRangedOnFirstSeries("Change per Day", "Day", "Actual/Forecast")
             }
             row {
-                forecastHubbert = linechart("Percent Growth vs Total",
+                forecastHubbert = linechartRangedOnFirstSeries("Percent Growth vs Total",
                         NumberAxis().apply { label = "Total" },
                         NumberAxis().apply {
                             label = "Percent Growth"
@@ -126,10 +129,21 @@ class ForecastPanel : SplitPane() {
 
     /** Plot forecast curves: min/avg/max totals predicted by day for a single region. */
     private fun updateForecasts() {
-        forecastTotals.dataSeries = model.cumulativeDataSeries()
+        val data0 = model.cumulativeDataSeries()
+        val max0 = data0.getOrNull(0)?.maxY()
+//        val maxOther = data0.drop(1).map { it.maxY() ?: 0.0 }.max()
+//        (forecastTotals.yAxis as NumberAxis).limitMaxTo(maxOther, max0, 3.0)
+
+        forecastTotals.dataSeries = data0
         forecastDeltas.dataSeries = model.dailyDataSeries()
         forecastHubbert.dataSeries = model.hubbertDataSeries()
         forecastResiduals.dataSeries = model.residualDataSeries()
+//
+//        val max2 = forecastDeltas.data.getOrNull(0)?.data?.map { it.yValue.toDouble() }?.max()
+//        max2?.let { (forecastTotals.yAxis as NumberAxis).limitMaxTo(3*it) }
+//
+//        val max1 = forecastHubbert.data.getOrNull(0)?.data?.map { it.xValue.toDouble() }?.max()
+//        max1?.let { (forecastTotals.xAxis as NumberAxis).limitMaxTo(3*it) }
 
         model.domain?.let {
             with(axisLabeler(it.start)) {
@@ -169,6 +183,27 @@ class ForecastPanel : SplitPane() {
                     }
                 }
             }
+        }
+    }
+
+    private fun NumberAxis.limitMaxTo(maxOther: Double?, max: Double?, multiplier: Double) {
+        when {
+            max == null || maxOther == null -> isAutoRanging = true
+            maxOther >= max*multiplier -> {
+                isAutoRanging = false
+                lowerBound = 0.0
+                upperBound = (max*multiplier).logRound()
+            }
+            else -> isAutoRanging = true
+        }
+    }
+
+    private fun Double.logRound(): Double {
+        val base = 10.0.pow(floor(log10(this)))
+        return when {
+            base >= this -> base
+            2*base >= this -> 2*base
+            else -> 5*base
         }
     }
 

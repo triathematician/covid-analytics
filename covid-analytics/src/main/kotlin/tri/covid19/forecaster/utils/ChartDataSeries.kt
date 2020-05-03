@@ -4,7 +4,10 @@ import tri.timeseries.MetricTimeSeries
 import tri.util.DateRange
 
 /** A named set of (x,y) data points. */
-data class ChartDataSeries(var id: String, var points: DataPoints)
+data class ChartDataSeries(var id: String, var points: DataPoints) {
+    fun maxX() = points.map { it.first.toDouble() }.max()
+    fun maxY() = points.map { it.second.toDouble() }.max()
+}
 
 /** Construct series from time series, using indices of metric's domain for x values. */
 fun series(id: String, s: MetricTimeSeries) = ChartDataSeries(id, s.domain.mapIndexed { i, d -> i to s.getOrNull(d) }.filterNullValues())

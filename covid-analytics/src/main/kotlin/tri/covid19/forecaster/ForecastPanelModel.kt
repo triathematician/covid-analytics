@@ -221,10 +221,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     /** Load the next US state in alphabetical order. */
     fun goToNextUsState() {
         val states = UnitedStates.stateNames.toSortedSet()
-        val trimRegion = region.removeSuffix(", US")
         region = when {
-            states.contains(trimRegion) -> states.rollAfter(trimRegion) + ", US"
-            else -> states.first() + ", US"
+            states.contains(region) -> states.rollAfter(region)
+            else -> states.first()
         }
         autofit()
     }
@@ -232,10 +231,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     /** Load the next US state in alphabetical order. */
     fun goToPreviousUsState() {
         val states = UnitedStates.stateNames.toSortedSet()
-        val trimRegion = region.removeSuffix(", US")
         region = when {
-            states.contains(trimRegion) -> states.rollBefore(trimRegion) + ", US"
-            else -> states.last() + ", US"
+            states.contains(region) -> states.rollBefore(region)
+            else -> states.last()
         }
         autofit()
     }

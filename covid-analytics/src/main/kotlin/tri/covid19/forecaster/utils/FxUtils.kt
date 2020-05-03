@@ -38,6 +38,19 @@ fun EventTarget.linechart(title: String, xTitle: String, yTitle: String, xLog: B
             (if (yLog) LogAxis() else NumberAxis()).apply { label = yTitle }, op)
 }
 
+/** Creates line chart. */
+fun EventTarget.linechartRangedOnFirstSeries(title: String, xTitle: String, yTitle: String, xLog: Boolean = false, yLog: Boolean = false,
+                          op: LineChart<Number, Number>.() -> Unit = {}): LineChart<Number, Number> {
+    return LineChartOnFirstSeries((if (xLog) LogAxis() else NumberAxis()).apply { label = xTitle },
+            (if (yLog) LogAxis() else NumberAxis()).apply { label = yTitle }, 3.0).attachTo(this, op) { it.title = title }
+}
+
+/** Creates line chart. */
+fun EventTarget.linechartRangedOnFirstSeries(title: String, xAxis: NumberAxis, yAxis: NumberAxis,
+                                             op: LineChart<Number, Number>.() -> Unit = {}): LineChart<Number, Number> {
+    return LineChartOnFirstSeries(xAxis, yAxis, 3.0).attachTo(this, op) { it.title = title }
+}
+
 //endregion
 
 //region LineChart XF
