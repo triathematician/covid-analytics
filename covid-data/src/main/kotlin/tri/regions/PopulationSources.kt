@@ -14,12 +14,12 @@ private const val CANADA_DATA = "resources/canada.csv"
 private const val CHINA_DATA = "resources/china.csv"
 private const val AUSTRALIA_DATA = "resources/australia.csv"
 
-sealed class PopulationLookup(resource: String): (String) -> Long? {
+sealed class PopulationLookupData(resource: String): (String) -> Long? {
     val dataLines = CountyData::class.java.getResource(resource).csvLines().toList()
     val dataTable: MutableMap<String, Long> = mutableMapOf()
 }
 
-object CountyData: PopulationLookup(COUNTY_CENSUS_DATA) {
+object CountyData: PopulationLookupData(COUNTY_CENSUS_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[12].replace(",", "").toLong() } }
 
     override fun invoke(input: String): Long? {
@@ -41,7 +41,7 @@ object CountyData: PopulationLookup(COUNTY_CENSUS_DATA) {
     }
 }
 
-object StateData: PopulationLookup(STATE_CENSUS_DATA) {
+object StateData: PopulationLookupData(STATE_CENSUS_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[12].replace(",", "").toLong() } }
     override fun invoke(input: String) = when (input.split(", ", ",").size) {
         2 -> dataTable[input.removeSuffix(", US").toLowerCase()]
@@ -50,27 +50,27 @@ object StateData: PopulationLookup(STATE_CENSUS_DATA) {
     }
 }
 
-object MetroData: PopulationLookup(METRO_DATA) {
+object MetroData: PopulationLookupData(METRO_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].toLong() } }
     override fun invoke(input: String) = dataTable[input.toLowerCase()]
 }
 
-object CanadaProvinceData: PopulationLookup(CANADA_DATA) {
+object CanadaProvinceData: PopulationLookupData(CANADA_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[5].replace(",", "").toLong() } }
     override fun invoke(input: String) = dataTable[input.removeSuffix(", Canada").toLowerCase()]
 }
 
-object AustraliaData: PopulationLookup(AUSTRALIA_DATA) {
+object AustraliaData: PopulationLookupData(AUSTRALIA_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].toLong() } }
     override fun invoke(input: String) = dataTable[input.removeSuffix(", Australia").toLowerCase()]
 }
 
-object ChinaData: PopulationLookup(CHINA_DATA) {
+object ChinaData: PopulationLookupData(CHINA_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].replace(",", "").toLong() } }
     override fun invoke(input: String) = dataTable[input.removeSuffix(", China").toLowerCase()]
 }
 
-object CountryData: PopulationLookup(COUNTRY_DATA) {
+object CountryData: PopulationLookupData(COUNTRY_DATA) {
     init { dataLines.forEach { dataTable[it[1].toLowerCase()] = it[2].replace(",", "").toLong() } }
 
     override fun invoke(input: String) = when {

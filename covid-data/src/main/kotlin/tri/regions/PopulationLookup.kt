@@ -1,20 +1,27 @@
 package tri.regions
 
+import tri.timeseries.RegionInfo
+import tri.timeseries.RegionType
+
 const val GLOBAL = "Global"
 const val GLOBAL_POPULATION = 7775510000
 
-fun lookupPopulation(id: String): Long? {
-    if (id == GLOBAL) return GLOBAL_POPULATION
-    val lookupId = alias(id)
-    MetroData(lookupId)?.let { return it }
-    CountyData(lookupId)?.let { return it }
-    CanadaProvinceData(lookupId)?.let { return it }
-    ChinaData(lookupId)?.let { return it }
-    AustraliaData(lookupId)?.let { return it }
-    StateData(lookupId)?.let { return it }
-    CountryData(lookupId)?.let { return it }
-    logIfNotFound(lookupId)
-    return null
+object PopulationLookup: (String) -> Long? {
+    fun fips(fips: Int): Long? = JhuRegionData.fips(fips)?.pop
+
+    override fun invoke(id: String): Long? {
+        if (id == GLOBAL) return GLOBAL_POPULATION
+        val lookupId = alias(id)
+        MetroData(lookupId)?.let { return it }
+        CountyData(lookupId)?.let { return it }
+        CanadaProvinceData(lookupId)?.let { return it }
+        ChinaData(lookupId)?.let { return it }
+        AustraliaData(lookupId)?.let { return it }
+        StateData(lookupId)?.let { return it }
+        CountryData(lookupId)?.let { return it }
+        logIfNotFound(lookupId)
+        return null
+    }
 }
 
 private fun alias(id: String) = when (id) {

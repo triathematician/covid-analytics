@@ -3,6 +3,7 @@ package tri.covid19.data
 import tri.covid19.*
 import tri.timeseries.ForecastId
 import tri.timeseries.MetricTimeSeries
+import tri.timeseries.RegionInfo
 import tri.util.csvKeyValues
 import tri.util.toLocalDate
 import java.lang.IllegalStateException
@@ -11,7 +12,7 @@ import java.net.URL
 const val IHME = "IHME"
 
 /** Loads IHME models. */
-object IhmeForecasts: CovidDataNormalizer() {
+object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
 
     override fun sources() = forecasts { it.name.startsWith("ihme") && it.extension == "csv" }
 
@@ -26,7 +27,7 @@ object IhmeForecasts: CovidDataNormalizer() {
                 }
     }
 
-    fun forecastId(region: String, fullMetricId: String): ForecastId {
+    fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {
         val s = fullMetricId.substringBefore(" ")
         val date = s.substringAfter("-")
         val metric = when {

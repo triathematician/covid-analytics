@@ -29,7 +29,7 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
         }
         center = scrollpane(fitToWidth = true, fitToHeight = true) {
             tableview(model.userForecasts) {
-                readonlyColumn("Region", UserForecast::region)
+                readonlyColumn("Region", UserForecast::regionId)
                 readonlyColumn("Model", UserForecast::model)
                 readonlyColumn("Metric", UserForecast::metric)
                 readonlyColumn("Forecast Date", UserForecast::forecastDate)

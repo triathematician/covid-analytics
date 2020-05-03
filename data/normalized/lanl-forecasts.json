@@ -1,8 +1,9 @@
 [ {
   "region" : {
     "id" : "Alabama, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 1,
-    "name" : "Alabama, US",
     "population" : 4688897,
     "latitude" : 32.3182,
     "longitude" : -86.9023
@@ -551,8 +552,9 @@
 }, {
   "region" : {
     "id" : "Alaska, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 2,
-    "name" : "Alaska, US",
     "population" : 597749,
     "latitude" : 61.3707,
     "longitude" : -152.4044
@@ -1101,8 +1103,9 @@
 }, {
   "region" : {
     "id" : "Arizona, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 4,
-    "name" : "Arizona, US",
     "population" : 7278717,
     "latitude" : 33.7298,
     "longitude" : -111.4312
@@ -1651,8 +1654,9 @@
 }, {
   "region" : {
     "id" : "Arkansas, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 5,
-    "name" : "Arkansas, US",
     "population" : 2589027,
     "latitude" : 34.9697,
     "longitude" : -92.3731
@@ -2201,8 +2205,9 @@
 }, {
   "region" : {
     "id" : "California, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 6,
-    "name" : "California, US",
     "population" : 39208620,
     "latitude" : 36.1162,
     "longitude" : -119.6816
@@ -2751,8 +2756,9 @@
 }, {
   "region" : {
     "id" : "Colorado, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 8,
-    "name" : "Colorado, US",
     "population" : 5666813,
     "latitude" : 39.0598,
     "longitude" : -105.3111
@@ -3301,8 +3307,9 @@
 }, {
   "region" : {
     "id" : "Connecticut, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 9,
-    "name" : "Connecticut, US",
     "population" : 3565287,
     "latitude" : 41.5978,
     "longitude" : -72.7554
@@ -3851,8 +3858,9 @@
 }, {
   "region" : {
     "id" : "Delaware, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 10,
-    "name" : "Delaware, US",
     "population" : 973764,
     "latitude" : 39.3185,
     "longitude" : -75.5071
@@ -4401,8 +4409,9 @@
 }, {
   "region" : {
     "id" : "District of Columbia, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 11,
-    "name" : "District of Columbia, US",
     "population" : 705749,
     "latitude" : 38.8974,
     "longitude" : -77.0268
@@ -4951,8 +4960,9 @@
 }, {
   "region" : {
     "id" : "Florida, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 12,
-    "name" : "Florida, US",
     "population" : 21232606,
     "latitude" : 27.7663,
     "longitude" : -81.6868
@@ -5501,8 +5511,9 @@
 }, {
   "region" : {
     "id" : "Georgia, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 13,
-    "name" : "Georgia, US",
     "population" : 10139393,
     "latitude" : 33.0406,
     "longitude" : -83.6431
@@ -6051,8 +6062,9 @@
 }, {
   "region" : {
     "id" : "Hawaii, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 15,
-    "name" : "Hawaii, US",
     "population" : 1415786,
     "latitude" : 21.0943,
     "longitude" : -157.4983
@@ -6601,8 +6613,9 @@
 }, {
   "region" : {
     "id" : "Idaho, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 16,
-    "name" : "Idaho, US",
     "population" : 1610497,
     "latitude" : 44.2405,
     "longitude" : -114.4788
@@ -7151,8 +7164,9 @@
 }, {
   "region" : {
     "id" : "Illinois, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 17,
-    "name" : "Illinois, US",
     "population" : 11735653,
     "latitude" : 40.3495,
     "longitude" : -88.9861
@@ -7701,8 +7715,9 @@
 }, {
   "region" : {
     "id" : "Indiana, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 18,
-    "name" : "Indiana, US",
     "population" : 6543994,
     "latitude" : 39.8494,
     "longitude" : -86.2583
@@ -8251,8 +8266,9 @@
 }, {
   "region" : {
     "id" : "Iowa, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 19,
-    "name" : "Iowa, US",
     "population" : 2620713,
     "latitude" : 42.0115,
     "longitude" : -93.2105
@@ -8801,8 +8817,9 @@
 }, {
   "region" : {
     "id" : "Kansas, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 20,
-    "name" : "Kansas, US",
     "population" : 2438488,
     "latitude" : 38.5266,
     "longitude" : -96.7265
@@ -9351,8 +9368,9 @@
 }, {
   "region" : {
     "id" : "Kentucky, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 21,
-    "name" : "Kentucky, US",
     "population" : 3423303,
     "latitude" : 37.6681,
     "longitude" : -84.6701
@@ -9901,8 +9919,9 @@
 }, {
   "region" : {
     "id" : "Louisiana, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 22,
-    "name" : "Louisiana, US",
     "population" : 4597266,
     "latitude" : 31.1695,
     "longitude" : -91.8678
@@ -10451,8 +10470,9 @@
 }, {
   "region" : {
     "id" : "Maine, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 23,
-    "name" : "Maine, US",
     "population" : 1174006,
     "latitude" : 44.6939,
     "longitude" : -69.3819
@@ -11001,8 +11021,9 @@
 }, {
   "region" : {
     "id" : "Maryland, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 24,
-    "name" : "Maryland, US",
     "population" : 5943335,
     "latitude" : 39.0639,
     "longitude" : -76.8021
@@ -11551,8 +11572,9 @@
 }, {
   "region" : {
     "id" : "Massachusetts, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 25,
-    "name" : "Massachusetts, US",
     "population" : 6863772,
     "latitude" : 42.2302,
     "longitude" : -71.5301
@@ -12101,8 +12123,9 @@
 }, {
   "region" : {
     "id" : "Michigan, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 26,
-    "name" : "Michigan, US",
     "population" : 7967259,
     "latitude" : 43.3266,
     "longitude" : -84.5361
@@ -12651,8 +12674,9 @@
 }, {
   "region" : {
     "id" : "Minnesota, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 27,
-    "name" : "Minnesota, US",
     "population" : 4946446,
     "latitude" : 45.6945,
     "longitude" : -93.9002
@@ -13201,8 +13225,9 @@
 }, {
   "region" : {
     "id" : "Mississippi, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 28,
-    "name" : "Mississippi, US",
     "population" : 2895206,
     "latitude" : 32.7416,
     "longitude" : -89.6787
@@ -13751,8 +13776,9 @@
 }, {
   "region" : {
     "id" : "Missouri, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 29,
-    "name" : "Missouri, US",
     "population" : 5859456,
     "latitude" : 38.4561,
     "longitude" : -92.2884
@@ -14301,8 +14327,9 @@
 }, {
   "region" : {
     "id" : "Montana, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 30,
-    "name" : "Montana, US",
     "population" : 865987,
     "latitude" : 46.9219,
     "longitude" : -110.4544
@@ -14851,8 +14878,9 @@
 }, {
   "region" : {
     "id" : "Nebraska, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 31,
-    "name" : "Nebraska, US",
     "population" : 1525272,
     "latitude" : 41.1254,
     "longitude" : -98.2681
@@ -15401,8 +15429,9 @@
 }, {
   "region" : {
     "id" : "Nevada, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 32,
-    "name" : "Nevada, US",
     "population" : 3016697,
     "latitude" : 38.3135,
     "longitude" : -117.0554
@@ -15951,8 +15980,9 @@
 }, {
   "region" : {
     "id" : "New Hampshire, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 33,
-    "name" : "New Hampshire, US",
     "population" : 1328148,
     "latitude" : 43.4525,
     "longitude" : -71.5639
@@ -16501,8 +16531,9 @@
 }, {
   "region" : {
     "id" : "New Jersey, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 34,
-    "name" : "New Jersey, US",
     "population" : 8882190,
     "latitude" : 40.2989,
     "longitude" : -74.521
@@ -17051,8 +17082,9 @@
 }, {
   "region" : {
     "id" : "New Mexico, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 35,
-    "name" : "New Mexico, US",
     "population" : 1667533,
     "latitude" : 34.8405,
     "longitude" : -106.2485
@@ -17601,8 +17633,9 @@
 }, {
   "region" : {
     "id" : "New York, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 36,
-    "name" : "New York, US",
     "population" : 16861025,
     "latitude" : 42.1657,
     "longitude" : -74.9481
@@ -18151,8 +18184,9 @@
 }, {
   "region" : {
     "id" : "North Carolina, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 37,
-    "name" : "North Carolina, US",
     "population" : 9917875,
     "latitude" : 35.6301,
     "longitude" : -79.8064
@@ -18701,8 +18735,9 @@
 }, {
   "region" : {
     "id" : "North Dakota, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 38,
-    "name" : "North Dakota, US",
     "population" : 606418,
     "latitude" : 47.5289,
     "longitude" : -99.784
@@ -19251,8 +19286,9 @@
 }, {
   "region" : {
     "id" : "Ohio, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 39,
-    "name" : "Ohio, US",
     "population" : 11173860,
     "latitude" : 40.3888,
     "longitude" : -82.7649
@@ -19801,8 +19837,9 @@
 }, {
   "region" : {
     "id" : "Oklahoma, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 40,
-    "name" : "Oklahoma, US",
     "population" : 3657634,
     "latitude" : 35.5653,
     "longitude" : -96.9289
@@ -20351,8 +20388,9 @@
 }, {
   "region" : {
     "id" : "Oregon, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 41,
-    "name" : "Oregon, US",
     "population" : 4007074,
     "latitude" : 44.572,
     "longitude" : -122.0709
@@ -20901,8 +20939,9 @@
 }, {
   "region" : {
     "id" : "Pennsylvania, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 42,
-    "name" : "Pennsylvania, US",
     "population" : 12587497,
     "latitude" : 40.5908,
     "longitude" : -77.2098
@@ -21451,8 +21490,9 @@
 }, {
   "region" : {
     "id" : "Puerto Rico, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 72,
-    "name" : "Puerto Rico, US",
     "population" : 2933408,
     "latitude" : 18.2208,
     "longitude" : -66.5901
@@ -22001,8 +22041,9 @@
 }, {
   "region" : {
     "id" : "Rhode Island, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 44,
-    "name" : "Rhode Island, US",
     "population" : 1059361,
     "latitude" : 41.6809,
     "longitude" : -71.5118
@@ -22551,8 +22592,9 @@
 }, {
   "region" : {
     "id" : "South Carolina, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 45,
-    "name" : "South Carolina, US",
     "population" : 5039975,
     "latitude" : 33.8569,
     "longitude" : -80.945
@@ -23101,8 +23143,9 @@
 }, {
   "region" : {
     "id" : "South Dakota, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 46,
-    "name" : "South Dakota, US",
     "population" : 735892,
     "latitude" : 44.2998,
     "longitude" : -99.4388
@@ -23651,8 +23694,9 @@
 }, {
   "region" : {
     "id" : "Tennessee, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 47,
-    "name" : "Tennessee, US",
     "population" : 6564929,
     "latitude" : 35.7478,
     "longitude" : -86.6923
@@ -24201,8 +24245,9 @@
 }, {
   "region" : {
     "id" : "Texas, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 48,
-    "name" : "Texas, US",
     "population" : 22984561,
     "latitude" : 31.0545,
     "longitude" : -97.5635
@@ -24751,8 +24796,9 @@
 }, {
   "region" : {
     "id" : "Utah, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 49,
-    "name" : "Utah, US",
     "population" : 2865882,
     "latitude" : 40.15,
     "longitude" : -111.8624
@@ -25301,8 +25347,9 @@
 }, {
   "region" : {
     "id" : "Vermont, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 50,
-    "name" : "Vermont, US",
     "population" : 610591,
     "latitude" : 44.0459,
     "longitude" : -72.7107
@@ -25851,8 +25898,9 @@
 }, {
   "region" : {
     "id" : "Virginia, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 51,
-    "name" : "Virginia, US",
     "population" : 7907230,
     "latitude" : 37.7693,
     "longitude" : -78.17
@@ -26401,8 +26449,9 @@
 }, {
   "region" : {
     "id" : "Virgin Islands, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 78,
-    "name" : "Virgin Islands, US",
     "population" : 107268,
     "latitude" : 18.3358,
     "longitude" : -64.8963
@@ -26951,8 +27000,9 @@
 }, {
   "region" : {
     "id" : "Washington, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 53,
-    "name" : "Washington, US",
     "population" : 7549403,
     "latitude" : 47.4009,
     "longitude" : -121.4905
@@ -27501,8 +27551,9 @@
 }, {
   "region" : {
     "id" : "West Virginia, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 54,
-    "name" : "West Virginia, US",
     "population" : 1322998,
     "latitude" : 38.4912,
     "longitude" : -80.9545
@@ -28051,8 +28102,9 @@
 }, {
   "region" : {
     "id" : "Wisconsin, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 55,
-    "name" : "Wisconsin, US",
     "population" : 5174571,
     "latitude" : 44.2685,
     "longitude" : -89.6165
@@ -28601,8 +28653,9 @@
 }, {
   "region" : {
     "id" : "Wyoming, US",
+    "type" : "PROVINCE_STATE",
+    "parent" : "US",
     "fips" : 56,
-    "name" : "Wyoming, US",
     "population" : 497240,
     "latitude" : 42.756,
     "longitude" : -107.3025

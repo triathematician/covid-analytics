@@ -10,7 +10,7 @@ class RegionTimeSeriesTest {
 
     @Test
     fun testJson() {
-        val r = RegionTimeSeries(RegionLookup("Iowa"), intTimeSeries("Iowa", "", "test", LocalDate.now(), 5))
+        val r = RegionTimeSeries(RegionLookup("Iowa, US"), MetricInfo("test", true, LocalDate.now(), 0, listOf(5, 6)))
         val json = DefaultMapper.prettyPrint(r)
 
         val rts2 = DefaultMapper.readValue<RegionTimeSeries>(json)

@@ -3,9 +3,9 @@ package triathematician.covid19
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.data.CovidHistory
-import tri.regions.UnitedStates.stateNames
-import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
+import tri.timeseries.RegionInfo
+import tri.timeseries.RegionType
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
@@ -18,10 +18,10 @@ import kotlin.time.measureTimedValue
 val DEATHS_PER_100K = DEATHS.perCapita
 val CASES_PER_100K = CASES.perCapita
 
-internal val US_STATE_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 1 && it in stateNames }
-internal val US_CBSA_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 2 && it.substringAfter(", ") !in stateNames }
-internal val US_COUNTY_ID_FILTER: (String) -> Boolean = { ", US" in it && it.count { it == ',' } == 2 && it.substringAfter(", ") in stateNames }
-internal val COUNTRY_ID_FILTER: (String) -> Boolean = { !US_STATE_ID_FILTER(it) && !US_COUNTY_ID_FILTER(it) && !US_CBSA_ID_FILTER(it) }
+internal val US_STATE_ID_FILTER: (RegionInfo) -> Boolean = { it.type == RegionType.PROVINCE_STATE && it.parent == "US" }
+internal val US_CBSA_ID_FILTER: (RegionInfo) -> Boolean = { it.type == RegionType.METRO && it.parent == "US" }
+internal val US_COUNTY_ID_FILTER: (RegionInfo) -> Boolean = { it.type == RegionType.COUNTY && "US" in it.parent }
+internal val COUNTRY_ID_FILTER: (RegionInfo) -> Boolean = { it.type == RegionType.COUNTRY_REGION }
 
 internal val String.perCapita
     get() = "$this (per 100k)"
@@ -39,29 +39,29 @@ object CovidTimeSeriesSources {
 
     /** Easy access to county data. */
     fun usCountyData() = dailyUsCountyReports
-            .map { it.copy(group = it.group.removeSuffix(", US")) }
-            .sortedBy { it.group }
+            .map { it.copy(region = it.region.copy(id = it.region.id.removeSuffix(", US"))) }
+            .sortedBy { it.region.id }
 
     /** Easy access to county data. */
     fun usCbsaData() = dailyUsCbsaReports
-            .map { it.copy(group = it.group.removeSuffix(", US")) }
-            .sortedBy { it.group }
+            .map { it.copy(region = it.region.copy(id = it.region.id.removeSuffix(", US"))) }
+            .sortedBy { it.region.id }
 
     /** Easy access to state data. */
     fun usStateData(includeUS: Boolean = true) = dailyUsStateReports
-            .filter { includeUS || it.group != "US" }
-            .map { it.copy(group = it.group.removeSuffix(", US")) }
-            .sortedBy { it.group }
+            .filter { includeUS || it.region.id != "US" }
+            .map { it.copy(region = it.region.copy(id = it.region.id.removeSuffix(", US"))) }
+            .sortedBy { it.region.id }
 
     /** Easy access to country data. */
     fun countryData(includeGlobal: Boolean = true) = dailyCountryReports
-            .filter { includeGlobal || it.group != "Global" }
-            .sortedBy { it.group }
+            .filter { includeGlobal || it.region.id != "Global" }
+            .sortedBy { it.region.id }
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
-    fun dailyReports(idFilter: (String) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
+    fun dailyReports(idFilter: (RegionInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
         CovidHistory.allData
-                .filter { idFilter(it.group) }
+                .filter { idFilter(it.region) }
                 .flatMap {
                     listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)
@@ -71,13 +71,13 @@ object CovidTimeSeriesSources {
     }.value
 
     /** Filter daily reports for selected region and metric. */
-    fun dailyReports(region: String, metric: String, relatedSeries: Boolean = true) = dailyReports({ it == region })
+    fun dailyReports(region: RegionInfo, metric: String, relatedSeries: Boolean = true) = dailyReports({ it == region })
             .filter { if (relatedSeries) metric in it.metric else metric == it.metric }
 }
 
 //region population lookups
 
-fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = lookupPopulation(group)) {
+fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = region.population) {
     null -> null
     else -> (this / (pop.toDouble() / 100000)).also {
         it.intSeries = false

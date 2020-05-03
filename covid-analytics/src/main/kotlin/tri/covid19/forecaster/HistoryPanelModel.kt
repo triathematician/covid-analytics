@@ -7,7 +7,6 @@ import tornadofx.property
 import tri.covid19.*
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.covid19.forecaster.utils.series
-import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
 import tri.timeseries.dateRange
 import tri.util.DateRange
@@ -87,10 +86,10 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     /** Get historical data for current config. Matching "includes" are first. */
     internal fun historicalData(): Set<MetricTimeSeries> {
         val sMetrics = data().filter { it.metric == mainPlotMetric }
-                .filter { lookupPopulation(it.group).let { it == null || it >= minPopulation } }
-                .filter { exclude(it.group) }
+                .filter { it.region.population.let { it == null || it >= minPopulation } }
+                .filter { exclude(it.region.id) }
                 .sortedByDescending { it.lastValue }
-        return (sMetrics.filter { include(it.group) } + sMetrics).take(regionLimit).toSet()
+        return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit).toSet()
     }
 
     internal fun data() = when (selectedRegionType.get()) {
@@ -115,12 +114,12 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             metrics = metrics.map { it.deltas() }.toSet()
         }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return domain to metrics.map { series(it.group, domain, it) }
+        return domain to metrics.map { series(it.region.id, domain, it) }
     }
 
     /** Plot growth vs counts. */
     internal fun hubbertDataSeries() = historicalData().map { it.hubbertSeries(7) }
-            .map { series(it.first.group, it.first.domain.shift(1, 0), it.first, it.second) }
+            .map { series(it.first.region.id, it.first.domain.shift(1, 0), it.first, it.second) }
 
     //endregion
 }

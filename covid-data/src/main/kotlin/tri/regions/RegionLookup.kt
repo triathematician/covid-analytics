@@ -1,6 +1,7 @@
 package tri.regions
 
 import tri.timeseries.RegionInfo
+import tri.timeseries.RegionType
 
 /** Uniform lookup for region info by id. */
 object RegionLookup {
@@ -10,15 +11,14 @@ object RegionLookup {
      * @param id region id
      * @param lookupUs if true, permits lookups by state name e.g. "Iowa" rather than the full id "Iowa, US"
      */
-    operator fun invoke(id: String, lookupUs: Boolean = true): RegionInfo {
-        val useId = when {
-            !lookupUs -> id
-            UnitedStates.stateNames.contains(id) -> "$id, US"
-            UnitedStates.countyNames.contains(id) -> "$id, US"
-            else -> id
+    operator fun invoke(id: String): RegionInfo {
+        return when (val found = JhuRegionData.data[id]) {
+            null -> {
+                println("Region not found: $id")
+                RegionInfo(id, RegionType.UNKNOWN, "Unknown")
+            }
+            else -> found.toRegionInfo()
         }
-        val found = JhuRegionData.data.firstOrNull { it.combinedKey == useId }
-        return found?.toRegionInfo() ?: RegionInfo(useId)
     }
 
 }

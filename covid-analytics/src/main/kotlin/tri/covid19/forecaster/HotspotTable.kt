@@ -27,7 +27,7 @@ class HotspotTable: BorderPane() {
         }
         center = scrollpane(fitToWidth = true, fitToHeight = true) {
             tableview(hotspotData) {
-                readonlyColumn("Region", HotspotInfo::region)
+                readonlyColumn("Region", HotspotInfo::regionId)
                 readonlyColumn("FIPS", HotspotInfo::fips)
                 readonlyColumn("Population", HotspotInfo::population)
                 readonlyColumn("Metric", HotspotInfo::metric)

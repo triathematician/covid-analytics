@@ -17,15 +17,15 @@ import kotlin.time.measureTimedValue
 
 @ExperimentalTime
 fun main() {
-//    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
-//    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
-    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
+    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
+    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
+//    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
 }
 
 private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
 
 /** Translates data from a source file to a common format. */
-abstract class CovidDataNormalizer {
+abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
 
     /** List of files to process. */
     abstract fun sources(): List<URL>
@@ -43,9 +43,9 @@ abstract class CovidDataNormalizer {
 
     /** Combine results of multiple files into series grouped by region. */
     open fun processTimeSeries(data: List<MetricTimeSeries>, coerceIncreasing: Boolean = false): List<RegionTimeSeries> {
-        return data.groupBy { it.group }.map { (region, data) ->
+        return data.groupBy { it.region }.map { (region, data) ->
             val metrics = data.regroupAndMerge(coerceIncreasing).filter { it.values.any { it > 0.0 } }
-            RegionTimeSeries(RegionLookup(region, lookupUs = region != "Georgia"), *metrics.toTypedArray())
+            RegionTimeSeries(region, *metrics.toTypedArray())
         }
     }
 
@@ -75,12 +75,10 @@ abstract class CovidDataNormalizer {
 
     /** Easy way to construct metric from string value content. */
     protected open fun metric(region: String, metric: String, date: String, value: String)
-            = MetricTimeSeries(region.normalized(), "", metric, 0.0, date.toLocalDate(FORMAT), value.toDouble())
+            = MetricTimeSeries(RegionLookup(region.maybeFixId()), metric, 0.0, date.toLocalDate(FORMAT), value.toDouble())
 
-    /** Normalizes ID's by region. */
-    protected open fun String.normalized() = when {
-        UnitedStates.stateNames.contains(this) -> "$this, US"
-        this == "United States of America" -> "US"
+    private fun String.maybeFixId() = when {
+        addIdSuffixes && "$this, US" in UnitedStates.stateNames -> "$this, US"
         else -> this
     }
 

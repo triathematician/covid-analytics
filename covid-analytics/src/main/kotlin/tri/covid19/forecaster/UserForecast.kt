@@ -42,6 +42,9 @@ class UserForecast(var forecast: Forecast) {
     val region
         get() = forecast.region
     @get:JsonIgnore
+    val regionId
+        get() = forecast.region.id
+    @get:JsonIgnore
     val model
         get() = forecast.model
     @get:JsonIgnore

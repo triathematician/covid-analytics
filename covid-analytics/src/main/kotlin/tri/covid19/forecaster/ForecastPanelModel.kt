@@ -12,8 +12,10 @@ import tri.covid19.data.IHME
 import tri.covid19.data.LANL
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.math.GEN_LOGISTIC
+import tri.regions.RegionLookup
 import tri.regions.UnitedStates
 import tri.timeseries.MetricTimeSeries
+import tri.timeseries.RegionInfo
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
@@ -103,8 +105,8 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     /** List of regions available for panel. */
     val regions: SortedSet<String> by lazy {
-        val jhuRegions = CovidHistory.allData.map { it.group }.toSet()
-        val forecastRegions = CovidForecasts.allForecasts.map { it.region }.toSet()
+        val jhuRegions = CovidHistory.allData.map { it.region.id }.toSet()
+        val forecastRegions = CovidForecasts.allForecasts.map { it.region.id }.toSet()
         (jhuRegions + forecastRegions).toSortedSet()
     }
 
@@ -122,7 +124,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     var externalForecasts = ExternalForecasts()
 
     private fun updateData() {
-        val regionMetrics = CovidTimeSeriesSources.dailyReports(region, selectedMetric)
+        val regionMetrics = CovidTimeSeriesSources.dailyReports(RegionLookup(region), selectedMetric)
         mainSeries = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
 
         domain = mainSeries?.domain?.shift(0, 30)
@@ -131,12 +133,12 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         userForecast = when {
             !showForecast -> null
             domain == null -> null
-            else -> MetricTimeSeries(region, "", "$selectedMetric (curve)", false, 0.0, domain!!.start,
+            else -> MetricTimeSeries(RegionLookup(region), "$selectedMetric (curve)", false, 0.0, domain!!.start,
                     domain!!.mapIndexed { i, _ -> curveFitter(i + shift) })
         }
 
         pastForecasts.metrics = regionMetrics.filter { "predicted" in it.metric || "peak" in it.metric }
-        externalForecasts.forecasts = CovidForecasts.allForecasts.filter { it.region == region && it.metric == selectedMetric }
+        externalForecasts.forecasts = CovidForecasts.allForecasts.filter { it.region.id == region && it.metric == selectedMetric }
     }
 
     /** Get day associated with given number. */
@@ -251,7 +253,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     /** Loads selected forecast. */
     fun load(f: UserForecast) {
-        region = f.region
+        region = f.region.id
         selectedMetric = f.metric
         curveFitter.curve = f.sigmoidCurve
         curveFitter.l = f.sigmoidParameters?.load as Number
@@ -286,9 +288,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     val PastForecasts.cumulative
         get() = metrics.filter { "predicted" in it.metric && "peak" !in it.metric }
     val PastForecasts.deltas
-        get() = metrics.filter { "predicted peak" in it.group }
+        get() = metrics.filter { "predicted peak" in it.metric }
     val PastForecasts.peakDays
-        get() = metrics.filter { "days" in it.group }
+        get() = metrics.filter { "days" in it.metric }
 
     val ExternalForecasts.filtered
         get() = forecasts.filter { (showIhme && it.model == IHME || showLanl && it.model == LANL) }.flatMap { it.data }

@@ -11,14 +11,14 @@ object CovidForecasts {
 
     val ihmeForecasts: List<Forecast>
         get() = loadTimeSeries("../data/normalized/ihme-forecasts.json").flatMap { regionData ->
-            regionData.metrics.groupBy { IhmeForecasts.forecastId(regionData.region.id, it.id) }.map {
+            regionData.metrics.groupBy { IhmeForecasts.forecastId(regionData.region, it.id) }.map {
                 Forecast(it.key, it.value)
             }
         }
 
     val lanlForecasts: List<Forecast>
         get() = loadTimeSeries("../data/normalized/lanl-forecasts.json").flatMap { regionData ->
-            regionData.metrics.groupBy { LanlForecasts.forecastId(regionData.region.id, it.id) }.map {
+            regionData.metrics.groupBy { LanlForecasts.forecastId(regionData.region, it.id) }.map {
                 Forecast(it.key, it.value)
             }
         }

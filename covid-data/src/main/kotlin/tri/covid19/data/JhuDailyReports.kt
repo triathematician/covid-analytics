@@ -2,10 +2,10 @@ package tri.covid19.data
 
 import tri.covid19.*
 import tri.regions.CbsaInfo
-import tri.regions.Fips
+import tri.regions.RegionLookup
 import tri.regions.UnitedStates
-import tri.regions.lookupPopulation
 import tri.timeseries.MetricTimeSeries
+import tri.timeseries.RegionInfo
 import tri.timeseries.intTimeSeries
 import tri.util.csvKeyValues
 import tri.util.toLocalDate
@@ -46,10 +46,11 @@ object JhuDailyReports: CovidDataNormalizer() {
         } catch (x: Exception) { println("Failed to read $url"); throw x }
 
         return rows.flatMap {
-            listOf(intTimeSeries(it.Combined_Key, it.FIPS, CASES, it.Last_Update, it.Confirmed),
-                    intTimeSeries(it.Combined_Key, it.FIPS, DEATHS, it.Last_Update, it.Deaths),
-                    intTimeSeries(it.Combined_Key, it.FIPS, RECOVERED, it.Last_Update, it.Recovered),
-                    intTimeSeries(it.Combined_Key, it.FIPS, ACTIVE, it.Last_Update, it.Active))
+            val region = it.region
+            listOf(intTimeSeries(region, CASES, it.Last_Update, it.Confirmed),
+                    intTimeSeries(region, DEATHS, it.Last_Update, it.Deaths),
+                    intTimeSeries(region, RECOVERED, it.Last_Update, it.Recovered),
+                    intTimeSeries(region, ACTIVE, it.Last_Update, it.Active))
         }
     }
 
@@ -71,7 +72,7 @@ object JhuDailyReports: CovidDataNormalizer() {
 
     // ﻿FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths,Recovered,Active,Combined_Key
     private fun Map<String, String>.read3() = DailyReportRow(this["FIPS"]!!, this["Admin2"]!!.adminFix(),
-            this["Province_State"]!!, this["Country_Region"]!!.regionFix(),
+            this["Province_State"]!!.stateFix(), this["Country_Region"]!!.regionFix(),
             gdate("Last_Update"), this["Lat"]!!.toDoubleOrNull(), this["Long_"]!!.toDoubleOrNull(),
             gint("Confirmed"), gint("Deaths"), gint("Recovered"), gint("Active"))
 
@@ -87,8 +88,10 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
                           var Last_Update: LocalDate, var Lat: Double?, var Long_: Double?,
                           var Confirmed: Int, var Deaths: Int, var Recovered: Int, var Active: Int) {
 
+    val region: RegionInfo
+        get() = RegionLookup(Combined_Key)
     val Combined_Key
-        get() = combinedKey(Admin2, Province_State, Country_Region)
+        get() = listOf(Admin2, Province_State, Country_Region).filter { it.isNotEmpty() }.joinToString(", ")
 
     /** Data that can be aggregated at a state level. */
     val isWithinStateData
@@ -97,6 +100,8 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
     /** Data that can be aggregated at a country level. */
     val isWithinCountryData
         get() = Country_Region.isNotBlank() && (Admin2.isNotBlank() || Province_State.isNotBlank())
+
+    //region CLEANUP
 
     /** If the timestamp on the row is after the given name, update the date to match the file name. (If before, leave as is.) */
     internal fun updateTimestampsIfAfter(fileDate: LocalDate) {
@@ -110,23 +115,31 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
             Province_State = ""
         }
     }
+
+    //endregion
+
 }
 
-//region ID CLEANUP
+//region CLEANUP
 
 private val COUNTRIES_INCORRECTLY_LISTED_AS_REGIONS = listOf("United Kingdom", "Netherlands", "France", "Denmark")
 
-private fun combinedKey(admin: String, state: String, region: String)
-        = listOf(admin.adminFix(), state.stateFix(), region.regionFix()).filterNot { it.isEmpty() }.joinToString(", ")
-
+/** String replacements for admin fields. */
 private fun String.adminFix() = when (this) {
+    "Washington County" -> "Washington"
+    "Garfield County" -> "Garfield"
+    "Elko County" -> "Elko"
     "Dona Ana" -> "Doña Ana"
     "LeSeur" -> "Le Sueur"
+    "District of Columbia" -> ""
+    "Southwest" -> "Southwest Utah"
+    "unassigned" -> "Unassigned"
     else -> this
 }
 
+/** State fixes when old id/naming scheme includes state abbreviation instead of full name. */
 private fun String.stateFix() = when {
-    this == "Chicago" -> "Chicago, Illinois"
+    this == "Falkland Islands (Islas Malvinas)" -> "Falkland Islands (Malvinas)"
     endsWith("IL") -> removeSuffix("IL") + "Illinois"
     endsWith("CA") -> removeSuffix("CA") + "California"
     endsWith("MA") -> removeSuffix("MA") + "Massachusetts"
@@ -139,7 +152,10 @@ private fun String.stateFix() = when {
     else -> this
 }
 
-private fun String.regionFix() = if (this == "Mainland China") "China" else this
+private fun String.regionFix() = when {
+    this == "Mainland China" -> "China"
+    else -> this
+}
 
 //endregion
 
@@ -150,7 +166,8 @@ private val COUNTRIES_TO_NOT_AGGREGATE = listOf("United Kingdom", "Netherlands",
 /** Add state and country aggregate information to the rows. */
 fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
     val cbsaAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
-            .groupBy { UnitedStates.cbsa(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", emptyList()) }
+            .groupBy { UnitedStates.cbsaForCounty(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", "", emptyList()) }
+            .filter { it.key.cbsaCode > 0 }
             .mapValues { it.value.sumWithinCbsa(it.key) }.values
     val stateAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
             .groupBy { it.Province_State + "__" + it.Country_Region }
@@ -176,17 +193,5 @@ private fun List<DailyReportRow>.sumWithinCountry() = DailyReportRow("", "", "",
 /** Sum of all data as a world row. */
 private fun List<DailyReportRow>.global() = DailyReportRow("", "", "", "Global", first().Last_Update, null, null,
         sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active })
-
-//endregion
-
-//region population lookups
-
-fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = lookupPopulation(group)) {
-    null -> null
-    else -> (this / (pop.toDouble() / 100000)).also {
-        it.intSeries = false
-        it.metric = metricFunction(it.metric)
-    }
-}
 
 //endregion

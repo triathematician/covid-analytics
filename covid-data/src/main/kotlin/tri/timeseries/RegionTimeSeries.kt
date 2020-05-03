@@ -10,10 +10,11 @@ import java.time.LocalDate
  */
 class RegionTimeSeries @JsonCreator constructor(var region: RegionInfo, var metrics: MutableList<MetricInfo> = mutableListOf()) {
 
-
     constructor(region: RegionInfo, vararg metrics: MetricTimeSeries): this(region) {
         metrics.forEach { this += it }
     }
+
+    constructor(region: RegionInfo, vararg metrics: MetricInfo): this(region, mutableListOf(*metrics))
 
     operator fun plusAssign(m: MetricTimeSeries) {
         metrics.add(MetricInfo(m.metric, m.intSeries, m.start, m.defValue, m.values))
@@ -39,6 +40,6 @@ class MetricInfo(var id: String, var intSeries: Boolean, var start: LocalDate, v
             }
         }
 
-    fun toMetricTimeSeries(group: String, group2: String) = MetricTimeSeries(group, group2, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
+    fun toMetricTimeSeries(region: RegionInfo) = MetricTimeSeries(region, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
 
 }
