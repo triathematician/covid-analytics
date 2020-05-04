@@ -14,7 +14,7 @@ fun List<Double>.deltas() = (1 until size).map { get(it) - get(it - 1) }
 /** Compute growth rates between entries (ratio of successive entries). Can produce infinity. */
 fun List<Double>.growthRates() = (1 until size).map { get(it) / get(it - 1) }
 /** Compute growth percentage between entries (ratio of change to total). */
-fun List<Double>.growthPercentages() = (1 until size).map { (get(it) - get(it - 1)) / get(it) }
+fun List<Double>.growthPercentages() = (1 until size).map { (get(it) - get(it - 1)) / (.5 * (get(it) + get(it - 1))) }
 
 /** Compute doubling time based on constant growth rates. */
 fun List<Double>.doublingTimes() = growthRates().map { 1/log2(it) }

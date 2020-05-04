@@ -1,7 +1,6 @@
 package tri.covid19.reports
 
 import tri.covid19.CovidRiskLevel
-import tri.regions.RegionLookup
 import tri.timeseries.RegionInfo
 
 /** Aggregates information about a single hotspot associated with a region. */
