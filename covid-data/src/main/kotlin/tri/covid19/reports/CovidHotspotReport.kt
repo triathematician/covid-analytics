@@ -19,18 +19,20 @@ fun List<MetricTimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,
 fun MetricTimeSeries.hotspotPerCapitaInfo(averageDays: Int = 7, includePriorDays: Boolean = false): List<HotspotInfo> {
     val changes = values.deltas().movingAverage(averageDays)
     val doublings = values.movingAverage(averageDays).doublingTimes()
+    val doublings30 = values.movingAverage(averageDays).doublingTimes(day0 = 30)
 
     val minSize = minOf(changes.size, doublings.size, values.size)
-    val info3 = if (minSize >= 3) hotspotPerCapitaInfo(region, "$metric -2", values.thirdToLast(), changes.thirdToLast(), doublings.thirdToLast()) else null
-    val info2 = if (minSize >= 2) hotspotPerCapitaInfo(region, "$metric -1", values.penultimate(), changes.penultimate(), doublings.penultimate(), info3) else null
-    val info = hotspotPerCapitaInfo(region, metric, values.lastOrNull(), changes.lastOrNull(), doublings.lastOrNull(), info2, info3)
+    val info3 = if (minSize >= 3) hotspotPerCapitaInfo(region, "$metric -2", values.thirdToLast(), changes.thirdToLast(), doublings.thirdToLast(), doublings30.thirdToLast()) else null
+    val info2 = if (minSize >= 2) hotspotPerCapitaInfo(region, "$metric -1", values.penultimate(), changes.penultimate(), doublings.penultimate(), doublings30.penultimate(), info3) else null
+    val info = hotspotPerCapitaInfo(region, metric, values.lastOrNull(), changes.lastOrNull(), doublings.lastOrNull(), doublings30.lastOrNull(), info2, info3)
 
     return if (includePriorDays) listOfNotNull(info, info2, info3) else listOfNotNull(info)
 }
 
 /** Compute hotspot info given values and information about the last few days to use when computing trends. */
-private fun hotspotPerCapitaInfo(region: RegionInfo, metric: String, value: Number?, dailyChange: Double?, doublingTimeDays: Double?, vararg priorInfo: HotspotInfo?): HotspotInfo? {
-    if (value == null || dailyChange == null || doublingTimeDays == null) {
+private fun hotspotPerCapitaInfo(region: RegionInfo, metric: String, value: Number?, dailyChange: Double?, doublingTimeDays: Double?,
+                                 doublingTimeDays30: Double?, vararg priorInfo: HotspotInfo?): HotspotInfo? {
+    if (value == null || dailyChange == null || doublingTimeDays == null || doublingTimeDays30 == null) {
         return null
     }
     val severityByChange = risk_PerCapitaDeathsPerDay(dailyChange)
@@ -43,7 +45,7 @@ private fun hotspotPerCapitaInfo(region: RegionInfo, metric: String, value: Numb
         minPrior < riskTotal -> riskTotal - minPrior
         else -> riskTotal - maxPrior
     }
-    return HotspotInfo(region, metric, value.toDouble(), dailyChange, doublingTimeDays, severityByChange, severityByDoubling, severityChange)
+    return HotspotInfo(region, metric, value.toDouble(), dailyChange, doublingTimeDays, doublingTimeDays30, severityByChange, severityByDoubling, severityChange)
 }
 
 private fun <X> List<X>.penultimate() = getOrNull(size - 2)

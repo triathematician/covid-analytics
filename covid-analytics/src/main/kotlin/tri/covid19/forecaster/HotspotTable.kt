@@ -36,6 +36,7 @@ class HotspotTable: BorderPane() {
                 readonlyColumn("Latest", HotspotInfo::dailyChange).cellFormat { text = it.userFormat() }
                 readonlyColumn("(per 100k)", HotspotInfo::dailyChangePerCapita).cellFormat { text = it?.userFormat() }
                 readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays).cellFormat { text = it.userFormat() }
+                readonlyColumn("(last 30 days)", HotspotInfo::doublingTimeDays30).cellFormat { text = it.userFormat() }
                 readonlyColumn("Severity (#)", HotspotInfo::severityByChange)
                 readonlyColumn("Severity (rate)", HotspotInfo::severityByDoubling)
                 readonlyColumn("Severity (total)", HotspotInfo::totalSeverity)
