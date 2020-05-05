@@ -7,7 +7,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 object CovidForecasts {
 
-    val allForecasts: List<Forecast> by lazy { ihmeForecasts + lanlForecasts }
+    val allForecasts: List<Forecast> by lazy { ihmeForecasts + lanlForecasts + yygForecasts }
 
     val ihmeForecasts: List<Forecast>
         get() = loadTimeSeries("../data/normalized/ihme-forecasts.json").flatMap { regionData ->
@@ -19,6 +19,13 @@ object CovidForecasts {
     val lanlForecasts: List<Forecast>
         get() = loadTimeSeries("../data/normalized/lanl-forecasts.json").flatMap { regionData ->
             regionData.metrics.groupBy { LanlForecasts.forecastId(regionData.region, it.id) }.map {
+                Forecast(it.key, it.value)
+            }
+        }
+
+    val yygForecasts: List<Forecast>
+        get() = loadTimeSeries("../data/normalized/yyg-forecasts.json").flatMap { regionData ->
+            regionData.metrics.groupBy { YygForecasts.forecastId(regionData.region, it.id) }.map {
                 Forecast(it.key, it.value)
             }
         }

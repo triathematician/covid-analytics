@@ -12,10 +12,17 @@ object RegionLookup {
      * @param lookupUs if true, permits lookups by state name e.g. "Iowa" rather than the full id "Iowa, US"
      */
     operator fun invoke(id: String): RegionInfo {
-        return when (val found = JhuRegionData.data[id]) {
+        val useId = when {
+            id in UnitedStates.stateAbbreviations ->
+                UnitedStates.stateFromAbbreviation(id) + ", US"
+            id.removeSuffix(", US") in UnitedStates.stateAbbreviations ->
+                UnitedStates.stateFromAbbreviation(id.removeSuffix(", US")) + ", US"
+            else -> id
+        }
+        return when (val found = JhuRegionData.data[useId]) {
             null -> {
-                println("Region not found: $id")
-                RegionInfo(id, RegionType.UNKNOWN, "Unknown")
+                println("Region not found: $useId")
+                RegionInfo(useId, RegionType.UNKNOWN, "Unknown")
             }
             else -> found.toRegionInfo()
         }

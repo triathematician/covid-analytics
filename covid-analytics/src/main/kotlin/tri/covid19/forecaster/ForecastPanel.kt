@@ -74,11 +74,9 @@ class ForecastPanel : SplitPane() {
             field("Statistical") {
                 checkbox("IHME").bind(model._showIhme)
                 checkbox("LANL").bind(model._showLanl)
-                checkbox("UT").bind(model._showUt)
             }
             field("Epidemiological") {
-                checkbox("MOBS").bind(model._showMobs)
-                checkbox("CU-80").bind(model._showCu80)
+                checkbox("YYG").bind(model._showYyg)
             }
         }
         fieldset("Forecast History") {

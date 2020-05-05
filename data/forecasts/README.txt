@@ -6,3 +6,6 @@ IHME Data:
 
 LANL Data:
 - https://covid-19.bsvgateway.org/#link%20to%20forecasting%20site
+
+YYG
+- https://github.com/youyanggu/covid19_projections

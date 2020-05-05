@@ -5,17 +5,13 @@ import org.apache.commons.math3.exception.NoBracketingException
 import tornadofx.asObservable
 import tornadofx.getProperty
 import tornadofx.property
-import tri.covid19.data.CovidForecasts
-import tri.covid19.data.CovidHistory
+import tri.covid19.data.*
 import tri.timeseries.Forecast
-import tri.covid19.data.IHME
-import tri.covid19.data.LANL
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.math.GEN_LOGISTIC
 import tri.regions.RegionLookup
 import tri.regions.UnitedStates
 import tri.timeseries.MetricTimeSeries
-import tri.timeseries.RegionInfo
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
@@ -49,11 +45,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _manualDeltaStdErr = SimpleStringProperty("")
 
     // other forecasts
-    internal var showCu80 by property(false)
     internal var showIhme by property(true)
     internal var showLanl by property(false)
-    internal var showMobs by property(false)
-    internal var showUt by property(false)
+    internal var showYyg by property(false)
 
     // historical forecasts
     private var movingAverage by property(4)
@@ -77,11 +71,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _selectedMetric = property(ForecastPanelModel::selectedMetric)
     internal val _smooth = property(ForecastPanelModel::smooth)
 
-    internal val _showCu80 = property(ForecastPanelModel::showCu80)
     internal val _showIhme = property(ForecastPanelModel::showIhme)
     internal val _showLanl = property(ForecastPanelModel::showLanl)
-    internal val _showMobs = property(ForecastPanelModel::showMobs)
-    internal val _showUt = property(ForecastPanelModel::showUt)
+    internal val _showYyg = property(ForecastPanelModel::showYyg)
 
     internal val _showForecast = property(ForecastPanelModel::showForecast)
     internal val _vActive = property(ForecastPanelModel::vActive)
@@ -291,15 +283,16 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         get() = metrics.filter { "days" in it.metric }
 
     val ExternalForecasts.filtered
-        get() = forecasts.filter { (showIhme && it.model == IHME || showLanl && it.model == LANL) }.flatMap { it.data }
+        get() = forecasts.filter { showIhme && it.model == IHME || showLanl && it.model == LANL || showYyg && it.model == YYG }
+                .flatMap { it.data }
     val ExternalForecasts.cumulative
         get() = filtered.filter { "totdea_" in it.metric }.toMutableList() +
-                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95")}
+                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95")} +
+                filtered.filter { "predicted_total_death" in it.metric }
     val ExternalForecasts.deltas
         get() = filtered.filter { "deaths_" in it.metric }.toMutableList() +
-                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95") }.map { it.deltas() }
-//            cumulative.map { it.deltas() }
-//            filtered.filter { "change" in it.metric }
+                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95") }.map { it.deltas() } +
+                filtered.filter { "predicted_total_death" in it.metric }.map { it.deltas() }
 
     //endregion
 
