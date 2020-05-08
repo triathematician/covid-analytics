@@ -85,8 +85,11 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _x0 = forecastProperty(ForecastCurveFitter::x0)
     internal val _v = forecastProperty(ForecastCurveFitter::v)
 
-    internal val _autofitLastDay = forecastProperty(ForecastCurveFitter::lastFitDay).apply { addListener { _ -> autofit() }}
-    internal val _autofitDays = forecastProperty(ForecastCurveFitter::fitDays).apply { addListener { _ -> autofit() }}
+    internal val _firstFitDay = forecastProperty(ForecastCurveFitter::firstFitDay).apply { addListener { _ -> autofit() }}
+    internal val _lastFitDay = forecastProperty(ForecastCurveFitter::lastFitDay).apply { addListener { _ -> autofit() }}
+
+    internal val _firstEvalDay = forecastProperty(ForecastCurveFitter::firstEvalDay).apply { addListener { _ -> autofit() }}
+    internal val _lastEvalDay = forecastProperty(ForecastCurveFitter::lastEvalDay).apply { addListener { _ -> autofit() }}
 
     internal val _movingAverage = property(ForecastPanelModel::movingAverage)
     internal val _projectionDays = property(ForecastPanelModel::projectionDays)
@@ -126,15 +129,12 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
             !showForecast -> null
             domain == null -> null
             else -> MetricTimeSeries(RegionLookup(region), "$selectedMetric (curve)", false, 0.0, domain!!.start,
-                    domain!!.mapIndexed { i, _ -> curveFitter(i + shift) })
+                    domain!!.map { d -> curveFitter.invoke(d) })
         }
 
         pastForecasts.metrics = regionMetrics.filter { "predicted" in it.metric || "peak" in it.metric }
         externalForecasts.forecasts = CovidForecasts.allForecasts.filter { it.region.id == region && it.metric == selectedMetric }
     }
-
-    /** Get day associated with given number. */
-    fun dayOf(x: Number) = domain?.start?.plusDays(x.toLong())
 
     //endregion
 
@@ -194,13 +194,13 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         _manualEquation.value = curveFitter.equation
         _manualPeak.value = try {
             val (x, y) = curveFitter.equationPeak()
-            "${y.userFormat()} on day ${dayOf(x) ?: "?"}"
+            "${y.userFormat()} on day ${curveFitter.numberToDate(x) ?: "?"}"
         } catch (x: NoBracketingException) {
             ""
         }
 
-        val se1 = curveFitter.cumulativeStandardError(mainSeries, 0.0)
-        val se2 = curveFitter.deltaStandardError(mainSeries, 0.0)
+        val se1 = curveFitter.cumulativeStandardError(mainSeries)
+        val se2 = curveFitter.deltaStandardError(mainSeries)
 
         _manualLogCumStdErr.value = "SE = ${se1?.userFormat() ?: "?"} (totals)"
         _manualDeltaStdErr.value = "SE = ${se2?.userFormat() ?: "?"} (per day)"
@@ -235,7 +235,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     /** Runs autofit using current config. */
     fun autofit() {
-        curveFitter.updateFitLabel(mainSeries?.end ?: LocalDate.now())
+        curveFitter.updateFitLabel()
         mainSeries?.let {
             curveFitter.autofitCumulativeSE(it)
         }
@@ -251,9 +251,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         curveFitter.x0 = f.sigmoidParameters?.x0 as Number
         curveFitter.v = f.sigmoidParameters?.v as Number
 
-        f.fitDayRange?.run {
-            curveFitter.lastFitDay = endInclusive.minus(LocalDate.now()) + 1
-            curveFitter.fitDays = size
+        f.fitDateRange?.run {
+            curveFitter.firstFitDay = start.minus(LocalDate.now())
+            curveFitter.lastFitDay = endInclusive.minus(LocalDate.now())
         }
     }
 

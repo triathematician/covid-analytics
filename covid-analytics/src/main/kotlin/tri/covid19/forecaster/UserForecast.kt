@@ -17,7 +17,7 @@ class UserForecast(var forecast: Forecast) {
     var sigmoidParameters: SigmoidParameters? = null
 
     /** Range of dates used for fit. */
-    var fitDayRange: DateRange? = null
+    var fitDateRange: DateRange? = null
 
     /** Standard error vs cumulative data. */
     var standardErrorCumulative: Double? = null
@@ -66,10 +66,10 @@ class UserForecast(var forecast: Forecast) {
 
     @get:JsonIgnore
     val fitFirstDay
-        get() = fitDayRange?.start
+        get() = fitDateRange?.start
     @get:JsonIgnore
     val fitLastDay
-        get() = fitDayRange?.endInclusive
+        get() = fitDateRange?.endInclusive
 
     @get:JsonIgnore
     val may1

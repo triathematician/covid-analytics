@@ -25,12 +25,14 @@ import kotlin.math.sqrt
 
 private const val MODEL_NAME = "User"
 
-private val K_FIT_RANGE = 0.04..0.25
+private val K_FIT_RANGE = 0.03..0.25
 private val L_FIT_RANGE = 1E1..1E7
-private val X0_FIT_RANGE = 10.0..100.0
+private val X0_FIT_RANGE = 10.0..200.0
 private val V_FIT_RANGE = 1E-2..1E2
 
-/** Tools for fitting forecast to empirical data. */
+private val DAY0 = LocalDate.of(2020, 1, 1)
+
+/** Tools for fitting forecast to empirical data. January 1, 2020 is "day 0". */
 class ForecastCurveFitter: (Number) -> Double {
 
     //region PROPERTIES
@@ -38,13 +40,25 @@ class ForecastCurveFitter: (Number) -> Double {
     var curve by property(SIGMOID_MODELS[3])
     var l: Number by property(70000.0)
     var k: Number by property(0.07)
-    var x0: Number by property(40.0)
+    var x0: Number by property(90.0)
     var v: Number by property(1.0)
 
-    var fitDays: Number by property(21)
-    var lastFitDay: Number by property(0)
+    private val now
+        get() = LocalDate.now()
+    val nowInt
+        get() = dateToNumber(now)
 
-    var fitLabel by property("Fit curves to different ranges of historical data.")
+    var firstFitDay: Number by property(nowInt - 20)
+    var lastFitDay: Number by property(nowInt - 7)
+    private val fitDateRange: DateRange
+        get() = DateRange(firstFitDay.toDate, lastFitDay.toDate)
+
+    var firstEvalDay: Number by property(nowInt - 6)
+    var lastEvalDay: Number by property(nowInt)
+    private val evalDateRange: DateRange
+        get() = DateRange(firstEvalDay.toDate, lastEvalDay.toDate)
+
+    var fitLabel by property("Automatically fit curves based on historical data.")
 
     //endregion
 
@@ -63,15 +77,22 @@ class ForecastCurveFitter: (Number) -> Double {
 
     //region PROPERTY UPDATES
 
-    /** Updates the label property with the range of dates being used for the fit. */
-    fun updateFitLabel(lastDate: LocalDate) {
-        val first = lastDate.plusDays(lastFitDay.toLong() - fitDays.toLong() + 1)
-        val last = lastDate.plusDays(lastFitDay.toLong())
-        fitLabel = "Fit curves to data from ${first.monthDay} to ${last.monthDay}"
-    }
+    /** Converts day to int. */
+    fun dateToNumber(date: LocalDate) = date - DAY0
+    /** Converts int to day. */
+    fun numberToDate(value: Number) = DAY0.plusDays(value.toLong())
 
-    /** Domain used for fitting. */
-    private fun fitDomain(domain: DateRange) = domain.shift(lastFitDay.toInt(), lastFitDay.toInt()).tail(fitDays.toInt())
+    private val LocalDate.toNumber
+        get() = dateToNumber(this)
+    private val Number.toDate
+        get() = numberToDate(this)
+    private val Number.monthDay
+        get() = numberToDate(this).monthDay
+
+    /** Updates the label property with the range of dates being used for the fit. */
+    fun updateFitLabel() {
+        fitLabel = "Automatically fit curves based on historical data from ${firstFitDay.monthDay} to ${lastFitDay.monthDay}"
+    }
 
     /** Compute estimated location of peak. */
     internal fun equationPeak(bracket: IntRange = 0..200): Pair<Double, Double> {
@@ -110,15 +131,18 @@ class ForecastCurveFitter: (Number) -> Double {
             forecastTotals[JUNE1] = invoke(JUNE1.minus(day0).toDouble())
             forecastTotals[JULY1] = invoke(JULY1.minus(day0).toDouble())
 
-            fitDayRange = fitDomain(empirical.domain)
-            standardErrorCumulative = cumulativeStandardError(empirical, 0.0)
-            standardErrorDelta = deltaStandardError(empirical, 0.0)
+            fitDateRange = empirical.domain.intersect(this@ForecastCurveFitter.fitDateRange)
+            standardErrorCumulative = cumulativeStandardError(empirical)
+            standardErrorDelta = deltaStandardError(empirical)
         }
     }
 
     //endregion
 
     //region COMPUTE FUNCTIONS
+
+    /** Current curve value. */
+    fun invoke(date: LocalDate) = invoke(date.toNumber)
 
     /** Current curve value. */
     override fun invoke(x: Number) = when (curve) {
@@ -146,9 +170,13 @@ class ForecastCurveFitter: (Number) -> Double {
     //region FITTING AND STATS
 
     private fun empiricalDataForFitting(empirical: MetricTimeSeries?): List<Vector2D>? {
-        val domain = empirical?.let { fitDomain(it.domain) } ?: return null
-        return empirical.values.mapIndexed { i, v -> empirical.date(i) to Vector2D(i.toDouble(), v) }
-                .filter { it.first in domain }.map { it.second }
+        val domain = empirical?.let { fitDateRange.intersect(empirical.domain) } ?: return null
+        return domain.map { Vector2D(it.toNumber.toDouble(), empirical[it]) }
+    }
+
+    private fun empiricalDataForEvaluation(empirical: MetricTimeSeries?): List<Vector2D>? {
+        val domain = empirical?.let { evalDateRange.intersect(empirical.domain) } ?: return null
+        return domain.map { Vector2D(it.toNumber.toDouble(), empirical[it]) }
     }
 
     /**
@@ -156,18 +184,18 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @param shift # of days to use for fit
      */
-    fun cumulativeStandardError(empirical: MetricTimeSeries?, shift: Double): Double? {
-        val observedPoints = empiricalDataForFitting(empirical) ?: return null
-        return standardError(observedPoints) { invoke(it + shift) }
+    fun cumulativeStandardError(empirical: MetricTimeSeries?): Double? {
+        val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
+        return standardError(observedPoints) { invoke(it) }
     }
 
     /**
      * Compute standard error for the delta (day-over-day change) of this curve compared to provided empirical data.
      * @param shift # of days to add to empirical data (e.g. if averaged) to match the appropriate x value on the curve
      */
-    fun deltaStandardError(empirical: MetricTimeSeries?, shift: Double): Double? {
-        val observedPoints = empiricalDataForFitting(empirical?.deltas()) ?: return null
-        return standardError(observedPoints) { derivative(it + shift) }
+    fun deltaStandardError(empirical: MetricTimeSeries?): Double? {
+        val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
+        return standardError(observedPoints) { derivative(it) }
     }
 
     /**

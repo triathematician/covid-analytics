@@ -3,17 +3,21 @@ package tri.covid19.forecaster
 import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
+import javafx.geometry.Pos
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.Priority
+import javafx.util.StringConverter
+import org.controlsfx.control.RangeSlider
 import tornadofx.*
 import tri.covid19.data.IHME
 import tri.covid19.data.LANL
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
+import tri.util.monthDay
 import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
@@ -49,28 +53,68 @@ class ForecastPanel : SplitPane() {
             field("Metric") { combobox(model._selectedMetric, METRIC_OPTIONS); checkbox("smooth").bind(model._smooth) }
         }
         fieldset("Forecast (S-Curve)") {
-            label("Adjust curve parameters to fit data.")
+            label("Adjust curve parameters to manually fit data.")
             field("Model") {
                 checkbox("Show").bind(model._showForecast)
                 combobox(model._curve, SIGMOID_MODELS)
-                button("Autofit") { action { model.autofit() } }
                 button("Save") { action { model.save() } }
+                button("Autofit") { action { model.autofit() } }
             }
-            field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l) }
-            field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k) }
-            field("x0 (midpoint)") { slider(-50.0..250.0) { blockIncrement = 0.01 }.bind(model._x0) }
+            field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l); label(model._l) }
+            field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k); label(model._k) }
+            field("x0 (midpoint)") { slider(0.0..250.0) { blockIncrement = 0.01 }.bind(model._x0); label(model._x0) }
             field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01; enableWhen(model._vActive) }.bind(model._v) }
             field("Equation") { label("").bind(model._manualEquation) }
             field("Peak") { label("").bind(model._manualPeak) }
-            field("Fit") { label("").bind(model._manualLogCumStdErr); label("").bind(model._manualDeltaStdErr) }
         }
         fieldset("Curve Fitting") {
             label(model._fitLabel)
-            field("First Day for Fit") { intslider(-60..0) { isShowTickLabels = true; blockIncrement = 7.0 }.bind(model._autofitLastDay) }
-            field("# Days for Fit") { intslider(5..60) { isShowTickLabels = true; blockIncrement = 7.0 }.bind(model._autofitDays) }
+            field("Dates for Curve Fit") {
+                RangeSlider(60.0, model.curveFitter.nowInt.toDouble(), 60.0, 60.0).apply {
+                    blockIncrement = 7.0
+                    majorTickUnit = 7.0
+                    minorTickCount = 6
+                    isShowTickLabels = true
+                    isShowTickMarks = true
+                    isSnapToTicks = true
+
+                    highValueProperty().bindBidirectional(model._lastFitDay)
+                    lowValueProperty().bindBidirectional(model._firstFitDay)
+
+                    labelFormatter = object: StringConverter<Number>() {
+                        override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
+                        override fun fromString(p0: String?) = TODO()
+                    }
+                }.attachTo(this)
+                button("Autofit") {
+                    alignment = Pos.TOP_CENTER
+                    action { model.autofit() }
+                }
+            }
+        }
+        fieldset("Model Evaluation") {
+            label("Evaluate models within the given range of dates.")
+            field("Eval Days") {
+                RangeSlider(60.0, model.curveFitter.nowInt.toDouble(), 60.0, 60.0).apply {
+                    blockIncrement = 7.0
+                    majorTickUnit = 7.0
+                    minorTickCount = 6
+                    isShowTickLabels = true
+                    isShowTickMarks = true
+                    isSnapToTicks = true
+
+                    highValueProperty().bindBidirectional(model._lastEvalDay)
+                    lowValueProperty().bindBidirectional(model._firstEvalDay)
+
+                    labelFormatter = object: StringConverter<Number>() {
+                        override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
+                        override fun fromString(p0: String?) = TODO()
+                    }
+                }.attachTo(this)
+            }
+            field("Error") { label("").bind(model._manualLogCumStdErr); label("").bind(model._manualDeltaStdErr) }
         }
         fieldset("Other Forecasts") {
-            label("View other forecasts")
             field("Statistical") {
                 checkbox("IHME").bind(model._showIhme)
                 checkbox("LANL").bind(model._showLanl)
