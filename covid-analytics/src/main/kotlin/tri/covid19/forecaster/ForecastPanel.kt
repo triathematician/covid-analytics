@@ -1,5 +1,6 @@
 package tri.covid19.forecaster
 
+import javafx.beans.binding.Bindings
 import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
@@ -10,10 +11,13 @@ import javafx.scene.control.SplitPane
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.Priority
 import javafx.util.StringConverter
+import org.controlsfx.control.CheckComboBox
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
+import tri.covid19.data.CovidForecasts
 import tri.covid19.data.IHME
 import tri.covid19.data.LANL
+import tri.covid19.data.YYG
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
@@ -112,26 +116,48 @@ class ForecastPanel : SplitPane() {
                     }
                 }.attachTo(this)
             }
-            field("Error") { label("").bind(model._manualLogCumStdErr); label("").bind(model._manualDeltaStdErr) }
+            field("Error") {
+                label("").bind(model._manualLogCumStdErr)
+                label("").bind(model._manualDeltaStdErr)
+            }
         }
         fieldset("Other Forecasts") {
-            field("Statistical") {
-                checkbox("IHME").bind(model._showIhme)
-                checkbox("LANL").bind(model._showLanl)
+            field("Forecasts") {
+                CheckComboBox(CovidForecasts.FORECAST_OPTIONS.asObservable()).apply {
+                    checkModel.check(IHME)
+                    checkModel.check(YYG)
+                    Bindings.bindContentBidirectional(model.otherForecasts, checkModel.checkedItems)
+                    checkModel.checkedIndices.onChange { updateForecasts() }
+                }.attachTo(this)
             }
-            field("Epidemiological") {
-                checkbox("YYG").bind(model._showYyg)
+            field("Dates Visible") {
+                RangeSlider(90.0, model.curveFitter.nowInt.toDouble(), 90.0, 90.0).apply {
+                    blockIncrement = 7.0
+                    majorTickUnit = 7.0
+                    minorTickCount = 6
+                    isShowTickLabels = true
+                    isShowTickMarks = true
+                    isSnapToTicks = true
+
+                    highValueProperty().bindBidirectional(model._lastForecastDay)
+                    lowValueProperty().bindBidirectional(model._firstForecastDay)
+
+                    labelFormatter = object: StringConverter<Number>() {
+                        override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
+                        override fun fromString(p0: String?) = TODO()
+                    }
+                }.attachTo(this)
             }
         }
-        fieldset("Forecast History") {
-            label("This will let you generate forecasts for data in the past to assess the model.")
-            field("Moving Average (days)") {
-                editablespinner(1..21).bind(model._movingAverage)
-            }
-            field("# of Days for Fit") {
-                editablespinner(3..99).bind(model._projectionDays)
-            }
-        }
+//        fieldset("Forecast History") {
+//            label("This will let you generate forecasts for data in the past to assess the model.")
+//            field("Moving Average (days)") {
+//                editablespinner(1..21).bind(model._movingAverage)
+//            }
+//            field("# of Days for Fit") {
+//                editablespinner(3..99).bind(model._projectionDays)
+//            }
+//        }
     }
 
     /** Charts. */

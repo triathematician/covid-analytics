@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty
 import org.apache.commons.math3.exception.NoBracketingException
 import tornadofx.asObservable
 import tornadofx.getProperty
+import tornadofx.observableListOf
 import tornadofx.property
 import tri.covid19.data.*
 import tri.timeseries.Forecast
@@ -45,13 +46,16 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _manualDeltaStdErr = SimpleStringProperty("")
 
     // other forecasts
-    internal var showIhme by property(true)
-    internal var showLanl by property(false)
-    internal var showYyg by property(false)
+    internal val otherForecasts = observableListOf(IHME, YYG)
 
-    // historical forecasts
-    private var movingAverage by property(4)
-    private var projectionDays by property(10)
+    var firstForecastDay: Number by property(90)
+    var lastForecastDay: Number by property(120)
+    private val forecastDateRange: DateRange
+        get() = DateRange(curveFitter.numberToDate(firstForecastDay), curveFitter.numberToDate(lastForecastDay))
+
+//    // historical forecasts
+//    private var movingAverage by property(4)
+//    private var projectionDays by property(10)
 
     //endregion
 
@@ -71,12 +75,11 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _selectedMetric = property(ForecastPanelModel::selectedMetric)
     internal val _smooth = property(ForecastPanelModel::smooth)
 
-    internal val _showIhme = property(ForecastPanelModel::showIhme)
-    internal val _showLanl = property(ForecastPanelModel::showLanl)
-    internal val _showYyg = property(ForecastPanelModel::showYyg)
-
     internal val _showForecast = property(ForecastPanelModel::showForecast)
     internal val _vActive = property(ForecastPanelModel::vActive)
+//
+//    internal val _movingAverage = property(ForecastPanelModel::movingAverage)
+//    internal val _projectionDays = property(ForecastPanelModel::projectionDays)
 
     internal val _fitLabel = forecastProperty(ForecastCurveFitter::fitLabel)
     internal val _curve = forecastProperty(ForecastCurveFitter::curve)
@@ -91,8 +94,8 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _firstEvalDay = forecastProperty(ForecastCurveFitter::firstEvalDay).apply { addListener { _ -> autofit() }}
     internal val _lastEvalDay = forecastProperty(ForecastCurveFitter::lastEvalDay).apply { addListener { _ -> autofit() }}
 
-    internal val _movingAverage = property(ForecastPanelModel::movingAverage)
-    internal val _projectionDays = property(ForecastPanelModel::projectionDays)
+    internal val _firstForecastDay = property(ForecastPanelModel::firstForecastDay)
+    internal val _lastForecastDay = property(ForecastPanelModel::lastForecastDay)
 
     //endregion
 
@@ -283,8 +286,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         get() = metrics.filter { "days" in it.metric }
 
     val ExternalForecasts.filtered
-        get() = forecasts.filter { showIhme && it.model == IHME || showLanl && it.model == LANL || showYyg && it.model == YYG }
-                .flatMap { it.data }
+        get() = forecasts.filter { it.model in otherForecasts }.flatMap { it.data }
     val ExternalForecasts.cumulative
         get() = filtered.filter { "totdea_" in it.metric }.toMutableList() +
                 filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95")} +

@@ -7,6 +7,8 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 object CovidForecasts {
 
+    val FORECAST_OPTIONS = listOf(IHME, LANL, YYG)
+
     val allForecasts: List<Forecast> by lazy { ihmeForecasts + lanlForecasts + yygForecasts }
 
     val ihmeForecasts: List<Forecast>
