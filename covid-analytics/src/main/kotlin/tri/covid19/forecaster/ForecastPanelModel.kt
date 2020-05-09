@@ -50,6 +50,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     // other forecasts
     internal val otherForecasts = observableListOf(IHME, YYG)
 
+    var showConfidence by property(true)
     var firstForecastDay: Number by property(90)
     var lastForecastDay: Number by property(120)
     private val forecastDateRange: DateRange
@@ -97,6 +98,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _firstEvalDay = forecastProperty(ForecastCurveFitter::firstEvalDay).apply { addListener { _ -> autofit() }}
     internal val _lastEvalDay = forecastProperty(ForecastCurveFitter::lastEvalDay).apply { addListener { _ -> autofit() }}
 
+    internal val _showConfidence = property(ForecastPanelModel::showConfidence)
     internal val _firstForecastDay = property(ForecastPanelModel::firstForecastDay)
     internal val _lastForecastDay = property(ForecastPanelModel::lastForecastDay)
 
@@ -297,7 +299,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         get() = metrics.filter { "days" in it.metric }
 
     val ExternalForecasts.filtered
-        get() = forecasts.filter { it.model in otherForecasts }.flatMap { it.data }
+        get() = forecasts.filter {
+            it.model in otherForecasts && (showConfidence || ("lower" != it.metric && "upper" != it.metric))
+        }.flatMap { it.data }
     val ExternalForecasts.cumulative
         get() = filtered.filter { DEATHS in it.metric }.toMutableList()
     val ExternalForecasts.deltas

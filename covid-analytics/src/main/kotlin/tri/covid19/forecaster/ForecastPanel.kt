@@ -136,6 +136,7 @@ class ForecastPanel : SplitPane() {
                     Bindings.bindContentBidirectional(model.otherForecasts, checkModel.checkedItems)
                     checkModel.checkedIndices.onChange { updateForecasts() }
                 }.attachTo(this)
+                checkbox("Show confidence intervals").bind(model._showConfidence)
             }
             field("Dates Visible") {
                 RangeSlider(90.0, model.curveFitter.nowInt.toDouble(), 90.0, 90.0).apply {
