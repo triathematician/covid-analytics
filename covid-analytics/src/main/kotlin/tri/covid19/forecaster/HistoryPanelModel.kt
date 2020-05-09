@@ -130,3 +130,8 @@ fun MetricTimeSeries.hubbertSeries(window: Int): Pair<MetricTimeSeries, MetricTi
     val growths = totals.growthPercentages()
     return totals to growths
 }
+
+/** Creates Hubbert series from monotonic metric. */
+fun MetricTimeSeries.changeDoublingDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+    return movingAverage(window).doublingTimes().movingAverage(window) to movingAverage(window).deltas()
+}

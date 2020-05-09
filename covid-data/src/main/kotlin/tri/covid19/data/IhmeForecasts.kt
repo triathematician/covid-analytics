@@ -6,8 +6,8 @@ import tri.timeseries.MetricTimeSeries
 import tri.timeseries.RegionInfo
 import tri.util.csvKeyValues
 import tri.util.toLocalDate
-import java.lang.IllegalStateException
 import java.net.URL
+import kotlin.IllegalStateException
 
 const val IHME = "IHME"
 
@@ -23,8 +23,18 @@ object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
                 .flatMap {
                     it.extractMetrics(regionField = "location_name", dateField = "date",
                             metricFieldPattern = { "_" in it && !it.startsWith("location") },
-                            metricPrefix = "$IHME-$date")
+                            metricNameMapper = { metricName(it, date) })
                 }
+    }
+
+    private fun metricName(metric: String, date: String): String {
+        val revisedName = when (metric) {
+            "totdea_mean" -> "$DEATHS"
+            "totdea_lower" -> "$DEATHS-lower"
+            "totdea_upper" -> "$DEATHS-upper"
+            else -> metric
+        }
+        return "$IHME-$date $revisedName"
     }
 
     fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {

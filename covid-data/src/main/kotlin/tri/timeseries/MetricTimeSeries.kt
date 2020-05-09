@@ -74,6 +74,10 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     fun growthPercentages(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.growthPercentages(), intSeries = false)
             .restrictToRealNumbers()
 
+    /** Return copy with doubling times. */
+    fun doublingTimes(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.doublingTimes(), intSeries = false)
+            .restrictToRealNumbers()
+
     /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
     fun shortTermLogisticForecast(days: Int): List<MetricTimeSeries> {
         val predictions = values.computeLogisticPrediction(days).filter { it.hasBoundedConfidence }

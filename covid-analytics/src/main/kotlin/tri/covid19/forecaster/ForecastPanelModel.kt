@@ -6,6 +6,7 @@ import tornadofx.asObservable
 import tornadofx.getProperty
 import tornadofx.observableListOf
 import tornadofx.property
+import tri.covid19.DEATHS
 import tri.covid19.data.*
 import tri.timeseries.Forecast
 import tri.covid19.forecaster.utils.ChartDataSeries
@@ -32,6 +33,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal var region by property("US")
     internal var selectedMetric by property(METRIC_OPTIONS[0])
     internal var smooth by property(true)
+    internal var showLogisticPrediction by property(true)
 
     // user forecast
     internal val curveFitter = ForecastCurveFitter()
@@ -74,6 +76,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _region = property(ForecastPanelModel::region)
     internal val _selectedMetric = property(ForecastPanelModel::selectedMetric)
     internal val _smooth = property(ForecastPanelModel::smooth)
+    internal val _showLogisticPrediction = property(ForecastPanelModel::showLogisticPrediction)
 
     internal val _showForecast = property(ForecastPanelModel::showForecast)
     internal val _vActive = property(ForecastPanelModel::vActive)
@@ -135,8 +138,10 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
                     domain!!.map { d -> curveFitter.invoke(d) })
         }
 
-        pastForecasts.metrics = regionMetrics.filter { "predicted" in it.metric || "peak" in it.metric }
-        externalForecasts.forecasts = CovidForecasts.allForecasts.filter { it.region.id == region && it.metric == selectedMetric }
+        pastForecasts.metrics = regionMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
+        externalForecasts.forecasts = CovidForecasts.allForecasts
+                .filter { it.region.id == region && it.metric == selectedMetric }
+//                .filter { it.forecastDate in forecastDateRange }
     }
 
     //endregion
@@ -161,6 +166,12 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         series(mainSeries?.hubbertSeries(7))
         series(userForecast?.hubbertSeries(1))
         series(externalForecasts.cumulative.map { it.hubbertSeries(1) })
+    }
+
+    internal fun changeDoublingDataSeries() = dataseries {
+        series(mainSeries?.changeDoublingDataSeries(7))
+        series(userForecast?.changeDoublingDataSeries(1))
+        series(externalForecasts.cumulative.map { it.changeDoublingDataSeries(1) })
     }
 
     internal fun residualDataSeries() = dataseries {
@@ -288,13 +299,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     val ExternalForecasts.filtered
         get() = forecasts.filter { it.model in otherForecasts }.flatMap { it.data }
     val ExternalForecasts.cumulative
-        get() = filtered.filter { "totdea_" in it.metric }.toMutableList() +
-                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95")} +
-                filtered.filter { "predicted_total_death" in it.metric }
+        get() = filtered.filter { DEATHS in it.metric }.toMutableList()
     val ExternalForecasts.deltas
-        get() = filtered.filter { "deaths_" in it.metric }.toMutableList() +
-                filtered.filter { it.metric containsOneOf listOf("q.05", "q.50", "q.95") }.map { it.deltas() } +
-                filtered.filter { "predicted_total_death" in it.metric }.map { it.deltas() }
+        get() = filtered.filter { DEATHS in it.metric }.map { it.deltas() }
 
     //endregion
 

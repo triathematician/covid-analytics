@@ -35,6 +35,7 @@ class ForecastPanel : SplitPane() {
     private lateinit var forecastTotals: LineChart<Number, Number>
     private lateinit var forecastDeltas: LineChart<Number, Number>
     private lateinit var forecastHubbert: LineChart<Number, Number>
+    private lateinit var forecastChangeDoubling: LineChart<Number, Number>
     private lateinit var forecastResiduals: LineChart<Number, Number>
 
     init {
@@ -54,7 +55,13 @@ class ForecastPanel : SplitPane() {
                     }
                 }.bind(model._region)
             }
-            field("Metric") { combobox(model._selectedMetric, METRIC_OPTIONS); checkbox("smooth").bind(model._smooth) }
+            field("Metric") {
+                combobox(model._selectedMetric, METRIC_OPTIONS)
+                checkbox("smooth").bind(model._smooth)
+            }
+            field("Logistic Prediction") {
+                checkbox("show").bind(model._showLogisticPrediction)
+            }
         }
         fieldset("Forecast (S-Curve)") {
             label("Adjust curve parameters to manually fit data.")
@@ -173,6 +180,9 @@ class ForecastPanel : SplitPane() {
                     gridpaneConstraints { vhGrow = Priority.ALWAYS }
                 }
                 forecastDeltas = linechartRangedOnFirstSeries("Change per Day", "Day", "Actual/Forecast")
+                forecastResiduals = linechart("Residuals (Daily)", "Day", "# more than forecasted") {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                }
             }
             row {
                 forecastHubbert = linechartRangedOnFirstSeries("Percent Growth vs Total",
@@ -188,8 +198,10 @@ class ForecastPanel : SplitPane() {
                     createSymbols = false
                     axisSortingPolicy = LineChart.SortingPolicy.NONE
                 }
-                forecastResiduals = linechart("Residuals (Daily)", "Day", "# more than forecasted") {
+                forecastChangeDoubling = linechartRangedOnFirstSeries("Change per Day vs Doubling Time", "Doubling Time", "Change per Day") {
                     gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                    animated = false
+                    createSymbols = false
                 }
             }
         }
@@ -205,6 +217,7 @@ class ForecastPanel : SplitPane() {
         forecastTotals.dataSeries = data0
         forecastDeltas.dataSeries = model.dailyDataSeries()
         forecastHubbert.dataSeries = model.hubbertDataSeries()
+        forecastChangeDoubling.dataSeries = model.changeDoublingDataSeries()
         forecastResiduals.dataSeries = model.residualDataSeries()
 //
 //        val max2 = forecastDeltas.data.getOrNull(0)?.data?.map { it.yValue.toDouble() }?.max()
@@ -221,14 +234,14 @@ class ForecastPanel : SplitPane() {
             }
         }
 
-        listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastHubbert).forEach { chart ->
+        listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastChangeDoubling, forecastHubbert).forEach { chart ->
             chart.animated = false
             chart.data.forEach {
                 if ("predicted" in it.name) {
                     it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
                     it.data.forEach { it.node?.isVisible = false }
                 }
-                if (IHME in it.name || LANL in it.name) {
+                if (IHME in it.name || LANL in it.name || YYG in it.name) {
                     it.node.style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
                     it.data.forEach { it.node?.isVisible = false }
                 }
@@ -279,6 +292,7 @@ class ForecastPanel : SplitPane() {
         val color = when {
             IHME in name -> "008000"
             LANL in name -> "4682b4"
+            YYG in name -> "b44682"
             else -> "808080"
         }
         val opacity = when {

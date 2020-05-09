@@ -17,10 +17,10 @@ import kotlin.time.measureTimedValue
 
 @ExperimentalTime
 fun main() {
-//    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
-//    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
-//    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
-    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
+    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
+    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
+    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
+//    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
 }
 
 private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
@@ -65,10 +65,10 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
     /** Extracts any number of metrics from given row of data, based on a field name predicate. */
     protected open fun Map<String, String>.extractMetrics(regionField: String, dateField: String,
                                                    metricFieldPattern: (String) -> Boolean,
-                                                   metricPrefix: String): List<MetricTimeSeries> {
+                                                   metricNameMapper: (String) -> String): List<MetricTimeSeries> {
         return keys.filter { metricFieldPattern(it) }.map {
             metric(get(regionField) ?: throw IllegalArgumentException(),
-                    "$metricPrefix $it",
+                    metricNameMapper(it),
                     get(dateField) ?: throw IllegalArgumentException(),
                     get(it) ?: throw IllegalArgumentException())
         }

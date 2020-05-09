@@ -22,12 +22,22 @@ object LanlForecasts: CovidDataNormalizer(addIdSuffixes = true) {
                 .flatMap {
                     it.extractMetrics(regionField = "state", dateField = "dates",
                             metricFieldPattern = { it.startsWith("q.") },
-                            metricPrefix = "$DEATHS $LANL-$date")
+                            metricNameMapper = { metricName(it, date) })
                 }
     }
 
+    private fun metricName(metric: String, date: String): String {
+        val revisedName = when (metric) {
+            "q.05" -> "$DEATHS"
+            "q.50" -> "$DEATHS-lower"
+            "q.95" -> "$DEATHS-upper"
+            else -> metric
+        }
+        return "$LANL-$date $revisedName"
+    }
+
     fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {
-        val s = fullMetricId.substringAfter(" ").substringBefore(" ")
+        val s = fullMetricId.substringBefore(" ")
         val date = s.substringAfter("-")
         return ForecastId(LANL, "$date-2000".toLocalDate(M_D_YYYY), region, DEATHS)
     }

@@ -31,9 +31,18 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return keys.filter { it.startsWith("predicted_total_deaths") || it.startsWith("predicted_total_infected") }
                 .filter { !get(it).isNullOrEmpty() }
                 .map {
-                    metric(yygRegion(get("region")!!, get("country")!!),
-                            "$YYG-$date $it", get("date")!!, get(it)!!)
+                    metric(yygRegion(get("region")!!, get("country")!!), metricName(it, date), get("date")!!, get(it)!!)
                 }
+    }
+
+    private fun metricName(metric: String, date: String): String {
+        val revisedName = when (metric) {
+            "predicted_total_deaths_mean" -> "$DEATHS"
+            "predicted_total_deaths_lower" -> "$DEATHS-lower"
+            "predicted_total_deaths_upper" -> "$DEATHS-upper"
+            else -> metric
+        }
+        return "$YYG-$date $revisedName"
     }
 
     private fun yygRegion(region: String, country: String): String {
@@ -48,7 +57,8 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
     }
 
     fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {
-        val date = fullMetricId.substringAfter("YYG-").substringBefore(" ")
+        val s = fullMetricId.substringBefore(" ")
+        val date = s.substringAfter("-")
         return ForecastId(YYG, "$date-2000".toLocalDate(M_D_YYYY), region, DEATHS)
     }
 
