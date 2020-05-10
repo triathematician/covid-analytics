@@ -45,7 +45,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     internal val _manualDeltaStdErr = SimpleStringProperty("")
 
     // other forecasts
-    internal val otherForecasts = observableListOf(IHME, YYG)
+    internal val otherForecasts = observableListOf(IHME, YYG).apply { onChange { listener() } }
 
     var showConfidence by property(true)
     var firstForecastDay: Number by property(90)

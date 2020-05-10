@@ -135,8 +135,7 @@ class ForecastPanel : SplitPane() {
                 CheckComboBox(CovidForecasts.FORECAST_OPTIONS.asObservable()).apply {
                     checkModel.check(IHME)
                     checkModel.check(YYG)
-                    Bindings.bindContentBidirectional(model.otherForecasts, checkModel.checkedItems)
-                    checkModel.checkedIndices.onChange { updateForecasts() }
+                    Bindings.bindContent(model.otherForecasts, checkModel.checkedItems)
                 }.attachTo(this)
                 checkbox("Show confidence intervals").bind(model._showConfidence)
             }
@@ -212,6 +211,7 @@ class ForecastPanel : SplitPane() {
 
     /** Plot forecast curves: min/avg/max totals predicted by day for a single region. */
     private fun updateForecasts() {
+        if (!this::forecastTotals.isInitialized) return
         measureTime {
             val data0 = model.cumulativeDataSeries()
             val max0 = data0.getOrNull(0)?.maxY()
