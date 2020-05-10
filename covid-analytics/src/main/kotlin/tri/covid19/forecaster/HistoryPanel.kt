@@ -84,6 +84,7 @@ class HistoryPanel: SplitPane() {
             vboxConstraints {
                 vGrow = Priority.ALWAYS
             }
+            isLegendVisible = false
         }
         hubbertChart = linechart("Percent Growth vs Total",
                 NumberAxis().apply { label = "Total" },

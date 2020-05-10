@@ -1,5 +1,6 @@
 package triathematician.covid19
 
+import javafx.util.Duration
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.data.CovidHistory
@@ -8,6 +9,7 @@ import tri.timeseries.RegionInfo
 import tri.timeseries.RegionType
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
+import kotlin.time.milliseconds
 
 //
 // This file links to various data sources providing time series information.
@@ -67,7 +69,7 @@ object CovidTimeSeriesSources {
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)
                 }
     }.also {
-        println("Loaded region group data with predictions in ${it.duration}")
+        if (it.duration > 100.milliseconds) println("Loaded region group data with predictions in ${it.duration}")
     }.value
 
     /** Filter daily reports for selected region and metric. */

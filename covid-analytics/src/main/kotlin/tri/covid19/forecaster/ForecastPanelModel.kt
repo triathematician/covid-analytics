@@ -2,10 +2,7 @@ package tri.covid19.forecaster
 
 import javafx.beans.property.SimpleStringProperty
 import org.apache.commons.math3.exception.NoBracketingException
-import tornadofx.asObservable
-import tornadofx.getProperty
-import tornadofx.observableListOf
-import tornadofx.property
+import tornadofx.*
 import tri.covid19.DEATHS
 import tri.covid19.data.*
 import tri.timeseries.Forecast
@@ -25,7 +22,7 @@ import kotlin.time.ExperimentalTime
 
 /** Config for logistic projection. */
 @ExperimentalTime
-class ForecastPanelModel(var onChange: () -> Unit = {}) {
+class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     //region UI BOUND PROPERTIES
 
@@ -64,13 +61,13 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
 
     //region JAVAFX UI PROPERTIES
 
-    private fun <T> property(prop: KMutableProperty1<*, T>) = getProperty(prop).apply { addListener { _ -> updateData(); onChange() } }
+    private fun <T> property(prop: KMutableProperty1<*, T>) = getProperty(prop).apply { addListener { _ -> updateData(); listener() } }
     private fun <T> forecastProperty(prop: KMutableProperty1<*, T>) = curveFitter.getProperty(prop).apply {
         addListener { _ ->
             updateData()
             updateEquation()
             vActive = curveFitter.curve == GEN_LOGISTIC
-            onChange()
+            listener()
         }
     }
 
@@ -92,11 +89,11 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
     internal val _x0 = forecastProperty(ForecastCurveFitter::x0)
     internal val _v = forecastProperty(ForecastCurveFitter::v)
 
-    internal val _firstFitDay = forecastProperty(ForecastCurveFitter::firstFitDay).apply { addListener { _ -> autofit() }}
-    internal val _lastFitDay = forecastProperty(ForecastCurveFitter::lastFitDay).apply { addListener { _ -> autofit() }}
+    internal val _firstFitDay = forecastProperty(ForecastCurveFitter::firstFitDay).apply { onChange { autofit() }}
+    internal val _lastFitDay = forecastProperty(ForecastCurveFitter::lastFitDay).apply { onChange { autofit() }}
 
-    internal val _firstEvalDay = forecastProperty(ForecastCurveFitter::firstEvalDay).apply { addListener { _ -> autofit() }}
-    internal val _lastEvalDay = forecastProperty(ForecastCurveFitter::lastEvalDay).apply { addListener { _ -> autofit() }}
+    internal val _firstEvalDay = curveFitter.getProperty(ForecastCurveFitter::firstEvalDay).apply { onChange { calcErrors() }}
+    internal val _lastEvalDay = curveFitter.getProperty(ForecastCurveFitter::lastEvalDay).apply { onChange { calcErrors() }}
 
     internal val _showConfidence = property(ForecastPanelModel::showConfidence)
     internal val _firstForecastDay = property(ForecastPanelModel::firstForecastDay)
@@ -143,7 +140,7 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         pastForecasts.metrics = regionMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
         externalForecasts.forecasts = CovidForecasts.allForecasts
                 .filter { it.region.id == region && it.metric == selectedMetric }
-//                .filter { it.forecastDate in forecastDateRange }
+                .filter { it.forecastDate in forecastDateRange }
     }
 
     //endregion
@@ -257,6 +254,11 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         }
     }
 
+    /** Recalculates errors. */
+    fun calcErrors() {
+        updateEquation()
+    }
+
     /** Loads selected forecast. */
     fun load(f: UserForecast) {
         region = f.region.id
@@ -299,9 +301,9 @@ class ForecastPanelModel(var onChange: () -> Unit = {}) {
         get() = metrics.filter { "days" in it.metric }
 
     val ExternalForecasts.filtered
-        get() = forecasts.filter {
-            it.model in otherForecasts && (showConfidence || ("lower" != it.metric && "upper" != it.metric))
-        }.flatMap { it.data }
+        get() = forecasts.filter { it.model in otherForecasts }.flatMap {
+            it.data.filter { mts -> showConfidence || ("lower" !in mts.metric && "upper" !in mts.metric) }
+        }
     val ExternalForecasts.cumulative
         get() = filtered.filter { DEATHS in it.metric }.toMutableList()
     val ExternalForecasts.deltas

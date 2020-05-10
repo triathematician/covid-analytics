@@ -48,7 +48,7 @@ object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
             "icu" in fullMetricId.toLowerCase() -> ICU
             else -> throw IllegalStateException()
         }
-        return ForecastId(IHME, "$date-2000".toLocalDate(M_D_YYYY), region, metric)
+        return ForecastId(IHME, "$date-2020".toLocalDate(M_D_YYYY), region, metric)
     }
 
 }

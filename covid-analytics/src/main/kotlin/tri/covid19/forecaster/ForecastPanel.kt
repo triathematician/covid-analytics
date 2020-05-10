@@ -26,6 +26,8 @@ import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
 import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
+import kotlin.time.milliseconds
 
 @ExperimentalTime
 class ForecastPanel : SplitPane() {
@@ -210,16 +212,17 @@ class ForecastPanel : SplitPane() {
 
     /** Plot forecast curves: min/avg/max totals predicted by day for a single region. */
     private fun updateForecasts() {
-        val data0 = model.cumulativeDataSeries()
-        val max0 = data0.getOrNull(0)?.maxY()
+        measureTime {
+            val data0 = model.cumulativeDataSeries()
+            val max0 = data0.getOrNull(0)?.maxY()
 //        val maxOther = data0.drop(1).map { it.maxY() ?: 0.0 }.max()
 //        (forecastTotals.yAxis as NumberAxis).limitMaxTo(maxOther, max0, 3.0)
 
-        forecastTotals.dataSeries = data0
-        forecastDeltas.dataSeries = model.dailyDataSeries()
-        forecastHubbert.dataSeries = model.hubbertDataSeries()
-        forecastChangeDoubling.dataSeries = model.changeDoublingDataSeries()
-        forecastResiduals.dataSeries = model.residualDataSeries()
+            forecastTotals.dataSeries = data0
+            forecastDeltas.dataSeries = model.dailyDataSeries()
+            forecastHubbert.dataSeries = model.hubbertDataSeries()
+            forecastChangeDoubling.dataSeries = model.changeDoublingDataSeries()
+            forecastResiduals.dataSeries = model.residualDataSeries()
 //
 //        val max2 = forecastDeltas.data.getOrNull(0)?.data?.map { it.yValue.toDouble() }?.max()
 //        max2?.let { (forecastTotals.yAxis as NumberAxis).limitMaxTo(3*it) }
@@ -227,44 +230,47 @@ class ForecastPanel : SplitPane() {
 //        val max1 = forecastHubbert.data.getOrNull(0)?.data?.map { it.xValue.toDouble() }?.max()
 //        max1?.let { (forecastTotals.xAxis as NumberAxis).limitMaxTo(3*it) }
 
-        model.domain?.let {
-            with(axisLabeler(it.start)) {
-                (forecastTotals.xAxis as NumberAxis).tickLabelFormatter = this
-                (forecastDeltas.xAxis as NumberAxis).tickLabelFormatter = this
-                (forecastResiduals.xAxis as NumberAxis).tickLabelFormatter = this
+            model.domain?.let {
+                with(axisLabeler(it.start)) {
+                    (forecastTotals.xAxis as NumberAxis).tickLabelFormatter = this
+                    (forecastDeltas.xAxis as NumberAxis).tickLabelFormatter = this
+                    (forecastResiduals.xAxis as NumberAxis).tickLabelFormatter = this
+                }
             }
-        }
 
-        listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastChangeDoubling, forecastHubbert).forEach { chart ->
-            chart.animated = false
-            chart.data.forEach {
-                if ("predicted" in it.name) {
-                    it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
-                    it.data.forEach { it.node?.isVisible = false }
+            listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastChangeDoubling, forecastHubbert).forEach { chart ->
+                chart.animated = false
+                chart.data.forEach {
+                    if ("predicted" in it.name) {
+                        it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
+                        it.data.forEach { it.node?.isVisible = false }
+                    }
+                    if (IHME in it.name || LANL in it.name || YYG in it.name) {
+                        it.node.style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
+                        it.data.forEach { it.node?.isVisible = false }
+                    }
+                    if ("curve" in it.name) {
+                        it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
+                        it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                        it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                        it.data.forEach { it.node?.isVisible = false }
+                    }
                 }
-                if (IHME in it.name || LANL in it.name || YYG in it.name) {
-                    it.node.style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
-                    it.data.forEach { it.node?.isVisible = false }
-                }
-                if ("curve" in it.name) {
-                    it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
+
+                chart.data.forEach {
                     it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
                     it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
-                    it.data.forEach { it.node?.isVisible = false }
-                }
-            }
-
-            chart.data.forEach {
-                it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
-                it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
-                it.data.forEach {
-                    it.node?.run {
-                        Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
-                        onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
-                        onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                    it.data.forEach {
+                        it.node?.run {
+                            Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
+                            onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
+                            onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                        }
                     }
                 }
             }
+        }.also {
+            if (it > 100.milliseconds) println("Forecast plots updated in $it")
         }
     }
 
