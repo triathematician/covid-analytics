@@ -278,9 +278,8 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     /** Save current config as new forecast. */
     fun save() {
         val empirical = mainSeries
-        val day0 = domain?.start
-        if (empirical != null && day0 != null) {
-            userForecasts.add(curveFitter.createUserForecast(day0, empirical))
+        if (empirical != null) {
+            userForecasts.add(curveFitter.createUserForecast(empirical = empirical))
         }
     }
 

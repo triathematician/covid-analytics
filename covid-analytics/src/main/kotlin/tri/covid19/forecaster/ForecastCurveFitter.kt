@@ -30,7 +30,7 @@ private val L_FIT_RANGE = 1E1..1E7
 private val X0_FIT_RANGE = 10.0..200.0
 private val V_FIT_RANGE = 1E-2..1E2
 
-private val DAY0 = LocalDate.of(2020, 1, 1)
+internal val DAY0 = LocalDate.of(2020, 1, 1)
 
 /** Tools for fitting forecast to empirical data. January 1, 2020 is "day 0". */
 class ForecastCurveFitter: (Number) -> Double {
@@ -109,8 +109,8 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param day0 starting day for forecast curve
      * @param empirical empirical data for metrics
      */
-    fun createUserForecast(day0: LocalDate, empirical: MetricTimeSeries): UserForecast {
-        val forecastDomain = DateRange(day0, JULY1)
+    fun createUserForecast(day0: LocalDate = DAY0, empirical: MetricTimeSeries): UserForecast {
+        val forecastDomain = DateRange(day0, JULY31)
         val forecastValues = forecastDomain.map { invoke(it.minus(day0)) }
         val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = day0, values = forecastValues)
         val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.region, empirical.metric, listOf(series))
@@ -123,13 +123,15 @@ class ForecastCurveFitter: (Number) -> Double {
             peakDay = day0.plusDays(peak.first.toLong())
             peakValue = peak.second
 
-            forecastDays[MAY1] = derivative(MAY1.minus(day0).toDouble())
-            forecastDays[JUNE1] = derivative(JUNE1.minus(day0).toDouble())
-            forecastDays[JULY1] = derivative(JULY1.minus(day0).toDouble())
+            forecastDays[APR30] = derivative(APR30.minus(day0).toDouble())
+            forecastDays[MAY31] = derivative(MAY31.minus(day0).toDouble())
+            forecastDays[JUNE30] = derivative(JUNE30.minus(day0).toDouble())
+            forecastDays[JULY31] = derivative(JULY31.minus(day0).toDouble())
 
-            forecastTotals[MAY1] = invoke(MAY1.minus(day0).toDouble())
-            forecastTotals[JUNE1] = invoke(JUNE1.minus(day0).toDouble())
-            forecastTotals[JULY1] = invoke(JULY1.minus(day0).toDouble())
+            forecastTotals[APR30] = invoke(APR30.minus(day0).toDouble())
+            forecastTotals[MAY31] = invoke(MAY31.minus(day0).toDouble())
+            forecastTotals[JUNE30] = invoke(JUNE30.minus(day0).toDouble())
+            forecastTotals[JULY31] = invoke(JULY31.minus(day0).toDouble())
 
             fitDateRange = empirical.domain.intersect(this@ForecastCurveFitter.fitDateRange)
             standardErrorCumulative = cumulativeStandardError(empirical)

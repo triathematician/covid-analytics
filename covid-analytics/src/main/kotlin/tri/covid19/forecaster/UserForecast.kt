@@ -6,9 +6,13 @@ import tri.timeseries.Forecast
 import tri.util.DateRange
 import java.time.LocalDate
 
+val APR30 = LocalDate.of(2020, 4, 30)
 val MAY1 = LocalDate.of(2020, 5, 1)
+val MAY31 = LocalDate.of(2020, 5, 31)
 val JUNE1 = LocalDate.of(2020, 6, 1)
+val JUNE30 = LocalDate.of(2020, 6, 20)
 val JULY1 = LocalDate.of(2020, 7, 1)
+val JULY31 = LocalDate.of(2020, 7, 31)
 
 /** Forecast along with key metrics. */
 class UserForecast(var forecast: Forecast) {
@@ -72,23 +76,26 @@ class UserForecast(var forecast: Forecast) {
         get() = fitDateRange?.endInclusive
 
     @get:JsonIgnore
-    val may1
-        get() = forecastDays[MAY1]
+    val apr30Total
+        get() = forecastTotals[APR30]
     @get:JsonIgnore
-    val june1
-        get() = forecastDays[JUNE1]
+    val may31Total
+        get() = forecastTotals[MAY31]
     @get:JsonIgnore
-    val july1
-        get() = forecastDays[JULY1]
+    val june30Total
+        get() = forecastTotals[JUNE30]
     @get:JsonIgnore
-    val may1Total
-        get() = forecastTotals[MAY1]
+    val july31Total
+        get() = forecastTotals[JULY31]
     @get:JsonIgnore
-    val june1Total
-        get() = forecastTotals[JUNE1]
+    val mayTotal
+        get() = forecastTotals[MAY31]!! - forecastTotals[APR30]!!
     @get:JsonIgnore
-    val july1Total
-        get() = forecastTotals[JULY1]
+    val juneTotal
+        get() = forecastTotals[JUNE30]!! - forecastTotals[MAY31]!!
+    @get:JsonIgnore
+    val julyTotal
+        get() = forecastTotals[JULY31]!! - forecastTotals[JUNE30]!!
 
     //endregion
 

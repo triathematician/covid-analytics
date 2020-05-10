@@ -36,12 +36,13 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
 
                 readonlyColumn("Peak Day", UserForecast::peakDay)
                 readonlyColumn("Peak Value", UserForecast::peakValue).cellFormat { text = it?.userFormat() }
-                readonlyColumn("May 1", UserForecast::may1).cellFormat { text = it?.userFormat() }
-                readonlyColumn("June 1", UserForecast::june1).cellFormat { text = it?.userFormat() }
-                readonlyColumn("July 1", UserForecast::july1).cellFormat { text = it?.userFormat() }
-                readonlyColumn("May 1 Total", UserForecast::may1Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("June 1 Total", UserForecast::june1Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("July 1 Total", UserForecast::july1Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of April", UserForecast::apr30Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of May", UserForecast::may31Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of June", UserForecast::june30Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of July", UserForecast::july31Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("May Total", UserForecast::mayTotal).cellFormat { text = it?.userFormat() }
+                readonlyColumn("June Total", UserForecast::juneTotal).cellFormat { text = it?.userFormat() }
+                readonlyColumn("July Total", UserForecast::julyTotal).cellFormat { text = it?.userFormat() }
                 readonlyColumn("Total", UserForecast::totalValue).cellFormat { text = it?.userFormat() }
 
                 readonlyColumn("Curve", UserForecast::sigmoidCurve)
