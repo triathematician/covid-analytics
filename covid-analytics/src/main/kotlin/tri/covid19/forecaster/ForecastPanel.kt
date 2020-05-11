@@ -157,6 +157,9 @@ class ForecastPanel : SplitPane() {
                     }
                 }.attachTo(this)
             }
+            field("Evaluation") {
+                button("Save to Table") { action { model.saveExternalForecastsToTable() } }
+            }
         }
 //        fieldset("Forecast History") {
 //            label("This will let you generate forecasts for data in the past to assess the model.")

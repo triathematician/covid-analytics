@@ -106,37 +106,62 @@ class ForecastCurveFitter: (Number) -> Double {
 
     /**
      * Creates new forecast from current settings.
-     * @param day0 starting day for forecast curve
      * @param empirical empirical data for metrics
      */
-    fun createUserForecast(day0: LocalDate = DAY0, empirical: MetricTimeSeries): UserForecast {
-        val forecastDomain = DateRange(day0, JULY31)
-        val forecastValues = forecastDomain.map { invoke(it.minus(day0)) }
-        val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = day0, values = forecastValues)
+    fun userForecastInfo(empirical: MetricTimeSeries): ForecastStats {
+        val forecastDomain = DateRange(DAY0, JULY31)
+        val forecastValues = forecastDomain.map { invoke(it.minus(DAY0)) }
+        val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = DAY0, values = forecastValues)
         val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.region, empirical.metric, listOf(series))
 
-        return UserForecast(f).apply {
+        return ForecastStats(f).apply {
             sigmoidParameters = SigmoidParameters(curve, l.toDouble(), k.toDouble(), x0.toDouble(), v.toDouble())
             totalValue = l
 
             val peak = equationPeak()
-            peakDay = day0.plusDays(peak.first.toLong())
+            peakDay = DAY0.plusDays(peak.first.toLong())
             peakValue = peak.second
 
-            forecastDays[APR30] = derivative(APR30.minus(day0).toDouble())
-            forecastDays[MAY31] = derivative(MAY31.minus(day0).toDouble())
-            forecastDays[JUNE30] = derivative(JUNE30.minus(day0).toDouble())
-            forecastDays[JULY31] = derivative(JULY31.minus(day0).toDouble())
+            forecastDays[APR30] = derivative(APR30.minus(DAY0).toDouble())
+            forecastDays[MAY31] = derivative(MAY31.minus(DAY0).toDouble())
+            forecastDays[JUNE30] = derivative(JUNE30.minus(DAY0).toDouble())
+            forecastDays[JULY31] = derivative(JULY31.minus(DAY0).toDouble())
 
-            forecastTotals[APR30] = invoke(APR30.minus(day0).toDouble())
-            forecastTotals[MAY31] = invoke(MAY31.minus(day0).toDouble())
-            forecastTotals[JUNE30] = invoke(JUNE30.minus(day0).toDouble())
-            forecastTotals[JULY31] = invoke(JULY31.minus(day0).toDouble())
+            forecastTotals[APR30] = invoke(APR30.minus(DAY0).toDouble())
+            forecastTotals[MAY31] = invoke(MAY31.minus(DAY0).toDouble())
+            forecastTotals[JUNE30] = invoke(JUNE30.minus(DAY0).toDouble())
+            forecastTotals[JULY31] = invoke(JULY31.minus(DAY0).toDouble())
 
             fitDateRange = empirical.domain.intersect(this@ForecastCurveFitter.fitDateRange)
-            standardErrorCumulative = cumulativeStandardError(empirical)
-            standardErrorDelta = deltaStandardError(empirical)
+            standardErrorCumulative = cumulativeStandardError(empirical = empirical)
+            standardErrorDelta = deltaStandardError(empirical = empirical)
         }
+    }
+
+
+    /**
+     * Creates new forecast from current settings.
+     * @param empirical empirical data for metrics
+     */
+    fun forecastStats(forecast: Forecast, empirical: MetricTimeSeries) = ForecastStats(forecast).apply {
+        sigmoidParameters = null
+        fitDateRange = null
+
+        val totals = forecast.data.first { forecast.metric in it.metric && "lower" !in it.metric && "upper" !in it.metric }
+        val deltas = totals.deltas()
+        totalValue = totals.lastValue
+        deltas.peak().apply {
+            peakDay = first
+            peakValue = second
+        }
+
+        arrayOf(APR30, MAY31, JUNE30, JULY31).forEach {
+            forecastTotals[it] = totals[it]
+            forecastDays[it] = deltas[it]
+        }
+
+        standardErrorCumulative = cumulativeStandardError(totals, empirical)
+        standardErrorDelta = deltaStandardError(deltas, empirical)
     }
 
     //endregion
@@ -183,21 +208,24 @@ class ForecastCurveFitter: (Number) -> Double {
 
     /**
      * Compute standard error for the cumulative (raw) time series data.
+     * @param curve optional curve to evaluate
      * @param empirical the empirical data
-     * @param shift # of days to use for fit
+     * @return error
      */
-    fun cumulativeStandardError(empirical: MetricTimeSeries?): Double? {
+    fun cumulativeStandardError(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
-        return standardError(observedPoints) { invoke(it) }
+        return standardError(observedPoints) { n -> curve?.let { it[numberToDate(n)] } ?: invoke(n) }
     }
 
     /**
      * Compute standard error for the delta (day-over-day change) of this curve compared to provided empirical data.
-     * @param shift # of days to add to empirical data (e.g. if averaged) to match the appropriate x value on the curve
+     * @param deltaCurve optional curve to evaluate
+     * @param empirical the empirical data
+     * @return error
      */
-    fun deltaStandardError(empirical: MetricTimeSeries?): Double? {
+    fun deltaStandardError(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
-        return standardError(observedPoints) { derivative(it) }
+        return standardError(observedPoints) { n -> deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n) }
     }
 
     /**

@@ -20,44 +20,44 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class ForecastTable(model: ForecastPanelModel) : BorderPane() {
 
-    lateinit var table: TableView<UserForecast>
+    lateinit var table: TableView<ForecastStats>
 
     init {
         top = toolbar {
             button("Copy") { action { copyTableDataToClipboard(table) } }
-            button("Export...") { action { exportForecastData(model.userForecasts) } }
+            button("Export...") { action { exportForecastData(model.forecastInfoList) } }
         }
         center = scrollpane(fitToWidth = true, fitToHeight = true) {
-            tableview(model.userForecasts) {
-                readonlyColumn("Region", UserForecast::regionId)
-                readonlyColumn("Model", UserForecast::model)
-                readonlyColumn("Metric", UserForecast::metric)
-                readonlyColumn("Forecast Date", UserForecast::forecastDate)
+            tableview(model.forecastInfoList) {
+                readonlyColumn("Region", ForecastStats::regionId)
+                readonlyColumn("Model", ForecastStats::model)
+                readonlyColumn("Metric", ForecastStats::metric)
+                readonlyColumn("Forecast Date", ForecastStats::forecastDate)
 
-                readonlyColumn("Peak Day", UserForecast::peakDay)
-                readonlyColumn("Peak Value", UserForecast::peakValue).cellFormat { text = it?.userFormat() }
-                readonlyColumn("End of April", UserForecast::apr30Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("End of May", UserForecast::may31Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("End of June", UserForecast::june30Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("End of July", UserForecast::july31Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("May Total", UserForecast::mayTotal).cellFormat { text = it?.userFormat() }
-                readonlyColumn("June Total", UserForecast::juneTotal).cellFormat { text = it?.userFormat() }
-                readonlyColumn("July Total", UserForecast::julyTotal).cellFormat { text = it?.userFormat() }
-                readonlyColumn("Total", UserForecast::totalValue).cellFormat { text = it?.userFormat() }
+                readonlyColumn("Peak Day", ForecastStats::peakDay)
+                readonlyColumn("Peak Value", ForecastStats::peakValue).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of April", ForecastStats::apr30Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of May", ForecastStats::may31Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of June", ForecastStats::june30Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("End of July", ForecastStats::july31Total).cellFormat { text = it?.userFormat() }
+                readonlyColumn("May Total", ForecastStats::mayTotal).cellFormat { text = it?.userFormat() }
+                readonlyColumn("June Total", ForecastStats::juneTotal).cellFormat { text = it?.userFormat() }
+                readonlyColumn("July Total", ForecastStats::julyTotal).cellFormat { text = it?.userFormat() }
+                readonlyColumn("Total", ForecastStats::totalValue).cellFormat { text = it?.userFormat() }
 
-                readonlyColumn("Curve", UserForecast::sigmoidCurve)
-                readonlyColumn("Parameters", UserForecast::parameters).cellFormat { text = it?.joinToString("; ") { it.userFormat() } }
-                readonlyColumn("k", UserForecast::parameterK).cellFormat { text = it?.format(4) }
+                readonlyColumn("Curve", ForecastStats::sigmoidCurve)
+                readonlyColumn("Parameters", ForecastStats::parameters).cellFormat { text = it?.joinToString("; ") { it.userFormat() } }
+                readonlyColumn("k", ForecastStats::parameterK).cellFormat { text = it?.format(4) }
 
-                readonlyColumn("First Fit Day", UserForecast::fitFirstDay)
-                readonlyColumn("Last Fit Day", UserForecast::fitLastDay)
-                readonlyColumn("SE Totals", UserForecast::standardErrorCumulative).cellFormat { text = it?.format(2) }
-                readonlyColumn("SE Deltas", UserForecast::standardErrorDelta).cellFormat { text = it?.format(2) }
+                readonlyColumn("First Fit Day", ForecastStats::fitFirstDay)
+                readonlyColumn("Last Fit Day", ForecastStats::fitLastDay)
+                readonlyColumn("SE Totals", ForecastStats::standardErrorCumulative).cellFormat { text = it?.format(2) }
+                readonlyColumn("SE Deltas", ForecastStats::standardErrorDelta).cellFormat { text = it?.format(2) }
 
                 contextmenu {
                     item("Restore").action { selectedItem?.apply { model.load(this) } }
                     separator()
-                    item("Remove").action { selectedItem?.apply { model.userForecasts.remove(this) } }
+                    item("Remove").action { selectedItem?.apply { model.forecastInfoList.remove(this) } }
                 }
 
                 table = this
@@ -86,12 +86,12 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
         else -> toString()
     }
 
-    private fun exportForecastData(forecasts: List<UserForecast>) {
+    private fun exportForecastData(forecastStats: List<ForecastStats>) {
         val fileChooser = FileChooser()
         fileChooser.title = "Export forecast data"
         fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("JSON Files (.json)", "*.json"))
         fileChooser.showSaveDialog(scene.window)?.run {
-            DefaultMapper.writerWithDefaultPrettyPrinter().writeValue(this, forecasts)
+            DefaultMapper.writerWithDefaultPrettyPrinter().writeValue(this, forecastStats)
         }
     }
 

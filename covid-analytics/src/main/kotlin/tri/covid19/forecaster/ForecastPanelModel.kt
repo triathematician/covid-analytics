@@ -34,7 +34,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     // user forecast
     internal val curveFitter = ForecastCurveFitter()
-    internal val userForecasts = mutableListOf<UserForecast>().asObservable()
+    internal val forecastInfoList = mutableListOf<ForecastStats>().asObservable()
 
     internal var showForecast by property(true)
     private var vActive by property(false)
@@ -212,8 +212,8 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
             ""
         }
 
-        val se1 = curveFitter.cumulativeStandardError(mainSeries)
-        val se2 = curveFitter.deltaStandardError(mainSeries)
+        val se1 = curveFitter.cumulativeStandardError(empirical = mainSeries)
+        val se2 = curveFitter.deltaStandardError(empirical = mainSeries)
 
         _manualLogCumStdErr.value = "SE = ${se1?.userFormat() ?: "?"} (totals)"
         _manualDeltaStdErr.value = "SE = ${se2?.userFormat() ?: "?"} (per day)"
@@ -260,7 +260,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     }
 
     /** Loads selected forecast. */
-    fun load(f: UserForecast) {
+    fun load(f: ForecastStats) {
         region = f.region.id
         selectedMetric = f.metric
         curveFitter.curve = f.sigmoidCurve
@@ -279,7 +279,16 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     fun save() {
         val empirical = mainSeries
         if (empirical != null) {
-            userForecasts.add(curveFitter.createUserForecast(empirical = empirical))
+            forecastInfoList.add(curveFitter.userForecastInfo(empirical))
+        }
+    }
+
+    /** Save all other forecasts. */
+    fun saveExternalForecastsToTable() {
+        val empirical = mainSeries
+        if (empirical != null) {
+            externalForecasts.forecasts.filter { it.model in otherForecasts }
+                    .forEach { forecastInfoList.add(curveFitter.forecastStats(it, empirical)) }
         }
     }
 
@@ -301,7 +310,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     val ExternalForecasts.filtered
         get() = forecasts.filter { it.model in otherForecasts }.flatMap {
-            it.data.filter { mts -> showConfidence || ("lower" !in mts.metric && "upper" !in mts.metric) }
+            it.data.filter { showConfidence || ("lower" !in it.metric && "upper" !in it.metric) }
         }
     val ExternalForecasts.cumulative
         get() = filtered.filter { DEATHS in it.metric }.toMutableList()

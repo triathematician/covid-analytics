@@ -54,6 +54,9 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
 
+    /** Get date of peak and value. */
+    fun peak(): Pair<LocalDate, Double> = domain.map { it to get(it) }.maxBy { it.second }!!
+
     //region DERIVED SERIES
 
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
