@@ -4,14 +4,17 @@ import javafx.beans.binding.Bindings
 import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
+import javafx.geometry.Orientation
 import javafx.geometry.Pos
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
+import javafx.scene.control.TextField
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.Priority
 import javafx.util.StringConverter
 import org.controlsfx.control.CheckComboBox
+import org.controlsfx.control.PlusMinusSlider
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
 import tri.covid19.data.CovidForecasts
@@ -50,12 +53,17 @@ class ForecastPanel : SplitPane() {
     private fun EventTarget.configPanel() = form {
         fieldset("Region/Metric") {
             field("Region") {
+                var regionField: TextField? = null
                 autotextfield(model.regions) {
                     contextmenu {
                         item("Next State") { action { model.goToNextUsState() } }
                         item("Previous State") { action { model.goToPreviousUsState() } }
                     }
+                    regionField = this
                 }.bind(model._region)
+                spinner(mutableListOf<String>().asObservable()) {
+                    editor.textProperty().bind(regionField!!.textProperty())
+                }
             }
             field("Metric") {
                 combobox(model._selectedMetric, METRIC_OPTIONS)
