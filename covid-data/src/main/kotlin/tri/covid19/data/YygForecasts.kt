@@ -31,7 +31,7 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return keys.filter { it.startsWith("predicted_total_deaths") || it.startsWith("predicted_total_infected") }
                 .filter { !get(it).isNullOrEmpty() }
                 .map {
-                    metric(yygRegion(get("region")!!, get("country")!!), metricName(it, date), get("date")!!, get(it)!!)
+                    metric(yygRegion(get("region")!!, get("country")!!), metricName(it, date), get("date")!!, get(it)!!.toDouble())
                 }
     }
 

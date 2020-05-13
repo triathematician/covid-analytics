@@ -37,7 +37,7 @@ object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return "$IHME-$date $revisedName"
     }
 
-    fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {
+    fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId? {
         val s = fullMetricId.substringBefore(" ")
         val date = s.substringAfter("-")
         val metric = when {
@@ -46,9 +46,11 @@ object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
             "bed" in fullMetricId.toLowerCase() -> BEDS
             "ven" in fullMetricId.toLowerCase() -> VENTILATORS
             "icu" in fullMetricId.toLowerCase() -> ICU
-            else -> throw IllegalStateException()
+            "tests" in fullMetricId.toLowerCase() -> TESTS
+            "infections" in fullMetricId.toLowerCase() -> null
+            else -> throw IllegalStateException("Unsupported: $fullMetricId")
         }
-        return ForecastId(IHME, "$date-2020".toLocalDate(M_D_YYYY), region, metric)
+        return metric?.let { ForecastId(IHME, "$date-2020".toLocalDate(M_D_YYYY), region, metric) }
     }
 
 }

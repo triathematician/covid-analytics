@@ -17,9 +17,9 @@ import kotlin.time.measureTimedValue
 
 @ExperimentalTime
 fun main() {
-//    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
-//    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
-//    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
+    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
+    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
+    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
     JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
 }
 
@@ -66,17 +66,19 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
     protected open fun Map<String, String>.extractMetrics(regionField: String, dateField: String,
                                                    metricFieldPattern: (String) -> Boolean,
                                                    metricNameMapper: (String) -> String): List<MetricTimeSeries> {
-        return keys.filter { metricFieldPattern(it) }.map {
-            metric(get(regionField) ?: throw IllegalArgumentException(),
-                    metricNameMapper(it),
-                    get(dateField) ?: throw IllegalArgumentException(),
-                    get(it) ?: throw IllegalArgumentException())
+        return keys.filter { metricFieldPattern(it) }.mapNotNull {
+            val value = get(it)?.toDoubleOrNull()
+            if (value == null) null else
+                metric(get(regionField) ?: throw IllegalArgumentException(),
+                        metricNameMapper(it),
+                        get(dateField) ?: throw IllegalArgumentException(),
+                        value)
         }
     }
 
     /** Easy way to construct metric from string value content. */
-    protected open fun metric(region: String, metric: String, date: String, value: String)
-            = MetricTimeSeries(RegionLookup(region.maybeFixId()), metric, 0.0, date.toLocalDate(FORMAT), value.toDouble())
+    protected open fun metric(region: String, metric: String, date: String, value: Double)
+            = MetricTimeSeries(RegionLookup(region.maybeFixId()), metric, 0.0, date.toLocalDate(FORMAT), value)
 
     private fun String.maybeFixId() = when {
         addIdSuffixes && "$this, US" in UnitedStates.stateNames -> "$this, US"

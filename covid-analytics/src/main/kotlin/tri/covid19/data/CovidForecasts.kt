@@ -13,9 +13,9 @@ object CovidForecasts {
 
     val ihmeForecasts: List<Forecast>
         get() = loadTimeSeries("../data/normalized/ihme-forecasts.json").flatMap { regionData ->
-            regionData.metrics.groupBy { IhmeForecasts.forecastId(regionData.region, it.id) }.map {
-                Forecast(it.key, it.value)
-            }
+            regionData.metrics.groupBy { IhmeForecasts.forecastId(regionData.region, it.id) }
+                    .filter { it.key != null }
+                    .map { Forecast(it.key!!, it.value) }
         }
 
     val lanlForecasts: List<Forecast>
