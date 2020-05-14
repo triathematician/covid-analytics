@@ -51,8 +51,8 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
 
                 readonlyColumn("First Fit Day", ForecastStats::fitFirstDay)
                 readonlyColumn("Last Fit Day", ForecastStats::fitLastDay)
-                readonlyColumn("SE Totals", ForecastStats::standardErrorCumulative).cellFormat { text = it?.format(2) }
-                readonlyColumn("SE Deltas", ForecastStats::standardErrorDelta).cellFormat { text = it?.format(2) }
+                readonlyColumn("RMSE Totals", ForecastStats::standardErrorCumulative).cellFormat { text = it?.format(2) }
+                readonlyColumn("RMSE Deltas", ForecastStats::standardErrorDelta).cellFormat { text = it?.format(2) }
 
                 contextmenu {
                     item("Restore").action { selectedItem?.apply { model.load(this) } }

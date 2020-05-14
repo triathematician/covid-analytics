@@ -215,8 +215,8 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         val se1 = curveFitter.cumulativeStandardError(empirical = mainSeries)
         val se2 = curveFitter.deltaStandardError(empirical = mainSeries)
 
-        _manualLogCumStdErr.value = "SE = ${se1?.userFormat() ?: "?"} (totals)"
-        _manualDeltaStdErr.value = "SE = ${se2?.userFormat() ?: "?"} (per day)"
+        _manualLogCumStdErr.value = "RMSE = ${se1?.userFormat() ?: "?"} (totals)"
+        _manualDeltaStdErr.value = "RMSE = ${se2?.userFormat() ?: "?"} (per day)"
     }
 
     //endregion

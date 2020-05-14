@@ -19,6 +19,7 @@ import tri.util.DateRange
 import tri.util.minus
 import tri.util.monthDay
 import java.time.LocalDate
+import kotlin.math.abs
 import kotlin.math.exp
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -218,7 +219,7 @@ class ForecastCurveFitter: (Number) -> Double {
      */
     fun cumulativeStandardError(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
-        return standardError(observedPoints) { n -> curve?.let { it[numberToDate(n)] } ?: invoke(n) }
+        return rootMeanSquareError(observedPoints) { n -> curve?.let { it[numberToDate(n)] } ?: invoke(n) }
     }
 
     /**
@@ -229,7 +230,7 @@ class ForecastCurveFitter: (Number) -> Double {
      */
     fun deltaStandardError(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
-        return standardError(observedPoints) { n -> deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n) }
+        return rootMeanSquareError(observedPoints) { n -> deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n) }
     }
 
     /**
@@ -300,8 +301,12 @@ class ForecastCurveFitter: (Number) -> Double {
 //region MATH UTILS
 
 /** Compute standard error given list of points and given function. */
-fun standardError(points: List<Vector2D>, function: (Double) -> Double)
+fun rootMeanSquareError(points: List<Vector2D>, function: (Double) -> Double)
         = sqrt(points.map { it.y - function(it.x) }.map { it * it }.sum() / points.size)
+
+/** Compute standard error given list of points and given function. */
+fun meanAbsoluteError(points: List<Vector2D>, function: (Double) -> Double)
+        = points.map { abs(it.y - function(it.x)) }.sum() / points.size
 
 operator fun Number.div(x: Double) = toDouble() / x
 operator fun Number.unaryMinus() = -toDouble()
