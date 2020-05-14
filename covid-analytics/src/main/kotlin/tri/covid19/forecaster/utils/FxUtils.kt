@@ -10,6 +10,7 @@ import javafx.scene.control.TextField
 import javafx.util.StringConverter
 import tornadofx.*
 import tri.util.monthDay
+import tri.util.userFormat
 import java.time.LocalDate
 import kotlin.math.floor
 import kotlin.math.log10
@@ -122,6 +123,16 @@ private fun Double.logRound(): Double {
         2*base >= this -> 2*base
         else -> 5*base
     }
+}
+
+//endregion
+
+//region FORMATTERS
+
+/** Converter for formatting number automatically. */
+object UserStringConverter : StringConverter<Number>() {
+    override fun toString(n: Number) = n.userFormat()
+    override fun fromString(s: String) = TODO("Not yet implemented")
 }
 
 //endregion

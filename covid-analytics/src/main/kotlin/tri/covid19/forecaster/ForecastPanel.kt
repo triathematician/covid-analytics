@@ -86,10 +86,25 @@ class ForecastPanel : SplitPane() {
                 button("Save") { action { model.save() } }
                 button("Autofit") { action { model.autofit() } }
             }
-            field("L (maximum)") { slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l); label(model._l) }
-            field("k (steepness)") { slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k); label(model._k) }
-            field("x0 (midpoint)") { slider(0.0..250.0) { blockIncrement = 0.01 }.bind(model._x0); label(model._x0) }
-            field("v (exponent)") { slider(0.01..5.0) { blockIncrement = 0.01; enableWhen(model._vActive) }.bind(model._v) }
+            field("L (maximum)") {
+                slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l)
+                label(model._l, converter = UserStringConverter)
+            }
+            field("k (steepness)") {
+                slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k)
+                label(model._k, converter = UserStringConverter)
+            }
+            field("x0 (midpoint)") {
+                slider(0.0..250.0) { blockIncrement = 0.01 }.bind(model._x0)
+                label(model._x0, converter = UserStringConverter)
+            }
+            field("v (exponent)") {
+                slider(0.01..5.0) {
+                    blockIncrement = 0.01
+                    visibleWhen(model._vActive)
+                    managedWhen(model._vActive)
+                }.bind(model._v)
+            }
             field("Equation") { label("").bind(model._manualEquation) }
             field("Peak") { label("").bind(model._manualPeak) }
         }

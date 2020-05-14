@@ -66,6 +66,7 @@ class ForecastCurveFitter: (Number) -> Double {
 
     val equation
         get() = when (curve) {
+            LINEAR -> String.format("%.2f * (1 + %.2f * (x - %.2f)) / 2", l, k, x0)
             LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))", l, k, x0)
             GEN_LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))^(1/%.2f)", l, k, x0, v)
             GAUSSIAN -> String.format("%.2f * (1 + erf(-%.3f (x - %.2f)))/2", l, k, x0)
@@ -173,6 +174,7 @@ class ForecastCurveFitter: (Number) -> Double {
 
     /** Current curve value. */
     override fun invoke(x: Number) = when (curve) {
+        LINEAR -> linear(x.toDouble())
         LOGISTIC -> logistic(x.toDouble())
         GEN_LOGISTIC -> generalLogistic(x.toDouble())
         GAUSSIAN -> gaussianErf(x.toDouble())
@@ -183,14 +185,16 @@ class ForecastCurveFitter: (Number) -> Double {
     /** Estimate derivative of curve at x. */
     fun derivative(x: Double) = 100*(invoke(x + .005) - invoke(x - .005))
 
+    /** Linear function. */
+    fun linear(x: Double) = linear(x, l.toDouble(), k.toDouble(), x0.toDouble())
     /** Compute logistic function at given # of days. */
-    fun logistic(x: Double) = l / (1 + exp(-k * (x - x0)))
+    fun logistic(x: Double) = logistic(x, l.toDouble(), k.toDouble(), x0.toDouble())
     /** Compute generalized logistic function at given # of days. */
-    fun generalLogistic(x: Double) = l * (1 + exp(-k * (x - x0))).pow(-1 / v)
+    fun generalLogistic(x: Double) = generalLogistic(x, l.toDouble(), k.toDouble(), x0.toDouble(), v.toDouble())
     /** Compute error function at given # of days. */
-    fun gaussianErf(x: Double) = l * (1 + Erf.erf(k * (x - x0))) / 2.0
+    fun gaussianErf(x: Double) = gaussianErf(x, l.toDouble(), k.toDouble(), x0.toDouble())
     /** Compute Gompertz function at given # of days. */
-    fun gompertz(x: Double) = l * exp(-exp(-k * (x - x0)))
+    fun gompertz(x: Double) = gompertz(x, l.toDouble(), k.toDouble(), x0.toDouble())
 
     //endregion
 
@@ -277,6 +281,7 @@ class ForecastCurveFitter: (Number) -> Double {
 
     /** Compute curve for explicit set of parameters. */
     private fun curve(x: Double, params: RealVector) = when(curve) {
+        LINEAR -> linear(x, params[0], params[1], params[2])
         LOGISTIC -> logistic(x, params[0], params[1], params[2])
         GEN_LOGISTIC -> generalLogistic(x, params[0], params[1], params[2], params[3])
         GAUSSIAN -> gaussianErf(x, params[0], params[1], params[2])
