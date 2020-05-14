@@ -1,11 +1,14 @@
 package tri.covid19.forecaster
 
+import com.sun.javafx.charts.Legend
+import javafx.beans.binding.Binding
 import javafx.beans.binding.Bindings
 import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
 import javafx.geometry.Orientation
 import javafx.geometry.Pos
+import javafx.scene.Node
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
@@ -17,6 +20,7 @@ import org.controlsfx.control.CheckComboBox
 import org.controlsfx.control.PlusMinusSlider
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
+import tornadofx.Stylesheet.Companion.contextMenu
 import tri.covid19.data.CovidForecasts
 import tri.covid19.data.IHME
 import tri.covid19.data.LANL
@@ -42,6 +46,7 @@ class ForecastPanel : SplitPane() {
     private lateinit var forecastHubbert: LineChart<Number, Number>
     private lateinit var forecastChangeDoubling: LineChart<Number, Number>
     private lateinit var forecastResiduals: LineChart<Number, Number>
+    private lateinit var legend: Legend
 
     init {
         configPanel()
@@ -191,10 +196,27 @@ class ForecastPanel : SplitPane() {
             row {
                 forecastTotals = linechartRangedOnFirstSeries("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
                     gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                    isLegendVisible = false
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
                 }
-                forecastDeltas = linechartRangedOnFirstSeries("Change per Day", "Day", "Actual/Forecast")
+                forecastDeltas = linechartRangedOnFirstSeries("Change per Day", "Day", "Actual/Forecast") {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                    isLegendVisible = false
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
+                }
                 forecastResiduals = linechart("Residuals (Daily)", "Day", "# more than forecasted") {
                     gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                    isLegendVisible = false
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
                 }
             }
             row {
@@ -207,16 +229,34 @@ class ForecastPanel : SplitPane() {
                             tickUnit = 0.05
                             upperBound = 0.3
                         }) {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
                     animated = false
                     createSymbols = false
+                    isLegendVisible = false
                     axisSortingPolicy = LineChart.SortingPolicy.NONE
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
                 }
                 forecastChangeDoubling = linechartRangedOnFirstSeries("Change per Day vs Doubling Time", "Doubling Time", "Change per Day") {
                     gridpaneConstraints { vhGrow = Priority.ALWAYS }
                     animated = false
                     createSymbols = false
+                    isLegendVisible = false
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
                 }
             }
+        }
+        bottom = hbox(alignment = Pos.CENTER) {
+            legend = Legend()
+            legend.alignment = Pos.CENTER
+            val chartLegend = forecastTotals.childrenUnmodifiable.first { it is Legend } as Legend
+            Bindings.bindContent(legend.items, chartLegend.items)
+            this += legend
         }
     }
 
@@ -282,27 +322,6 @@ class ForecastPanel : SplitPane() {
             }
         }.also {
             if (it > 100.milliseconds) println("Forecast plots updated in $it")
-        }
-    }
-
-    private fun NumberAxis.limitMaxTo(maxOther: Double?, max: Double?, multiplier: Double) {
-        when {
-            max == null || maxOther == null -> isAutoRanging = true
-            maxOther >= max*multiplier -> {
-                isAutoRanging = false
-                lowerBound = 0.0
-                upperBound = (max*multiplier).logRound()
-            }
-            else -> isAutoRanging = true
-        }
-    }
-
-    private fun Double.logRound(): Double {
-        val base = 10.0.pow(floor(log10(this)))
-        return when {
-            base >= this -> base
-            2*base >= this -> 2*base
-            else -> 5*base
         }
     }
 

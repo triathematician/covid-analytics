@@ -1,7 +1,10 @@
 package tri.covid19.forecaster
 
+import com.sun.javafx.charts.Legend
+import javafx.beans.binding.Bindings
 import javafx.event.EventHandler
 import javafx.event.EventTarget
+import javafx.geometry.Pos
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
@@ -14,13 +17,14 @@ import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
 @ExperimentalTime
-class HistoryPanel: SplitPane() {
+class HistoryPanel : SplitPane() {
 
     private val historyPanelModel = HistoryPanelModel { updateBothCharts() }
     private val hubbertChartModel = HistoricalHubbertPlots { updateBothCharts() }
 
     private lateinit var historicalChart: LineChart<Number, Number>
     private lateinit var hubbertChart: LineChart<Number, Number>
+    private lateinit var legend: Legend
 
     private val _logScale = historyPanelModel.getProperty(HistoryPanelModel::logScale).apply { addListener { _ -> resetCharts() } }
 
@@ -77,30 +81,48 @@ class HistoryPanel: SplitPane() {
     }
 
     /** Charts. */
-    private fun EventTarget.charts() = vbox {
-        historicalChart = linechart("Historical Data", "Day","Count", yLog = historyPanelModel.logScale) {
-            animated = false
-            createSymbols = false
-            vboxConstraints {
-                vGrow = Priority.ALWAYS
+    private fun EventTarget.charts() = borderpane {
+        center = gridpane {
+            row {
+                historicalChart = linechart("Historical Data", "Day", "Count", yLog = historyPanelModel.logScale) {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                    animated = false
+                    createSymbols = false
+                    isLegendVisible = false
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
+                }
             }
-            isLegendVisible = false
+            row {
+                hubbertChart = linechart("Percent Growth vs Total",
+                        NumberAxis().apply { label = "Total" },
+                        NumberAxis().apply {
+                            label = "Percent Growth"
+                            isAutoRanging = false
+                            lowerBound = 0.0
+                            tickUnit = 0.05
+                            upperBound = 0.3
+                        }) {
+                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
+                    animated = false
+                    createSymbols = false
+                    isLegendVisible = false
+                    axisSortingPolicy = LineChart.SortingPolicy.NONE
+                    contextmenu {
+                        item("Maximize").action { maximizeInParent() }
+                        item("Restore").action { restoreInParent() }
+                    }
+                }
+            }
         }
-        hubbertChart = linechart("Percent Growth vs Total",
-                NumberAxis().apply { label = "Total" },
-                NumberAxis().apply {
-                    label = "Percent Growth"
-                    isAutoRanging = false
-                    lowerBound = 0.0
-                    tickUnit = 0.05
-                    upperBound = 0.3
-                }) {
-            animated = false
-            createSymbols = false
-            axisSortingPolicy = LineChart.SortingPolicy.NONE
-            vboxConstraints {
-                vGrow = Priority.ALWAYS
-            }
+        bottom = hbox(alignment = Pos.CENTER) {
+            legend = Legend()
+            legend.alignment = Pos.CENTER
+            val chartLegend = historicalChart.childrenUnmodifiable.first { it is Legend } as Legend
+            Bindings.bindContent(legend.items, chartLegend.items)
+            this += legend
         }
     }
 
@@ -109,7 +131,7 @@ class HistoryPanel: SplitPane() {
         val parent = historicalChart.parent
         hubbertChart.removeFromParent()
         historicalChart.removeFromParent()
-        historicalChart = parent.linechart("Historical Data", "Day","Count", yLog = historyPanelModel.logScale) {
+        historicalChart = parent.linechart("Historical Data", "Day", "Count", yLog = historyPanelModel.logScale) {
             animated = false
             createSymbols = false
         }
@@ -194,5 +216,4 @@ class HistoryPanel: SplitPane() {
                 series(it.id, it.points.map { tri.covid19.forecaster.utils.xy(it.first, it.second) }.asObservable())
             }
         }
-
 }
