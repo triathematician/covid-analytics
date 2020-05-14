@@ -9,7 +9,6 @@ import org.apache.commons.math3.fitting.leastsquares.MultivariateJacobianFunctio
 import org.apache.commons.math3.linear.Array2DRowRealMatrix
 import org.apache.commons.math3.linear.ArrayRealVector
 import org.apache.commons.math3.linear.RealVector
-import org.apache.commons.math3.special.Erf
 import tornadofx.Vector2D
 import tornadofx.property
 import tri.math.*
@@ -20,8 +19,6 @@ import tri.util.minus
 import tri.util.monthDay
 import java.time.LocalDate
 import kotlin.math.abs
-import kotlin.math.exp
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 private const val MODEL_NAME = "User"
@@ -135,8 +132,10 @@ class ForecastCurveFitter: (Number) -> Double {
             forecastTotals[JULY31] = invoke(JULY31.minus(DAY0).toDouble())
 
             fitDateRange = empirical.domain.intersect(this@ForecastCurveFitter.fitDateRange)
-            standardErrorCumulative = cumulativeStandardError(empirical = empirical)
-            standardErrorDelta = deltaStandardError(empirical = empirical)
+            rmsErrorCumulative = cumulativeRmse(empirical = empirical)
+            rmsErrorDelta = deltaRmse(empirical = empirical)
+            masErrorCumulative = cumulativeMase(empirical = empirical)
+            masErrorDelta = deltaMase(empirical = empirical)
         }
     }
 
@@ -162,8 +161,11 @@ class ForecastCurveFitter: (Number) -> Double {
             forecastDays[it] = deltas[it]
         }
 
-        standardErrorCumulative = cumulativeStandardError(totals, empirical)
-        standardErrorDelta = deltaStandardError(deltas, empirical)
+        rmsErrorCumulative = cumulativeRmse(totals, empirical)
+        rmsErrorDelta = deltaRmse(deltas, empirical)
+
+        masErrorCumulative = cumulativeMase(totals, empirical)
+        masErrorDelta = deltaMase(deltas, empirical)
     }
 
     //endregion
@@ -217,7 +219,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @return error
      */
-    fun cumulativeStandardError(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+    fun cumulativeRmse(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
         return rootMeanSquareError(observedPoints) { n -> curve?.let { it[numberToDate(n)] } ?: invoke(n) }
     }
@@ -228,9 +230,31 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @return error
      */
-    fun deltaStandardError(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+    fun deltaRmse(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
         return rootMeanSquareError(observedPoints) { n -> deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n) }
+    }
+
+    /**
+     * Compute MAS error for the cumulative (raw) time series data.
+     * @param curve optional curve to evaluate
+     * @param empirical the empirical data
+     * @return error
+     */
+    fun cumulativeMase(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+        val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
+        return meanAbsoluteScaledError(observedPoints) { n -> curve?.let { it[numberToDate(n)] } ?: invoke(n) }
+    }
+
+    /**
+     * Compute MAS error for the delta (day-over-day change) of this curve compared to provided empirical data.
+     * @param deltaCurve optional curve to evaluate
+     * @param empirical the empirical data
+     * @return error
+     */
+    fun deltaMase(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+        val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
+        return meanAbsoluteScaledError(observedPoints) { n -> deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n) }
     }
 
     /**
@@ -300,13 +324,17 @@ class ForecastCurveFitter: (Number) -> Double {
 
 //region MATH UTILS
 
-/** Compute standard error given list of points and given function. */
+/** Compute root mean squared error given list of points and given function. */
 fun rootMeanSquareError(points: List<Vector2D>, function: (Double) -> Double)
         = sqrt(points.map { it.y - function(it.x) }.map { it * it }.sum() / points.size)
 
-/** Compute standard error given list of points and given function. */
+/** Compute mean absolute error given list of points and given function. */
 fun meanAbsoluteError(points: List<Vector2D>, function: (Double) -> Double)
-        = points.map { abs(it.y - function(it.x)) }.sum() / points.size
+        = points.map { abs(it.y - function(it.x)) }.average()
+
+/** Compute MAS error given list of points and given function. */
+fun meanAbsoluteScaledError(points: List<Vector2D>, function: (Double) -> Double)
+        = points.map { abs(it.y - function(it.x)) }.average() / (2 until points.size).map { abs(points[it].y - points[it-1].y)}.average()
 
 operator fun Number.div(x: Double) = toDouble() / x
 operator fun Number.unaryMinus() = -toDouble()

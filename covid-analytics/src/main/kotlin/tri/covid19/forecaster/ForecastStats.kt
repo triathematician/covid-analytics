@@ -23,10 +23,15 @@ class ForecastStats(var forecast: Forecast) {
     /** Range of dates used for fit. */
     var fitDateRange: DateRange? = null
 
-    /** Standard error vs cumulative data. */
-    var standardErrorCumulative: Double? = null
-    /** Standard error vs delta data. */
-    var standardErrorDelta: Double? = null
+    /** Root-mean-squared error vs cumulative data. */
+    var rmsErrorCumulative: Double? = null
+    /** Root-mean-squared  error vs delta data. */
+    var rmsErrorDelta: Double? = null
+
+    /** Mean-absolute-scaled error vs cumulative data. */
+    var masErrorCumulative: Double? = null
+    /** Mean-absolute-scaled error vs delta data. */
+    var masErrorDelta: Double? = null
 
     /** Total forecast value. */
     var totalValue: Number? = null
