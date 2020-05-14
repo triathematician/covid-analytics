@@ -1,26 +1,20 @@
 package tri.covid19.forecaster
 
 import com.sun.javafx.charts.Legend
-import javafx.beans.binding.Binding
 import javafx.beans.binding.Bindings
 import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
-import javafx.geometry.Orientation
 import javafx.geometry.Pos
-import javafx.scene.Node
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
-import javafx.scene.control.TextField
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.Priority
 import javafx.util.StringConverter
 import org.controlsfx.control.CheckComboBox
-import org.controlsfx.control.PlusMinusSlider
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
-import tornadofx.Stylesheet.Companion.contextMenu
 import tri.covid19.data.CovidForecasts
 import tri.covid19.data.IHME
 import tri.covid19.data.LANL
@@ -29,9 +23,6 @@ import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
 import tri.util.monthDay
-import kotlin.math.floor
-import kotlin.math.log10
-import kotlin.math.pow
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 import kotlin.time.milliseconds
@@ -58,16 +49,24 @@ class ForecastPanel : SplitPane() {
     private fun EventTarget.configPanel() = form {
         fieldset("Region/Metric") {
             field("Region") {
-                var regionField: TextField? = null
-                autotextfield(model.regions) {
-                    contextmenu {
-                        item("Next State") { action { model.goToNextUsState() } }
-                        item("Previous State") { action { model.goToPreviousUsState() } }
+                hbox {
+                    alignment = Pos.BASELINE_CENTER
+                    button("◂") {
+                        style = "-fx-background-radius: 3 0 0 3; -fx-padding: 4"
+                        action { model.goToPreviousUsState() }
                     }
-                    regionField = this
-                }.bind(model._region)
-                spinner(mutableListOf<String>().asObservable()) {
-                    editor.textProperty().bind(regionField!!.textProperty())
+                    autocompletetextfield(model.regions) {
+                        hgrow = Priority.ALWAYS
+                        style = "-fx-background-radius: 0"
+                        contextmenu {
+                            item("Next State") { action { model.goToNextUsState() } }
+                            item("Previous State") { action { model.goToPreviousUsState() } }
+                        }
+                    }.bind(model._region)
+                    button("▸") {
+                        style = "-fx-background-radius: 0 3 3 0; -fx-padding: 4"
+                        action { model.goToNextUsState() }
+                    }
                 }
             }
             field("Metric") {

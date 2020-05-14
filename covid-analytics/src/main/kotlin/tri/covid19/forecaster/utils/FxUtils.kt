@@ -6,6 +6,7 @@ import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.XYChart
 import javafx.scene.control.Slider
+import javafx.scene.control.Spinner
 import javafx.scene.control.TextField
 import javafx.util.StringConverter
 import tornadofx.*
@@ -21,7 +22,10 @@ typealias DataPoints = List<Pair<Number, Number>>
 //region BUILDER UTILS
 
 /** Text field with autocomplete suppport. */
-fun EventTarget.autotextfield(values: Collection<String> = listOf(), op: TextField.() -> Unit = {}) = AutocompleteTextField(values.toSortedSet()).attachTo(this, op)
+fun EventTarget.autocompletetextfield(values: Collection<String> = listOf(), op: TextField.() -> Unit = {}) = AutocompleteTextField(values.toSortedSet()).attachTo(this, op)
+
+/** Text field with autocomplete suppport. */
+fun EventTarget.autocompletespinner(values: Collection<String> = listOf(), op: Spinner<String>.() -> Unit = {}) = AutocompleteSpinner(values.toSortedSet()).attachTo(this, op)
 
 /** Creates spinner for editing range of ints. */
 fun EventTarget.editablespinner(range: IntRange) = spinner(range.first, range.last, range.first, 1) {
