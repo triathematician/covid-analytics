@@ -54,17 +54,19 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
         get() = population?.let { dailyChange/it * 1E5 }
 
     val threeDayPercentChange
-        get() = deltas.ratioFromEnd(0..2, 3..5)
+        get() = deltas.percentIncrease(4..6, 1..3)
     val sevenDayPercentChange
-        get() = deltas.ratioFromEnd(0..6, 7..13)
+        get() = deltas.percentIncrease(8..14, 1..7)
     val threeSevenPercentRatio
         get() = threeDayPercentChange divideOrNull sevenDayPercentChange
 
-    private fun List<Double>.ratioFromEnd(top: IntRange, bottom: IntRange): Double? {
+    private fun List<Double>.percentIncrease(bottom: IntRange, top: IntRange): Double? {
         if (top.last > size || bottom.last > size) {
             return null
         }
-        return subList(size - top.last - 1, size - top.first).average() / subList(size - bottom.last - 1, size - bottom.first).average()
+        val first = subList(size - bottom.last - 1, size - bottom.first).average()
+        val second = subList(size - top.last - 1, size - top.first).average()
+        return (second - first)/first
     }
 }
 

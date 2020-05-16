@@ -26,6 +26,9 @@ class HotspotTable: SplitPane() {
     val selectedMetric = SimpleStringProperty(DEATHS).apply { addListener { _ -> updateTableData() } }
     val hotspotData = mutableListOf<HotspotInfo>().asObservable()
     val minCount = SimpleObjectProperty(100).apply { addListener { _ -> updateTableData() } }
+    val minPerCapitaCount = SimpleObjectProperty(0).apply { addListener { _ -> updateTableData() } }
+    val minLastWeekCount = SimpleObjectProperty(100).apply { addListener { _ -> updateTableData() } }
+    val minLastWeekPerCapitaCount = SimpleObjectProperty(20).apply { addListener { _ -> updateTableData() } }
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> updateTableData() } }
@@ -47,8 +50,17 @@ class HotspotTable: SplitPane() {
             }
         }
         fieldset("Filtering") {
-            field("Min Count") {
+            field("Min Total") {
                 editablespinner(0..10000).bind(minCount)
+            }
+            field("Min (per capitas)") {
+                editablespinner(0..10000).bind(minPerCapitaCount)
+            }
+            field("Min (Last 7 Days)") {
+                editablespinner(0..10000).bind(minLastWeekCount)
+            }
+            field("Min (per capita, Last 7 Days)") {
+                editablespinner(0..10000).bind(minLastWeekPerCapitaCount)
             }
         }
     }
@@ -79,6 +91,9 @@ class HotspotTable: SplitPane() {
     private fun updateTableData() {
         hotspotData.setAll(data()
                 .filter { it.lastValue >= minCount.value }
+                .filter { it.last(1..7).average() >= minLastWeekCount.value }
+                .filter { it.region.population == null || it.lastValue / it.region.population!! * 1E5 >= minPerCapitaCount.value }
+                .filter { it.region.population == null || it.last(1..7).average() / it.region.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
                 .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = 0))
     }
 
