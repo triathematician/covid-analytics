@@ -4,6 +4,10 @@ import javafx.scene.effect.BlurType
 import javafx.scene.effect.DropShadow
 import javafx.scene.layout.Priority
 import tornadofx.*
+import tri.covid19.forecaster.forecast.ForecastPanel
+import tri.covid19.forecaster.forecast.ForecastTable
+import tri.covid19.forecaster.history.HistoryPanel
+import tri.covid19.forecaster.hotspot.HotspotTable
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

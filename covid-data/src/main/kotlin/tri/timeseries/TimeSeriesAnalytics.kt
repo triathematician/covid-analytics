@@ -23,9 +23,9 @@ fun List<Double>.growthPercentages() = (1 until size).map { (get(it) - get(it - 
 
 /**
  * Compute doubling time based on constant growth rates.
- * @param day0 how many days ago is "day 0" for computation of growth rates.
+ * @param sinceDaysAgo how many days ago is "day 0" for computation of growth rates.
  */
-fun List<Double>.doublingTimes(day0: Int = 0) = growthRates(day0).map { 1/log2(it) }
+fun List<Double>.doublingTimes(sinceDaysAgo: Int = 0) = growthRates(sinceDaysAgo).map { 1/log2(it) }
 
 /** Compute average over n entries. The first n-1 entries have partial averages. */
 fun List<Double>.movingAverage(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.average() }
