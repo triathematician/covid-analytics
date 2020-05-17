@@ -122,11 +122,14 @@ class ForecastPanel : SplitPane() {
                     highValueProperty().bindBidirectional(model._lastFitDay)
                     lowValueProperty().bindBidirectional(model._firstFitDay)
 
-                    labelFormatter = object: StringConverter<Number>() {
+                    labelFormatter = object : StringConverter<Number>() {
                         override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
                         override fun fromString(p0: String?) = TODO()
                     }
                 }.attachTo(this)
+            }
+            field("Fit to") {
+                checkbox("Cumulative Count", model._fitCumulative)
                 button("Autofit") {
                     alignment = Pos.TOP_CENTER
                     action { model.autofit() }

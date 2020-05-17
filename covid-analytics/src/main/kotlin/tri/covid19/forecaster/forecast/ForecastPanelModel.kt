@@ -2,6 +2,9 @@ package tri.covid19.forecaster.forecast
 
 import javafx.beans.property.SimpleStringProperty
 import org.apache.commons.math3.exception.NoBracketingException
+import org.apache.commons.math3.fitting.leastsquares.ParameterValidator
+import org.apache.commons.math3.linear.ArrayRealVector
+import org.apache.commons.math3.linear.RealVector
 import tornadofx.*
 import tri.covid19.DEATHS
 import tri.covid19.data.*
@@ -11,6 +14,9 @@ import tri.covid19.forecaster.history.hubbertSeries
 import tri.timeseries.Forecast
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.math.GEN_LOGISTIC
+import tri.math.SigmoidCurveFitting
+import tri.math.get
+import tri.math.vec
 import tri.regions.RegionLookup
 import tri.regions.UnitedStates
 import tri.timeseries.MetricTimeSeries
@@ -94,6 +100,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     internal val _firstFitDay = forecastProperty(ForecastCurveFitter::firstFitDay).apply { onChange { autofit() }}
     internal val _lastFitDay = forecastProperty(ForecastCurveFitter::lastFitDay).apply { onChange { autofit() }}
+    internal val _fitCumulative = forecastProperty(ForecastCurveFitter::fitCumulative).apply { onChange { autofit() }}
 
     internal val _firstEvalDay = curveFitter.getProperty(ForecastCurveFitter::firstEvalDay).apply { onChange { calcErrors() }}
     internal val _lastEvalDay = curveFitter.getProperty(ForecastCurveFitter::lastEvalDay).apply { onChange { calcErrors() }}
@@ -251,10 +258,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Runs autofit using current config. */
     fun autofit() {
-        curveFitter.updateFitLabel()
-        mainSeries?.let {
-            curveFitter.autofitCumulativeSE(it)
-        }
+        curveFitter.autofit(mainSeries)
     }
 
     /** Recalculates errors. */

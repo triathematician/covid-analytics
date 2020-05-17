@@ -3,13 +3,8 @@ package tri.covid19.forecaster.forecast
 import org.apache.commons.math3.analysis.UnivariateFunction
 import org.apache.commons.math3.analysis.solvers.AllowedSolution
 import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresBuilder
-import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer
-import org.apache.commons.math3.fitting.leastsquares.MultivariateJacobianFunction
-import org.apache.commons.math3.linear.Array2DRowRealMatrix
-import org.apache.commons.math3.linear.ArrayRealVector
-import org.apache.commons.math3.linear.RealVector
-import tornadofx.Vector2D
+import org.apache.commons.math3.fitting.leastsquares.ParameterValidator
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import tornadofx.property
 import tri.math.*
 import tri.timeseries.Forecast
@@ -18,8 +13,6 @@ import tri.util.DateRange
 import tri.util.minus
 import tri.util.monthDay
 import java.time.LocalDate
-import kotlin.math.abs
-import kotlin.math.sqrt
 
 private const val MODEL_NAME = "User"
 
@@ -41,6 +34,9 @@ class ForecastCurveFitter: (Number) -> Double {
     var x0: Number by property(90.0)
     var v: Number by property(1.0)
 
+    val sigmoidParameters: SigmoidParameters
+        get() = SigmoidParameters(curve, l.toDouble(), k.toDouble(), x0.toDouble(), v.toDouble())
+
     private val now
         get() = LocalDate.now()
     val nowInt
@@ -51,16 +47,14 @@ class ForecastCurveFitter: (Number) -> Double {
     private val fitDateRange: DateRange
         get() = DateRange(firstFitDay.toDate, lastFitDay.toDate)
 
+    var fitCumulative: Boolean by property(true)
+
     var firstEvalDay: Number by property(nowInt - 6)
     var lastEvalDay: Number by property(nowInt)
     private val evalDateRange: DateRange
         get() = DateRange(firstEvalDay.toDate, lastEvalDay.toDate)
 
     var fitLabel by property("Automatically fit curves based on historical data.")
-
-    //endregion
-
-    //region DERIVED PROPERTIES
 
     val equation
         get() = when (curve) {
@@ -75,18 +69,6 @@ class ForecastCurveFitter: (Number) -> Double {
     //endregion
 
     //region PROPERTY UPDATES
-
-    /** Converts day to int. */
-    fun dateToNumber(date: LocalDate) = date - DAY0
-    /** Converts int to day. */
-    fun numberToDate(value: Number) = DAY0.plusDays(value.toLong())
-
-    private val LocalDate.toNumber
-        get() = dateToNumber(this)
-    private val Number.toDate
-        get() = numberToDate(this)
-    private val Number.monthDay
-        get() = numberToDate(this).monthDay
 
     /** Updates the label property with the range of dates being used for the fit. */
     fun updateFitLabel() {
@@ -114,7 +96,7 @@ class ForecastCurveFitter: (Number) -> Double {
         val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.region, empirical.metric, listOf(series))
 
         return ForecastStats(f).apply {
-            sigmoidParameters = SigmoidParameters(curve, l.toDouble(), k.toDouble(), x0.toDouble(), v.toDouble())
+            sigmoidParameters = this@ForecastCurveFitter.sigmoidParameters
             totalValue = l
 
             val peak = equationPeak()
@@ -172,6 +154,18 @@ class ForecastCurveFitter: (Number) -> Double {
 
     //region COMPUTE FUNCTIONS
 
+    /** Converts day to int. */
+    fun dateToNumber(date: LocalDate) = date - DAY0
+    /** Converts int to day. */
+    fun numberToDate(value: Number) = DAY0.plusDays(value.toLong())
+
+    private val LocalDate.toNumber
+        get() = dateToNumber(this)
+    private val Number.toDate
+        get() = numberToDate(this)
+    private val Number.monthDay
+        get() = numberToDate(this).monthDay
+
     /** Current curve value. */
     fun invoke(date: LocalDate) = invoke(date.toNumber)
 
@@ -203,7 +197,26 @@ class ForecastCurveFitter: (Number) -> Double {
 
     //region FITTING AND STATS
 
-    private fun empiricalDataForFitting(empirical: MetricTimeSeries?): List<Vector2D>? {
+    fun autofit(series: MetricTimeSeries?) {
+        updateFitLabel()
+
+        if (series != null) {
+            val validator = ParameterValidator { v ->
+                vec(v[0].coerceIn(L_FIT_RANGE), v[1].coerceIn(K_FIT_RANGE),
+                        v[2].coerceIn(X0_FIT_RANGE), v[3].coerceIn(V_FIT_RANGE))
+            }
+            val params = when (fitCumulative) {
+                true -> SigmoidCurveFitting.fitCumulative(curve, empiricalDataForFitting(series)!!, sigmoidParameters, validator)
+                else -> SigmoidCurveFitting.fitIncidence(curve, empiricalDataForFitting(series)!!, sigmoidParameters, validator)
+            }
+            l = params.load
+            k = params.k
+            x0 = params.x0
+            params.v?.let { v = it }
+        }
+    }
+
+    internal fun empiricalDataForFitting(empirical: MetricTimeSeries?): List<Vector2D>? {
         val domain = empirical?.let { fitDateRange.intersect(empirical.domain) } ?: return null
         return domain.map { Vector2D(it.toNumber.toDouble(), empirical[it]) }
     }
@@ -265,91 +278,6 @@ class ForecastCurveFitter: (Number) -> Double {
         }
     }
 
-    /**
-     * Autofit series data using the cumulative SE.
-     * Uses the current curve and the parameter vector [l, k, x0, v].
-     * @param series the series to fit
-     */
-    fun autofitCumulativeSE(series: MetricTimeSeries) {
-        val observedPoints = empiricalDataForFitting(series)!!
-        val observedTarget = observedPoints.map { it.y }.toDoubleArray()
-
-        val problem = LeastSquaresBuilder()
-                .start(vec(l, k, x0, v))
-                .model(solverFun(observedPoints))
-                .target(observedTarget)
-                .maxEvaluations(100000)
-                .maxIterations(100000)
-                .parameterValidator { v -> vec(v[0].coerceIn(L_FIT_RANGE), v[1].coerceIn(K_FIT_RANGE),
-                        v[2].coerceIn(X0_FIT_RANGE), v[3].coerceIn(V_FIT_RANGE)) }
-                .build()
-
-        val optimum = LevenbergMarquardtOptimizer()
-                .withCostRelativeTolerance(1.0e-9)
-                .withParameterRelativeTolerance(1.0e-9)
-                .optimize(problem)
-
-        val optimalValues = optimum.point.toArray()
-        println("Best fit: ${optimum.point}")
-        l = optimalValues[0]
-        k = optimalValues[1]
-        x0 = optimalValues[2]
-        v = optimalValues[3]
-    }
-
-    /** Function used for fitting curve around the given observed points. */
-    private fun solverFun(observedPoints: List<Vector2D>) = MultivariateJacobianFunction { params ->
-        val values = observedPoints.map { curve(it.x, params) }
-
-        val jacobian = Array2DRowRealMatrix(observedPoints.size, 4)
-        observedPoints.forEachIndexed { i, o ->
-            jacobian.setEntry(i, 0, curvePartial(o.x, params, vec(1, 0, 0, 0)))
-            jacobian.setEntry(i, 1, curvePartial(o.x, params, vec(0, 1, 0, 0)))
-            jacobian.setEntry(i, 2, curvePartial(o.x, params, vec(0, 0, 1, 0)))
-            jacobian.setEntry(i, 3, curvePartial(o.x, params, vec(0, 0, 0, 1)))
-        }
-
-        Jacobian(ArrayRealVector(values.toDoubleArray()), jacobian)
-    }
-
-    /** Compute curve for explicit set of parameters. */
-    private fun curve(x: Double, params: RealVector) = when(curve) {
-        LINEAR -> linear(x, params[0], params[1], params[2])
-        LOGISTIC -> logistic(x, params[0], params[1], params[2])
-        GEN_LOGISTIC -> generalLogistic(x, params[0], params[1], params[2], params[3])
-        GAUSSIAN -> gaussianErf(x, params[0], params[1], params[2])
-        GOMPERTZ -> gompertz(x, params[0], params[1], params[2])
-        else -> throw IllegalStateException()
-    }
-
-    /** Compute partial derivative in given direction. */
-    private fun curvePartial(x: Double, params: RealVector, delta: RealVector)
-        = (curve(x, params + .0005*delta.unitVector()) - curve(x, params - .0005*delta.unitVector())) / 1000.0
-
     //endregion
 
 }
-
-//region MATH UTILS
-
-/** Compute root mean squared error given list of points and given function. */
-fun rootMeanSquareError(points: List<Vector2D>, function: (Double) -> Double)
-        = sqrt(points.map { it.y - function(it.x) }.map { it * it }.sum() / points.size)
-
-/** Compute mean absolute error given list of points and given function. */
-fun meanAbsoluteError(points: List<Vector2D>, function: (Double) -> Double)
-        = points.map { abs(it.y - function(it.x)) }.average()
-
-/** Compute MAS error given list of points and given function. */
-fun meanAbsoluteScaledError(points: List<Vector2D>, function: (Double) -> Double)
-        = points.map { abs(it.y - function(it.x)) }.average() / (2 until points.size).map { abs(points[it].y - points[it-1].y)}.average()
-
-operator fun Number.div(x: Double) = toDouble() / x
-operator fun Number.unaryMinus() = -toDouble()
-operator fun Number.times(x: Double) = toDouble() * x
-operator fun Number.plus(x: Double) = toDouble() + x
-operator fun Double.minus(x: Number) = this - x.toDouble()
-operator fun Double.div(x: Number) = this / x.toDouble()
-operator fun Int.div(x: Number) = this / x.toDouble()
-
-//endregion
