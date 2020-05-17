@@ -15,15 +15,17 @@ import javafx.util.StringConverter
 import org.controlsfx.control.CheckComboBox
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
-import tri.covid19.data.CovidForecasts
-import tri.covid19.data.IHME
-import tri.covid19.data.LANL
-import tri.covid19.data.YYG
+import tri.covid19.data.*
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.history.METRIC_OPTIONS
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
+import tri.util.minus
 import tri.util.monthDay
+import tri.util.toLocalDate
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 import kotlin.time.milliseconds
@@ -350,13 +352,28 @@ class ForecastPanel : SplitPane() {
             YYG in name -> "b44682"
             else -> "808080"
         }
-        val opacity = when {
-            "4-26" in name || "4-28" in name -> "ff"
-            "4-19" in name || "4-20" in name -> "80"
-            else -> "40"
-        }
+        val opacity = opacityByDate(name.substringAfter("-").substringBefore(" "))
         return "#$color$opacity"
     }
+
+    private fun opacityByDate(date: String) = try {
+        val ld = "$date-2020".toLocalDate(M_D_YYYY)
+        val age = LocalDate.now().minus(ld).toInt()
+        when {
+            age <= 7 -> 255.hex
+            age >= 28 -> 64.hex
+            else -> interpolate(age, 28, 7, 64, 255).hex
+        }
+    } catch (x: DateTimeParseException) {
+        println("Invalid date: $date")
+        "00"
+    }
+
+    private val Int.hex
+        get() = toString(16)
+
+    private fun interpolate(x: Int, from1: Int, from2: Int, to1: Int, to2: Int)
+            = (to1 + (to2 - to1) / (from2 - from1).toDouble() * (x - from1)).toInt()
 
     private fun modelStrokeWidth(name: String) = when {
         "lower" in name || "upper" in name -> "1"
