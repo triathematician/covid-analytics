@@ -15,9 +15,9 @@ import kotlin.time.measureTimedValue
 
 @ExperimentalTime
 fun main() {
-//    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
+    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
 //    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
-    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
+//    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
 //    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
 }
 

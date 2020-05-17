@@ -149,6 +149,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
         pastForecasts.metrics = regionMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
         externalForecasts.forecasts = CovidForecasts.allForecasts
+                .filter { it.model in otherForecasts }
                 .filter { it.region.id == region && it.metric == selectedMetric }
                 .filter { it.forecastDate in forecastDateRange }
     }
@@ -320,9 +321,9 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
             it.data.filter { showConfidence || ("lower" !in it.metric && "upper" !in it.metric) }
         }
     val ExternalForecasts.cumulative
-        get() = filtered.filter { DEATHS in it.metric }.toMutableList()
+        get() = filtered.toMutableList()
     val ExternalForecasts.deltas
-        get() = filtered.filter { DEATHS in it.metric }.map { it.deltas() }
+        get() = filtered.map { it.deltas() }
 
     //endregion
 

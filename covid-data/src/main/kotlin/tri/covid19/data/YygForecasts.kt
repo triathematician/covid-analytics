@@ -22,7 +22,7 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
     override fun readSource(url: URL): List<MetricTimeSeries> {
         val date = url.path.substringAfter("yyg-").substringBeforeLast("-")
         return url.csvKeyValues()
-                .filter { it["actual_deaths"] != "0" }.toList()
+                .filter { it["predicted_deaths_mean"] != "" }.toList()
                 .flatMap { it.extractMetrics(date) }
     }
 
@@ -37,10 +37,13 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
 
     private fun metricName(metric: String, date: String): String {
         val revisedName = when (metric) {
-            "predicted_total_deaths_mean" -> "$DEATHS"
+            "predicted_total_deaths_mean" -> DEATHS
             "predicted_total_deaths_lower" -> "$DEATHS-lower"
             "predicted_total_deaths_upper" -> "$DEATHS-upper"
-            else -> metric
+            "predicted_total_infected_mean" -> CASES
+            "predicted_total_infected_lower" -> "$CASES-lower"
+            "predicted_total_infected_upper" -> "$CASES-upper"
+            else -> null
         }
         return "$YYG-$date $revisedName"
     }

@@ -2,9 +2,6 @@ package tri.covid19.data
 
 import tri.covid19.data.LanlForecasts.forecastId
 import tri.timeseries.Forecast
-import tri.timeseries.ForecastId
-import tri.timeseries.RegionInfo
-import tri.util.toLocalDate
 import java.io.File
 import kotlin.time.ExperimentalTime
 
