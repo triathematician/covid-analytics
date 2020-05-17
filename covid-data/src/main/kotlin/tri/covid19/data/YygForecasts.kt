@@ -56,10 +56,4 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         }
     }
 
-    fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {
-        val s = fullMetricId.substringBefore(" ")
-        val date = s.substringAfter("-")
-        return ForecastId(YYG, "$date-2020".toLocalDate(M_D_YYYY), region, DEATHS)
-    }
-
 }

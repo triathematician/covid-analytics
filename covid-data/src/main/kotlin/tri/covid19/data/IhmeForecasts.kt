@@ -27,30 +27,20 @@ object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
                 }
     }
 
-    private fun metricName(metric: String, date: String): String {
-        val revisedName = when (metric) {
-            "totdea_mean" -> "$DEATHS"
-            "totdea_lower" -> "$DEATHS-lower"
-            "totdea_upper" -> "$DEATHS-upper"
-            else -> metric
+    private fun metricName(metric: String, date: String): String? {
+        return "$IHME-$date " + when (metric.substringBefore("_")) {
+            "totdea" -> DEATHS
+            "allbed" -> BEDS
+            "ICUbed" -> ICU
+            "InvVen" -> VENTILATORS
+            "admis" -> ADMITS
+            else -> return null
+        } + when (metric.substringAfter("_")) {
+            "mean" -> ""
+            "lower" -> "-lower"
+            "upper" -> "-upper"
+            else -> return null
         }
-        return "$IHME-$date $revisedName"
-    }
-
-    fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId? {
-        val s = fullMetricId.substringBefore(" ")
-        val date = s.substringAfter("-")
-        val metric = when {
-            "admi" in fullMetricId.toLowerCase() -> ADMITS
-            "dea" in fullMetricId.toLowerCase() -> DEATHS
-            "bed" in fullMetricId.toLowerCase() -> BEDS
-            "ven" in fullMetricId.toLowerCase() -> VENTILATORS
-            "icu" in fullMetricId.toLowerCase() -> ICU
-            "tests" in fullMetricId.toLowerCase() -> TESTS
-            "infections" in fullMetricId.toLowerCase() -> null
-            else -> throw IllegalStateException("Unsupported: $fullMetricId")
-        }
-        return metric?.let { ForecastId(IHME, "$date-2020".toLocalDate(M_D_YYYY), region, metric) }
     }
 
 }

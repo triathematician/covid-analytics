@@ -316,7 +316,7 @@ class ForecastPanel : SplitPane() {
                         it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
                         it.data.forEach { it.node?.isVisible = false }
                     }
-                    if (IHME in it.name || LANL in it.name || YYG in it.name) {
+                    if (CovidForecasts.FORECAST_OPTIONS.any { f -> f in it.name }) {
                         it.node.style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
                         it.data.forEach { it.node?.isVisible = false }
                     }
@@ -346,12 +346,7 @@ class ForecastPanel : SplitPane() {
     }
 
     private fun modelColor(name: String): String {
-        val color = when {
-            IHME in name -> "008000"
-            LANL in name -> "4682b4"
-            YYG in name -> "b44682"
-            else -> "808080"
-        }
+        val color = CovidForecasts.modelColor(name)
         val opacity = opacityByDate(name.substringAfter("-").substringBefore(" "))
         return "#$color$opacity"
     }

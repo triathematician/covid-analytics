@@ -3,9 +3,7 @@ package tri.covid19.data
 import com.fasterxml.jackson.module.kotlin.readValue
 import tri.regions.RegionLookup
 import tri.regions.UnitedStates
-import tri.timeseries.MetricTimeSeries
-import tri.timeseries.RegionTimeSeries
-import tri.timeseries.regroupAndMerge
+import tri.timeseries.*
 import tri.util.DefaultMapper
 import tri.util.toLocalDate
 import java.io.File
@@ -19,8 +17,8 @@ import kotlin.time.measureTimedValue
 fun main() {
 //    YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
 //    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
-//    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
-    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
+    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
+//    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
 }
 
 private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
@@ -65,14 +63,15 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
     /** Extracts any number of metrics from given row of data, based on a field name predicate. */
     protected open fun Map<String, String>.extractMetrics(regionField: String, dateField: String,
                                                    metricFieldPattern: (String) -> Boolean,
-                                                   metricNameMapper: (String) -> String): List<MetricTimeSeries> {
+                                                   metricNameMapper: (String) -> String?): List<MetricTimeSeries> {
         return keys.filter { metricFieldPattern(it) }.mapNotNull {
             val value = get(it)?.toDoubleOrNull()
-            if (value == null) null else
-                metric(get(regionField) ?: throw IllegalArgumentException(),
-                        metricNameMapper(it),
-                        get(dateField) ?: throw IllegalArgumentException(),
-                        value)
+            val name = metricNameMapper(it)
+            when {
+                value == null || name == null -> null
+                else -> metric(get(regionField) ?: throw IllegalArgumentException(),
+                        name,get(dateField) ?: throw IllegalArgumentException(), value)
+            }
         }
     }
 
@@ -85,12 +84,22 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
         else -> this
     }
 
+    fun forecastId(model: String, region: RegionInfo, fullMetricId: String): ForecastId? {
+        val s = fullMetricId.substringBefore(" ")
+        val date = s.substringAfter("-")
+        val metric = fullMetricId.substringAfter(" ").substringBefore("-")
+        return ForecastId(model, "$date-2020".toLocalDate(M_D_YYYY), region, metric)
+    }
 }
 
 /** Load forecasts from local data. */
 @ExperimentalTime
-fun loadTimeSeries(path: String) = measureTimedValue {
-    DefaultMapper.readValue<List<RegionTimeSeries>>(File(path))
+fun loadTimeSeries(path: String) = loadTimeSeries(File(path))
+
+/** Load forecasts from local data. */
+@ExperimentalTime
+fun loadTimeSeries(file: File) = measureTimedValue {
+    DefaultMapper.readValue<List<RegionTimeSeries>>(file)
 }.also {
-    println("Loaded data from $path in ${it.duration}")
+    println("Loaded data from $file in ${it.duration}")
 }.value

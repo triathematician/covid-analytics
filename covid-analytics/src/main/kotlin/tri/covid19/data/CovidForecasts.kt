@@ -1,6 +1,11 @@
 package tri.covid19.data
 
+import tri.covid19.data.LanlForecasts.forecastId
 import tri.timeseries.Forecast
+import tri.timeseries.ForecastId
+import tri.timeseries.RegionInfo
+import tri.util.toLocalDate
+import java.io.File
 import kotlin.time.ExperimentalTime
 
 /** Access to forecasts by model and date. */
@@ -9,27 +14,28 @@ object CovidForecasts {
 
     val FORECAST_OPTIONS = listOf(IHME, LANL, YYG)
 
-    val allForecasts: List<Forecast> by lazy { ihmeForecasts + lanlForecasts + yygForecasts }
+    fun modelColor(name: String) = when {
+        IHME in name -> "008000"
+        LANL in LANL -> "4682b4"
+        YYG in name -> "b44682"
+        else -> "808080"
+    }
 
-    val ihmeForecasts: List<Forecast>
-        get() = loadTimeSeries("../data/normalized/ihme-forecasts.json").flatMap { regionData ->
-            regionData.metrics.groupBy { IhmeForecasts.forecastId(regionData.region, it.id) }
+    val allForecasts: List<Forecast> by lazy { loadForecasts() }
+
+    private fun loadForecasts(): List<Forecast> {
+        return File("../data/normalized/").walk().filter { it.name.endsWith("-forecasts.json") }.toList()
+                .flatMap { fileForecasts(it) }
+    }
+
+    private fun fileForecasts(file: File): List<Forecast> {
+        val model = file.nameWithoutExtension.substringBefore("-").toUpperCase()
+        return loadTimeSeries(file).flatMap { regionData ->
+            regionData.metrics.groupBy { forecastId(model, regionData.region, it.id) }
                     .filter { it.key != null }
                     .map { Forecast(it.key!!, it.value) }
         }
+    }
 
-    val lanlForecasts: List<Forecast>
-        get() = loadTimeSeries("../data/normalized/lanl-forecasts.json").flatMap { regionData ->
-            regionData.metrics.groupBy { LanlForecasts.forecastId(regionData.region, it.id) }.map {
-                Forecast(it.key, it.value)
-            }
-        }
-
-    val yygForecasts: List<Forecast>
-        get() = loadTimeSeries("../data/normalized/yyg-forecasts.json").flatMap { regionData ->
-            regionData.metrics.groupBy { YygForecasts.forecastId(regionData.region, it.id) }.map {
-                Forecast(it.key, it.value)
-            }
-        }
 }
 

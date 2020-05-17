@@ -36,10 +36,4 @@ object LanlForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return "$LANL-$date $revisedName"
     }
 
-    fun forecastId(region: RegionInfo, fullMetricId: String): ForecastId {
-        val s = fullMetricId.substringBefore(" ")
-        val date = s.substringAfter("-")
-        return ForecastId(LANL, "$date-2020".toLocalDate(M_D_YYYY), region, DEATHS)
-    }
-
 }
