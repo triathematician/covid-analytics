@@ -45,12 +45,15 @@ object JhuDailyReports: CovidDataNormalizer() {
                     .withAggregations()
         } catch (x: Exception) { println("Failed to read $url"); throw x }
 
-        return rows.flatMap {
-            val region = it.region
-            listOf(intTimeSeries(region, CASES, it.Last_Update, it.Confirmed),
-                    intTimeSeries(region, DEATHS, it.Last_Update, it.Deaths),
-                    intTimeSeries(region, RECOVERED, it.Last_Update, it.Recovered),
-                    intTimeSeries(region, ACTIVE, it.Last_Update, it.Active))
+        return rows.flatMap { row ->
+            val region = row.region
+            listOfNotNull(intTimeSeries(region, CASES, row.Last_Update, row.Confirmed),
+                    intTimeSeries(region, DEATHS, row.Last_Update, row.Deaths),
+                    intTimeSeries(region, RECOVERED, row.Last_Update, row.Recovered),
+                    intTimeSeries(region, ACTIVE, row.Last_Update, row.Active),
+                    row.People_Tested?.let { intTimeSeries(region, TESTS, row.Last_Update, it) },
+                    row.People_Hospitalized?.let { intTimeSeries(region, ADMITS, row.Last_Update, it) }
+            )
         }
     }
 
@@ -62,22 +65,23 @@ object JhuDailyReports: CovidDataNormalizer() {
     private fun Map<String, String>.read1() = DailyReportRow("", "",
             this["Province/State"]!!.stateFix(), this["Country/Region"]!!.regionFix(),
             gdate("Last Update"), null, null,
-            gint("Confirmed"), gint("Deaths"), gint("Recovered"), 0)
+            gint("Confirmed"), gint("Deaths"), gint("Recovered"), 0, 0, 0)
 
     // Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered,Latitude,Longitude
     private fun Map<String, String>.read2() = DailyReportRow("", "",
             this["Province/State"]!!.stateFix(), this["Country/Region"]!!.regionFix(),
             gdate("Last Update"), this["Latitude"]!!.toDoubleOrNull(), this["Longitude"]!!.toDoubleOrNull(),
-            gint("Confirmed"), gint("Deaths"), gint("Recovered"), 0)
+            gint("Confirmed"), gint("Deaths"), gint("Recovered"), 0, 0, 0)
 
     // ﻿FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths,Recovered,Active,Combined_Key
     private fun Map<String, String>.read3() = DailyReportRow(this["FIPS"]!!, this["Admin2"]!!.adminFix(),
             this["Province_State"]!!.stateFix(), this["Country_Region"]!!.regionFix(),
             gdate("Last_Update"), this["Lat"]!!.toDoubleOrNull(), this["Long_"]!!.toDoubleOrNull(),
-            gint("Confirmed"), gint("Deaths"), gint("Recovered"), gint("Active"))
+            gint("Confirmed"), gint("Deaths"), gint("Recovered"), gint("Active"), gintn("People_Tested"), gintn("People_Hospitalized"))
 
     private fun Map<String, String>.gdate(f: String) = this[f]!!.toLocalDate(*FORMATS)
     private fun Map<String, String>.gint(f: String) = this[f]?.toIntOrNull() ?: 0
+    private fun Map<String, String>.gintn(f: String) = this[f]?.toIntOrNull()
 
     //endregion
 
@@ -86,7 +90,8 @@ object JhuDailyReports: CovidDataNormalizer() {
 /** Daily report row info. */
 data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_State: String, var Country_Region: String,
                           var Last_Update: LocalDate, var Lat: Double?, var Long_: Double?,
-                          var Confirmed: Int, var Deaths: Int, var Recovered: Int, var Active: Int) {
+                          var Confirmed: Int, var Deaths: Int, var Recovered: Int, var Active: Int,
+                          var People_Tested: Int?, var People_Hospitalized: Int?) {
 
     val region: RegionInfo
         get() = RegionLookup(Combined_Key)
@@ -180,18 +185,18 @@ fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
 
 /** Sums all counts within CBSA. */
 private fun List<DailyReportRow>.sumWithinCbsa(region: CbsaInfo) = DailyReportRow("", "", region.cbsaTitle, first().Country_Region, first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active })
+        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
 private fun List<DailyReportRow>.sumWithinState() = DailyReportRow("", "", first().Province_State, first().Country_Region, first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active })
+        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
 private fun List<DailyReportRow>.sumWithinCountry() = DailyReportRow("", "", "", first().Country_Region, first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active })
+        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
 
 /** Sum of all data as a world row. */
 private fun List<DailyReportRow>.global() = DailyReportRow("", "", "", "Global", first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active })
+        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
 
 //endregion
