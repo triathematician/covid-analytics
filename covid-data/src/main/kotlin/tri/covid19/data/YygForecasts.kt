@@ -30,12 +30,12 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
     private fun Map<String, String>.extractMetrics(date: String): List<MetricTimeSeries> {
         return keys.filter { it.startsWith("predicted_total_deaths") || it.startsWith("predicted_total_infected") }
                 .filter { !get(it).isNullOrEmpty() }
-                .map {
+                .mapNotNull {
                     metric(yygRegion(get("region")!!, get("country")!!), metricName(it, date), get("date")!!, get(it)!!.toDouble())
                 }
     }
 
-    private fun metricName(metric: String, date: String): String {
+    private fun metricName(metric: String, date: String): String? {
         val revisedName = when (metric) {
             "predicted_total_deaths_mean" -> DEATHS
             "predicted_total_deaths_lower" -> "$DEATHS-lower"
@@ -43,7 +43,7 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
             "predicted_total_infected_mean" -> CASES
             "predicted_total_infected_lower" -> "$CASES-lower"
             "predicted_total_infected_upper" -> "$CASES-upper"
-            else -> null
+            else -> return null
         }
         return "$YYG-$date $revisedName"
     }

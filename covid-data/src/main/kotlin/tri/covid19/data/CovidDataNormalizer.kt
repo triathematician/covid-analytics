@@ -16,9 +16,9 @@ import kotlin.time.measureTimedValue
 @ExperimentalTime
 fun main() {
     YygForecasts.processTo(File("../data/normalized/yyg-forecasts.json"))
-//    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
-//    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
-//    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
+    LanlForecasts.processTo(File("../data/normalized/lanl-forecasts.json"))
+    IhmeForecasts.processTo(File("../data/normalized/ihme-forecasts.json"))
+    JhuDailyReports.processTo(File("../data/normalized/jhu-historical.json"))
 }
 
 private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
@@ -76,8 +76,8 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
     }
 
     /** Easy way to construct metric from string value content. */
-    protected open fun metric(region: String, metric: String, date: String, value: Double)
-            = MetricTimeSeries(RegionLookup(region.maybeFixId()), metric, 0.0, date.toLocalDate(FORMAT), value)
+    protected open fun metric(region: String, metric: String?, date: String, value: Double)
+            = metric?.let { MetricTimeSeries(RegionLookup(region.maybeFixId()), it, 0.0, date.toLocalDate(FORMAT), value) }
 
     private fun String.maybeFixId() = when {
         addIdSuffixes && "$this, US" in UnitedStates.stateNames -> "$this, US"

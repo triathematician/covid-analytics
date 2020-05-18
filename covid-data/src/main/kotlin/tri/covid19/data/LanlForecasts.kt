@@ -26,12 +26,12 @@ object LanlForecasts: CovidDataNormalizer(addIdSuffixes = true) {
                 }
     }
 
-    private fun metricName(metric: String, date: String): String {
+    private fun metricName(metric: String, date: String): String? {
         val revisedName = when (metric) {
             "q.05" -> "$DEATHS"
             "q.50" -> "$DEATHS-lower"
             "q.95" -> "$DEATHS-upper"
-            else -> metric
+            else -> return null
         }
         return "$LANL-$date $revisedName"
     }
