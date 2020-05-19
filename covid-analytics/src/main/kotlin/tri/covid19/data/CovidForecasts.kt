@@ -13,7 +13,7 @@ object CovidForecasts {
 
     fun modelColor(name: String) = when {
         IHME in name -> "008000"
-        LANL in LANL -> "4682b4"
+        LANL in name -> "4682b4"
         YYG in name -> "b44682"
         else -> "808080"
     }
