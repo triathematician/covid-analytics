@@ -7,7 +7,7 @@ import javafx.scene.chart.LineChart
  * Chart that updates range based on first series data only.
  * A parameter allows axis range to stretch by no more than the data times that max.
  */
-class LineChartOnFirstSeries(xAxis: Axis<Number>, yAxis: Axis<Number>, val maxMultiplier: Double) : LineChart<Number, Number>(xAxis, yAxis) {
+open class LineChartOnFirstSeries(xAxis: Axis<Number>, yAxis: Axis<Number>, val maxMultiplier: Double) : LineChart<Number, Number>(xAxis, yAxis) {
 
     override fun updateAxisRange() {
         super.updateAxisRange()

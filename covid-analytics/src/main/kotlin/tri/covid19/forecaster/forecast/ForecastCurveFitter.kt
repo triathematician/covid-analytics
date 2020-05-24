@@ -167,7 +167,7 @@ class ForecastCurveFitter: (Number) -> Double {
         get() = numberToDate(this).monthDay
 
     /** Current curve value. */
-    fun invoke(date: LocalDate) = invoke(date.toNumber)
+    operator fun invoke(date: LocalDate, shift: Double) = invoke(date.toNumber + shift)
 
     /** Current curve value. */
     override fun invoke(x: Number) = when (curve) {

@@ -1,6 +1,5 @@
 package triathematician.covid19
 
-import javafx.util.Duration
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.data.CovidHistory

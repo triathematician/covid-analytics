@@ -1,10 +1,8 @@
 package tri.covid19.data
 
 import tri.covid19.CASES
-import tri.covid19.DEATHS
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
-import kotlin.math.pow
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

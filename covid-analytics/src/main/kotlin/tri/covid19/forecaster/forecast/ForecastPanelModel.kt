@@ -1,12 +1,12 @@
 package tri.covid19.forecaster.forecast
 
 import javafx.beans.property.SimpleStringProperty
+import javafx.scene.control.Alert
+import javafx.scene.text.Text
+import javafx.scene.text.TextFlow
 import org.apache.commons.math3.exception.NoBracketingException
-import org.apache.commons.math3.fitting.leastsquares.ParameterValidator
-import org.apache.commons.math3.linear.ArrayRealVector
-import org.apache.commons.math3.linear.RealVector
+import org.apache.commons.math3.exception.TooManyEvaluationsException
 import tornadofx.*
-import tri.covid19.DEATHS
 import tri.covid19.data.*
 import tri.covid19.forecaster.history.METRIC_OPTIONS
 import tri.covid19.forecaster.history.changeDoublingDataSeries
@@ -14,12 +14,10 @@ import tri.covid19.forecaster.history.hubbertSeries
 import tri.timeseries.Forecast
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.math.GEN_LOGISTIC
-import tri.math.SigmoidCurveFitting
-import tri.math.get
-import tri.math.vec
 import tri.regions.RegionLookup
 import tri.regions.UnitedStates
 import tri.timeseries.MetricTimeSeries
+import tri.timeseries.MinMaxFinder
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
@@ -40,10 +38,11 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     internal var selectedMetric by property(METRIC_OPTIONS[0])
     internal var smooth by property(true)
     internal var showLogisticPrediction by property(true)
+    internal var dataInfo = observableListOf<Text>()
 
     // user forecast
     internal val curveFitter = ForecastCurveFitter()
-    internal val forecastInfoList = mutableListOf<ForecastStats>().asObservable()
+    internal val forecastInfoList = observableListOf<ForecastStats>()
 
     internal var showForecast by property(true)
     private var vActive by property(false)
@@ -136,15 +135,15 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     private fun updateData() {
         val regionMetrics = CovidTimeSeriesSources.dailyReports(RegionLookup(region), selectedMetric)
         mainSeries = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
-
         domain = mainSeries?.domain?.shift(0, 30)
+        dataInfo.setAll(mainSeries?.dataInfo() ?: emptyList())
 
         val shift = if (smooth) -3.5 else 0.0
         userForecast = when {
             !showForecast -> null
             domain == null -> null
             else -> MetricTimeSeries(RegionLookup(region), "$selectedMetric (curve)", false, 0.0, domain!!.start,
-                    domain!!.map { d -> curveFitter.invoke(d) })
+                    domain!!.map { d -> curveFitter(d, shift) })
         }
 
         pastForecasts.metrics = regionMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
@@ -188,6 +187,14 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         val daily = mainSeries?.deltas()?.maybeSmoothed()
         series(userForecast?.deltas()?.residuals(daily))
         series(externalForecasts.deltas.mapNotNull { it.residuals(daily) })
+    }
+
+    private fun MetricTimeSeries.dataInfo(): List<Text> {
+        val seriesForExtrema = deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)
+        val summary = MinMaxFinder(7).invoke(seriesForExtrema)
+        return summary.extrema.values.map {
+            Text("${it.type} at ${it.date}: ${it.count.userFormat()}  ")
+        }
     }
 
     private fun MetricTimeSeries.residuals(empirical: MetricTimeSeries?): MetricTimeSeries? {
@@ -259,7 +266,11 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Runs autofit using current config. */
     fun autofit() {
-        curveFitter.autofit(mainSeries)
+        try {
+            curveFitter.autofit(mainSeries)
+        } catch (x: TooManyEvaluationsException) {
+            alert(Alert.AlertType.ERROR, "Too many evaluations during curve fit.")
+        }
     }
 
     /** Recalculates errors. */

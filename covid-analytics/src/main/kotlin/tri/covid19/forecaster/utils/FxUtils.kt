@@ -74,6 +74,12 @@ var LineChart<Number, Number>.dataSeries: List<ChartDataSeries>
         }
     }
 
+/** Adds a context menu to chart with maximize/restore options. */
+internal fun LineChart<*, *>.chartContextMenu() = contextmenu {
+    item("Maximize").action { maximizeInParent() }
+    item("Restore").action { restoreInParent() }
+}
+
 internal fun LineChart<*, *>.maximizeInParent() {
     val p = this.parent
     p.childrenUnmodifiable.filter { it != this && it is LineChart<*, *> }
