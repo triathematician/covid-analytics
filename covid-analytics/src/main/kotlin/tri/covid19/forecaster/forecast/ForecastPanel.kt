@@ -24,6 +24,7 @@ import tri.math.SIGMOID_MODELS
 import tri.util.minus
 import tri.util.monthDay
 import tri.util.toLocalDate
+import tri.util.userFormat
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 import kotlin.time.ExperimentalTime
