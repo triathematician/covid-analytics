@@ -6,14 +6,17 @@ import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
 import javafx.geometry.Pos
-import javafx.scene.chart.Chart
+import javafx.scene.Node
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
 import javafx.scene.control.Tooltip
+import javafx.scene.layout.BorderPane
+import javafx.scene.layout.Pane
 import javafx.scene.layout.Priority
 import javafx.util.StringConverter
 import org.controlsfx.control.CheckComboBox
+import org.controlsfx.control.InfoOverlay
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
 import tri.covid19.data.*
@@ -43,233 +46,276 @@ class ForecastPanel : SplitPane() {
     private lateinit var forecastResiduals: LineChart<Number, Number>
     private lateinit var legend: Legend
 
+    //region UI INITALIZATION
+
     init {
-        configPanel()
+        scrollpane {
+            form {
+                regionMetricFieldSet()
+                forecastFieldSet()
+                curveFittingFieldSet()
+                modelEvaluationFieldSet()
+                otherForecastFieldSet()
+            }
+        }
         charts()
         updateForecasts()
-    }
-
-    /** Projection configuration panel. */
-    private fun EventTarget.configPanel() = scrollpane {
-        form {
-            fieldset("Region/Metric") {
-                field("Region") {
-                    hbox {
-                        alignment = Pos.BASELINE_CENTER
-                        button("◂") {
-                            style = "-fx-background-radius: 3 0 0 3; -fx-padding: 4"
-                            action { model.goToPreviousUsState() }
-                        }
-                        autocompletetextfield(model.regions) {
-                            hgrow = Priority.ALWAYS
-                            style = "-fx-background-radius: 0"
-                            contextmenu {
-                                item("Next State") { action { model.goToNextUsState() } }
-                                item("Previous State") { action { model.goToPreviousUsState() } }
-                            }
-                        }.bind(model._region)
-                        button("▸") {
-                            style = "-fx-background-radius: 0 3 3 0; -fx-padding: 4"
-                            action { model.goToNextUsState() }
-                        }
-                    }
-                }
-                field("Metric") {
-                    combobox(model._selectedMetric, METRIC_OPTIONS)
-                    checkbox("smooth").bind(model._smooth)
-                }
-                field("Logistic Prediction") {
-                    checkbox("show").bind(model._showLogisticPrediction)
-                }
-                field("Information") {
-                    listview(model.dataInfo)
-                }
-            }
-            fieldset("Forecast (S-Curve)") {
-                label("Adjust curve parameters to manually fit data.")
-                field("Model") {
-                    checkbox("Show").bind(model._showForecast)
-                    combobox(model._curve, SIGMOID_MODELS)
-                    button("Save") { action { model.save() } }
-                    button("Autofit") { action { model.autofit() } }
-                }
-                field("L (maximum)") {
-                    slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l)
-                    label(model._l, converter = UserStringConverter)
-                }
-                field("k (steepness)") {
-                    slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k)
-                    label(model._k, converter = UserStringConverter)
-                }
-                field("x0 (midpoint)") {
-                    slider(0.0..250.0) { blockIncrement = 0.01 }.bind(model._x0)
-                    label(model._x0, converter = UserStringConverter)
-                }
-                field("v (exponent)") {
-                    slider(0.01..5.0) {
-                        blockIncrement = 0.01
-                        visibleWhen(model._vActive)
-                        managedWhen(model._vActive)
-                    }.bind(model._v)
-                }
-                field("Equation") { label("").bind(model._manualEquation) }
-                field("Peak") { label("").bind(model._manualPeak) }
-            }
-            fieldset("Curve Fitting") {
-                label(model._fitLabel)
-                field("Dates for Curve Fit") {
-                    RangeSlider(60.0, model.curveFitter.nowInt.toDouble(), 60.0, 60.0).apply {
-                        blockIncrement = 7.0
-                        majorTickUnit = 7.0
-                        minorTickCount = 6
-                        isShowTickLabels = true
-                        isShowTickMarks = true
-                        isSnapToTicks = true
-
-                        highValueProperty().bindBidirectional(model._lastFitDay)
-                        lowValueProperty().bindBidirectional(model._firstFitDay)
-
-                        labelFormatter = object : StringConverter<Number>() {
-                            override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
-                            override fun fromString(p0: String?) = TODO()
-                        }
-                    }.attachTo(this)
-                }
-                field("Fit to") {
-                    checkbox("Cumulative Count", model._fitCumulative)
-                    button("Autofit") {
-                        alignment = Pos.TOP_CENTER
-                        action { model.autofit() }
-                    }
-                }
-            }
-            fieldset("Model Evaluation") {
-                label("Evaluate models within the given range of dates.")
-                field("Eval Days") {
-                    RangeSlider(60.0, model.curveFitter.nowInt.toDouble(), 60.0, 60.0).apply {
-                        blockIncrement = 7.0
-                        majorTickUnit = 7.0
-                        minorTickCount = 6
-                        isShowTickLabels = true
-                        isShowTickMarks = true
-                        isSnapToTicks = true
-
-                        highValueProperty().bindBidirectional(model._lastEvalDay)
-                        lowValueProperty().bindBidirectional(model._firstEvalDay)
-
-                        labelFormatter = object : StringConverter<Number>() {
-                            override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
-                            override fun fromString(p0: String?) = TODO()
-                        }
-                    }.attachTo(this)
-                }
-                field("Error") {
-                    label("").bind(model._manualLogCumStdErr)
-                    label("").bind(model._manualDeltaStdErr)
-                }
-            }
-            fieldset("Other Forecasts") {
-                field("Forecasts") {
-                    CheckComboBox(CovidForecasts.FORECAST_OPTIONS.asObservable()).apply {
-                        checkModel.check(IHME)
-                        checkModel.check(YYG)
-                        Bindings.bindContent(model.otherForecasts, checkModel.checkedItems)
-                    }.attachTo(this)
-                    checkbox("Show confidence intervals").bind(model._showConfidence)
-                }
-                field("Dates Visible") {
-                    RangeSlider(90.0, model.curveFitter.nowInt.toDouble(), 90.0, 90.0).apply {
-                        blockIncrement = 7.0
-                        majorTickUnit = 7.0
-                        minorTickCount = 6
-                        isShowTickLabels = true
-                        isShowTickMarks = true
-                        isSnapToTicks = true
-
-                        highValueProperty().bindBidirectional(model._lastForecastDay)
-                        lowValueProperty().bindBidirectional(model._firstForecastDay)
-
-                        labelFormatter = object : StringConverter<Number>() {
-                            override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
-                            override fun fromString(p0: String?) = TODO()
-                        }
-                    }.attachTo(this)
-                }
-                field("Evaluation") {
-                    button("Save to Table") { action { model.saveExternalForecastsToTable() } }
-                }
-            }
-//        fieldset("Forecast History") {
-//            label("This will let you generate forecasts for data in the past to assess the model.")
-//            field("Moving Average (days)") {
-//                editablespinner(1..21).bind(model._movingAverage)
-//            }
-//            field("# of Days for Fit") {
-//                editablespinner(3..99).bind(model._projectionDays)
-//            }
-//        }
-        }
+        this += MetricTimeSeriesInfoPanel(model.mainSeries)
     }
 
     /** Charts. */
-    private fun EventTarget.charts() = borderpane {
-        top = hbox(10) {
-            padding = Insets(10.0, 10.0, 10.0, 10.0)
-            label(model._region) { style = "-fx-font-size: 20; -fx-font-weight: bold" }
-            label(model._selectedMetric) { style = "-fx-font-size: 20; -fx-font-weight: bold" }
-        }
-        center = gridpane {
-            row {
-                forecastTotals = datechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    isLegendVisible = false
-                    chartContextMenu()
+    private fun EventTarget.charts() {
+        borderpane {
+            top = hbox(10) {
+                padding = Insets(10.0, 10.0, 10.0, 10.0)
+                label(model._region) { style = "-fx-font-size: 20; -fx-font-weight: bold" }
+                label(model._selectedMetric) { style = "-fx-font-size: 20; -fx-font-weight: bold" }
+            }
+            center = gridpane {
+                row {
+                    forecastTotals = forecastTotalsChart()
+                    forecastDeltas = forecastDeltasChart()
+                    forecastResiduals = forecastResidualsChart()
                 }
-                forecastDeltas = datechart("Change per Day", "Day", "Actual/Forecast") {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    isLegendVisible = false
-                    chartContextMenu()
-                }
-                forecastResiduals = datechart("Residuals (Daily)", "Day", "# more than forecasted") {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    isLegendVisible = false
-                    chartContextMenu()
+                row {
+                    forecastHubbert = forecastHubberChart()
+                    forecastChangeDoubling = forecastChangeDoublingChart()
                 }
             }
-            row {
-                forecastHubbert = linechartRangedOnFirstSeries("Percent Growth vs Total",
-                        NumberAxis().apply { label = "Total" },
-                        NumberAxis().apply {
-                            label = "Percent Growth"
-                            isAutoRanging = false
-                            lowerBound = 0.0
-                            tickUnit = 0.05
-                            upperBound = 0.3
-                        }) {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    animated = false
-                    createSymbols = false
-                    isLegendVisible = false
-                    axisSortingPolicy = LineChart.SortingPolicy.NONE
-                    chartContextMenu()
-                }
-                forecastChangeDoubling = linechartRangedOnFirstSeries("Change per Day vs Doubling Time", "Doubling Time", "Change per Day") {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    animated = false
-                    createSymbols = false
-                    isLegendVisible = false
-                    chartContextMenu()
-                }
+            bottom = hbox(alignment = Pos.CENTER) {
+                legend = Legend()
+                legend.alignment = Pos.CENTER
+                val chartLegend = forecastTotals.childrenUnmodifiable.first { it is Legend } as Legend
+                Bindings.bindContent(legend.items, chartLegend.items)
+                this += legend
             }
-        }
-        bottom = hbox(alignment = Pos.CENTER) {
-            legend = Legend()
-            legend.alignment = Pos.CENTER
-            val chartLegend = forecastTotals.childrenUnmodifiable.first { it is Legend } as Legend
-            Bindings.bindContent(legend.items, chartLegend.items)
-            this += legend
         }
     }
+
+    //endregion
+
+    //region CONFIGURATION FORMS
+
+    private fun EventTarget.regionMetricFieldSet() {
+        fieldset("Region/Metric") {
+            field("Region") {
+                hbox {
+                    alignment = Pos.BASELINE_CENTER
+                    button("◂") {
+                        style = "-fx-background-radius: 3 0 0 3; -fx-padding: 4"
+                        action { model.goToPreviousUsState() }
+                    }
+                    autocompletetextfield(model.regions) {
+                        hgrow = Priority.ALWAYS
+                        style = "-fx-background-radius: 0"
+                        contextmenu {
+                            item("Next State") { action { model.goToNextUsState() } }
+                            item("Previous State") { action { model.goToPreviousUsState() } }
+                        }
+                    }.bind(model._region)
+                    button("▸") {
+                        style = "-fx-background-radius: 0 3 3 0; -fx-padding: 4"
+                        action { model.goToNextUsState() }
+                    }
+                }
+            }
+            field("Metric") {
+                combobox(model._selectedMetric, METRIC_OPTIONS)
+                checkbox("per capita").bind(model._perCapita)
+                checkbox("smooth").bind(model._smooth)
+            }
+            field("Logistic Prediction") {
+                checkbox("show").bind(model._showLogisticPrediction)
+            }
+        }
+    }
+
+    private fun EventTarget.forecastFieldSet() {
+        fieldset("Forecast (S-Curve)") {
+            label("Adjust curve parameters to manually fit data.")
+            field("Model") {
+                checkbox("Show").bind(model._showForecast)
+                combobox(model._curve, SIGMOID_MODELS)
+                button("Save") { action { model.save() } }
+                button("Autofit") { action { model.autofit() } }
+            }
+            field("L (maximum)") {
+                slider(0.01..100000.0) { blockIncrement = 0.1 }.bind(model._l)
+                label(model._l, converter = UserStringConverter)
+            }
+            field("k (steepness)") {
+                slider(0.01..2.0) { blockIncrement = 0.001 }.bind(model._k)
+                label(model._k, converter = UserStringConverter)
+            }
+            field("x0 (midpoint)") {
+                slider(0.0..250.0) { blockIncrement = 0.01 }.bind(model._x0)
+                label(model._x0, converter = UserStringConverter)
+            }
+            field("v (exponent)") {
+                slider(0.01..5.0) {
+                    blockIncrement = 0.01
+                    visibleWhen(model._vActive)
+                    managedWhen(model._vActive)
+                }.bind(model._v)
+            }
+            field("Equation") { label("").bind(model._manualEquation) }
+            field("Peak") { label("").bind(model._manualPeak) }
+        }
+    }
+
+    private fun EventTarget.curveFittingFieldSet() {
+        fieldset("Curve Fitting") {
+            label(model._fitLabel)
+            field("Dates for Curve Fit") {
+                RangeSlider(60.0, model.curveFitter.nowInt.toDouble(), 60.0, 60.0).apply {
+                    blockIncrement = 7.0
+                    majorTickUnit = 7.0
+                    minorTickCount = 6
+                    isShowTickLabels = true
+                    isShowTickMarks = true
+                    isSnapToTicks = true
+
+                    highValueProperty().bindBidirectional(model._lastFitDay)
+                    lowValueProperty().bindBidirectional(model._firstFitDay)
+
+                    labelFormatter = object : StringConverter<Number>() {
+                        override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
+                        override fun fromString(p0: String?) = TODO()
+                    }
+                }.attachTo(this)
+            }
+            field("Fit to") {
+                checkbox("Cumulative Count", model._fitCumulative)
+                button("Autofit") {
+                    alignment = Pos.TOP_CENTER
+                    action { model.autofit() }
+                }
+            }
+        }
+    }
+
+    private fun EventTarget.modelEvaluationFieldSet() {
+        fieldset("Model Evaluation") {
+            label("Evaluate models within the given range of dates.")
+            field("Eval Days") {
+                RangeSlider(60.0, model.curveFitter.nowInt.toDouble(), 60.0, 60.0).apply {
+                    blockIncrement = 7.0
+                    majorTickUnit = 7.0
+                    minorTickCount = 6
+                    isShowTickLabels = true
+                    isShowTickMarks = true
+                    isSnapToTicks = true
+
+                    highValueProperty().bindBidirectional(model._lastEvalDay)
+                    lowValueProperty().bindBidirectional(model._firstEvalDay)
+
+                    labelFormatter = object : StringConverter<Number>() {
+                        override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
+                        override fun fromString(p0: String?) = TODO()
+                    }
+                }.attachTo(this)
+            }
+            field("Error") {
+                label("").bind(model._manualLogCumStdErr)
+                label("").bind(model._manualDeltaStdErr)
+            }
+        }
+    }
+
+    private fun EventTarget.otherForecastFieldSet() {
+        fieldset("Other Forecasts") {
+            field("Forecasts") {
+                CheckComboBox(CovidForecasts.FORECAST_OPTIONS.asObservable()).apply {
+                    checkModel.check(IHME)
+                    checkModel.check(YYG)
+                    Bindings.bindContent(model.otherForecasts, checkModel.checkedItems)
+                }.attachTo(this)
+                checkbox("Show confidence intervals").bind(model._showConfidence)
+            }
+            field("Dates Visible") {
+                RangeSlider(90.0, model.curveFitter.nowInt.toDouble(), 90.0, 90.0).apply {
+                    blockIncrement = 7.0
+                    majorTickUnit = 7.0
+                    minorTickCount = 6
+                    isShowTickLabels = true
+                    isShowTickMarks = true
+                    isSnapToTicks = true
+
+                    highValueProperty().bindBidirectional(model._lastForecastDay)
+                    lowValueProperty().bindBidirectional(model._firstForecastDay)
+
+                    labelFormatter = object : StringConverter<Number>() {
+                        override fun toString(p0: Number) = model.curveFitter.numberToDate(p0).monthDay
+                        override fun fromString(p0: String?) = TODO()
+                    }
+                }.attachTo(this)
+            }
+            field("Evaluation") {
+                button("Save to Table") { action { model.saveExternalForecastsToTable() } }
+            }
+        }
+    }
+
+    //endregion
+
+    //region CHART INITIALIZERS
+
+    private fun EventTarget.forecastTotalsChart(): DateRangeChart {
+        return datechart("Totals", "Day (or Day of Forecast)", "Actual/Forecast") {
+            gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            isLegendVisible = false
+            chartContextMenu()
+        }
+    }
+
+    private fun EventTarget.forecastDeltasChart(): DateRangeChart {
+        return datechart("Change per Day", "Day", "Actual/Forecast") {
+            gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            isLegendVisible = false
+            chartContextMenu()
+        }
+    }
+
+    private fun EventTarget.forecastResidualsChart(): DateRangeChart {
+        return datechart("Residuals (Daily)", "Day", "# more than forecasted") {
+            gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            isLegendVisible = false
+            chartContextMenu()
+        }
+    }
+
+    private fun EventTarget.forecastChangeDoublingChart(): LineChart<Number, Number> {
+        return linechartRangedOnFirstSeries("Change per Day vs Doubling Time", "Doubling Time", "Change per Day") {
+            gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            animated = false
+            createSymbols = false
+            isLegendVisible = false
+            chartContextMenu()
+        }
+    }
+
+    private fun EventTarget.forecastHubberChart(): LineChart<Number, Number> {
+        return linechartRangedOnFirstSeries("Percent Growth vs Total",
+                NumberAxis().apply { label = "Total" },
+                NumberAxis().apply {
+                    label = "Percent Growth"
+                    isAutoRanging = false
+                    lowerBound = 0.0
+                    tickUnit = 0.05
+                    upperBound = 0.3
+                }) {
+            gridpaneConstraints { vhGrow = Priority.ALWAYS }
+            animated = false
+            createSymbols = false
+            isLegendVisible = false
+            axisSortingPolicy = LineChart.SortingPolicy.NONE
+            chartContextMenu()
+        }
+    }
+
+    //endregion
+
+    //region UPDATE METHOD
 
     /** Plot forecast curves: min/avg/max totals predicted by day for a single region. */
     private fun updateForecasts() {
@@ -368,4 +414,6 @@ class ForecastPanel : SplitPane() {
         "lower" in name || "upper" in name -> "1"
         else -> "2"
     }
+
+    //endregion
 }

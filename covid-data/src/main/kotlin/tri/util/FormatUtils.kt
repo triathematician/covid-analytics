@@ -16,6 +16,9 @@ fun Number.userFormat(): String {
     }
 }
 
+/** Format a number as a percentage. */
+fun Number.percentFormat() = NumberFormat.getPercentInstance().format(this)
+
 fun String.javaTrim() = trim { it <= ' ' }
 
 /** Formats integers using given range of digits. */

@@ -1,5 +1,6 @@
 package tri.covid19.forecaster.forecast
 
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.control.Alert
 import javafx.scene.text.Text
@@ -36,9 +37,9 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     // metric selection
     internal var region by property("US")
     internal var selectedMetric by property(METRIC_OPTIONS[0])
+    internal var perCapita by property(false)
     internal var smooth by property(true)
     internal var showLogisticPrediction by property(true)
-    internal var dataInfo = observableListOf<Text>()
 
     // user forecast
     internal val curveFitter = ForecastCurveFitter()
@@ -81,6 +82,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     internal val _region = property(ForecastPanelModel::region)
     internal val _selectedMetric = property(ForecastPanelModel::selectedMetric)
+    internal val _perCapita = property(ForecastPanelModel::perCapita)
     internal val _smooth = property(ForecastPanelModel::smooth)
     internal val _showLogisticPrediction = property(ForecastPanelModel::showLogisticPrediction)
 
@@ -123,7 +125,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     var domain: DateRange? = null
 
     /** The primary time series for the selected metric. */
-    var mainSeries: MetricTimeSeries? = null
+    val mainSeries = SimpleObjectProperty<MetricTimeSeries?>()
     /** User's projection. */
     var userForecast: MetricTimeSeries? = null
 
@@ -134,9 +136,8 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     private fun updateData() {
         val regionMetrics = CovidTimeSeriesSources.dailyReports(RegionLookup(region), selectedMetric)
-        mainSeries = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
-        domain = mainSeries?.domain?.shift(0, 30)
-        dataInfo.setAll(mainSeries?.dataInfo() ?: emptyList())
+        mainSeries.value = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
+        domain = mainSeries.value?.domain?.shift(0, 30)
 
         val shift = if (smooth) -3.5 else 0.0
         userForecast = when {
@@ -158,43 +159,35 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     //region SERIES BUILDERS
 
     internal fun cumulativeDataSeries() = dataseries {
-        series(mainSeries?.maybeSmoothed())
+        series(mainSeries.value?.maybeSmoothed())
         series(userForecast)
         series(pastForecasts.cumulative)
         series(externalForecasts.cumulative)
     }
 
     internal fun dailyDataSeries() = dataseries {
-        series(mainSeries?.deltas()?.maybeSmoothed())
+        series(mainSeries.value?.deltas()?.maybeSmoothed())
         series(userForecast?.deltas())
         series(pastForecasts.deltas)
         series(externalForecasts.cumulative.map { it.deltas() })
     }
 
     internal fun hubbertDataSeries() = dataseries {
-        series(mainSeries?.hubbertSeries(7))
+        series(mainSeries.value?.hubbertSeries(7))
         series(userForecast?.hubbertSeries(1))
         series(externalForecasts.cumulative.map { it.hubbertSeries(1) })
     }
 
     internal fun changeDoublingDataSeries() = dataseries {
-        series(mainSeries?.changeDoublingDataSeries(7))
+        series(mainSeries.value?.changeDoublingDataSeries(7))
         series(userForecast?.changeDoublingDataSeries(1))
         series(externalForecasts.cumulative.map { it.changeDoublingDataSeries(1) })
     }
 
     internal fun residualDataSeries() = dataseries {
-        val daily = mainSeries?.deltas()?.maybeSmoothed()
+        val daily = mainSeries.value?.deltas()?.maybeSmoothed()
         series(userForecast?.deltas()?.residuals(daily))
         series(externalForecasts.deltas.mapNotNull { it.residuals(daily) })
-    }
-
-    private fun MetricTimeSeries.dataInfo(): List<Text> {
-        val seriesForExtrema = deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)
-        val summary = MinMaxFinder(7).invoke(seriesForExtrema)
-        return summary.extrema.values.map {
-            Text("${it.type} at ${it.date}: ${it.count.userFormat()}  ")
-        }
     }
 
     private fun MetricTimeSeries.residuals(empirical: MetricTimeSeries?): MetricTimeSeries? {
@@ -230,8 +223,8 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
             ""
         }
 
-        val se1 = curveFitter.cumulativeRmse(empirical = mainSeries)
-        val se2 = curveFitter.deltaRmse(empirical = mainSeries)
+        val se1 = curveFitter.cumulativeRmse(empirical = mainSeries.value)
+        val se2 = curveFitter.deltaRmse(empirical = mainSeries.value)
 
         _manualLogCumStdErr.value = "RMSE = ${se1?.userFormat() ?: "?"} (totals)"
         _manualDeltaStdErr.value = "RMSE = ${se2?.userFormat() ?: "?"} (per day)"
@@ -267,7 +260,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     /** Runs autofit using current config. */
     fun autofit() {
         try {
-            curveFitter.autofit(mainSeries)
+            curveFitter.autofit(mainSeries.value)
         } catch (x: TooManyEvaluationsException) {
             alert(Alert.AlertType.ERROR, "Too many evaluations during curve fit.")
         }
@@ -296,7 +289,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Save current config as new forecast. */
     fun save() {
-        val empirical = mainSeries
+        val empirical = mainSeries.value
         if (empirical != null) {
             forecastInfoList.add(curveFitter.userForecastInfo(empirical))
         }
@@ -304,7 +297,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Save all other forecasts. */
     fun saveExternalForecastsToTable() {
-        val empirical = mainSeries
+        val empirical = mainSeries.value
         if (empirical != null) {
             externalForecasts.forecasts.filter { it.model in otherForecasts }
                     .forEach { forecastInfoList.add(curveFitter.forecastStats(it, empirical)) }
@@ -338,7 +331,6 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     //endregion
 
-    infix fun String.containsOneOf(list: List<String>) = list.any { it in this }
 
 }
 

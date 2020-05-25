@@ -17,7 +17,6 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
         val minima = findMins(values, sampleWindow)
         val maxima = findMaxs(values, sampleWindow)
         val extremes = (minima.map { it to ExtremaType.LOCAL_MIN } + maxima.map { it to ExtremaType.LOCAL_MAX })
-        println("  ${extremes.toMap().toSortedMap()}")
         val endpoints = listOf(0 to ExtremaType.ENDPOINT, series.size - 1 to ExtremaType.ENDPOINT)
         val intermediates = extremes.windowed(2)
                 .filter { it[0].second == it[1].second && it[1].first - it[0].first > sampleWindow }
