@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane
 import tornadofx.*
 import tri.covid19.DEATHS
 import tri.covid19.forecaster.history.*
+import tri.covid19.forecaster.utils.cellFormatDayTrend
 import tri.covid19.forecaster.utils.cellFormatPercentage
 import tri.covid19.forecaster.utils.cellFormatUserNumber
 import tri.covid19.forecaster.utils.editablespinner
@@ -70,12 +71,14 @@ class HotspotTable: SplitPane() {
         tableview(hotspotData) {
             readonlyColumn("Region", HotspotInfo::regionId)
             readonlyColumn("FIPS", HotspotInfo::fips)
-            readonlyColumn("Population", HotspotInfo::population)
+            readonlyColumn("Population", HotspotInfo::population).cellFormatUserNumber()
             readonlyColumn("Metric", HotspotInfo::metric)
             readonlyColumn("Total", HotspotInfo::value).cellFormatUserNumber()
             readonlyColumn("(per 100k)", HotspotInfo::valuePerCapita).cellFormatUserNumber()
             readonlyColumn("Latest", HotspotInfo::dailyChange).cellFormatUserNumber()
             readonlyColumn("(per 100k)", HotspotInfo::dailyChangePerCapita).cellFormatUserNumber()
+            readonlyColumn("Trend", HotspotInfo::trendDays).cellFormatDayTrend()
+            readonlyColumn("(since last extreme)", HotspotInfo::changeSinceTrendExtremum).cellFormatPercentage()
             readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays).cellFormatUserNumber()
             readonlyColumn("(last 30 days)", HotspotInfo::doublingTimeDays28).cellFormatUserNumber()
             readonlyColumn("Severity (#)", HotspotInfo::severityByChange)

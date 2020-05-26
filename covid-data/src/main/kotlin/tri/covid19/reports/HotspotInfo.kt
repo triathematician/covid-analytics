@@ -2,10 +2,12 @@ package tri.covid19.reports
 
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
-import tri.timeseries.RegionInfo
-import tri.timeseries.deltas
-import tri.timeseries.doublingTimes
-import tri.timeseries.movingAverage
+import tri.timeseries.*
+import tri.util.minus
+import java.time.LocalDate
+import java.util.*
+import kotlin.math.absoluteValue
+import kotlin.math.sign
 
 /** Aggregates information about a single hotspot associated with a region. */
 data class HotspotInfo(var region: RegionInfo, var metric: String, var values: List<Double>, val averageDays: Int = 7) {
@@ -53,6 +55,16 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
     val dailyChangePerCapita
         get() = population?.let { dailyChange/it * 1E5 }
 
+    private val currentTrend
+        get() = MinMaxFinder(10).invoke(MetricTimeSeries(RegionInfo("", RegionType.UNKNOWN, ""), "", false, 0.0, LocalDate.now(), deltas)
+                .restrictNumberOfStartingZerosTo(1).movingAverage(7))
+                .let { CurrentTrend(it.extrema) }
+
+    val trendDays
+        get() = currentTrend.daysSigned
+    val changeSinceTrendExtremum
+        get() = currentTrend.percentChangeSinceExtremum
+
     val threeDayPercentChange
         get() = deltas.percentIncrease(4..6, 1..3)
     val sevenDayPercentChange
@@ -73,4 +85,20 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
 private infix fun Double?.divideOrNull(y: Double?) = when {
     this == null || y == null -> null
     else -> this/y
+}
+
+private fun Double.percentChangeTo(count: Double) = (count - this) / this
+
+private class CurrentTrend(map: SortedMap<LocalDate, ExtremaInfo>) {
+    val curValue by lazy { map.values.last().value }
+    val curDate by lazy { map.keys.last()
+    }
+    val anchorDate by lazy {
+        map.keys.reversed().first { curDate.minus(it) >= 14 ||
+            curDate.minus(it) >= 7 && map[it]!!.value.percentChangeTo(curValue).absoluteValue >= .1 ||
+            map[it]!!.value.percentChangeTo(curValue).absoluteValue >= .2 }
+    }
+    val anchorValue by lazy { map[anchorDate]!!.value }
+    val daysSigned by lazy { ((curValue - anchorValue).sign * curDate.minus(anchorDate)).toInt() }
+    val percentChangeSinceExtremum by lazy { anchorValue.percentChangeTo(curValue) }
 }

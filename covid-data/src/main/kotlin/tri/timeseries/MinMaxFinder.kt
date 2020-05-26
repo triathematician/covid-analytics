@@ -67,7 +67,7 @@ class ExtremaSummary(val series: MetricTimeSeries) {
 enum class ExtremaType { LOCAL_MAX, LOCAL_MIN, ENDPOINT }
 
 /** Information associated with a single extremum. */
-data class ExtremaInfo(var date: LocalDate, var count: Double, var type: ExtremaType)
+data class ExtremaInfo(var date: LocalDate, var value: Double, var type: ExtremaType)
 
 @ExperimentalTime
 fun main() {
