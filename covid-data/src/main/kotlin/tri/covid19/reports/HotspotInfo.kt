@@ -15,6 +15,7 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
     val deltas = values.deltas()
     val deltaAverages = deltas.movingAverage(averageDays)
     val doublings = values.movingAverage(averageDays).doublingTimes()
+    val doublings14 = values.movingAverage(averageDays).doublingTimes(sinceDaysAgo = 14)
     val doublings28 = values.movingAverage(averageDays).doublingTimes(sinceDaysAgo = 28)
 
 //    val minPrior = priorInfo.mapNotNull { it?.totalSeverity }.min()
@@ -25,20 +26,36 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
 //        else -> riskTotal - maxPrior
 //    }
 
+    val value
+        get() = values.last()
+    val valuePerCapita
+        get() = population?.let { value/it * 1E5 }
+
     val dailyChange
         get() = deltaAverages.last()
+    val dailyChange7
+        get() = deltaAverages.last() * 7
+    val percentInLast7
+        get() = dailyChange7/value
     val doublingTimeDays
         get() = doublings.last()
+    val doublingTimeDays14
+        get() = doublings14.last()
     val doublingTimeDays28
         get() = doublings28.last()
+    val doublingTimeDaysRatio
+        get() = doublingTimeDays / doublingTimeDays28
     val severityByChange
         get() = risk_PerCapitaDeathsPerDay(dailyChange)
     val severityByDoubling
         get() = risk_DoublingTime(doublingTimeDays)
     val totalSeverity
         get() = severityByChange.level + severityByDoubling.level
-    val severityChange
-        get() = 0
+
+    val dailyChangePerCapita
+        get() = population?.let { dailyChange/it * 1E5 }
+    val dailyChange7PerCapita
+        get() = population?.let { dailyChange7/it * 1E5 }
 
     val regionId
         get() = region.id
@@ -46,14 +63,6 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
         get() = region.fips
     val population
         get() = region.population
-
-    val value
-        get() = values.last()
-
-    val valuePerCapita
-        get() = population?.let { value/it * 1E5 }
-    val dailyChangePerCapita
-        get() = population?.let { dailyChange/it * 1E5 }
 
     private val currentTrend
         get() = MinMaxFinder(10).invoke(MetricTimeSeries(RegionInfo("", RegionType.UNKNOWN, ""), "", false, 0.0, LocalDate.now(), deltas)

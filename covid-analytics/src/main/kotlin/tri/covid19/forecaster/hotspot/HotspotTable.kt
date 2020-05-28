@@ -1,11 +1,9 @@
 package tri.covid19.forecaster.hotspot
 
-import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.event.EventTarget
 import javafx.scene.control.SplitPane
-import javafx.scene.layout.BorderPane
 import tornadofx.*
 import tri.covid19.DEATHS
 import tri.covid19.forecaster.history.*
@@ -15,9 +13,7 @@ import tri.covid19.forecaster.utils.cellFormatUserNumber
 import tri.covid19.forecaster.utils.editablespinner
 import tri.covid19.reports.HotspotInfo
 import tri.covid19.reports.hotspotPerCapitaInfo
-import tri.util.userFormat
 import triathematician.covid19.CovidTimeSeriesSources
-import java.text.NumberFormat
 import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
@@ -26,6 +22,7 @@ class HotspotTable: SplitPane() {
 
     val selectedMetric = SimpleStringProperty(DEATHS).apply { addListener { _ -> updateTableData() } }
     val hotspotData = mutableListOf<HotspotInfo>().asObservable()
+    val minPopulation = SimpleObjectProperty(0).apply { addListener { _ -> updateTableData() } }
     val minCount = SimpleObjectProperty(100).apply { addListener { _ -> updateTableData() } }
     val minPerCapitaCount = SimpleObjectProperty(0).apply { addListener { _ -> updateTableData() } }
     val minLastWeekCount = SimpleObjectProperty(100).apply { addListener { _ -> updateTableData() } }
@@ -51,8 +48,11 @@ class HotspotTable: SplitPane() {
             }
         }
         fieldset("Filtering") {
+            field("Min Population") {
+                editablespinner(0..100000).bind(minPopulation)
+            }
             field("Min Total") {
-                editablespinner(0..10000).bind(minCount)
+                editablespinner(0..1000000).bind(minCount)
             }
             field("Min (per capitas)") {
                 editablespinner(0..10000).bind(minPerCapitaCount)
@@ -75,29 +75,31 @@ class HotspotTable: SplitPane() {
             readonlyColumn("Metric", HotspotInfo::metric)
             readonlyColumn("Total", HotspotInfo::value).cellFormatUserNumber()
             readonlyColumn("(per 100k)", HotspotInfo::valuePerCapita).cellFormatUserNumber()
-            readonlyColumn("Latest", HotspotInfo::dailyChange).cellFormatUserNumber()
-            readonlyColumn("(per 100k)", HotspotInfo::dailyChangePerCapita).cellFormatUserNumber()
+            readonlyColumn("Last 7", HotspotInfo::dailyChange7).cellFormatUserNumber()
+            readonlyColumn("(per 100k)", HotspotInfo::dailyChange7PerCapita).cellFormatUserNumber()
+            readonlyColumn("(percent in last 7)", HotspotInfo::percentInLast7).cellFormatPercentage()
             readonlyColumn("Trend", HotspotInfo::trendDays).cellFormatDayTrend()
             readonlyColumn("(since last extreme)", HotspotInfo::changeSinceTrendExtremum).cellFormatPercentage()
             readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays).cellFormatUserNumber()
-            readonlyColumn("(last 30 days)", HotspotInfo::doublingTimeDays28).cellFormatUserNumber()
+            readonlyColumn("(last 28 days)", HotspotInfo::doublingTimeDays28).cellFormatUserNumber()
+            readonlyColumn("(last 14 days)", HotspotInfo::doublingTimeDays14).cellFormatUserNumber()
+            readonlyColumn("(ratio)", HotspotInfo::doublingTimeDaysRatio).cellFormatUserNumber()
             readonlyColumn("Severity (#)", HotspotInfo::severityByChange)
             readonlyColumn("Severity (rate)", HotspotInfo::severityByDoubling)
             readonlyColumn("Severity (total)", HotspotInfo::totalSeverity)
-            readonlyColumn("Trend", HotspotInfo::severityChange)
+//            readonlyColumn("Trend", HotspotInfo::severityChange)
             readonlyColumn("3Day %", HotspotInfo::threeDayPercentChange).cellFormatPercentage()
             readonlyColumn("7Day %", HotspotInfo::sevenDayPercentChange).cellFormatPercentage()
-            readonlyColumn("3/7% Ratio", HotspotInfo::threeSevenPercentRatio).cellFormatUserNumber()
+//            readonlyColumn("3/7% Ratio", HotspotInfo::threeSevenPercentRatio).cellFormatUserNumber()
         }
     }
 
     private fun updateTableData() {
         hotspotData.setAll(data()
-                .filter { it.lastValue >= minCount.value }
-                .filter { it.last(1..7).average() >= minLastWeekCount.value }
+                .filter { it.lastValue >= minCount.value && it.deltas().last(0..6).sum() >= minLastWeekCount.value }
                 .filter { it.region.population == null || it.lastValue / it.region.population!! * 1E5 >= minPerCapitaCount.value }
-                .filter { it.region.population == null || it.last(1..7).average() / it.region.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
-                .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = 0))
+                .filter { it.region.population == null || it.deltas().last(0..6).sum() / it.region.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
+                .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = minPopulation.value))
     }
 
     internal fun data() = when (selectedRegionType.value) {

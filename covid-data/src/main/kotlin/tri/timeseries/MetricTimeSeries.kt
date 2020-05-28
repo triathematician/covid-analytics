@@ -131,7 +131,7 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
         }
     }
 
-    /** Get sublist with given indices relative to end of list. Zero is considered the last element. */
+    /** Get sublist with given indices relative to end of list. Zero is the last element. */
     fun last(range: IntRange): List<Double> {
         return values.subList(maxOf(0, values.size - range.last - 1), maxOf(0, values.size - range.first))
     }
