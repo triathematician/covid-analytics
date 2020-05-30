@@ -2,6 +2,8 @@ package tri.covid19.forecaster
 
 import javafx.event.EventHandler
 import javafx.scene.Node
+import javafx.scene.chart.XYChart
+import javafx.scene.control.Tooltip
 import javafx.scene.effect.BlurType
 import javafx.scene.effect.DropShadow
 import javafx.scene.layout.Priority
@@ -66,8 +68,22 @@ class CovidForecasterStyles: Stylesheet() {
     }
 }
 
+/** Installs chart hover effect on all data series, adds tooltip with series name. */
+fun XYChart<*, *>.installStandardHoverAndTooltip() {
+    data.forEach {
+        it.installHoverEffect()
+        Tooltip.install(it.node, Tooltip(it.name))
+    }
+}
+
 /** Installs chart hover effect on given node. */
 fun Node.installHoverEffect() {
     onMouseEntered = EventHandler { addClass(CovidForecasterStyles.chartHover) }
     onMouseExited = EventHandler { removeClass(CovidForecasterStyles.chartHover) }
+}
+
+/** Installs chart hover effect on given series. */
+fun XYChart.Series<*, *>.installHoverEffect() {
+    node.installHoverEffect()
+    data.forEach { it.node?.let { installHoverEffect() } }
 }

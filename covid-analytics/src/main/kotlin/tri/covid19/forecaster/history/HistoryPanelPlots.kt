@@ -5,50 +5,38 @@ import javafx.beans.binding.Bindings
 import javafx.geometry.Pos
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
+import javafx.scene.chart.XYChart
 import javafx.scene.control.Tooltip
-import javafx.scene.layout.Priority
 import tornadofx.*
+import tri.covid19.forecaster.charts.HubbertChart
+import tri.covid19.forecaster.charts.TimeSeriesChart
+import tri.covid19.forecaster.charts.hubbertChart
+import tri.covid19.forecaster.charts.timeserieschart
 import tri.covid19.forecaster.installHoverEffect
+import tri.covid19.forecaster.installStandardHoverAndTooltip
 import tri.covid19.forecaster.utils.*
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, val hubbertPanelModel: HistoryHubbertModel) : View() {
 
-    private lateinit var historicalChart: LineChart<Number, Number>
-    private lateinit var hubbertChart: LineChart<Number, Number>
+    private lateinit var standardChart: TimeSeriesChart
+    private lateinit var hubbertChart: HubbertChart
     private lateinit var legend: Legend
 
     override val root = borderpane {
         center = gridpane {
             row {
-                historicalChart = linechart("Historical Data", "Day", "Count", yLog = historyPanelModel.logScale) {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    animated = false
-                    createSymbols = false
-                    isLegendVisible = false
-                    chartContextMenu()
-                }
+                standardChart = timeserieschart("Historical Data", "Day", "Count", historyPanelModel.logScale)
             }
             row {
-                hubbertChart = linechart("Percent Growth vs Total",
-                        NumberAxis().apply { label = "Total" },
-                        NumberAxis("Percent Growth", 0.0, 0.3, 0.5).apply {
-                            isAutoRanging = false
-                        }) {
-                    gridpaneConstraints { vhGrow = Priority.ALWAYS }
-                    animated = false
-                    createSymbols = false
-                    isLegendVisible = false
-                    axisSortingPolicy = LineChart.SortingPolicy.NONE
-                    chartContextMenu()
-                }
+                hubbertChart = hubbertChart("Percent Growth vs Total", "Total", "Percent Growth")
             }
         }
         bottom = hbox(alignment = Pos.CENTER) {
             legend = Legend()
             legend.alignment = Pos.CENTER
-            val chartLegend = historicalChart.childrenUnmodifiable.first { it is Legend } as Legend
+            val chartLegend = standardChart.childrenUnmodifiable.first { it is Legend } as Legend
             Bindings.bindContent(legend.items, chartLegend.items)
             this += legend
         }
@@ -57,56 +45,45 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
     init {
         historyPanelModel.onChange = { updateBothCharts() }
         hubbertPanelModel.onChange = { updateBothCharts() }
-        historyPanelModel._logScale.onChange { resetCharts() }
+        historyPanelModel._logScale.onChange { resetChartAxes() }
         updateBothCharts()
     }
 
     /** Resets positioning of chart, must do when axes change. */
-    private fun resetCharts() {
+    private fun resetChartAxes() {
         // TODO - this needs to reset and relink the legend
-        val parent = historicalChart.parent
+        val parent = standardChart.parent
         hubbertChart.removeFromParent()
-        historicalChart.removeFromParent()
-        historicalChart = parent.linechart("Historical Data", "Day", "Count", yLog = historyPanelModel.logScale) {
-            animated = false
-            createSymbols = false
-        }
+        standardChart.removeFromParent()
+        standardChart = timeserieschart("Historical Data", "Day", "Count", historyPanelModel.logScale)
         parent.add(hubbertChart)
-        updateHistoryChart()
+        updateStandardChart()
     }
 
     /** Update both charts. */
     private fun updateBothCharts() {
-        if (this::historicalChart.isInitialized) {
-            updateHistoryChart()
+        if (this::standardChart.isInitialized) {
+            updateStandardChart()
             updateHubbertChart()
         }
     }
 
     /** Plot counts by date. */
-    private fun updateHistoryChart() {
+    private fun updateStandardChart() {
         val (domain, series) = historyPanelModel.historicalDataSeries()
-
-        historicalChart.dataSeries = series
-        (historicalChart.xAxis as NumberAxis).tickLabelFormatter = axisLabeler(domain.start)
-        historicalChart.lineWidth = lineChartWidthForCount(series.size)
+        standardChart.setTimeSeries(domain, series)
+        standardChart.lineWidth = lineChartWidthForCount(series.size)
 
         if (hubbertPanelModel.showPeakCurve.get() && historyPanelModel.perDay) {
             val peak = hubbertPanelModel.peakValue
             val label = hubbertPanelModel.peakLabel
             val peakSeries = domain.mapIndexed { i, _ -> xy(i, peak) }
-            historicalChart.series(label, peakSeries.asObservable()).also {
+            standardChart.series(label, peakSeries.asObservable()).also {
                 it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
             }
         }
 
-        historicalChart.data.forEach {
-            it.node.installHoverEffect()
-            Tooltip.install(it.node, Tooltip(it.name))
-            it.data.forEach {
-                it.node?.run { installHoverEffect() }
-            }
-        }
+        standardChart.installStandardHoverAndTooltip()
     }
 
     /** Plot growth vs. total. */
@@ -128,19 +105,6 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
             }
         }
 
-        hubbertChart.data.forEach {
-            it.node.installHoverEffect()
-            Tooltip.install(it.node, Tooltip(it.name))
-        }
+        hubbertChart.installStandardHoverAndTooltip()
     }
-
-    /** Set chart series as list of [ChartDataSeries]. */
-    private var LineChart<Number, Number>.dataSeries: List<ChartDataSeries>
-        get() = listOf()
-        set(value) {
-            data.clear()
-            value.forEach {
-                series(it.id, it.points.map { xy(it.first, it.second) }.asObservable())
-            }
-        }
 }

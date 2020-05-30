@@ -2,25 +2,22 @@ package tri.covid19.forecaster.forecast
 
 import com.sun.javafx.charts.Legend
 import javafx.beans.binding.Bindings
-import javafx.event.EventHandler
 import javafx.event.EventTarget
 import javafx.geometry.Insets
 import javafx.geometry.Pos
-import javafx.scene.Node
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
 import javafx.scene.control.Tooltip
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.Pane
 import javafx.scene.layout.Priority
 import javafx.util.StringConverter
 import org.controlsfx.control.CheckComboBox
-import org.controlsfx.control.InfoOverlay
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
-import tri.covid19.data.*
-import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
+import tri.covid19.data.CovidForecasts
+import tri.covid19.data.IHME
+import tri.covid19.data.M_D_YYYY
+import tri.covid19.data.YYG
 import tri.covid19.forecaster.history.METRIC_OPTIONS
 import tri.covid19.forecaster.installHoverEffect
 import tri.covid19.forecaster.utils.*
@@ -351,30 +348,27 @@ class ForecastPanel : SplitPane() {
 
             listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastChangeDoubling, forecastHubbert).forEach { chart ->
                 chart.animated = false
-                chart.data.forEach {
-                    if ("predicted" in it.name) {
-                        it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
-                        it.data.forEach { it.node?.isVisible = false }
-                    }
-                    if (CovidForecasts.FORECAST_OPTIONS.any { f -> f in it.name }) {
-                        it.node.style = "-fx-stroke: ${modelColor(it.name)}; -fx-stroke-width: ${modelStrokeWidth(it.name)}; -fx-stroke-dash-array: 3,3"
-                        it.data.forEach { it.node?.isVisible = false }
-                    }
-                    if ("curve" in it.name) {
-                        it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
-                        it.node.installHoverEffect()
-                        it.data.forEach { it.node?.isVisible = false }
-                    }
-                }
-
                 chart.data.forEach { series ->
-                    series.node.installHoverEffect()
+                    installHoverEffect()
                     Tooltip.install(series.node, Tooltip(series.name))
+
+                    if ("predicted" in series.name) {
+                        series.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 2; -fx-stroke-dash-array: 2,2"
+                        series.data.forEach { it.node?.isVisible = false }
+                    }
+                    if (CovidForecasts.FORECAST_OPTIONS.any { f -> f in series.name }) {
+                        series.node.style = "-fx-stroke: ${modelColor(series.name)}; -fx-stroke-width: ${modelStrokeWidth(series.name)}; -fx-stroke-dash-array: 3,3"
+                        series.data.forEach { it.node?.isVisible = false }
+                    }
+                    if ("curve" in series.name) {
+                        series.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
+                        series.data.forEach { it.node?.isVisible = false }
+                    }
+
                     series.data.forEach {
                         it.node?.run {
                             val domainValue = if (it.xValue is Int && day0 != null) day0.plusDays(it.xValue.toLong()).monthDay else it.xValue
                             Tooltip.install(this, Tooltip("${series.name}: $domainValue -> ${it.yValue.userFormat()}"))
-                            installHoverEffect()
                         }
                     }
                 }
