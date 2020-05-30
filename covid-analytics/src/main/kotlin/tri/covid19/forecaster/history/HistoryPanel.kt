@@ -172,14 +172,18 @@ class HistoryPanel : SplitPane() {
             historicalChart.series(label, peakSeries.asObservable()).also {
                 it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
             }
+            historicalChart.data.forEach {
+                Tooltip.install(it.node, Tooltip(it.name))
+            }
         }
 
         historicalChart.data.forEach {
             it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
             it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+            Tooltip.install(it.node, Tooltip(it.name))
             it.data.forEach {
                 it.node?.run {
-                    Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
+//                    Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
                     onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
                     onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
                 }
