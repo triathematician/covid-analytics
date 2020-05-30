@@ -14,6 +14,7 @@ import javafx.scene.layout.Priority
 import tornadofx.*
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.utils.*
+import tri.util.userFormat
 import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
@@ -86,6 +87,9 @@ class HistoryPanel : SplitPane() {
                     blockIncrement = 0.01
                     enableWhen(hubbertChartModel.showPeakCurve)
                 }.bind(hubbertChartModel.logPeakValueProperty)
+                label(hubbertChartModel.peakValue.userFormat()) {
+                    hubbertChartModel.logPeakValueProperty.onChange { text = hubbertChartModel.peakValue.userFormat() }
+                }
             }
         }
     }
