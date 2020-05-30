@@ -367,13 +367,14 @@ class ForecastPanel : SplitPane() {
                     }
                 }
 
-                chart.data.forEach {
-                    it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
-                    it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
-                    it.data.forEach {
+                chart.data.forEach { series ->
+                    series.node.onMouseEntered = EventHandler { _ -> series.node.addClass(chartHover) }
+                    series.node.onMouseExited = EventHandler { _ -> series.node.removeClass(chartHover) }
+                    Tooltip.install(series.node, Tooltip(series.name))
+                    series.data.forEach {
                         it.node?.run {
                             val domainValue = if (it.xValue is Int && day0 != null) day0.plusDays(it.xValue.toLong()).monthDay else it.xValue
-                            Tooltip.install(this, Tooltip("$domainValue -> ${it.yValue.userFormat()}"))
+                            Tooltip.install(this, Tooltip("${series.name}: $domainValue -> ${it.yValue.userFormat()}"))
                             onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
                             onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
                         }

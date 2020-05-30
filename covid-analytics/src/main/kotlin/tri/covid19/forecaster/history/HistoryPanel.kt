@@ -172,9 +172,6 @@ class HistoryPanel : SplitPane() {
             historicalChart.series(label, peakSeries.asObservable()).also {
                 it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
             }
-            historicalChart.data.forEach {
-                Tooltip.install(it.node, Tooltip(it.name))
-            }
         }
 
         historicalChart.data.forEach {
@@ -183,7 +180,6 @@ class HistoryPanel : SplitPane() {
             Tooltip.install(it.node, Tooltip(it.name))
             it.data.forEach {
                 it.node?.run {
-//                    Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
                     onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
                     onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
                 }
@@ -203,7 +199,7 @@ class HistoryPanel : SplitPane() {
                 val peak = hubbertChartModel.peakValue
                 val label = hubbertChartModel.peakLabel
                 val min = peak / 0.3
-                val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { tri.covid19.forecaster.utils.xy(it, peak / it) }
+                val peakSeries = (0..100).map { min + (max - min) * it / 100.0 }.map { xy(it, peak / it) }
                 hubbertChart.series(label, peakSeries.asObservable()).also {
                     it.nodeProperty().get().style = "-fx-stroke-width: 8px; -fx-stroke: #88888888"
                 }
@@ -213,9 +209,9 @@ class HistoryPanel : SplitPane() {
         hubbertChart.data.forEach {
             it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
             it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+            Tooltip.install(it.node, Tooltip(it.name))
             it.data.forEach {
                 it.node?.run {
-                    Tooltip.install(this, Tooltip("${it.xValue} -> ${it.yValue}"))
                     onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
                     onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
                 }
@@ -229,7 +225,7 @@ class HistoryPanel : SplitPane() {
         set(value) {
             data.clear()
             value.forEach {
-                series(it.id, it.points.map { tri.covid19.forecaster.utils.xy(it.first, it.second) }.asObservable())
+                series(it.id, it.points.map { xy(it.first, it.second) }.asObservable())
             }
         }
 }
