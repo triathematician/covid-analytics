@@ -288,6 +288,7 @@ class ForecastPanel : SplitPane() {
             animated = false
             createSymbols = false
             isLegendVisible = false
+            axisSortingPolicy = LineChart.SortingPolicy.NONE
             chartContextMenu()
         }
     }
@@ -349,7 +350,7 @@ class ForecastPanel : SplitPane() {
             listOf(forecastTotals, forecastDeltas, forecastResiduals, forecastChangeDoubling, forecastHubbert).forEach { chart ->
                 chart.animated = false
                 chart.data.forEach { series ->
-                    installHoverEffect()
+                    series.node.installHoverEffect()
                     Tooltip.install(series.node, Tooltip(series.name))
 
                     if ("predicted" in series.name) {

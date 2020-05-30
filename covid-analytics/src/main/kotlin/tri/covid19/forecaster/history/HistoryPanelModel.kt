@@ -118,8 +118,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
     //region
 
-    /** Plot counts by date. */
-    internal fun historicalDataSeries(): Pair<DateRange, List<ChartDataSeries>> {
+    /** Get smoothed version of data. */
+    internal fun smoothedData(): Set<MetricTimeSeries> {
         var metrics = historicalData()
         if (smooth != 1) {
             metrics = metrics.map { it.movingAverage(smooth, false) }.toSet()
@@ -127,6 +127,12 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
                 metrics = metrics.map { it.movingAverage(3, false) }.toSet()
             }
         }
+        return metrics
+    }
+
+    /** Plot counts by date. */
+    internal fun historicalDataSeries(): Pair<DateRange, List<ChartDataSeries>> {
+        var metrics = smoothedData()
         if (perDay) {
             metrics = metrics.map { it.deltas() }.toSet()
         }
@@ -135,17 +141,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     }
 
     /** Plot growth vs counts. */
-    internal fun hubbertDataSeries(): List<ChartDataSeries> {
-        var metrics = historicalData()
-        if (smooth != 1) {
-            metrics = metrics.map { it.movingAverage(smooth, false) }.toSet()
-            if (extraSmooth) {
-                metrics = metrics.map { it.movingAverage(3, false) }.toSet()
-            }
-        }
-        return metrics.map { it.hubbertSeries(1) }
+    internal fun hubbertDataSeries() = smoothedData().map { it.hubbertSeries(1) }
                 .map { series(it.first.region.id, it.first.domain.shift(1, 0), it.first, it.second) }
-    }
 
     //endregion
 }
@@ -164,7 +161,12 @@ fun MetricTimeSeries.hubbertSeries(window: Int): Pair<MetricTimeSeries, MetricTi
     return totals to growths
 }
 
-/** Creates Hubbert series from monotonic metric. */
+/** Creates doubling-change series from monotonic metric. */
 fun MetricTimeSeries.changeDoublingDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
-    return movingAverage(window).doublingTimes().movingAverage(window) to movingAverage(window).deltas()
+    return movingAverage(window).doublingTimes() to movingAverage(window).deltas()
+}
+
+/** Creates total-doubling series from monotonic metric. */
+fun MetricTimeSeries.doublingTotalDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+    return movingAverage(window) to movingAverage(window).doublingTimes()
 }

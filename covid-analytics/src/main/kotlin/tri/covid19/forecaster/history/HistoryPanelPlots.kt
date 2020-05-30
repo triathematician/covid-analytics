@@ -3,34 +3,33 @@ package tri.covid19.forecaster.history
 import com.sun.javafx.charts.Legend
 import javafx.beans.binding.Bindings
 import javafx.geometry.Pos
-import javafx.scene.chart.LineChart
-import javafx.scene.chart.NumberAxis
-import javafx.scene.chart.XYChart
-import javafx.scene.control.Tooltip
 import tornadofx.*
-import tri.covid19.forecaster.charts.HubbertChart
-import tri.covid19.forecaster.charts.TimeSeriesChart
-import tri.covid19.forecaster.charts.hubbertChart
-import tri.covid19.forecaster.charts.timeserieschart
-import tri.covid19.forecaster.installHoverEffect
+import tri.covid19.forecaster.charts.*
 import tri.covid19.forecaster.installStandardHoverAndTooltip
 import tri.covid19.forecaster.utils.*
 import kotlin.time.ExperimentalTime
 
+/**
+ * View with charts showing line plots for several selected regions.
+ */
 @ExperimentalTime
 class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, val hubbertPanelModel: HistoryHubbertModel) : View() {
 
     private lateinit var standardChart: TimeSeriesChart
+    private lateinit var doublingTotalChart: DoublingTotalChart
     private lateinit var hubbertChart: HubbertChart
+    private lateinit var deathCaseChart: DeathCaseChart
     private lateinit var legend: Legend
 
     override val root = borderpane {
         center = gridpane {
             row {
                 standardChart = timeserieschart("Historical Data", "Day", "Count", historyPanelModel.logScale)
+                doublingTotalChart = doublingtotalchart("Daily Count vs Doubling Time", "Doubling Time", "Daily Count")
             }
             row {
                 hubbertChart = hubbertChart("Percent Growth vs Total", "Total", "Percent Growth")
+                deathCaseChart = deathcasechart("Confirmed Cases vs Deaths", "Deaths", "Confirmed Cases")
             }
         }
         bottom = hbox(alignment = Pos.CENTER) {
@@ -43,10 +42,10 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
     }
 
     init {
-        historyPanelModel.onChange = { updateBothCharts() }
-        hubbertPanelModel.onChange = { updateBothCharts() }
+        historyPanelModel.onChange = { updateAllCharts() }
+        hubbertPanelModel.onChange = { updateAllCharts() }
         historyPanelModel._logScale.onChange { resetChartAxes() }
-        updateBothCharts()
+        updateAllCharts()
     }
 
     /** Resets positioning of chart, must do when axes change. */
@@ -60,15 +59,18 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
         updateStandardChart()
     }
 
-    /** Update both charts. */
-    private fun updateBothCharts() {
+    /** Update all charts. */
+    private fun updateAllCharts() {
         if (this::standardChart.isInitialized) {
             updateStandardChart()
+            updateDoubleTotalChart()
             updateHubbertChart()
+            updateDeathCaseChart()
         }
     }
 
-    /** Plot counts by date. */
+    //region CHART UPDATERS
+
     private fun updateStandardChart() {
         val (domain, series) = historyPanelModel.historicalDataSeries()
         standardChart.setTimeSeries(domain, series)
@@ -86,7 +88,6 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
         standardChart.installStandardHoverAndTooltip()
     }
 
-    /** Plot growth vs. total. */
     private fun updateHubbertChart() {
         val series = historyPanelModel.hubbertDataSeries()
         hubbertChart.dataSeries = series
@@ -107,4 +108,22 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
 
         hubbertChart.installStandardHoverAndTooltip()
     }
+
+    private fun updateDoubleTotalChart() {
+        with (doublingTotalChart) {
+            series = historyPanelModel.smoothedData()
+            lineWidth = lineChartWidthForCount(data.size)
+            installStandardHoverAndTooltip()
+        }
+    }
+
+    private fun updateDeathCaseChart() {
+//        val (domain, series) = historyPanelModel.historicalDataSeries()
+//        deathCaseChart.setTimeSeries(domain, series)
+//        deathCaseChart.lineWidth = lineChartWidthForCount(series.size)
+//        deathCaseChart.installStandardHoverAndTooltip()
+    }
+
+    //endregion
+
 }
