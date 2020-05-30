@@ -17,7 +17,10 @@ fun series(id: String, s: MetricTimeSeries) = ChartDataSeries(id, s.domain.mapIn
 fun series(id: String, domain: DateRange, s: MetricTimeSeries) = ChartDataSeries(id, domain.mapIndexed { i, d -> i to s.getOrNull(d) }.filterNullValues())
 
 /** Construct series from two time series, using the common domain between the two. */
-fun series(id: String, domain: DateRange, x: MetricTimeSeries, y: MetricTimeSeries) = ChartDataSeries(id, domain.mapIndexed { _, d -> x.getFinite(d) to y.getFinite(d) }.filterNullValues())
+fun series(id: String, x: MetricTimeSeries, y: MetricTimeSeries) = series(id, x.domain.intersect(y.domain) ?: emptySet(), x, y)
+
+/** Construct series from two time series, using the common domain between the two. */
+fun series(id: String, domain: Iterable<LocalDate>, x: MetricTimeSeries, y: MetricTimeSeries) = ChartDataSeries(id, domain.mapIndexed { _, d -> x.getFinite(d) to y.getFinite(d) }.filterNullValues())
 
 /** Get finite value from data series. */
 fun MetricTimeSeries.getFinite(d: LocalDate) = getOrNull(d)?.let { if (it.isFinite()) it else null }

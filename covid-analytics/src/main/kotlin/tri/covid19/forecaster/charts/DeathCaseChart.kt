@@ -7,6 +7,9 @@ import javafx.scene.layout.Priority
 import tornadofx.attachTo
 import tornadofx.gridpaneConstraints
 import tri.covid19.forecaster.utils.chartContextMenu
+import tri.covid19.forecaster.utils.dataSeries
+import tri.covid19.forecaster.utils.series
+import tri.timeseries.MetricTimeSeries
 
 /** Displays total on x-axis, doubling time on vertical axis. */
 class DeathCaseChart : LineChart<Number, Number>(NumberAxis(), NumberAxis()) {
@@ -16,8 +19,18 @@ class DeathCaseChart : LineChart<Number, Number>(NumberAxis(), NumberAxis()) {
         animated = false
         createSymbols = false
         isLegendVisible = false
+        axisSortingPolicy = SortingPolicy.NONE
         chartContextMenu()
     }
+
+    /** Set mapping of deaths (first set of series) to cases (second set of series). */
+    var series: Pair<List<MetricTimeSeries>, List<MetricTimeSeries>>
+        get() = TODO()
+        set(value) {
+            val commonIndices = value.first.indices.intersect(value.second.indices)
+            dataSeries = commonIndices.map { value.first[it] to value.second[it] }
+                    .map { series(it.first.region.id, it.first, it.second) }
+        }
 
 }
 

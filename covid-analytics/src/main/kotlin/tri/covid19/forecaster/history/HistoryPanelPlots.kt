@@ -4,6 +4,8 @@ import com.sun.javafx.charts.Legend
 import javafx.beans.binding.Bindings
 import javafx.geometry.Pos
 import tornadofx.*
+import tri.covid19.CASES
+import tri.covid19.DEATHS
 import tri.covid19.forecaster.charts.*
 import tri.covid19.forecaster.installStandardHoverAndTooltip
 import tri.covid19.forecaster.utils.*
@@ -118,10 +120,14 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
     }
 
     private fun updateDeathCaseChart() {
-//        val (domain, series) = historyPanelModel.historicalDataSeries()
-//        deathCaseChart.setTimeSeries(domain, series)
-//        deathCaseChart.lineWidth = lineChartWidthForCount(series.size)
-//        deathCaseChart.installStandardHoverAndTooltip()
+        with (deathCaseChart) {
+            val perDay = historyPanelModel.perDay
+            val deaths = historyPanelModel.smoothedData(metric = DEATHS)
+            val cases = historyPanelModel.smoothedData(metric = CASES)
+            series = if (perDay) deaths.map { it.deltas() } to cases.map { it.deltas() } else deaths to cases
+            lineWidth = lineChartWidthForCount(data.size)
+            installStandardHoverAndTooltip()
+        }
     }
 
     //endregion

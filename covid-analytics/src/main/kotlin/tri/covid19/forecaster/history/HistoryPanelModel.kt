@@ -4,7 +4,10 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
-import tri.covid19.*
+import tri.covid19.ACTIVE
+import tri.covid19.CASES
+import tri.covid19.DEATHS
+import tri.covid19.RECOVERED
 import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.covid19.forecaster.utils.series
 import tri.timeseries.MetricTimeSeries
@@ -16,7 +19,6 @@ import triathematician.covid19.CovidTimeSeriesSources.usCbsaData
 import triathematician.covid19.CovidTimeSeriesSources.usCountyData
 import triathematician.covid19.CovidTimeSeriesSources.usStateData
 import triathematician.covid19.perCapita
-import java.lang.IllegalStateException
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
 import kotlin.time.ExperimentalTime
@@ -42,8 +44,6 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val excludeRegion = SimpleStringProperty("").apply { addListener { _ -> if (excludeRegionActive.get()) onChange() } }
 
     var selectedMetric by property(METRIC_OPTIONS[0])
-    val mainPlotMetric: String
-        get() = if (perCapita) selectedMetric.perCapita else selectedMetric
     var perDay by property(false)
     var perCapita by property(false)
     var logScale by property(false)
@@ -91,12 +91,19 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     //region DATA
 
     /** Get historical data for current config. Matching "includes" are first. */
-    internal fun historicalData(): Set<MetricTimeSeries> {
-        val sMetrics = data().filter { it.metric == mainPlotMetric }
-                .filter { it.region.population.let { it == null || it >= minPopulation } }
-                .filter { exclude(it.region.id) }
-                .sortedByDescending { it.sortMetric }
-        return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit).toSet()
+    internal fun historicalData(metric: String? = null): List<MetricTimeSeries> {
+        if (metric == null) {
+            val sMetrics = data().filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
+                    .filter { it.region.population.let { it == null || it >= minPopulation } }
+                    .filter { exclude(it.region.id) }
+                    .sortedByDescending { it.sortMetric }
+            return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit)
+        } else {
+            val regions = historicalData(null).map { it.region.id }
+            return data().filter { it.metric == if (perCapita) metric.perCapita else metric }
+                .filter { it.region.id in regions }
+                .sortedBy { regions.indexOf(it.region.id) }
+        }
     }
 
     private val MetricTimeSeries.sortMetric
@@ -118,23 +125,27 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
     //region
 
-    /** Get smoothed version of data. */
-    internal fun smoothedData(): Set<MetricTimeSeries> {
-        var metrics = historicalData()
-        if (smooth != 1) {
-            metrics = metrics.map { it.movingAverage(smooth, false) }.toSet()
-            if (extraSmooth) {
-                metrics = metrics.map { it.movingAverage(3, false) }.toSet()
+    /** Smooth using current settings. */
+    internal val List<MetricTimeSeries>.smoothed: List<MetricTimeSeries>
+        get() {
+            var res = this
+            if (smooth != 1) {
+                res = res.map { it.movingAverage(smooth, false) }
+                if (extraSmooth) {
+                    res = res.map { it.movingAverage(3, false) }
+                }
             }
+            return res
         }
-        return metrics
-    }
+
+    /** Get smoothed version of data. */
+    internal fun smoothedData(metric: String? = null) = historicalData(metric).smoothed
 
     /** Plot counts by date. */
     internal fun historicalDataSeries(): Pair<DateRange, List<ChartDataSeries>> {
         var metrics = smoothedData()
         if (perDay) {
-            metrics = metrics.map { it.deltas() }.toSet()
+            metrics = metrics.map { it.deltas() }
         }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
         return domain to metrics.map { series(it.region.id, domain, it) }
