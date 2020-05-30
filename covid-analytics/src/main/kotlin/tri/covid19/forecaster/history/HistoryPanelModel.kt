@@ -65,6 +65,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val _extraSmooth = property(HistoryPanelModel::extraSmooth)
     val _sort = property(HistoryPanelModel::sort)
 
+    val _logScale = property(HistoryPanelModel::logScale)
+
     //endregion
 
     //region INCLUDE/EXCLUDE

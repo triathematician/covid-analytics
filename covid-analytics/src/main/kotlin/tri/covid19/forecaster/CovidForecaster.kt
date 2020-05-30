@@ -1,5 +1,7 @@
 package tri.covid19.forecaster
 
+import javafx.event.EventHandler
+import javafx.scene.Node
 import javafx.scene.effect.BlurType
 import javafx.scene.effect.DropShadow
 import javafx.scene.layout.Priority
@@ -51,6 +53,7 @@ class CovidForecasterView : View() {
 
 }
 
+/** Stylesheet for the application. */
 class CovidForecasterStyles: Stylesheet() {
     companion object {
         val chartHover by cssclass()
@@ -61,4 +64,10 @@ class CovidForecasterStyles: Stylesheet() {
             effect = DropShadow(BlurType.GAUSSIAN, c("dodgerblue"), 10.0, 0.2, 0.0, 0.0)
         }
     }
+}
+
+/** Installs chart hover effect on given node. */
+fun Node.installHoverEffect() {
+    onMouseEntered = EventHandler { addClass(CovidForecasterStyles.chartHover) }
+    onMouseExited = EventHandler { removeClass(CovidForecasterStyles.chartHover) }
 }

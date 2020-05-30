@@ -22,6 +22,7 @@ import tornadofx.*
 import tri.covid19.data.*
 import tri.covid19.forecaster.CovidForecasterStyles.Companion.chartHover
 import tri.covid19.forecaster.history.METRIC_OPTIONS
+import tri.covid19.forecaster.installHoverEffect
 import tri.covid19.forecaster.utils.*
 import tri.math.SIGMOID_MODELS
 import tri.util.minus
@@ -361,22 +362,19 @@ class ForecastPanel : SplitPane() {
                     }
                     if ("curve" in it.name) {
                         it.node.style = "-fx-opacity: 0.5; -fx-stroke-width: 4"
-                        it.node.onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
-                        it.node.onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                        it.node.installHoverEffect()
                         it.data.forEach { it.node?.isVisible = false }
                     }
                 }
 
                 chart.data.forEach { series ->
-                    series.node.onMouseEntered = EventHandler { _ -> series.node.addClass(chartHover) }
-                    series.node.onMouseExited = EventHandler { _ -> series.node.removeClass(chartHover) }
+                    series.node.installHoverEffect()
                     Tooltip.install(series.node, Tooltip(series.name))
                     series.data.forEach {
                         it.node?.run {
                             val domainValue = if (it.xValue is Int && day0 != null) day0.plusDays(it.xValue.toLong()).monthDay else it.xValue
                             Tooltip.install(this, Tooltip("${series.name}: $domainValue -> ${it.yValue.userFormat()}"))
-                            onMouseEntered = EventHandler { _ -> it.node.addClass(chartHover) }
-                            onMouseExited = EventHandler { _ -> it.node.removeClass(chartHover) }
+                            installHoverEffect()
                         }
                     }
                 }
