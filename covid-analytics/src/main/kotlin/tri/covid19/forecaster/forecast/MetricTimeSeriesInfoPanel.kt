@@ -7,6 +7,7 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Text
 import tornadofx.*
+import tri.covid19.forecaster.utils.UserStringConverter
 import tri.covid19.reports.HotspotInfo
 import tri.timeseries.*
 import tri.util.minus
@@ -57,7 +58,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<MetricTimeSerie
             return
         }
 
-        popText.value = s.region.population?.toString() ?: "unknown"
+        popText.value = s.region.population?.userFormat() ?: "unknown"
 
         val deltas = s.deltas()
         val smoothedDeltas = deltas.movingAverage(7)

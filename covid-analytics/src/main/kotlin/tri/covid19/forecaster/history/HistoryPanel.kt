@@ -69,6 +69,7 @@ class HistoryPanel : SplitPane() {
                 editablespinner(1..28).bind(historyPanelModel._smooth)
                 checkbox("log scale").bind(_logScale)
             }
+            field("Extra smooth") { checkbox("extra smooth").bind(historyPanelModel._extraSmooth) }
             field("Sort") {
                 val group = togglegroup {
                     selectedValueProperty<TimeSeriesSort>().value = TimeSeriesSort.ALL

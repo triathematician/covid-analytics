@@ -48,6 +48,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     var perCapita by property(false)
     var logScale by property(false)
     var smooth by property(7)
+    var extraSmooth by property(false)
     var sort by property(TimeSeriesSort.ALL)
 
     //region JAVAFX UI PROPERTIES
@@ -61,6 +62,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val _perCapita = property(HistoryPanelModel::perCapita)
     val _perDay = property(HistoryPanelModel::perDay)
     val _smooth = property(HistoryPanelModel::smooth)
+    val _extraSmooth = property(HistoryPanelModel::extraSmooth)
     val _sort = property(HistoryPanelModel::sort)
 
     //endregion
@@ -119,6 +121,9 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         var metrics = historicalData()
         if (smooth != 1) {
             metrics = metrics.map { it.movingAverage(smooth, false) }.toSet()
+            if (extraSmooth) {
+                metrics = metrics.map { it.movingAverage(3, false) }.toSet()
+            }
         }
         if (perDay) {
             metrics = metrics.map { it.deltas() }.toSet()
@@ -128,8 +133,17 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     }
 
     /** Plot growth vs counts. */
-    internal fun hubbertDataSeries() = historicalData().map { it.hubbertSeries(7) }
-            .map { series(it.first.region.id, it.first.domain.shift(1, 0), it.first, it.second) }
+    internal fun hubbertDataSeries(): List<ChartDataSeries> {
+        var metrics = historicalData()
+        if (smooth != 1) {
+            metrics = metrics.map { it.movingAverage(smooth, false) }.toSet()
+            if (extraSmooth) {
+                metrics = metrics.map { it.movingAverage(3, false) }.toSet()
+            }
+        }
+        return metrics.map { it.hubbertSeries(1) }
+                .map { series(it.first.region.id, it.first.domain.shift(1, 0), it.first, it.second) }
+    }
 
     //endregion
 }
