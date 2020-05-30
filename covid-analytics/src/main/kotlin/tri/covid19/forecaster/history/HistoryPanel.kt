@@ -8,6 +8,7 @@ import javafx.geometry.Pos
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.control.SplitPane
+import javafx.scene.control.ToggleGroup
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.Priority
 import tornadofx.*
@@ -64,8 +65,17 @@ class HistoryPanel : SplitPane() {
                 checkbox("per day").bind(historyPanelModel._perDay)
             }
             field("Smooth (days)") {
-                editablespinner(1..14).bind(historyPanelModel._bucket)
+                editablespinner(1..28).bind(historyPanelModel._smooth)
                 checkbox("log scale").bind(_logScale)
+            }
+            field("Sort") {
+                val group = togglegroup {
+                    selectedValueProperty<TimeSeriesSort>().value = TimeSeriesSort.ALL
+                    historyPanelModel._sort.bind(selectedValueProperty())
+                }
+                radiobutton("total", group, TimeSeriesSort.ALL) { isSelected = true }
+                radiobutton("last 14 days", group, TimeSeriesSort.LAST14)
+                radiobutton("last 7 days", group, TimeSeriesSort.LAST7)
             }
         }
 
@@ -141,8 +151,10 @@ class HistoryPanel : SplitPane() {
 
     /** Update both charts. */
     private fun updateBothCharts() {
-        updateHistoryChart()
-        updateHubbertChart()
+        if (this::historicalChart.isInitialized) {
+            updateHistoryChart()
+            updateHubbertChart()
+        }
     }
 
     /** Plot counts by date. */

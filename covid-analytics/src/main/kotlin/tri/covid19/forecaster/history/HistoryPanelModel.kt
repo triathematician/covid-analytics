@@ -47,7 +47,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     var perDay by property(false)
     var perCapita by property(false)
     var logScale by property(false)
-    var bucket by property(7)
+    var smooth by property(7)
+    var sort by property(TimeSeriesSort.ALL)
 
     //region JAVAFX UI PROPERTIES
 
@@ -56,9 +57,11 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val _regionLimit = property(HistoryPanelModel::regionLimit)
     val _minPopulation = property(HistoryPanelModel::minPopulation)
     val _selectedMetric = property(HistoryPanelModel::selectedMetric)
+
     val _perCapita = property(HistoryPanelModel::perCapita)
     val _perDay = property(HistoryPanelModel::perDay)
-    val _bucket = property(HistoryPanelModel::bucket)
+    val _smooth = property(HistoryPanelModel::smooth)
+    val _sort = property(HistoryPanelModel::sort)
 
     //endregion
 
@@ -88,9 +91,16 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         val sMetrics = data().filter { it.metric == mainPlotMetric }
                 .filter { it.region.population.let { it == null || it >= minPopulation } }
                 .filter { exclude(it.region.id) }
-                .sortedByDescending { it.lastValue }
+                .sortedByDescending { it.sortMetric }
         return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit).toSet()
     }
+
+    private val MetricTimeSeries.sortMetric
+        get() = when(sort) {
+            TimeSeriesSort.ALL -> lastValue
+            TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
+            TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
+        }
 
     internal fun data() = when (selectedRegionType.get()) {
         COUNTRIES -> countryData(includeGlobal = true)
@@ -107,8 +117,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     /** Plot counts by date. */
     internal fun historicalDataSeries(): Pair<DateRange, List<ChartDataSeries>> {
         var metrics = historicalData()
-        if (bucket != 1) {
-            metrics = metrics.map { it.movingAverage(bucket, false) }.toSet()
+        if (smooth != 1) {
+            metrics = metrics.map { it.movingAverage(smooth, false) }.toSet()
         }
         if (perDay) {
             metrics = metrics.map { it.deltas() }.toSet()
@@ -122,6 +132,13 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             .map { series(it.first.region.id, it.first.domain.shift(1, 0), it.first, it.second) }
 
     //endregion
+}
+
+/** Options for sorting time series retrieved for history panel. */
+enum class TimeSeriesSort {
+    ALL,
+    LAST14,
+    LAST7
 }
 
 /** Creates Hubbert series from monotonic metric. */
