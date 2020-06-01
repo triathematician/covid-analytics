@@ -85,8 +85,8 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
         if (top.last > size || bottom.last > size) {
             return null
         }
-        val first = subList(size - bottom.last - 1, size - bottom.first).average()
-        val second = subList(size - top.last - 1, size - top.first).average()
+        val first = subList(maxOf(size - bottom.last - 1, 0), maxOf(size - bottom.first, 0)).average()
+        val second = subList(maxOf(size - top.last - 1, 0), maxOf(size - top.first, 0)).average()
         return (second - first)/first
     }
 }

@@ -132,7 +132,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             if (smooth != 1) {
                 res = res.map { it.movingAverage(smooth, false) }
                 if (extraSmooth) {
-                    res = res.map { it.movingAverage(3, false) }
+                    res = res.map { it.movingAverage(3, false).movingAverage(3, false) }
                 }
             }
             return res

@@ -12,6 +12,7 @@ fun Number.format(digits: Int) = "%.${digits}f".format(this)
 fun Number.userFormat(): String {
     val x = toDouble().absoluteValue
     return when {
+        this is Int || this is Long -> NumberFormat.getNumberInstance(Locale.US).format(this)
         x < 0.000001 -> "0"
         x >= 1000 -> NumberFormat.getNumberInstance(Locale.US).format(this.nearestInt)
         x >= 10.0 -> this.nearestInt.toString()
