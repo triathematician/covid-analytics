@@ -29,6 +29,7 @@ class HotspotTable: SplitPane() {
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> updateTableData() } }
+    val parentRegion = SimpleStringProperty("").apply { addListener { _ -> updateTableData() } }
 
     lateinit var table: TableView<HotspotInfo>
 
@@ -54,6 +55,9 @@ class HotspotTable: SplitPane() {
             }
         }
         fieldset("Filtering") {
+            field("Parent Region") {
+                textfield(parentRegion)
+            }
             field("Min Population") {
                 editablespinner(0..100000).bind(minPopulation)
             }
@@ -104,6 +108,7 @@ class HotspotTable: SplitPane() {
 
     private fun updateTableData() {
         hotspotData.setAll(data()
+                .filter { parentRegion.value.isEmpty() || it.region.parent == parentRegion.value }
                 .filter { it.lastValue >= minCount.value && it.deltas().last(0..6).sum() >= minLastWeekCount.value }
                 .filter { it.region.population == null || it.lastValue / it.region.population!! * 1E5 >= minPerCapitaCount.value }
                 .filter { it.region.population == null || it.deltas().last(0..6).sum() / it.region.population!! * 1E5 >= minLastWeekPerCapitaCount.value }

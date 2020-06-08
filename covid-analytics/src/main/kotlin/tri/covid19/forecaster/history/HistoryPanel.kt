@@ -28,6 +28,9 @@ class HistoryPanel : SplitPane() {
             field("Max # of Regions") {
                 editablespinner(0..200).bind(historyPanelModel._regionLimit)
             }
+            field("Parent Region") {
+                textfield().bind(historyPanelModel.parentRegion)
+            }
             field("Include Regions") {
                 checkbox().bind(historyPanelModel.includeRegionActive)
                 textfield().bind(historyPanelModel.includeRegion)

@@ -40,6 +40,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> onChange() } }
     val includeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
     val excludeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
+    val parentRegion = SimpleStringProperty("").apply { addListener { _ -> onChange() } }
     val includeRegion = SimpleStringProperty("").apply { addListener { _ -> if (includeRegionActive.get()) onChange() } }
     val excludeRegion = SimpleStringProperty("").apply { addListener { _ -> if (excludeRegionActive.get()) onChange() } }
 
@@ -93,10 +94,14 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     /** Get historical data for current config. Matching "includes" are first. */
     internal fun historicalData(metric: String? = null): List<MetricTimeSeries> {
         if (metric == null) {
-            val sMetrics = data().filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
+            val sMetrics = data()
+                    .asSequence()
+                    .filter { parentRegion.value.isEmpty() || it.region.parent == parentRegion.value }
+                    .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
                     .filter { it.region.population.let { it == null || it >= minPopulation } }
                     .filter { exclude(it.region.id) }
                     .sortedByDescending { it.sortMetric }
+                    .toList()
             return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit)
         } else {
             val regions = historicalData(null).map { it.region.id }
