@@ -7,11 +7,18 @@ import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.XYChart
 import javafx.scene.control.Slider
 import javafx.scene.control.Spinner
+import javafx.scene.control.TableView
 import javafx.scene.control.TextField
+import javafx.scene.input.Clipboard
+import javafx.scene.input.ClipboardContent
 import javafx.util.StringConverter
 import tornadofx.*
+import tri.util.logCsv
 import tri.util.monthDay
 import tri.util.userFormat
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
+import java.nio.charset.Charset
 import java.time.LocalDate
 import kotlin.math.floor
 import kotlin.math.log10
@@ -68,6 +75,31 @@ fun EventTarget.linechartRangedOnFirstSeries(title: String, xAxis: NumberAxis, y
 object UserStringConverter : StringConverter<Number>() {
     override fun toString(n: Number) = n.userFormat()
     override fun fromString(s: String) = TODO("Not yet implemented")
+}
+
+//endregion
+
+//region TABLE UTILS
+
+fun <X> copyTableDataToClipboard(table: TableView<X>) {
+    val stream = ByteArrayOutputStream()
+    val printer = PrintStream(stream)
+    table.columns.map { it.text }.logCsv(printer)
+    table.items.forEach { row ->
+        table.columns.map { it.getCellData(row).forPrinting() }.logCsv(printer)
+    }
+
+    val string = stream.toString(Charset.defaultCharset())
+    val clipboardContent = ClipboardContent().apply { putString(string) }
+    Clipboard.getSystemClipboard().setContent(clipboardContent)
+
+    println(string)
+}
+
+private fun Any?.forPrinting() = when (this) {
+    is DoubleArray -> toList().joinToString("; ")
+    is Array<*> -> listOf(*this).joinToString("; ")
+    else -> toString()
 }
 
 //endregion

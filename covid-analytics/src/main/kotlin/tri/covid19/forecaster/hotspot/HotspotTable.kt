@@ -4,13 +4,12 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.event.EventTarget
 import javafx.scene.control.SplitPane
+import javafx.scene.control.TableView
 import tornadofx.*
 import tri.covid19.DEATHS
+import tri.covid19.forecaster.forecast.ForecastStats
 import tri.covid19.forecaster.history.*
-import tri.covid19.forecaster.utils.cellFormatDayTrend
-import tri.covid19.forecaster.utils.cellFormatPercentage
-import tri.covid19.forecaster.utils.cellFormatUserNumber
-import tri.covid19.forecaster.utils.editablespinner
+import tri.covid19.forecaster.utils.*
 import tri.covid19.reports.HotspotInfo
 import tri.covid19.reports.hotspotPerCapitaInfo
 import triathematician.covid19.CovidTimeSeriesSources
@@ -31,9 +30,16 @@ class HotspotTable: SplitPane() {
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> updateTableData() } }
 
+    lateinit var table: TableView<HotspotInfo>
+
     init {
         configPanel()
-        table()
+        borderpane {
+            top = toolbar {
+                button("Copy") { action { copyTableDataToClipboard(table) } }
+            }
+            center = table()
+        }
         updateTableData()
     }
 
@@ -91,6 +97,8 @@ class HotspotTable: SplitPane() {
             readonlyColumn("3Day %", HotspotInfo::threeDayPercentChange).cellFormatPercentage()
             readonlyColumn("7Day %", HotspotInfo::sevenDayPercentChange).cellFormatPercentage()
 //            readonlyColumn("3/7% Ratio", HotspotInfo::threeSevenPercentRatio).cellFormatUserNumber()
+
+            table = this
         }
     }
 

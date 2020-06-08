@@ -103,9 +103,9 @@ private class CurrentTrend(map: SortedMap<LocalDate, ExtremaInfo>) {
     val curDate by lazy { map.keys.last()
     }
     val anchorDate by lazy {
-        map.keys.reversed().first { curDate.minus(it) >= 14 ||
+        map.keys.reversed().firstOrNull { curDate.minus(it) >= 14 ||
             curDate.minus(it) >= 7 && map[it]!!.value.percentChangeTo(curValue).absoluteValue >= .1 ||
-            map[it]!!.value.percentChangeTo(curValue).absoluteValue >= .2 }
+            map[it]!!.value.percentChangeTo(curValue).absoluteValue >= .2 } ?: map.keys.first()
     }
     val anchorValue by lazy { map[anchorDate]!!.value }
     val daysSigned by lazy { ((curValue - anchorValue).sign * curDate.minus(anchorDate)).toInt() }

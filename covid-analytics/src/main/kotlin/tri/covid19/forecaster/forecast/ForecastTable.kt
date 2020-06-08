@@ -6,6 +6,7 @@ import javafx.scene.input.ClipboardContent
 import javafx.scene.layout.BorderPane
 import javafx.stage.FileChooser
 import tornadofx.*
+import tri.covid19.forecaster.utils.copyTableDataToClipboard
 import tri.util.DefaultMapper
 import tri.util.format
 import tri.util.logCsv
@@ -65,27 +66,6 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
                 table = this
             }
         }
-    }
-
-    fun <X> copyTableDataToClipboard(table: TableView<X>) {
-        val stream = ByteArrayOutputStream()
-        val printer = PrintStream(stream)
-        table.columns.map { it.text }.logCsv(printer)
-        table.items.forEach { row ->
-            table.columns.map { it.getCellData(row).forPrinting() }.logCsv(printer)
-        }
-
-        val string = stream.toString(Charset.defaultCharset())
-        val clipboardContent = ClipboardContent().apply { putString(string) }
-        Clipboard.getSystemClipboard().setContent(clipboardContent)
-
-        println(string)
-    }
-
-    private fun Any?.forPrinting() = when (this) {
-        is DoubleArray -> toList().joinToString("; ")
-        is Array<*> -> listOf(*this).joinToString("; ")
-        else -> toString()
     }
 
     private fun exportForecastData(forecastStats: List<ForecastStats>) {
