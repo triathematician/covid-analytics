@@ -255,7 +255,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     }
 
     private fun <X> SortedSet<X>.rollAfter(x: X) = tailSet(x).elementAtOrNull(1) ?: first()
-    private fun <X> SortedSet<X>.rollBefore(x: X) = headSet(x).reversed().elementAtOrNull(1) ?: last()
+    private fun <X> SortedSet<X>.rollBefore(x: X) = headSet(x).reversed().elementAtOrNull(0) ?: last()
 
     /** Runs autofit using current config. */
     fun autofit() {
