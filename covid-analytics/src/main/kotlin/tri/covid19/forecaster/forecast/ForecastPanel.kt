@@ -21,7 +21,7 @@ import tri.covid19.data.YYG
 import tri.covid19.forecaster.history.METRIC_OPTIONS
 import tri.covid19.forecaster.installHoverEffect
 import tri.covid19.forecaster.utils.*
-import tri.math.SIGMOID_MODELS
+import tri.math.Sigmoid
 import tri.util.minus
 import tri.util.monthDay
 import tri.util.toLocalDate
@@ -133,7 +133,7 @@ class ForecastPanel : SplitPane() {
             label("Adjust curve parameters to manually fit data.")
             field("Model") {
                 checkbox("Show").bind(model._showForecast)
-                combobox(model._curve, SIGMOID_MODELS)
+                combobox(model._curve, Sigmoid.values().toList())
                 button("Save") { action { model.save() } }
                 button("Autofit") { action { model.autofit() } }
             }

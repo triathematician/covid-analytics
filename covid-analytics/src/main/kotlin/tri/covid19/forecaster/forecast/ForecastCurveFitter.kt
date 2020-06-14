@@ -28,7 +28,7 @@ class ForecastCurveFitter: (Number) -> Double {
 
     //region PROPERTIES
 
-    var curve by property(SIGMOID_MODELS[3])
+    var curve by property(Sigmoid.GOMPERTZ)
     var l: Number by property(70000.0)
     var k: Number by property(0.07)
     var x0: Number by property(90.0)
@@ -58,12 +58,12 @@ class ForecastCurveFitter: (Number) -> Double {
 
     val equation
         get() = when (curve) {
-            LINEAR -> String.format("%.2f * (1 + %.2f * (x - %.2f)) / 2", l, k, x0)
-            LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))", l, k, x0)
-            GEN_LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))^(1/%.2f)", l, k, x0, v)
-            GAUSSIAN -> String.format("%.2f * (1 + erf(-%.3f (x - %.2f)))/2", l, k, x0)
-            GOMPERTZ -> String.format("%.2f * e^(-e^(-%.3f (x - %.2f)))", l, k, x0)
-            else -> throw IllegalStateException()
+            Sigmoid.LINEAR -> String.format("%.2f * (1 + %.2f * (x - %.2f)) / 2", l, k, x0)
+            Sigmoid.QUADRATIC -> String.format("%.2f * (x - %.2f)^2 + %.2f", k, x0, l)
+            Sigmoid.LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))", l, k, x0)
+            Sigmoid.GEN_LOGISTIC -> String.format("%.2f / (1 + e^(-%.3f * (x - %.2f)))^(1/%.2f)", l, k, x0, v)
+            Sigmoid.GAUSSIAN -> String.format("%.2f * (1 + erf(-%.3f (x - %.2f)))/2", l, k, x0)
+            Sigmoid.GOMPERTZ -> String.format("%.2f * e^(-e^(-%.3f (x - %.2f)))", l, k, x0)
         }
 
     //endregion
@@ -171,12 +171,12 @@ class ForecastCurveFitter: (Number) -> Double {
 
     /** Current curve value. */
     override fun invoke(x: Number) = when (curve) {
-        LINEAR -> linear(x.toDouble())
-        LOGISTIC -> logistic(x.toDouble())
-        GEN_LOGISTIC -> generalLogistic(x.toDouble())
-        GAUSSIAN -> gaussianErf(x.toDouble())
-        GOMPERTZ -> gompertz(x.toDouble())
-        else -> throw IllegalStateException()
+        Sigmoid.LINEAR -> linear(x.toDouble())
+        Sigmoid.QUADRATIC -> quadratic(x.toDouble())
+        Sigmoid.LOGISTIC -> logistic(x.toDouble())
+        Sigmoid.GEN_LOGISTIC -> generalLogistic(x.toDouble())
+        Sigmoid.GAUSSIAN -> gaussianErf(x.toDouble())
+        Sigmoid.GOMPERTZ -> gompertz(x.toDouble())
     }
 
     /** Estimate derivative of curve at x. */
@@ -184,6 +184,9 @@ class ForecastCurveFitter: (Number) -> Double {
 
     /** Linear function. */
     fun linear(x: Double) = linear(x, l.toDouble(), k.toDouble(), x0.toDouble())
+    /** Quadratic function. */
+    fun quadratic(x: Double) = quadratic(x, l.toDouble(), k.toDouble(), x0.toDouble())
+
     /** Compute logistic function at given # of days. */
     fun logistic(x: Double) = logistic(x, l.toDouble(), k.toDouble(), x0.toDouble())
     /** Compute generalized logistic function at given # of days. */
@@ -201,9 +204,12 @@ class ForecastCurveFitter: (Number) -> Double {
         updateFitLabel()
 
         if (series != null) {
-            val validator = ParameterValidator { v ->
-                vec(v[0].coerceIn(L_FIT_RANGE), v[1].coerceIn(K_FIT_RANGE),
-                        v[2].coerceIn(X0_FIT_RANGE), v[3].coerceIn(V_FIT_RANGE))
+            val validator = if (curve == Sigmoid.QUADRATIC)
+                ParameterValidator { v ->
+                    vec(v[0].coerceIn(-1E5, 1E5), v[1].coerceIn(0.0..2.0), v[2].coerceIn(-1E2, 1E2), v[3])
+                }
+            else ParameterValidator { v ->
+                vec(v[0].coerceIn(L_FIT_RANGE), v[1].coerceIn(K_FIT_RANGE), v[2].coerceIn(X0_FIT_RANGE), v[3].coerceIn(V_FIT_RANGE))
             }
             val params = when (fitCumulative) {
                 true -> SigmoidCurveFitting.fitCumulative(curve, empiricalDataForFitting(series)!!, sigmoidParameters, validator)
