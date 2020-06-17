@@ -3,22 +3,22 @@ package tri.covid19.forecaster.forecast
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.control.Alert
-import javafx.scene.text.Text
-import javafx.scene.text.TextFlow
 import org.apache.commons.math3.exception.NoBracketingException
 import org.apache.commons.math3.exception.TooManyEvaluationsException
 import tornadofx.*
-import tri.covid19.data.*
+import tri.covid19.data.CovidForecasts
+import tri.covid19.data.CovidHistory
+import tri.covid19.data.IHME
+import tri.covid19.data.YYG
 import tri.covid19.forecaster.history.METRIC_OPTIONS
 import tri.covid19.forecaster.history.changeDoublingDataSeries
 import tri.covid19.forecaster.history.hubbertSeries
-import tri.timeseries.Forecast
 import tri.covid19.forecaster.utils.ChartDataSeries
-import tri.math.GEN_LOGISTIC
+import tri.math.Sigmoid
 import tri.regions.RegionLookup
 import tri.regions.UnitedStates
+import tri.timeseries.Forecast
 import tri.timeseries.MetricTimeSeries
-import tri.timeseries.MinMaxFinder
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
@@ -75,7 +75,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         addListener { _ ->
             updateData()
             updateEquation()
-            vActive = curveFitter.curve == GEN_LOGISTIC
+            vActive = curveFitter.curve == Sigmoid.GEN_LOGISTIC
             listener()
         }
     }
