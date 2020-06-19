@@ -59,12 +59,12 @@ class HotspotTable: SplitPane() {
                 textfield(parentRegion)
             }
             field("Min Population") {
-                editablespinner(0..100000).bind(minPopulation)
+                editablespinner(0..10000000).bind(minPopulation)
             }
             field("Min Total") {
-                editablespinner(0..1000000).bind(minCount)
+                editablespinner(0..100000000).bind(minCount)
             }
-            field("Min (per capitas)") {
+            field("Min (per capita)") {
                 editablespinner(0..10000).bind(minPerCapitaCount)
             }
             field("Min (Last 7 Days)") {

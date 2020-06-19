@@ -40,7 +40,7 @@ class HistoryPanel : SplitPane() {
                 textfield().bind(historyPanelModel.excludeRegion)
             }
             field("Min Population") {
-                editablespinner(0..1000000).bind(historyPanelModel._minPopulation)
+                editablespinner(0..10000000).bind(historyPanelModel._minPopulation)
             }
         }
 
