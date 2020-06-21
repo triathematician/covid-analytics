@@ -12,6 +12,8 @@ import tri.covid19.forecaster.utils.ChartDataSeries
 import tri.covid19.forecaster.utils.series
 import tri.timeseries.MetricTimeSeries
 import tri.timeseries.dateRange
+import tri.timeseries.deltas
+import tri.timeseries.movingAverage
 import tri.util.DateRange
 import tri.util.javaTrim
 import triathematician.covid19.CovidTimeSeriesSources.countryData
@@ -116,6 +118,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             TimeSeriesSort.ALL -> lastValue
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
             TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
+            TimeSeriesSort.POPULATION -> region.population?.toDouble() ?: 0.0
+            TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).max() ?: 0.0
         }
 
     internal fun data() = when (selectedRegionType.get()) {
@@ -167,7 +171,9 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
 enum class TimeSeriesSort {
     ALL,
     LAST14,
-    LAST7
+    LAST7,
+    PEAK7,
+    POPULATION
 }
 
 /** Creates Hubbert series from monotonic metric. */

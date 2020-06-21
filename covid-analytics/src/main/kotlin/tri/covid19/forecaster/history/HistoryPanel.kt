@@ -63,6 +63,8 @@ class HistoryPanel : SplitPane() {
                 radiobutton("total", group, TimeSeriesSort.ALL) { isSelected = true }
                 radiobutton("last 14 days", group, TimeSeriesSort.LAST14)
                 radiobutton("last 7 days", group, TimeSeriesSort.LAST7)
+                radiobutton("peak incidence", group, TimeSeriesSort.PEAK7)
+                radiobutton("population", group, TimeSeriesSort.POPULATION)
             }
         }
 
