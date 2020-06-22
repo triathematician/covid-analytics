@@ -1,8 +1,5 @@
 package tri.regions
 
-import tri.timeseries.RegionInfo
-import tri.timeseries.RegionType
-
 const val GLOBAL = "Global"
 const val GLOBAL_POPULATION = 7775510000
 
