@@ -1,5 +1,6 @@
 package tri.covid19.reports
 
+import tri.covid19.CovidRiskLevel
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
 import tri.timeseries.*
@@ -32,30 +33,30 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
         get() = population?.let { value/it * 1E5 }
 
     val dailyChange
-        get() = deltaAverages.last()
+        get() = deltaAverages.lastOrNull()
     val dailyChange7
-        get() = deltaAverages.last() * 7
+        get() = deltaAverages.lastOrNull()?.times(7)
     val percentInLast7
-        get() = dailyChange7/value
+        get() = dailyChange7?.div(value)
     val doublingTimeDays
-        get() = doublings.last()
+        get() = doublings.lastOrNull()
     val doublingTimeDays14
-        get() = doublings14.last()
+        get() = doublings14.lastOrNull()
     val doublingTimeDays28
-        get() = doublings28.last()
+        get() = doublings28.lastOrNull()
     val doublingTimeDaysRatio
-        get() = doublingTimeDays / doublingTimeDays28
+        get() = doublingTimeDays?.divideOrNull(doublingTimeDays28)
     val severityByChange
-        get() = risk_PerCapitaDeathsPerDay(dailyChange)
+        get() = dailyChange?.let { risk_PerCapitaDeathsPerDay(it) } ?: CovidRiskLevel.MINOR
     val severityByDoubling
-        get() = risk_DoublingTime(doublingTimeDays)
+        get() = doublingTimeDays?.let { risk_DoublingTime(it) } ?: CovidRiskLevel.MINOR
     val totalSeverity
         get() = severityByChange.level + severityByDoubling.level
 
     val dailyChangePerCapita
-        get() = population?.let { dailyChange/it * 1E5 }
+        get() = population?.let { dailyChange?.let { c -> c/it * 1E5 } }
     val dailyChange7PerCapita
-        get() = population?.let { dailyChange7/it * 1E5 }
+        get() = population?.let { dailyChange7?.let { c -> c/it * 1E5 } }
 
     val regionId
         get() = region.id

@@ -24,7 +24,7 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
 
         return ExtremaSummary(series).apply {
             (endpoints + extremes + intermediates).map {
-                ExtremaInfo(series.date(it.first), series.values[it.first], it.second)
+                ExtremaInfo(series.date(it.first), series.values.getOrNull(it.first) ?: 0.0, it.second)
             }.onEach { extrema.put(it.date, it) }
         }
     }
