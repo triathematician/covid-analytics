@@ -120,6 +120,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
             TimeSeriesSort.POPULATION -> region.population?.toDouble() ?: 0.0
             TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).max() ?: 0.0
+            TimeSeriesSort.PEAK14 -> values.deltas().movingAverage(14).max() ?: 0.0
         }
 
     internal fun data() = when (selectedRegionType.get()) {
@@ -170,9 +171,10 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
 /** Options for sorting time series retrieved for history panel. */
 enum class TimeSeriesSort {
     ALL,
-    LAST14,
     LAST7,
+    LAST14,
     PEAK7,
+    PEAK14,
     POPULATION
 }
 

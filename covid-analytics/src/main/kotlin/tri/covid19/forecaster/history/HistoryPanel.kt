@@ -60,11 +60,23 @@ class HistoryPanel : SplitPane() {
                     selectedValueProperty<TimeSeriesSort>().value = TimeSeriesSort.ALL
                     historyPanelModel._sort.bind(selectedValueProperty())
                 }
-                radiobutton("total", group, TimeSeriesSort.ALL) { isSelected = true }
-                radiobutton("last 14 days", group, TimeSeriesSort.LAST14)
-                radiobutton("last 7 days", group, TimeSeriesSort.LAST7)
-                radiobutton("peak incidence", group, TimeSeriesSort.PEAK7)
-                radiobutton("population", group, TimeSeriesSort.POPULATION)
+                vbox {
+                    hbox {
+                        spacing = 5.0
+                        radiobutton("total", group, TimeSeriesSort.ALL) { isSelected = true }
+                        radiobutton("last 14 days", group, TimeSeriesSort.LAST14)
+                        radiobutton("last 7 days", group, TimeSeriesSort.LAST7)
+                    }
+                    hbox {
+                        spacing = 5.0
+                        radiobutton("peak incidence (7 days)", group, TimeSeriesSort.PEAK7)
+                        radiobutton("peak incidence (14 days)", group, TimeSeriesSort.PEAK14)
+                    }
+                    hbox {
+                        spacing = 5.0
+                        radiobutton("population", group, TimeSeriesSort.POPULATION)
+                    }
+                }
             }
         }
 
