@@ -9,5 +9,5 @@ fun List<MetricTimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,
                                                 valueFilter: (Double) -> Boolean = { it >= 5 }): List<HotspotInfo> {
     return filter { it.region.population?.let { it > minPopulation } ?: true }
             .filter { it.metric == metric && valueFilter(it.lastValue) }
-            .map { HotspotInfo(it.region, it.metric, it.values) }
+            .map { HotspotInfo(it.region, it.metric, it.start, it.values) }
 }

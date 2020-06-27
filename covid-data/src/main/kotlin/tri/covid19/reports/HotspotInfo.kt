@@ -11,7 +11,9 @@ import kotlin.math.absoluteValue
 import kotlin.math.sign
 
 /** Aggregates information about a single hotspot associated with a region. */
-data class HotspotInfo(var region: RegionInfo, var metric: String, var values: List<Double>, val averageDays: Int = 7) {
+data class HotspotInfo(var region: RegionInfo, var metric: String, var start: LocalDate, var values: List<Double>, val averageDays: Int = 7) {
+
+    constructor(series: MetricTimeSeries): this(series.region, series.metric, series.start, series.values)
 
     val deltas = values.deltas()
     val deltaAverages = deltas.movingAverage(averageDays)
@@ -36,8 +38,12 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
         get() = deltaAverages.lastOrNull()
     val dailyChange7
         get() = deltaAverages.lastOrNull()?.times(7)
+    val dailyChange28
+        get() = deltas.movingAverage(28).lastOrNull()?.times(28)
     val percentInLast7
         get() = dailyChange7?.div(value)
+    val percentInLast7Of28
+        get() = dailyChange7.divideOrNull(dailyChange28)
     val doublingTimeDays
         get() = doublings.lastOrNull()
     val doublingTimeDays14
@@ -53,10 +59,28 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var values: L
     val totalSeverity
         get() = severityByChange.level + severityByDoubling.level
 
+    val perCapitaPop
+        get() = population?.toDouble() divideOrNull 1E5
+
     val dailyChangePerCapita
-        get() = population?.let { dailyChange?.let { c -> c/it * 1E5 } }
+        get() = dailyChange divideOrNull perCapitaPop
     val dailyChange7PerCapita
-        get() = population?.let { dailyChange7?.let { c -> c/it * 1E5 } }
+        get() = dailyChange7 divideOrNull perCapitaPop
+    val dailyChange28PerCapita
+        get() = dailyChange28 divideOrNull perCapitaPop
+
+    val peak7
+        get() = values.deltas().movingAverage(7).max()?.times(7) ?: 0.0
+    val peak7PerCapita
+        get() = peak7 divideOrNull perCapitaPop
+    val peak7Date
+        get() = values.deltas().movingAverage(7).withIndex().maxBy { it.value }?.index?.let { start.plusDays(it + 7L) }
+    val peak14
+        get() = values.deltas().movingAverage(14).max()?.times(14) ?: 0.0
+    val peak14PerCapita
+        get() = peak14 divideOrNull perCapitaPop
+    val peak14Date
+        get() = values.deltas().movingAverage(14).withIndex().maxBy { it.value }?.index?.let { start.plusDays(it + 7L) }
 
     val regionId
         get() = region.id

@@ -66,7 +66,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<MetricTimeSerie
         val peakSmoothed = smoothedDeltas.peak()
         peakText.value = "${peak.second.userFormat()} on ${peak.first.monthDay}, ${peakSmoothed.second.userFormat()} on ${peakSmoothed.first.monthDay} (smoothed)"
 
-        val hotspotInfo = s.let { HotspotInfo(it.region, it.metric, it.values) }
+        val hotspotInfo = s.let { HotspotInfo(it) }
         doublingText.value = "${hotspotInfo.doublingTimeDays?.userFormat() ?: "N/A"} days (all time), ${hotspotInfo.doublingTimeDays28?.userFormat() ?: "N/A"} days (last 28 days)"
         recentChangeText.value = "${hotspotInfo.threeDayPercentChange?.percentFormat() ?: "N/A"} (3 day change), ${hotspotInfo.sevenDayPercentChange?.percentFormat() ?: "N/A"} (7 day change)"
 

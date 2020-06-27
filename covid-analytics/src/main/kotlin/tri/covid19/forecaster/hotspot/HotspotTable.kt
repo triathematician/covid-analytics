@@ -83,23 +83,38 @@ class HotspotTable: SplitPane() {
             readonlyColumn("FIPS", HotspotInfo::fips)
             readonlyColumn("Population", HotspotInfo::population).cellFormatUserNumber()
             readonlyColumn("Metric", HotspotInfo::metric)
+
             readonlyColumn("Total", HotspotInfo::value).cellFormatUserNumber()
             readonlyColumn("(per 100k)", HotspotInfo::valuePerCapita).cellFormatUserNumber()
+            readonlyColumn("Last 28", HotspotInfo::dailyChange28).cellFormatUserNumber()
+            readonlyColumn("(per 100k)", HotspotInfo::dailyChange28PerCapita).cellFormatUserNumber()
             readonlyColumn("Last 7", HotspotInfo::dailyChange7).cellFormatUserNumber()
             readonlyColumn("(per 100k)", HotspotInfo::dailyChange7PerCapita).cellFormatUserNumber()
-            readonlyColumn("(percent in last 7)", HotspotInfo::percentInLast7).cellFormatPercentage()
+            readonlyColumn("(7days/total)", HotspotInfo::percentInLast7).cellFormatPercentage()
+            readonlyColumn("(7days/28days)", HotspotInfo::percentInLast7Of28).cellFormatPercentage()
+
+            readonlyColumn("3Day %Δ", HotspotInfo::threeDayPercentChange).cellFormatPercentage()
+            readonlyColumn("7Day %Δ", HotspotInfo::sevenDayPercentChange).cellFormatPercentage()
+
             readonlyColumn("Trend", HotspotInfo::trendDays).cellFormatDayTrend()
             readonlyColumn("(since last extreme)", HotspotInfo::changeSinceTrendExtremum).cellFormatPercentage()
+
             readonlyColumn("Doubling Time", HotspotInfo::doublingTimeDays).cellFormatUserNumber()
             readonlyColumn("(last 28 days)", HotspotInfo::doublingTimeDays28).cellFormatUserNumber()
             readonlyColumn("(last 14 days)", HotspotInfo::doublingTimeDays14).cellFormatUserNumber()
             readonlyColumn("(ratio)", HotspotInfo::doublingTimeDaysRatio).cellFormatUserNumber()
+
+            readonlyColumn("Peak 7-Day Total", HotspotInfo::peak7).cellFormatUserNumber()
+            readonlyColumn("(per 100k)", HotspotInfo::peak7PerCapita).cellFormatUserNumber()
+            readonlyColumn("(date)", HotspotInfo::peak7Date)
+            readonlyColumn("Peak 14-Day Total", HotspotInfo::peak14).cellFormatUserNumber()
+            readonlyColumn("(per 100k)", HotspotInfo::peak14PerCapita).cellFormatUserNumber()
+            readonlyColumn("(date)", HotspotInfo::peak14Date)
+
             readonlyColumn("Severity (#)", HotspotInfo::severityByChange)
             readonlyColumn("Severity (rate)", HotspotInfo::severityByDoubling)
             readonlyColumn("Severity (total)", HotspotInfo::totalSeverity)
 //            readonlyColumn("Trend", HotspotInfo::severityChange)
-            readonlyColumn("3Day %", HotspotInfo::threeDayPercentChange).cellFormatPercentage()
-            readonlyColumn("7Day %", HotspotInfo::sevenDayPercentChange).cellFormatPercentage()
 //            readonlyColumn("3/7% Ratio", HotspotInfo::threeSevenPercentRatio).cellFormatUserNumber()
 
             table = this
