@@ -1,5 +1,6 @@
 package tri.covid19.forecaster.utils
 
+import javafx.beans.value.ObservableValue
 import javafx.event.EventTarget
 import javafx.scene.Node
 import javafx.scene.chart.LineChart
@@ -36,6 +37,11 @@ fun EventTarget.autocompletespinner(values: Collection<String> = listOf(), op: S
 
 /** Creates spinner for editing range of ints. */
 fun EventTarget.editablespinner(range: IntRange) = spinner(range.first, range.last, range.first, 1) {
+    isEditable = true
+}
+
+/** Creates spinner for editing range of ints. */
+fun EventTarget.editablespinner(range: LongRange) = spinner(range.first, range.last, range.first, 1) {
     isEditable = true
 }
 

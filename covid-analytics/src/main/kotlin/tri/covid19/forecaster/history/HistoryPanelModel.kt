@@ -37,7 +37,9 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     var regionLimit by property(10)
+    var skipFirst by property(0)
     var minPopulation by property(10000)
+    var maxPopulation by property(Int.MAX_VALUE)
 
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> onChange() } }
     val includeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
@@ -59,7 +61,9 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     private fun <T> property(prop: KMutableProperty1<*, T>) = getProperty(prop).apply { addListener { _ -> onChange() } }
 
     val _regionLimit = property(HistoryPanelModel::regionLimit)
+    val _skipFirst = property(HistoryPanelModel::skipFirst)
     val _minPopulation = property(HistoryPanelModel::minPopulation)
+    val _maxPopulation = property(HistoryPanelModel::maxPopulation)
     val _selectedMetric = property(HistoryPanelModel::selectedMetric)
 
     val _perCapita = property(HistoryPanelModel::perCapita)
@@ -100,11 +104,11 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
                     .asSequence()
                     .filter { parentRegion.value.isEmpty() || it.region.parent == parentRegion.value }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
-                    .filter { it.region.population.let { it == null || it >= minPopulation } }
+                    .filter { it.region.population.let { it == null || it in minPopulation..maxPopulation } }
                     .filter { exclude(it.region.id) }
                     .sortedByDescending { it.sortMetric }
                     .toList()
-            return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit)
+            return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit + skipFirst).drop(skipFirst)
         } else {
             val regions = historicalData(null).map { it.region.id }
             return data().filter { it.metric == if (perCapita) metric.perCapita else metric }

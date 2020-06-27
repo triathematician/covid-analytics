@@ -1,7 +1,7 @@
 package tri.covid19.forecaster.hotspot
 
-import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleStringProperty
+import javafx.beans.property.*
+import javafx.beans.value.ObservableLongValue
 import javafx.event.EventTarget
 import javafx.scene.control.SplitPane
 import javafx.scene.control.TableView
@@ -22,6 +22,7 @@ class HotspotTable: SplitPane() {
     val selectedMetric = SimpleStringProperty(DEATHS).apply { addListener { _ -> updateTableData() } }
     val hotspotData = mutableListOf<HotspotInfo>().asObservable()
     val minPopulation = SimpleObjectProperty(0).apply { addListener { _ -> updateTableData() } }
+    val maxPopulation = SimpleObjectProperty(Int.MAX_VALUE).apply { addListener { _ -> updateTableData() } }
     val minCount = SimpleObjectProperty(100).apply { addListener { _ -> updateTableData() } }
     val minPerCapitaCount = SimpleObjectProperty(0).apply { addListener { _ -> updateTableData() } }
     val minLastWeekCount = SimpleObjectProperty(100).apply { addListener { _ -> updateTableData() } }
@@ -59,7 +60,10 @@ class HotspotTable: SplitPane() {
                 textfield(parentRegion)
             }
             field("Min Population") {
-                editablespinner(0..10000000).bind(minPopulation)
+                editablespinner(0..Int.MAX_VALUE).bind(minPopulation)
+            }
+            field("Max Population") {
+                editablespinner(0..Int.MAX_VALUE).bind(maxPopulation)
             }
             field("Min Total") {
                 editablespinner(0..100000000).bind(minCount)
@@ -127,7 +131,7 @@ class HotspotTable: SplitPane() {
                 .filter { it.lastValue >= minCount.value && it.deltas().last(0..6).sum() >= minLastWeekCount.value }
                 .filter { it.region.population == null || it.lastValue / it.region.population!! * 1E5 >= minPerCapitaCount.value }
                 .filter { it.region.population == null || it.deltas().last(0..6).sum() / it.region.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
-                .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = minPopulation.value))
+                .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = minPopulation.value, maxPopulation = maxPopulation.value))
     }
 
     internal fun data() = when (selectedRegionType.value) {

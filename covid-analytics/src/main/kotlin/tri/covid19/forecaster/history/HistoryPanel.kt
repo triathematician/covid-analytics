@@ -25,8 +25,10 @@ class HistoryPanel : SplitPane() {
             field("Region Category") {
                 combobox(historyPanelModel.selectedRegionType, historyPanelModel.regionTypes)
             }
-            field("Max # of Regions") {
+            field("# of Regions") {
                 editablespinner(0..200).bind(historyPanelModel._regionLimit)
+                label("skip")
+                editablespinner(0..200).bind(historyPanelModel._skipFirst)
             }
             field("Parent Region") {
                 textfield().bind(historyPanelModel.parentRegion)
@@ -40,7 +42,10 @@ class HistoryPanel : SplitPane() {
                 textfield().bind(historyPanelModel.excludeRegion)
             }
             field("Min Population") {
-                editablespinner(0..10000000).bind(historyPanelModel._minPopulation)
+                editablespinner(0..Int.MAX_VALUE).bind(historyPanelModel._minPopulation)
+            }
+            field("Max Population") {
+                editablespinner(0..Int.MAX_VALUE).bind(historyPanelModel._maxPopulation)
             }
         }
 
