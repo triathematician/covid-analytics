@@ -178,5 +178,14 @@ private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
     s1.copy(start = minDate, values = series)
 }
 
+/** Sums a bunch of separate time series into a single time series object. */
+fun List<MetricTimeSeries>.sum(region: RegionInfo) = reduce { s1, s2 ->
+    require(s1.metric == s2.metric)
+    val minDate = minOf(s1.start, s2.start)
+    val maxDate = maxOf(s1.end, s2.end)
+    val series = (minDate..maxDate).map { s1[it] + s2[it] }
+    s1.copy(region = region, start = minDate, values = series)
+}
+
 //endregion
 

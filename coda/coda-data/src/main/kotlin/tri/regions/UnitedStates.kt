@@ -20,8 +20,15 @@ object UnitedStates {
                 .toList()
     }
 
+    private val cbsaCache = mutableMapOf<Int, RegionInfo?>()
+
     /** Lookup CBSA for a given county. */
     fun cbsaForCounty(fips: Int) = cbsas.firstOrNull { it.counties.contains(fips) }
+    /** Lookup CBSA region for a given county. */
+    fun cbsaRegion(fips: Int) = cbsaCache.getOrPut(fips) {
+        val cbsa = cbsaForCounty(fips) ?: return null
+        JhuRegionData.cbsaRegionData["${cbsa.cbsaTitle}, US"]?.toRegionInfo()
+    }
 
     private fun loadCbsaData() = UnitedStates::class.java.getResource("resources/census-cbsa-fips.csv").csvKeyValues()
             .map { CbsaInfo(it["cbsacode"]!!.toInt(), it["csacode"]?.toIntOrNull(), it["cbsatitle"]!!, it["csatitle"]!!,
