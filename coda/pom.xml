@@ -12,6 +12,7 @@
     <modules>
         <module>coda-data</module>
         <module>coda-app</module>
+        <module>coda-jlink</module>
     </modules>
 
     <properties>

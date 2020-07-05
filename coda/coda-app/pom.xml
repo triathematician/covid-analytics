@@ -57,6 +57,18 @@
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>${main.class}</Main-Class>
+                        </manifestEntries>
+                    </archive>
+<!--                    <finalName>coda</finalName>-->
+                </configuration>
+            </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-assembly-plugin</artifactId>-->

@@ -16,11 +16,11 @@ import tri.timeseries.deltas
 import tri.timeseries.movingAverage
 import tri.util.DateRange
 import tri.util.javaTrim
-import triathematician.covid19.CovidTimeSeriesSources.countryData
-import triathematician.covid19.CovidTimeSeriesSources.usCbsaData
-import triathematician.covid19.CovidTimeSeriesSources.usCountyData
-import triathematician.covid19.CovidTimeSeriesSources.usStateData
-import triathematician.covid19.perCapita
+import tri.covid19.data.CovidTimeSeriesSources.countryData
+import tri.covid19.data.CovidTimeSeriesSources.usCbsaData
+import tri.covid19.data.CovidTimeSeriesSources.usCountyData
+import tri.covid19.data.CovidTimeSeriesSources.usStateData
+import tri.covid19.data.perCapita
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
 import kotlin.time.ExperimentalTime

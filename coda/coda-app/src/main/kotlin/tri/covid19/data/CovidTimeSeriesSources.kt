@@ -1,8 +1,7 @@
-package triathematician.covid19
+package tri.covid19.data
 
 import tri.covid19.CASES
 import tri.covid19.DEATHS
-import tri.covid19.data.CovidHistory
 import tri.timeseries.MetricTimeSeries
 import tri.timeseries.RegionInfo
 import tri.timeseries.RegionType

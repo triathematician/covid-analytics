@@ -22,7 +22,7 @@ import tri.timeseries.MetricTimeSeries
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
-import triathematician.covid19.CovidTimeSeriesSources
+import tri.covid19.data.CovidTimeSeriesSources
 import java.time.LocalDate
 import java.util.*
 import kotlin.reflect.KMutableProperty1
