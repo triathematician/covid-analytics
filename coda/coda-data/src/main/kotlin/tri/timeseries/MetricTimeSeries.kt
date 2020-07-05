@@ -70,6 +70,9 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     /** Return copy with moving averages. */
     fun movingAverage(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingAverage(bucket, includePartialList))
 
+    /** Return copy with moving sum. */
+    fun movingSum(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingSum(bucket, includePartialList))
+
     /** Return copy with deltas. */
     fun deltas(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.deltas())
 
@@ -184,8 +187,8 @@ fun List<MetricTimeSeries>.sum(region: RegionInfo) = reduce { s1, s2 ->
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { s1[it] + s2[it] }
-    s1.copy(region = region, start = minDate, values = series)
-}
+    s1.copy(start = minDate, values = series)
+}.copy(region = region)
 
 //endregion
 

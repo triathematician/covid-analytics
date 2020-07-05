@@ -37,7 +37,8 @@ object UnitedStates {
             .map { it.value.first().copy(counties = it.value.flatMap { it.counties }) }
             .onEach { it.population = it.counties.sumByDouble { PopulationLookup.fips(it)?.toDouble() ?: 0.0 }.toLong() }
 
-    fun stateFromAbbreviation(id: String) = stateInfo.first { it.abbr.toLowerCase() == id.toLowerCase() }.let { it.name }
+    fun abbreviationFromState(id: String) = stateInfo.first { it.name.toLowerCase() == id.removeSuffix(", US").toLowerCase() }?.abbr
+    fun stateFromAbbreviation(id: String) = stateInfo.first { it.abbr.toLowerCase() == id.toLowerCase() }.name
 
 }
 

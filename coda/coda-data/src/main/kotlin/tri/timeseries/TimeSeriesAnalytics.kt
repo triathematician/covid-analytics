@@ -29,5 +29,9 @@ fun List<Double>.doublingTimes(sinceDaysAgo: Int = 0) = growthRates(sinceDaysAgo
     1/log2(it)
 }
 
-/** Compute average over n entries. The first n-1 entries have partial averages. */
+/** Compute average over n entries. The first n-1 entries have partial averages if [includePartialList] is true. */
 fun List<Double>.movingAverage(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.average() }
+
+/** Compute sum over n entries. The first n-1 entries have partial sums if [includePartialList] is true. */
+fun List<Double>.movingSum(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.sum() }
+

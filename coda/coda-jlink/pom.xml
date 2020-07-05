@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>coda-jlink</artifactId>
-    <packaging>jlink</packaging>
+<!--    <packaging>jlink</packaging>-->
 
     <dependencies>
         <dependency>
@@ -23,25 +23,25 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>net.agilhard.maven.plugins</groupId>
-                <artifactId>jlink-jpackager-maven-plugin</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <verbose>true</verbose>
-                    <module>coda/tri.covid19.coda.CodaApp</module>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>net.agilhard.maven.plugins</groupId>-->
+<!--                <artifactId>jlink-jpackager-maven-plugin</artifactId>-->
+<!--                <version>1.0.0-SNAPSHOT</version>-->
+<!--                <extensions>true</extensions>-->
+<!--                <configuration>-->
+<!--                    <verbose>true</verbose>-->
+<!--                    <module>coda/tri.covid19.coda.CodaApp</module>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
-            <plugin>
-                <artifactId>maven-jlink-plugin</artifactId>
-                <version>3.0.0-alpha-1</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <!-- configuration elements goes here -->
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <artifactId>maven-jlink-plugin</artifactId>-->
+<!--                <version>3.0.0-alpha-1</version>-->
+<!--                <extensions>true</extensions>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; configuration elements goes here &ndash;&gt;-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
