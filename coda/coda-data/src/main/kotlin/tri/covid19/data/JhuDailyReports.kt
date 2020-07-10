@@ -171,7 +171,7 @@ private val COUNTRIES_TO_NOT_AGGREGATE = listOf("United Kingdom", "Netherlands",
 /** Add state and country aggregate information to the rows. */
 fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
     val cbsaAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
-            .groupBy { UnitedStates.cbsaForCounty(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", "", emptyList()) }
+            .groupBy { UnitedStates.countyFipsToCbsa(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", "", emptyList()) }
             .filter { it.key.cbsaCode > 0 }
             .mapValues { it.value.sumWithinCbsa(it.key) }.values
     val stateAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }

@@ -20,8 +20,8 @@ object JhuRegionData {
                 .toList()
 
     private fun generateCbsaRegionData() = jhuRegionData.values
-            .filter { it.fips != null && UnitedStates.cbsaForCounty(it.fips!!) != null }
-                .groupBy { UnitedStates.cbsaForCounty(it.fips!!)!! }
+            .filter { it.fips != null && UnitedStates.countyFipsToCbsa(it.fips!!) != null }
+                .groupBy { UnitedStates.countyFipsToCbsa(it.fips!!)!! }
                 .map { it.value.toCbsa(it.key) }
 
     fun fips(fips: Int) = fipsData[fips]

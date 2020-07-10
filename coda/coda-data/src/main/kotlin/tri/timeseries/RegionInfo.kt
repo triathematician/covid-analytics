@@ -4,6 +4,9 @@ package tri.timeseries
 data class RegionInfo(var id: String, var type: RegionType, var parent: String, var fips: Int? = null,
                       var population: Long? = null, var latitude: Float? = null, var longitude: Float? = null)
 
+/** Construct representation of a zipcode. */
+fun zipcodeRegion(zipcode: Int) = RegionInfo(zipcode.toString(), RegionType.ZIPCODE, "")
+
 /** Region type. */
 enum class RegionType {
     GLOBAL,
@@ -11,5 +14,6 @@ enum class RegionType {
     PROVINCE_STATE,
     COUNTY,
     METRO,
+    ZIPCODE,
     UNKNOWN
 }
