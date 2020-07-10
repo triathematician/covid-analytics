@@ -1,12 +1,56 @@
 package tri.covid19.data
 
 import tri.covid19.CASES
+import tri.timeseries.MetricTimeSeries
+import tri.timeseries.RegionType
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
+import tri.util.minus
+import tri.util.rangeTo
+import java.time.LocalDate
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 fun main() {
+    testGrowth()
+}
+
+@ExperimentalTime
+fun testGrowth() {
+    val data = CovidHistory.allData.filter { it.region.type == RegionType.COUNTY && it.metric == CASES }
+    val latest = mutableMapOf<String, LocalDate>()
+    (LocalDate.of(2020, 6, 15)..LocalDate.now()).forEach { date ->
+        val filtered = data.map { Growth(it, date) }.filter {
+            it.count7 >= 100 && it.countPerCapita7 >= 20 &&
+            it.ratio730 >= .31 && (it.change7 >= 1.6 || it.change3 >= 1.6)
+        }
+        println("$date: ${filtered.size}")
+        filtered.filter {
+            val lastOn = latest.getOrElse(it.series.region.id) { LocalDate.of(2020, 1, 1) }
+            val new = date.minus(lastOn) > 21
+            latest.put(it.series.region.id, date)
+            new
+        }.let { println("  ${it.size}: ${it.map { it.series.region.id }}") }
+    }
+}
+
+class Growth(val series: MetricTimeSeries, val date: LocalDate) {
+    val count7
+        get() = series[date] - series[date-7]
+    val countPerCapita7
+        get() = series.region.population?.let { count7/(it/1E5) } ?: Double.NaN
+    val ratio730
+        get() = (series[date]-series[date-7])/(series[date]-series[date-30])
+    val change7
+        get() = (series[date]-series[date-7])/(series[date-7]-series[date-14])
+    val change3
+        get() = (series[date]-series[date-7])/(series[date-7]-series[date-14])
+}
+
+private operator fun LocalDate.minus(i: Int) = minusDays(i.toLong())
+
+@ExperimentalTime
+fun testKernel() {
     val data = CovidHistory.allData.first { it.region.id == "United Kingdom" && it.metric == CASES }
     println(data.values)
     println(data.values.deltas().movingAverage(7))
