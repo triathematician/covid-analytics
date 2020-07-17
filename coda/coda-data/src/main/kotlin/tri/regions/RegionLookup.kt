@@ -9,10 +9,10 @@ object RegionLookup {
     /**
      * Performs lookup on given id.
      * @param id region id
-     * @param lookupUs if true, permits lookups by state name e.g. "Iowa" rather than the full id "Iowa, US"
      */
     operator fun invoke(id: String): RegionInfo {
         val useId = when {
+            id == "District of Columbia, District of Columbia, US" -> UnitedStates.stateFromAbbreviation("DC") + ", US"
             id in UnitedStates.stateAbbreviations ->
                 UnitedStates.stateFromAbbreviation(id) + ", US"
             id.removeSuffix(", US") in UnitedStates.stateAbbreviations ->
