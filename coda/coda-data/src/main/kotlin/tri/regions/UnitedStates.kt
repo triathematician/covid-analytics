@@ -36,7 +36,7 @@ object UnitedStates {
     }
 
     fun abbreviationFromState(id: String) = stateInfo.first { it.name.toLowerCase() == id.removeSuffix(", US").toLowerCase() }?.abbr
-    fun stateFromAbbreviation(id: String) = stateInfo.first { it.abbr.toLowerCase() == id.toLowerCase() }.name
+    fun stateFromAbbreviation(id: String) = stateInfo.firstOrNull { it.abbr.toLowerCase() == id.toLowerCase() }?.name ?: throw IllegalArgumentException("State abbreviation not found: $id")
 
     //endregion
 
@@ -49,9 +49,9 @@ object UnitedStates {
 
     fun femaRegion(stateAbbr: String) = when (stateAbbr) {
         "CT", "ME", "MA", "NH", "RI", "VT" -> 1
-        "NY", "NJ", "PR", "VI" -> 2
-        "DC", "DE", "MD", "PA", "VA", "WV" -> 3
-        "AL", "FL", "GA", "MS", "NC", "SC", "TN", "KY" -> 4
+        "NJ", "NY", "PR", "VI" -> 2
+        "DE", "DC", "MD", "PA", "VA", "WV" -> 3
+        "AL", "FL", "GA", "KY", "MS", "NC", "SC", "TN" -> 4
         "IL", "IN", "MI", "MN", "WI", "OH" -> 5
         "NM", "LA", "TX", "AR", "OK" -> 6
         "IA", "NE", "MO", "KS" -> 7
@@ -60,6 +60,9 @@ object UnitedStates {
         "AK", "ID", "OR", "WA" -> 10
         else -> -1
     }
+
+    val stateAbbrOrderedByFema = stateAbbreviations.sortedWith(compareBy({ femaRegion(it) }, { it }))
+    val stateNameOrderedByFema = stateNames.sortedWith(compareBy({ femaRegion(abbreviationFromState(it)) }, { it }))
 
 }
 

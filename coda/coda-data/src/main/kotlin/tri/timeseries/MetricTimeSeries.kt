@@ -57,10 +57,25 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     /** Get date of peak and value. */
     fun peak(): Pair<LocalDate, Double> = domain.map { it to get(it) }.maxBy { it.second }!!
 
+    //region QUERIES
+
+    /** Compute sum over all dates in given range. */
+    fun sum(dates: DateRange) = dates.sumByDouble { get(it) }
+    /** Compute average over all dates in given range. */
+    fun average(dates: DateRange) = dates.map { get(it) }.average()
+
+    //endregion
+
     //region DERIVED SERIES
 
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
             = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+
+    /** Copy after dropping first n values. */
+    fun dropFirst(n: Int): MetricTimeSeries {
+        val res = copyAdjustingStartDay(values = values.drop(n))
+        return res
+    }
 
     operator fun plus(n: Number): MetricTimeSeries = copy(values = values.map { it + n.toDouble() })
     operator fun minus(n: Number): MetricTimeSeries = copy(values = values.map { it - n.toDouble() })
@@ -69,7 +84,6 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
 
     /** Return copy with moving averages. */
     fun movingAverage(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingAverage(bucket, includePartialList))
-
     /** Return copy with moving sum. */
     fun movingSum(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingSum(bucket, includePartialList))
 
@@ -79,11 +93,9 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     /** Return copy with growth percentages. */
     fun growthPercentages(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.growthPercentages(), intSeries = false)
             .restrictToRealNumbers()
-
     /** Return copy with doubling times. */
     fun doublingTimes(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.doublingTimes(), intSeries = false)
             .restrictToRealNumbers()
-
     /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
     fun shortTermLogisticForecast(days: Int): List<MetricTimeSeries> {
         val predictions = values.computeLogisticPrediction(days).filter { it.hasBoundedConfidence }
@@ -95,12 +107,6 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
 //                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = predictions.map { it.slope }, intSeries = false),
 //                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = predictions.map { it.intercept }, intSeries = false)
         ).map { it.restrictToRealNumbers() }
-    }
-
-    /** Copy after dropping first n values. */
-    fun dropFirst(n: Int): MetricTimeSeries {
-        val res = copyAdjustingStartDay(values = values.drop(n))
-        return res
     }
 
     //endregion
