@@ -37,12 +37,13 @@ object UnitedStates {
 
     fun abbreviationFromState(id: String) = stateInfo.first { it.name.toLowerCase() == id.removeSuffix(", US").toLowerCase() }?.abbr
     fun stateFromAbbreviation(id: String) = stateInfo.firstOrNull { it.abbr.toLowerCase() == id.toLowerCase() }?.name ?: throw IllegalArgumentException("State abbreviation not found: $id")
+    fun stateFromAbbreviationOrNull(id: String) = stateInfo.firstOrNull { it.abbr.toLowerCase() == id.toLowerCase() }?.name
 
     //endregion
 
-    private fun loadCbsaData() = UnitedStates::class.java.getResource("resources/census-cbsa-fips.csv").csvKeyValues()
-            .map { CbsaInfo(it["cbsacode"]!!.toInt(), it["csacode"]?.toIntOrNull(), it["cbsatitle"]!!, it["csatitle"]!!,
-                    it["cbsatitle"]!!.substringAfter(", "), listOf(it["fipsstatecode"]!!.toInt()*1000 + it["fipscountycode"]!!.toInt())) }
+    private fun loadCbsaData() = UnitedStates::class.java.getResource("resources/Mar2020cbsaDelineation.csv").csvKeyValues()
+            .map { CbsaInfo(it["CBSA Code"]!!.toInt(), it["CSA Code"]?.toIntOrNull(), it["CBSA Title"]!!, it["CSA Title"]!!,
+                    it["CBSA Title"]!!.substringAfter(", "), listOf(it["FIPS Combined"]!!.toInt())) }
             .groupBy { it.cbsaCode }
             .map { it.value.first().copy(counties = it.value.flatMap { it.counties }) }
             .onEach { it.population = it.counties.sumByDouble { PopulationLookup.fips(it)?.toDouble() ?: 0.0 }.toLong() }
