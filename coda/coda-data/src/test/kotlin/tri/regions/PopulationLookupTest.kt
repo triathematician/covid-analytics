@@ -13,16 +13,16 @@ fun main() {
     println("\n--")
     UnitedStates.cbsas.first { it.cbsaTitle == "New York-Newark-Jersey City, NY-NJ-PA" }.let { println(it.population) }
 
-    UnitedStates::class.java.getResource("resources/census-cbsa-fips.csv").csvKeyValues().toList()
-            .filter { it["cbsatitle"] == "New York-Newark-Jersey City, NY-NJ-PA" }
+    UnitedStates::class.java.getResource("resources/Mar2020cbsaDelineation.csv").csvKeyValues().toList()
+            .filter { it["CBSA Title"] == "New York-Newark-Jersey City, NY-NJ-PA" }
             .onEach {
-                println("${it["fipscountycode"]}, ${it["countycountyequivalent"]}, " +
-                        "${PopulationLookup(it["countycountyequivalent"]!!.removeSuffix(" County") + ", " + it["statename"])}")
+                println("${it["FIPS County Code"]}, ${it["County/County Equivalent"]}, " +
+                        "${PopulationLookup(it["County/County Equivalent"]!!.removeSuffix(" County") + ", " + it["State Name"])}")
             }
 
-    UnitedStates::class.java.getResource("resources/census-cbsa-fips.csv").csvKeyValues()
-            .map { CbsaInfo(it["cbsacode"]!!.toInt(), it["csacode"]?.toIntOrNull(), it["cbsatitle"]!!, it["csatitle"]!!,
-                    it["cbsatitle"]!!.substringAfter(", "), listOf(it["fipsstatecode"]!!.toInt()*1000 + it["fipscountycode"]!!.toInt())) }
+    UnitedStates::class.java.getResource("resources/Mar2020cbsaDelineation.csv").csvKeyValues()
+            .map { CbsaInfo(it["CBSA Code"]!!.toInt(), it["CSA Code"]?.toIntOrNull(), it["CBSA Title"]!!, it["CSA Title"]!!,
+                    it["CBSA Title"]!!.substringAfter(", "), listOf(it["FIPS State Code"]!!.toInt()*1000 + it["FIPS County Code"]!!.toInt())) }
             .filter { it.cbsaCode == 35620 }.toList()
             .onEach {
                 it.counties.forEach {
