@@ -18,7 +18,6 @@ object RegionLookup {
         notFound[id]?.let { return it }
 
         val useId = when {
-            id == "District of Columbia, District of Columbia, US" -> UnitedStates.stateFromAbbreviation("DC") + ", US"
             id in UnitedStates.stateAbbreviations ->
                 UnitedStates.stateFromAbbreviation(id) + ", US"
             id.removeSuffix(", US") in UnitedStates.stateAbbreviations ->
