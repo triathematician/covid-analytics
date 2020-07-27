@@ -787,7 +787,7 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 84010001,US,USA,840,10001,Kent,Delaware,US,39.08646628,-75.56884914,"Kent, Delaware, US",180786
 84010003,US,USA,840,10003,New Castle,Delaware,US,39.57992638,-75.64054974,"New Castle, Delaware, US",558753
 84010005,US,USA,840,10005,Sussex,Delaware,US,38.66143781,-75.39031349,"Sussex, Delaware, US",234225
-84011001,US,USA,840,11001,District of Columbia,District of Columbia,US,38.90417773,-77.01655992,"District of Columbia, District of Columbia ,US",705749
+84011001,US,USA,840,11001,District of Columbia,District of Columbia,US,38.90417773,-77.01655992,"District of Columbia, District of Columbia, US",705749
 84012001,US,USA,840,12001,Alachua,Florida,US,29.67866525,-82.35928158,"Alachua, Florida, US",269043
 84012003,US,USA,840,12003,Baker,Florida,US,30.33060121,-82.28467476,"Baker, Florida, US",29210
 84012005,US,USA,840,12005,Bay,Florida,US,30.26548745,-85.62122584,"Bay, Florida, US",174705
