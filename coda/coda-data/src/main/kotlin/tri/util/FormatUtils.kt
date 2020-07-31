@@ -26,7 +26,7 @@ fun Number.userFormat(): String {
 private val Number.nearestInt
     get() = if (this.toLong().absoluteValue > Int.MAX_VALUE) round(toDouble()).toLong() else round(toDouble()).toInt()
 /** Format a number as a percentage. */
-fun Number.percentFormat() = NumberFormat.getPercentInstance().format(this)
+fun Number.percentFormat(digits: Int = 0) = NumberFormat.getPercentInstance().also { it.minimumFractionDigits = digits }.format(this)
 
 fun String.javaTrim() = trim { it <= ' ' }
 

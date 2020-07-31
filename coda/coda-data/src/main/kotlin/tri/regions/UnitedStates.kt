@@ -73,7 +73,10 @@ object Fips {
     fun usCounty(it: Int?) = (1000..100000).contains(it)
 }
 
-data class CbsaInfo(var cbsaCode: Int, var csaCode: Int?, var cbsaTitle: String, var csaTitle: String, var state: String,
-                    var counties: List<Int>, var population: Long = 0)
+data class CbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, val csaTitle: String, val state: String,
+                    val counties: List<Int>, var population: Long = 0) {
+    val coreState: String
+        get() = state.substringBefore("-")
+}
 
 data class StateInfo(var name: String, var abbr: String, var fips: Int)
