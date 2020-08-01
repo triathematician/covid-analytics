@@ -1,5 +1,11 @@
+/**
+ * OSS from https://github.com/triathematician/covid-analytics
+ */
 package tri.util
 
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
 import java.io.PrintStream
 import java.net.URL
 
@@ -21,12 +27,18 @@ object CsvLineSplitter {
 
     /** Reads data from the given URL, returning the header line and content lines. */
     fun readData(file1: URL): Pair<List<String>, Sequence<List<String>>> {
-        val lines = file1.readText().lines()
-        val line0 = lines[0].substringAfter("\uFEFF")
+        val line0 = InputStreamReader(file1.openStream()).useLines { it.first().substringAfter("\uFEFF") }
+        val otherLines = BufferedReader(InputStreamReader(file1.openStream())).lineSequence().drop(1)
         val header = splitLine(line0).map { it.javaTrim() }
-        return header to lines.asSequence().drop(1).filter { it.isNotBlank() }.map { splitLine(it) }
+        return header to otherLines.filter { it.isNotBlank() }.map { splitLine(it) }
     }
 }
+
+/** Maps lines of data from a file. */
+fun <X> File.mapCsvKeyValues(op: (Map<String, String>) -> X) = toURI().toURL().csvKeyValues().map { op(it) }
+
+/** Reads lines of data from a file. */
+fun File.csvKeyValues() = toURI().toURL().csvKeyValues()
 
 /** Reads lines of data from a URL. */
 fun URL.csvLines() = CsvLineSplitter.readData(this).second
@@ -45,3 +57,7 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
     }.toString()
 }.map { if (',' in it) "\"$it\"" else it }
         .joinToString(sep).log(ps, prefix)
+
+fun Map<String, String>.string(n: String) = get(n)?.let { if (it.isEmpty()) null else it }
+fun Map<String, String>.boolean(n: String) = get(n)?.let { "TRUE".equals(it, ignoreCase = true) } ?: false
+fun Map<String, String>.int(n: String) = get(n)?.toIntOrNull()

@@ -4,7 +4,7 @@ import tri.timeseries.RegionInfo
 import tri.util.csvKeyValues
 import tri.util.csvLines
 
-/** Provides information about states and counties in the US. */
+/** Common lookup information for states and counties in the US. */
 object UnitedStates {
     val states: List<RegionInfo> by lazy { JhuRegionData.usStates.values.map { it.toRegionInfo() } }
     val counties: List<RegionInfo> by lazy { JhuRegionData.usCounties.values.map { it.toRegionInfo() } }
@@ -73,10 +73,5 @@ object Fips {
     fun usCounty(it: Int?) = (1000..100000).contains(it)
 }
 
-data class CbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, val csaTitle: String, val state: String,
-                    val counties: List<Int>, var population: Long = 0) {
-    val coreState: String
-        get() = state.substringBefore("-")
-}
-
+/** Information about a state. */
 data class StateInfo(var name: String, var abbr: String, var fips: Int)

@@ -29,6 +29,7 @@ private val Number.nearestInt
 fun Number.percentFormat(digits: Int = 0) = NumberFormat.getPercentInstance().also { it.minimumFractionDigits = digits }.format(this)
 
 fun String.javaTrim() = trim { it <= ' ' }
+fun String?.nonBlankOrNull() = if (this.isNullOrBlank()) null else this
 
 /** Formats integers using given range of digits. */
 fun numberFormat(integerDigitRange: IntRange) = NumberFormat.getInstance().apply {
