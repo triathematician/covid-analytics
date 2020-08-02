@@ -63,9 +63,13 @@ object JhuDailyReports: CovidDataNormalizer() {
 
     // ﻿Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered
     private fun Map<String, String>.read1() = DailyReportRow("", "",
-            this["Province/State"]!!.stateFix(), this["Country/Region"]!!.regionFix(),
+            get("Province/State")?.stateFix() ?: throw readError(), get("Country/Region")?.regionFix() ?: throw readError(),
             gdate("Last Update"), null, null,
             gint("Confirmed"), gint("Deaths"), gint("Recovered"), 0, 0, 0)
+
+    private fun Map<String, String>.readError() : IllegalStateException {
+        return IllegalStateException("Unexpected fields in $this")
+    }
 
     // Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered,Latitude,Longitude
     private fun Map<String, String>.read2() = DailyReportRow("", "",

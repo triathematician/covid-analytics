@@ -27,7 +27,10 @@ object CsvLineSplitter {
 
     /** Reads data from the given URL, returning the header line and content lines. */
     fun readData(file1: URL): Pair<List<String>, Sequence<List<String>>> {
-        val line0 = InputStreamReader(file1.openStream()).useLines { it.first().substringAfter("\uFEFF") }
+        val line0 = InputStreamReader(file1.openStream()).useLines {
+            // remove BOM markers in the file before reading header line
+            it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
+        }
         val otherLines = BufferedReader(InputStreamReader(file1.openStream())).lineSequence().drop(1)
         val header = splitLine(line0).map { it.javaTrim() }
         return header to otherLines.filter { it.isNotBlank() }.map { splitLine(it) }
