@@ -48,6 +48,8 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
     /** Get value on given date, or null if argument is outside range. */
     fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
+    /** Get value by days from end. */
+    fun valuesByDayFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
 
     /** Get date by index. */
     fun date(i: Int) = start.plusDays(i.toLong())

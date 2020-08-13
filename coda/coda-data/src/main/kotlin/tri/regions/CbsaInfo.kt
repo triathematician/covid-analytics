@@ -5,10 +5,9 @@ data class CbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String,
                     val counties: List<Int>, var population: Long = 0) {
 
     /** Abbreviation for core state. */
-    val coreState: String
-        get() = state.substringBefore("-")
-
+    val coreStateAbbr = state.substringBefore("-")
+    /** Core state. */
+    val coreState = UnitedStates.stateFromAbbreviation(coreStateAbbr)
     /** Region of core state. */
-    val coreRegion: Int
-        get() = UnitedStates.femaRegion(coreState)
+    val coreRegion = UnitedStates.femaRegion(coreStateAbbr)
 }

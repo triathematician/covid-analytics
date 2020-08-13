@@ -1,6 +1,7 @@
 package tri.regions
 
 import tri.timeseries.RegionInfo
+import tri.timeseries.RegionType
 import tri.util.csvKeyValues
 import tri.util.csvLines
 
@@ -29,13 +30,29 @@ object UnitedStates {
 
     /** Lookup CBSA for a given county. */
     fun countyFipsToCbsa(fips: Int) = cbsas.firstOrNull { it.counties.contains(fips) }
-    /** Lookup CBSA region for a given county. */
+    /** Lookup CBSA region for a given county by FIPS. */
     fun cbsaRegion(fips: Int) = cbsaCache.getOrPut(fips) {
         val cbsa = countyFipsToCbsa(fips) ?: return null
         JhuRegionData.cbsaRegionData["${cbsa.cbsaTitle}, US"]?.toRegionInfo()
     }
 
-    fun abbreviationFromState(id: String) = stateInfo.first { it.name.toLowerCase() == id.removeSuffix(", US").toLowerCase() }?.abbr
+    /** Lookup FEMA region for a given CBSA. Requires an exact match. */
+    fun stateToFemaRegion(region: RegionInfo): Int? {
+        require(region.type == RegionType.PROVINCE_STATE)
+        return femaRegion(abbreviationFromState(region.id))
+    }
+    /** Lookup FEMA region for a given CBSA. Requires an exact match. */
+    fun cbsaToCoreFemaRegion(region: RegionInfo): Int? {
+        require(region.type == RegionType.METRO)
+        return cbsas.firstOrNull { it.cbsaTitle.toLowerCase() == region.id.toLowerCase().removeSuffix(", us") }?.coreRegion
+    }
+    /** Lookup state for a given CBSA. Requires an exact match. */
+    fun cbsaToCoreState(region: RegionInfo): String? {
+        require(region.type == RegionType.METRO)
+        return cbsas.firstOrNull { it.cbsaTitle.toLowerCase() == region.id.toLowerCase().removeSuffix(", us") }?.coreState
+    }
+
+    fun abbreviationFromState(id: String) = stateInfo.firstOrNull { it.name.toLowerCase() == id.toLowerCase().removeSuffix(", us") }?.abbr ?: throw IllegalArgumentException("State not found: $id")
     fun stateFromAbbreviation(id: String) = stateInfo.firstOrNull { it.abbr.toLowerCase() == id.toLowerCase() }?.name ?: throw IllegalArgumentException("State abbreviation not found: $id")
     fun stateFromAbbreviationOrNull(id: String) = stateInfo.firstOrNull { it.abbr.toLowerCase() == id.toLowerCase() }?.name
 
@@ -57,7 +74,7 @@ object UnitedStates {
         "NM", "LA", "TX", "AR", "OK" -> 6
         "IA", "NE", "MO", "KS" -> 7
         "CO", "MT", "ND", "SD", "UT", "WY" -> 8
-        "CA", "NV", "HI", "AZ", "PI" -> 9
+        "CA", "NV", "HI", "AZ", "PI", "GU", "MP" -> 9
         "AK", "ID", "OR", "WA" -> 10
         else -> -1
     }
