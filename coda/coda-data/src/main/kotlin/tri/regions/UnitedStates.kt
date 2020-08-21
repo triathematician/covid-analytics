@@ -7,6 +7,8 @@ import tri.util.csvLines
 
 /** Common lookup information for states and counties in the US. */
 object UnitedStates {
+    val region = RegionLookup("US")
+
     val states: List<RegionInfo> by lazy { JhuRegionData.usStates.values.map { it.toRegionInfo() } }
     val counties: List<RegionInfo> by lazy { JhuRegionData.usCounties.values.map { it.toRegionInfo() } }
 

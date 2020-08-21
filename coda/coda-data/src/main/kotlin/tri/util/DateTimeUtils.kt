@@ -11,7 +11,7 @@ val LocalDate.monthDay
     get() = this.format(DateTimeFormatter.ofPattern("M/d"))
 /** Formats date as readable month-day. */
 val LocalDate.monthDayReadable
-    get() = this.format(DateTimeFormatter.ofPattern("MMM d"))
+    get() = this.format(DateTimeFormatter.ofPattern("MMMM d"))
 
 /** Parses string to local date using one of given formats. */
 fun String.toLocalDate(vararg formats: DateTimeFormatter): LocalDate {
@@ -37,6 +37,8 @@ operator fun LocalDate.rangeTo(other: LocalDate) = DateRange(this, other)
 
 /** Provides a range of dates, with ability to iterate. */
 data class DateRange(override var start: LocalDate, override var endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
+
+    constructor(range: ClosedRange<LocalDate>): this(range.start, range.endInclusive)
 
     override fun iterator() = DateIterator(start, endInclusive)
 

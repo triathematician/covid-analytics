@@ -9,6 +9,10 @@ object RegionLookup {
     private val regionCache = mutableMapOf<String, RegionInfo>()
     private val notFound = mutableMapOf<String, RegionInfo>()
 
+    init {
+        regionCache["US"] = US_REGION.toRegionInfo()
+    }
+
     /**
      * Performs lookup on given id.
      * @param id region id

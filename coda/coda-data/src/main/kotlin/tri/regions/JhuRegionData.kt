@@ -29,6 +29,8 @@ object JhuRegionData {
 }
 
 val GLOBAL_REGION = JhuRegionInfo(region1 = GLOBAL, combinedKey = GLOBAL, pop = GLOBAL_POPULATION)
+val US_REGION = JhuRegionInfo(840, "US", "USA", 840, null, "", "", "US",
+        40f, -100f, "US", 329466283)
 
 private fun <X, Y> List<X>.groupByOne(map: (X) -> Y) = groupBy(map).mapValues {
     if (it.value.size > 1) {
