@@ -3,6 +3,7 @@
  */
 package tri.util
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -40,6 +41,9 @@ object CsvLineSplitter {
 /** Maps lines of data from a file. */
 fun <X> File.mapCsvKeyValues(op: (Map<String, String>) -> X) = toURI().toURL().csvKeyValues().map { op(it) }
 
+/** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> File.mapCsvKeyValues() = toURI().toURL().csvKeyValues().map { ObjectMapper().convertValue(it, X::class.java) }
+
 /** Reads lines of data from a file. */
 fun File.csvKeyValues() = toURI().toURL().csvKeyValues()
 
@@ -63,4 +67,5 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
 
 fun Map<String, String>.string(n: String) = get(n)?.let { if (it.isEmpty()) null else it }
 fun Map<String, String>.boolean(n: String) = get(n)?.let { "TRUE".equals(it, ignoreCase = true) } ?: false
-fun Map<String, String>.int(n: String) = get(n)?.toIntOrNull()
+fun Map<String, String>.int(n: String) = get(n)?.toIntOrNull() ?: get(n)?.toDoubleOrNull()?.toInt()
+fun Map<String, String>.double(n: String) = get(n)?.toDoubleOrNull()

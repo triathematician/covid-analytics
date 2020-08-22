@@ -3,6 +3,7 @@ package tri.timeseries
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.timeseries.analytics.computeLogisticPrediction
 import tri.util.DateRange
+import tri.util.minus
 import tri.util.rangeTo
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -49,7 +50,7 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
     /** Get value on given date, or null if argument is outside range. */
     fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
     /** Get value by days from end. */
-    fun valuesByDayFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
+    fun valueByDaysFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
 
     /** Get date by index. */
     fun date(i: Int) = start.plusDays(i.toLong())
@@ -70,6 +71,11 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
 
     //region DERIVED SERIES
 
+    /** Copy where data is restricted to start no early than given date. */
+    fun copyWithDataSince(firstDate: LocalDate)
+            = copy(metric = metric, start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()), intSeries = intSeries)
+
+    /** Create a copy while adjusting the start day if the number of values changes. */
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
             = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
 
@@ -179,6 +185,12 @@ fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy 
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
+/** Sums a bunch of time series by id and metric. */
+fun List<MetricTimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.region, it.metric) }
+        .map { it.value.sum(it.key[0] as RegionInfo) }
+        .map { if (coerceIncreasing) it.coerceIncreasing() else it }
+        .map { it.restrictNumberOfStartingZerosTo(5) }
+
 /** Merge a bunch of separate time series into a single time series object. */
 private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
     require(s1.region == s2.region)
@@ -189,7 +201,7 @@ private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
     s1.copy(start = minDate, values = series)
 }
 
-/** Sums a bunch of separate time series into a single time series object. */
+/** Sums a bunch of separate time series into a single time series object. Requires metrics to match. */
 fun List<MetricTimeSeries>.sum(region: RegionInfo) = reduce { s1, s2 ->
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
@@ -197,6 +209,14 @@ fun List<MetricTimeSeries>.sum(region: RegionInfo) = reduce { s1, s2 ->
     val series = (minDate..maxDate).map { s1[it] + s2[it] }
     s1.copy(start = minDate, values = series)
 }.copy(region = region)
+
+/** Sums a bunch of separate time series into a single time series object. Does not require metrics to match, but must provide a metric name. */
+fun List<MetricTimeSeries>.sum(region: RegionInfo, metric: String) = reduce { s1, s2 ->
+    val minDate = minOf(s1.start, s2.start)
+    val maxDate = maxOf(s1.end, s2.end)
+    val series = (minDate..maxDate).map { s1[it] + s2[it] }
+    s1.copy(start = minDate, values = series)
+}.copy(metric = metric, region = region)
 
 //endregion
 
