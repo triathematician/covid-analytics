@@ -9,19 +9,8 @@ import java.net.URL
 
 /** Split lines of the CSV file, accommodating quotes and empty entries. */
 object CsvLineSplitter {
-    private val regex = "(?<=^|,)(?:\"{2}|(?:)|[^,\"\\r\\n]+|\"(?:\"{2}|[^\"]+)+\")(?=,|\$)".toRegex()
-
-    /** Splits a comma-separated lines. An empty line will generate an exception. */
-    fun splitLine(line: String): List<String> {
-        require(line.isNotBlank())
-        return regex.findAll(line).map {
-            var res = it.value
-            while (res.startsWith("\"") && res.endsWith("\"")) {
-                res = res.substring(1, res.length - 1)
-            }
-            res
-        }.toList()
-    }
+    private val regex = "(?m)(?s)(?<=^)(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+(?=$)".toRegex()
+    private val inlineRegex = "(?m)(?<=^|,)(?:\"\"|(?:)|[^,\"\\r\\n]+|\"(?:\"\"|[^\"]+)+\")(?=,|$)".toRegex()
 
     /** Reads data from the given URL, returning the header line and content lines. */
     fun readData(url: URL) = readData { InputStreamReader(url.openStream()) }
@@ -30,14 +19,27 @@ object CsvLineSplitter {
     fun readData(string: String) = readData { StringReader(string) }
 
     /** Reads data from a reader, returning the header line and content lines. */
-    fun readData(reader: () -> Reader): Pair<List<String>, Sequence<List<String>>> {
+    fun readData(reader: () -> Reader): Pair<List<String>, List<List<String>>> {
         val line0 = reader().useLines {
             // remove BOM markers in the file before reading header line
             it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
         }
-        val otherLines = BufferedReader(reader()).lineSequence().drop(1)
         val header = splitLine(line0).map { it.javaTrim() }
-        return header to otherLines.filter { it.isNotBlank() }.map { splitLine(it) }
+        val otherLines = BufferedReader(reader()).lineSequence().drop(1).joinToString("\n")
+        val others = regex.findAll(otherLines).map { it.value }.toList()
+        return header to others.map { splitLine(it) }
+    }
+
+    /** Splits a comma-separated lines. An empty line will generate an exception. */
+    fun splitLine(line: String): List<String> {
+        require(line.isNotBlank())
+        return inlineRegex.findAll(line).map {
+            var res = it.value
+            while (res.startsWith("\"") && res.endsWith("\"")) {
+                res = res.substring(1, res.length - 1)
+            }
+            res
+        }.toList()
     }
 }
 
@@ -59,7 +61,7 @@ fun URL.csvLines() = CsvLineSplitter.readData(this).second
 fun URL.csvKeyValues() = CsvLineSplitter.readData(this).keyValues()
 
 /** Pairs up header with content. */
-private fun Pair<List<String>, Sequence<List<String>>>.keyValues() = second.map { datum -> datum
+private fun Pair<List<String>, List<List<String>>>.keyValues() = second.map { datum -> datum
         .filterIndexed { i, _ -> if (i >= first.size) println("More columns than expected: \n[[[\n   - ${datum.joinToString("\n   - ")}\n]]]"); i < first.size }
         .mapIndexed { i, s -> first[i] to s }.toMap() }
 
