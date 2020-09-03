@@ -1,6 +1,7 @@
 package tri.timeseries
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import tri.area.AreaInfo
 import tri.timeseries.analytics.computeLogisticPrediction
 import tri.util.DateRange
 import tri.util.minus
@@ -12,18 +13,18 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric.
  * Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
-data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
+data class MetricTimeSeries(var area: AreaInfo, var metric: String = "",
                             var intSeries: Boolean, val defValue: Double = 0.0,
                             var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
-    constructor(region: RegionInfo, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double)
-            : this(region, metric, false, defValue, start, listOf(value))
+    constructor(area: AreaInfo, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double)
+            : this(area, metric, false, defValue, start, listOf(value))
 
-    constructor(region: RegionInfo, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>)
-            : this(region, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
+    constructor(area: AreaInfo, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>)
+            : this(area, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
 
-    constructor(region: RegionInfo, metric: String, defValue: Int = 0, start: LocalDate, value: Int)
-            : this(region, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
+    constructor(area: AreaInfo, metric: String, defValue: Int = 0, start: LocalDate, value: Int)
+            : this(area, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
     @get:JsonIgnore
     val size: Int
@@ -158,8 +159,8 @@ data class MetricTimeSeries(var region: RegionInfo, var metric: String = "",
 
 //region factories
 
-fun intTimeSeries(region: RegionInfo, metric: String, start: LocalDate, values: List<Int>) = MetricTimeSeries(region, metric, 0, start, values)
-fun intTimeSeries(region: RegionInfo, metric: String, date: LocalDate, value: Int) = MetricTimeSeries(region, metric, 0, date, value)
+fun intTimeSeries(area: AreaInfo, metric: String, start: LocalDate, values: List<Int>) = MetricTimeSeries(area, metric, 0, start, values)
+fun intTimeSeries(area: AreaInfo, metric: String, date: LocalDate, value: Int) = MetricTimeSeries(area, metric, 0, date, value)
 
 //endregion
 
@@ -180,20 +181,20 @@ val Collection<MetricTimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.region, it.metric) }
+fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.area, it.metric) }
         .map { it.value.merge() }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Sums a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.region, it.metric) }
-        .map { it.value.sum(it.key[0] as RegionInfo) }
+fun List<MetricTimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.area, it.metric) }
+        .map { it.value.sum(it.key[0] as AreaInfo) }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge a bunch of separate time series into a single time series object. */
 private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
-    require(s1.region == s2.region)
+    require(s1.area == s2.area)
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
@@ -202,21 +203,21 @@ private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
 }
 
 /** Sums a bunch of separate time series into a single time series object. Requires metrics to match. */
-fun List<MetricTimeSeries>.sum(region: RegionInfo) = reduce { s1, s2 ->
+fun List<MetricTimeSeries>.sum(area: AreaInfo) = reduce { s1, s2 ->
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { s1[it] + s2[it] }
     s1.copy(start = minDate, values = series)
-}.copy(region = region)
+}.copy(area = area)
 
 /** Sums a bunch of separate time series into a single time series object. Does not require metrics to match, but must provide a metric name. */
-fun List<MetricTimeSeries>.sum(region: RegionInfo, metric: String) = reduce { s1, s2 ->
+fun List<MetricTimeSeries>.sum(area: AreaInfo, metric: String) = reduce { s1, s2 ->
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { s1[it] + s2[it] }
     s1.copy(start = minDate, values = series)
-}.copy(metric = metric, region = region)
+}.copy(metric = metric, area = area)
 
 //endregion
 

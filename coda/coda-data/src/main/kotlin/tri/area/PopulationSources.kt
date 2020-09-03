@@ -1,4 +1,4 @@
-package tri.regions
+package tri.area
 
 import tri.util.csvLines
 

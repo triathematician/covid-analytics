@@ -15,8 +15,8 @@ import tri.covid19.coda.history.changeDoublingDataSeries
 import tri.covid19.coda.history.hubbertSeries
 import tri.covid19.coda.utils.ChartDataSeries
 import tri.math.Sigmoid
-import tri.regions.RegionLookup
-import tri.regions.UnitedStates
+import tri.area.AreaLookup
+import tri.area.UnitedStates
 import tri.timeseries.Forecast
 import tri.timeseries.MetricTimeSeries
 import tri.util.DateRange
@@ -116,8 +116,8 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** List of regions available for panel. */
     val regions: SortedSet<String> by lazy {
-        val jhuRegions = CovidHistory.allData.map { it.region.id }.toSet()
-        val forecastRegions = CovidForecasts.allForecasts.map { it.region.id }.toSet()
+        val jhuRegions = CovidHistory.allData.map { it.area.id }.toSet()
+        val forecastRegions = CovidForecasts.allForecasts.map { it.area.id }.toSet()
         (jhuRegions + forecastRegions).toSortedSet()
     }
 
@@ -135,7 +135,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     var externalForecasts = ExternalForecasts()
 
     private fun updateData() {
-        val regionMetrics = CovidTimeSeriesSources.dailyReports(RegionLookup(region), selectedMetric)
+        val regionMetrics = CovidTimeSeriesSources.dailyReports(AreaLookup(region), selectedMetric)
         mainSeries.value = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
         domain = mainSeries.value?.domain?.shift(0, 30)
 
@@ -143,14 +143,14 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         userForecast = when {
             !showForecast -> null
             domain == null -> null
-            else -> MetricTimeSeries(RegionLookup(region), "$selectedMetric (curve)", false, 0.0, domain!!.start,
+            else -> MetricTimeSeries(AreaLookup(region), "$selectedMetric (curve)", false, 0.0, domain!!.start,
                     domain!!.map { d -> curveFitter(d, shift) })
         }
 
         pastForecasts.metrics = regionMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
         externalForecasts.forecasts = CovidForecasts.allForecasts
                 .filter { it.model in otherForecasts }
-                .filter { it.region.id == region && it.metric == selectedMetric }
+                .filter { it.area.id == region && it.metric == selectedMetric }
                 .filter { it.forecastDate in forecastDateRange }
     }
 

@@ -3,18 +3,19 @@ package tri.timeseries
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import tri.area.AreaInfo
 import java.time.LocalDate
 
 /**
  * Aggregates all time series for a single region.
  */
-class RegionTimeSeries @JsonCreator constructor(var region: RegionInfo, var metrics: MutableList<MetricInfo> = mutableListOf()) {
+class RegionTimeSeries @JsonCreator constructor(var area: AreaInfo, var metrics: MutableList<MetricInfo> = mutableListOf()) {
 
-    constructor(region: RegionInfo, vararg metrics: MetricTimeSeries): this(region) {
+    constructor(area: AreaInfo, vararg metrics: MetricTimeSeries): this(area) {
         metrics.forEach { this += it }
     }
 
-    constructor(region: RegionInfo, vararg metrics: MetricInfo): this(region, mutableListOf(*metrics))
+    constructor(area: AreaInfo, vararg metrics: MetricInfo): this(area, mutableListOf(*metrics))
 
     operator fun plusAssign(m: MetricTimeSeries) {
         metrics.add(MetricInfo(m.metric, m.intSeries, m.start, m.defValue, m.values))
@@ -40,6 +41,6 @@ class MetricInfo(var id: String, var intSeries: Boolean, var start: LocalDate, v
             }
         }
 
-    fun toMetricTimeSeries(region: RegionInfo) = MetricTimeSeries(region, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
+    fun toMetricTimeSeries(area: AreaInfo) = MetricTimeSeries(area, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
 
 }

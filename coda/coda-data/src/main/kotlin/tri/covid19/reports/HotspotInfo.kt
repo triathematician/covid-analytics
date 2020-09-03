@@ -1,5 +1,7 @@
 package tri.covid19.reports
 
+import tri.area.AreaInfo
+import tri.area.RegionType
 import tri.covid19.CovidRiskLevel
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
@@ -11,9 +13,9 @@ import kotlin.math.absoluteValue
 import kotlin.math.sign
 
 /** Aggregates information about a single hotspot associated with a region. */
-data class HotspotInfo(var region: RegionInfo, var metric: String, var start: LocalDate, var values: List<Double>, val averageDays: Int = 7) {
+data class HotspotInfo(var area: AreaInfo, var metric: String, var start: LocalDate, var values: List<Double>, val averageDays: Int = 7) {
 
-    constructor(series: MetricTimeSeries): this(series.region, series.metric, series.start, series.values)
+    constructor(series: MetricTimeSeries): this(series.area, series.metric, series.start, series.values)
 
     val deltas = values.deltas()
     val deltaAverages = deltas.movingAverage(averageDays)
@@ -83,14 +85,14 @@ data class HotspotInfo(var region: RegionInfo, var metric: String, var start: Lo
         get() = values.deltas().movingAverage(14).withIndex().maxBy { it.value }?.index?.let { start.plusDays(it + 7L) }
 
     val regionId
-        get() = region.id
+        get() = area.id
     val fips
-        get() = region.fips
+        get() = area.fips
     val population
-        get() = region.population
+        get() = area.population
 
     private val currentTrend
-        get() = MinMaxFinder(10).invoke(MetricTimeSeries(RegionInfo("", RegionType.UNKNOWN, ""), "", false, 0.0, LocalDate.now(), deltas)
+        get() = MinMaxFinder(10).invoke(MetricTimeSeries(AreaInfo("", RegionType.UNKNOWN, ""), "", false, 0.0, LocalDate.now(), deltas)
                 .restrictNumberOfStartingZerosTo(1).movingAverage(7))
                 .let { CurrentTrend(it.extrema) }
 

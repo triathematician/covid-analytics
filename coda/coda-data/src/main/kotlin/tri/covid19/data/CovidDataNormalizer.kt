@@ -1,8 +1,9 @@
 package tri.covid19.data
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import tri.regions.RegionLookup
-import tri.regions.UnitedStates
+import tri.area.AreaInfo
+import tri.area.AreaLookup
+import tri.area.UnitedStates
 import tri.timeseries.*
 import tri.util.DefaultMapper
 import tri.util.toLocalDate
@@ -42,7 +43,7 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
 
     /** Combine results of multiple files into series grouped by region. */
     open fun processTimeSeries(data: List<MetricTimeSeries>, coerceIncreasing: Boolean = false): List<RegionTimeSeries> {
-        return data.groupBy { it.region }.map { (region, data) ->
+        return data.groupBy { it.area }.map { (region, data) ->
             val metrics = data.regroupAndMerge(coerceIncreasing).filter { it.values.any { it > 0.0 } }
             RegionTimeSeries(region, *metrics.toTypedArray())
         }
@@ -77,18 +78,18 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
 
     /** Easy way to construct metric from string value content. */
     protected open fun metric(region: String, metric: String?, date: String, value: Double)
-            = metric?.let { MetricTimeSeries(RegionLookup(region.maybeFixId()), it, 0.0, date.toLocalDate(FORMAT), value) }
+            = metric?.let { MetricTimeSeries(AreaLookup(region.maybeFixId()), it, 0.0, date.toLocalDate(FORMAT), value) }
 
     private fun String.maybeFixId() = when {
         addIdSuffixes && "$this, US" in UnitedStates.stateNames -> "$this, US"
         else -> this
     }
 
-    fun forecastId(model: String, region: RegionInfo, fullMetricId: String): ForecastId? {
+    fun forecastId(model: String, area: AreaInfo, fullMetricId: String): ForecastId? {
         val s = fullMetricId.substringBefore(" ")
         val date = s.substringAfter("-")
         val metric = fullMetricId.substringAfter(" ").substringBefore("-")
-        return ForecastId(model, "$date-2020".toLocalDate(M_D_YYYY), region, metric)
+        return ForecastId(model, "$date-2020".toLocalDate(M_D_YYYY), area, metric)
     }
 }
 

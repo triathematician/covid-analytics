@@ -1,57 +1,66 @@
-package tri.regions
+package tri.area
 
-import tri.timeseries.RegionInfo
-import tri.timeseries.RegionType
 import tri.util.csvKeyValues
 import tri.util.csvLines
+import tri.util.int
+import tri.util.string
 
 /** Common lookup information for states and counties in the US. */
 object UnitedStates {
-    val region = RegionLookup("US")
+    val region = AreaLookup("US")
 
-    val states: List<RegionInfo> by lazy { JhuRegionData.usStates.values.map { it.toRegionInfo() } }
-    val counties: List<RegionInfo> by lazy { JhuRegionData.usCounties.values.map { it.toRegionInfo() } }
+    val states by lazy { JhuAreaData.usStates.values.map { it.toAreaInfo() } }
+    val counties by lazy { JhuAreaData.usCounties.values.map { it.toAreaInfo() } }
 
-    val stateNames: List<String> by lazy { states.map { it.id } }
-    val stateAbbreviations: List<String> by lazy { stateInfo.map { it.abbr }}
-    val countyNames: List<String> by lazy { counties.map { it.id } }
-    val cbsas: List<CbsaInfo> by lazy { loadCbsaData() }
+    val stateNames by lazy { states.map { it.id } }
+    val stateAbbreviations by lazy { stateInfo.map { it.abbr }}
+    val countyNames by lazy { counties.map { it.id } }
+    val fullCountyNames by lazy { loadFullCountyNames() }
+    val cbsas by lazy { loadCbsaData() }
 
-    val stateInfo: List<StateInfo> by lazy {
-        JhuRegionData::class.java.getResource("resources/state-fips.csv").csvLines()
+    val stateInfo by lazy {
+        JhuAreaData::class.java.getResource("resources/state-fips.csv").csvLines()
                 .map { StateInfo(it[0], it[1], it[3].toIntOrNull()!!) }
                 .toList()
     }
 
-    private val cbsaCache = mutableMapOf<Int, RegionInfo?>()
+    /** Cache that associates county FIPS to CBSA regions. */
+    private val countyFipsToCbsaCache = mutableMapOf<Int, AreaInfo?>()
 
     //region LOOKUPS
 
-    /** Lookup FIPS for county. */
+    /** Lookup state region by name. */
+    fun state(name: String) = when (name) {
+        "U.S. Virgin Islands" -> AreaLookup("Virgin Islands, US")
+        else -> states.firstOrNull { it.id == name || it.id == "$name, US" } ?: throw IllegalArgumentException(name)
+    }
+
+    /** Lookup county by FIPS. */
     fun fipsToCounty(fips: Int) = counties.firstOrNull { it.fips == fips }
+    /** Lookup full county name by FIPS. */
+    fun fipsToFullCountyName(fips: Int) = fullCountyNames[fips]
+    /** Lookup CBSA by FIPS. */
+    fun fipsToCbsa(fips: Int) = cbsas.firstOrNull { it.cbsaCode == fips }?.toAreaInfo()
 
     /** Lookup CBSA for a given county. */
-    fun countyFipsToCbsa(fips: Int) = cbsas.firstOrNull { it.counties.contains(fips) }
+    fun countyFipsToCbsaInfo(fips: Int) = cbsas.firstOrNull { it.counties.contains(fips) }
     /** Lookup CBSA region for a given county by FIPS. */
-    fun cbsaRegion(fips: Int) = cbsaCache.getOrPut(fips) {
-        val cbsa = countyFipsToCbsa(fips) ?: return null
-        JhuRegionData.cbsaRegionData["${cbsa.cbsaTitle}, US"]?.toRegionInfo()
-    }
+    fun countyFipsToCbsaRegion(fips: Int) = countyFipsToCbsaCache.getOrPut(fips) { countyFipsToCbsaInfo(fips)?.toAreaInfo() }
 
     /** Lookup FEMA region for a given CBSA. Requires an exact match. */
-    fun stateToFemaRegion(region: RegionInfo): Int? {
-        require(region.type == RegionType.PROVINCE_STATE)
-        return femaRegion(abbreviationFromState(region.id))
+    fun stateToFemaRegion(area: AreaInfo): Int? {
+        require(area.type == RegionType.PROVINCE_STATE)
+        return femaRegion(abbreviationFromState(area.id))
     }
     /** Lookup FEMA region for a given CBSA. Requires an exact match. */
-    fun cbsaToCoreFemaRegion(region: RegionInfo): Int? {
-        require(region.type == RegionType.METRO)
-        return cbsas.firstOrNull { it.cbsaTitle.toLowerCase() == region.id.toLowerCase().removeSuffix(", us") }?.coreRegion
+    fun cbsaToCoreFemaRegion(area: AreaInfo): Int? {
+        require(area.type == RegionType.METRO)
+        return cbsas.firstOrNull { it.cbsaTitle.toLowerCase() == area.id.toLowerCase().removeSuffix(", us") }?.coreRegion
     }
     /** Lookup state for a given CBSA. Requires an exact match. */
-    fun cbsaToCoreState(region: RegionInfo): String? {
-        require(region.type == RegionType.METRO)
-        return cbsas.firstOrNull { it.cbsaTitle.toLowerCase() == region.id.toLowerCase().removeSuffix(", us") }?.coreState
+    fun cbsaToCoreState(area: AreaInfo): String? {
+        require(area.type == RegionType.METRO)
+        return cbsas.firstOrNull { it.cbsaTitle.toLowerCase() == area.id.toLowerCase().removeSuffix(", us") }?.coreState
     }
 
     fun abbreviationFromState(id: String) = stateInfo.firstOrNull { it.name.toLowerCase() == id.toLowerCase().removeSuffix(", us") }?.abbr ?: throw IllegalArgumentException("State not found: $id")
@@ -59,6 +68,9 @@ object UnitedStates {
     fun stateFromAbbreviationOrNull(id: String) = stateInfo.firstOrNull { it.abbr.toLowerCase() == id.toLowerCase() }?.name
 
     //endregion
+
+    private fun loadFullCountyNames() = UnitedStates::class.java.getResource("resources/fips.csv").csvKeyValues()
+            .map { it.int("fips")!! to it.string("name")!! }.toMap()
 
     private fun loadCbsaData() = UnitedStates::class.java.getResource("resources/Mar2020cbsaDelineation.csv").csvKeyValues()
             .map { CbsaInfo(it["CBSA Code"]!!.toInt(), it["CSA Code"]?.toIntOrNull(), it["CBSA Title"]!!, it["CSA Title"]!!,

@@ -1,14 +1,10 @@
 package tri.covid19.data
 
 import tri.covid19.*
-import tri.regions.RegionLookup
-import tri.regions.UnitedStates
-import tri.timeseries.ForecastId
+import tri.area.AreaLookup
 import tri.timeseries.MetricTimeSeries
-import tri.timeseries.RegionInfo
-import tri.timeseries.RegionType
+import tri.area.RegionType
 import tri.util.csvKeyValues
-import tri.util.toLocalDate
 import java.lang.IllegalArgumentException
 import java.net.URL
 
@@ -51,7 +47,7 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
     private fun yygRegion(region: String, country: String): String {
         if (region == "ALL" || region == "")
             return country
-        val lookup = RegionLookup("$region, $country")
+        val lookup = AreaLookup("$region, $country")
         if (lookup.type != RegionType.UNKNOWN) {
             return lookup.id
         } else {

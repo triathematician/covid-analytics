@@ -1,11 +1,11 @@
 package tri.covid19.data
 
 import tri.covid19.*
-import tri.regions.CbsaInfo
-import tri.regions.RegionLookup
-import tri.regions.UnitedStates
+import tri.area.CbsaInfo
+import tri.area.AreaLookup
+import tri.area.UnitedStates
 import tri.timeseries.MetricTimeSeries
-import tri.timeseries.RegionInfo
+import tri.area.AreaInfo
 import tri.timeseries.intTimeSeries
 import tri.util.csvKeyValues
 import tri.util.toLocalDate
@@ -46,7 +46,7 @@ object JhuDailyReports: CovidDataNormalizer() {
         } catch (x: Exception) { println("Failed to read $url"); throw x }
 
         return rows.flatMap { row ->
-            val region = row.region
+            val region = row.area
             listOfNotNull(intTimeSeries(region, CASES, row.Last_Update, row.Confirmed),
                     intTimeSeries(region, DEATHS, row.Last_Update, row.Deaths),
                     intTimeSeries(region, RECOVERED, row.Last_Update, row.Recovered),
@@ -97,8 +97,8 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
                           var Confirmed: Int, var Deaths: Int, var Recovered: Int, var Active: Int,
                           var People_Tested: Int?, var People_Hospitalized: Int?) {
 
-    val region: RegionInfo
-        get() = RegionLookup(Combined_Key)
+    val area: AreaInfo
+        get() = AreaLookup(Combined_Key)
     val Combined_Key
         get() = listOf(Admin2, Province_State, Country_Region).filter { it.isNotEmpty() }.joinToString(", ")
 
@@ -175,7 +175,7 @@ private val COUNTRIES_TO_NOT_AGGREGATE = listOf("United Kingdom", "Netherlands",
 /** Add state and country aggregate information to the rows. */
 fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
     val cbsaAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
-            .groupBy { UnitedStates.countyFipsToCbsa(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", "", emptyList()) }
+            .groupBy { UnitedStates.countyFipsToCbsaInfo(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", "", emptyList()) }
             .filter { it.key.cbsaCode > 0 }
             .mapValues { it.value.sumWithinCbsa(it.key) }.values
     val stateAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
