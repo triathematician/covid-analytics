@@ -28,7 +28,7 @@ object CovidForecasts {
     private fun fileForecasts(file: File): List<Forecast> {
         val model = file.nameWithoutExtension.substringBefore("-").toUpperCase()
         return loadTimeSeries(file).flatMap { regionData ->
-            regionData.metrics.groupBy { forecastId(model, regionData.region, it.id) }
+            regionData.metrics.groupBy { forecastId(model, regionData.area, it.id) }
                     .filter { it.key != null }
                     .map { Forecast(it.key!!, it.value) }
         }

@@ -102,18 +102,18 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
-                    .filter { parentRegion.value.isEmpty() || it.region.parent == parentRegion.value }
+                    .filter { parentRegion.value.isEmpty() || it.area.parent == parentRegion.value }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
-                    .filter { it.region.population.let { it == null || it in minPopulation..maxPopulation } }
-                    .filter { exclude(it.region.id) }
+                    .filter { it.area.population.let { it == null || it in minPopulation..maxPopulation } }
+                    .filter { exclude(it.area.id) }
                     .sortedByDescending { it.sortMetric }
                     .toList()
-            return (sMetrics.filter { include(it.region.id) } + sMetrics).take(regionLimit + skipFirst).drop(skipFirst)
+            return (sMetrics.filter { include(it.area.id) } + sMetrics).take(regionLimit + skipFirst).drop(skipFirst)
         } else {
-            val regions = historicalData(null).map { it.region.id }
+            val regions = historicalData(null).map { it.area.id }
             return data().filter { it.metric == if (perCapita) metric.perCapita else metric }
-                .filter { it.region.id in regions }
-                .sortedBy { regions.indexOf(it.region.id) }
+                .filter { it.area.id in regions }
+                .sortedBy { regions.indexOf(it.area.id) }
         }
     }
 
@@ -122,7 +122,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             TimeSeriesSort.ALL -> lastValue
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
             TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
-            TimeSeriesSort.POPULATION -> region.population?.toDouble() ?: 0.0
+            TimeSeriesSort.POPULATION -> area.population?.toDouble() ?: 0.0
             TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).max() ?: 0.0
             TimeSeriesSort.PEAK14 -> values.deltas().movingAverage(14).max() ?: 0.0
         }
@@ -162,12 +162,12 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             metrics = metrics.map { it.deltas() }
         }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return domain to metrics.map { series(it.region.id, domain, it) }
+        return domain to metrics.map { series(it.area.id, domain, it) }
     }
 
     /** Plot growth vs counts. */
     internal fun hubbertDataSeries() = smoothedData().map { it.hubbertSeries(1) }
-                .map { series(it.first.region.id, it.first.domain.shift(1, 0), it.first, it.second) }
+                .map { series(it.first.area.id, it.first.domain.shift(1, 0), it.first, it.second) }
 
     //endregion
 }

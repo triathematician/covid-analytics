@@ -57,7 +57,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<MetricTimeSerie
             return
         }
 
-        popText.value = s.region.population?.userFormat() ?: "unknown"
+        popText.value = s.area.population?.userFormat() ?: "unknown"
 
         val deltas = s.deltas()
         val smoothedDeltas = deltas.movingAverage(7)

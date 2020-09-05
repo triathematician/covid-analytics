@@ -1,10 +1,10 @@
-package tri.regions
+package tri.area
 
 const val GLOBAL = "Global"
 const val GLOBAL_POPULATION = 7775510000
 
 object PopulationLookup: (String) -> Long? {
-    fun fips(fips: Int): Long? = JhuRegionData.fips(fips)?.pop
+    fun fips(fips: Int): Long? = JhuAreaData.fips(fips)?.pop
 
     override fun invoke(id: String): Long? {
         if (id == GLOBAL) return GLOBAL_POPULATION

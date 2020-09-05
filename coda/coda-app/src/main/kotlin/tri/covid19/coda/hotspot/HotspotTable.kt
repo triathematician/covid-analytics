@@ -125,10 +125,10 @@ class HotspotTable: SplitPane() {
 
     private fun updateTableData() {
         hotspotData.setAll(data()
-                .filter { parentRegion.value.isEmpty() || it.region.parent == parentRegion.value }
+                .filter { parentRegion.value.isEmpty() || it.area.parent == parentRegion.value }
                 .filter { it.lastValue >= minCount.value && it.deltas().last(0..6).sum() >= minLastWeekCount.value }
-                .filter { it.region.population == null || it.lastValue / it.region.population!! * 1E5 >= minPerCapitaCount.value }
-                .filter { it.region.population == null || it.deltas().last(0..6).sum() / it.region.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
+                .filter { it.area.population == null || it.lastValue / it.area.population!! * 1E5 >= minPerCapitaCount.value }
+                .filter { it.area.population == null || it.deltas().last(0..6).sum() / it.area.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
                 .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = minPopulation.value, maxPopulation = maxPopulation.value))
     }
 

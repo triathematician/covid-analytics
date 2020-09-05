@@ -9,9 +9,15 @@ import java.time.temporal.ChronoUnit
 /** Formats date as month and day only. */
 val LocalDate.monthDay
     get() = this.format(DateTimeFormatter.ofPattern("M/d"))
+/** Formats date as month/day/year. */
+val LocalDate.monthDayYear
+    get() = DateTimeFormatter.ofPattern("M/d/yyyy").format(this)
 /** Formats date as readable month-day. */
 val LocalDate.monthDayReadable
     get() = this.format(DateTimeFormatter.ofPattern("MMMM d"))
+/** Formats date as year-month-day. */
+val LocalDate.yyyyMMdd
+    get() = DateTimeFormatter.ofPattern("yyyyMMdd").format(this)
 
 /** Parses string to local date using one of given formats. */
 fun String.toLocalDate(vararg formats: DateTimeFormatter): LocalDate {

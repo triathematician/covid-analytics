@@ -4,20 +4,36 @@
 package tri.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
-import java.io.PrintStream
+import java.io.*
 import java.net.URL
 
 /** Split lines of the CSV file, accommodating quotes and empty entries. */
 object CsvLineSplitter {
-    private val regex = "(?<=^|,)(?:\"{2}|(?:)|[^,\"\\r\\n]+|\"(?:\"{2}|[^\"]+)+\")(?=,|\$)".toRegex()
+    private val regex = "(?m)(?s)(?<=^)(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+(?=$)".toRegex()
+    private val inlineRegex = "(?m)(?<=^|,)(?:\"\"|(?:)|[^,\"\\r\\n]+|\"(?:\"\"|[^\"]+)+\")(?=,|$)".toRegex()
+
+    /** Reads data from the given URL, returning the header line and content lines. */
+    fun readData(url: URL) = readData { InputStreamReader(url.openStream()) }
+
+    /** Reads data from the given string, returning the header line and content lines. */
+    fun readData(string: String) = readData { StringReader(string) }
+
+    /** Reads data from a reader, returning the header line and content lines. */
+    fun readData(reader: () -> Reader): Pair<List<String>, List<List<String>>> {
+        val line0 = reader().useLines {
+            // remove BOM markers in the file before reading header line
+            it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
+        }
+        val header = splitLine(line0).map { it.javaTrim() }
+        val otherLines = BufferedReader(reader()).lineSequence().drop(1).joinToString("\n")
+        val others = regex.findAll(otherLines).map { it.value }.toList()
+        return header to others.map { splitLine(it) }
+    }
 
     /** Splits a comma-separated lines. An empty line will generate an exception. */
     fun splitLine(line: String): List<String> {
         require(line.isNotBlank())
-        return regex.findAll(line).map {
+        return inlineRegex.findAll(line).map {
             var res = it.value
             while (res.startsWith("\"") && res.endsWith("\"")) {
                 res = res.substring(1, res.length - 1)
@@ -25,35 +41,29 @@ object CsvLineSplitter {
             res
         }.toList()
     }
-
-    /** Reads data from the given URL, returning the header line and content lines. */
-    fun readData(file1: URL): Pair<List<String>, Sequence<List<String>>> {
-        val line0 = InputStreamReader(file1.openStream()).useLines {
-            // remove BOM markers in the file before reading header line
-            it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
-        }
-        val otherLines = BufferedReader(InputStreamReader(file1.openStream())).lineSequence().drop(1)
-        val header = splitLine(line0).map { it.javaTrim() }
-        return header to otherLines.filter { it.isNotBlank() }.map { splitLine(it) }
-    }
 }
 
-/** Maps lines of data from a file. */
-fun <X> File.mapCsvKeyValues(op: (Map<String, String>) -> X) = toURI().toURL().csvKeyValues().map { op(it) }
-
-/** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
-inline fun <reified X> File.mapCsvKeyValues() = toURI().toURL().csvKeyValues().map { ObjectMapper().convertValue(it, X::class.java) }
+/** Maps lines of data from a string. */
+fun <X> String.mapCsvKeyValues(op: (Map<String, String>) -> X) = csvKeyValues().map { op(it) }
+/** Reads lines of data from a URL. */
+fun String.csvKeyValues() = CsvLineSplitter.readData(this).keyValues()
 
 /** Reads lines of data from a file. */
 fun File.csvKeyValues() = toURI().toURL().csvKeyValues()
+/** Maps lines of data from a file. */
+fun <X> File.mapCsvKeyValues(op: (Map<String, String>) -> X) = csvKeyValues().map { op(it) }
+/** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> File.mapCsvKeyValues() = csvKeyValues().map { ObjectMapper().convertValue(it, X::class.java) }
 
 /** Reads lines of data from a URL. */
 fun URL.csvLines() = CsvLineSplitter.readData(this).second
-
 /** Reads lines of data from a URL. */
-fun URL.csvKeyValues() = CsvLineSplitter.readData(this).let {
-    (header, data) -> data.map { datum -> datum.mapIndexed { i, s -> header[i] to s }.toMap() }
-}
+fun URL.csvKeyValues() = CsvLineSplitter.readData(this).keyValues()
+
+/** Pairs up header with content. */
+private fun Pair<List<String>, List<List<String>>>.keyValues() = second.map { datum -> datum
+        .filterIndexed { i, _ -> if (i >= first.size) println("More columns than expected: \n[[[\n   - ${datum.joinToString("\n   - ")}\n]]]"); i < first.size }
+        .mapIndexed { i, s -> first[i] to s }.toMap() }
 
 /** Log a list of items as comma-separated CSV lines. */
 fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: String = ",") = map {
@@ -62,8 +72,7 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
         is Number -> if (it.toDouble() >= 0.1) it.format(3) else it.format(6)
         else -> it
     }.toString()
-}.map { if (',' in it) "\"$it\"" else it }
-        .joinToString(sep).log(ps, prefix)
+}.joinToString(sep) { if (',' in it) "\"$it\"" else it }.log(ps, prefix)
 
 fun Map<String, String>.string(n: String) = get(n)?.let { if (it.isEmpty()) null else it }
 fun Map<String, String>.boolean(n: String) = get(n)?.let { "TRUE".equals(it, ignoreCase = true) } ?: false
