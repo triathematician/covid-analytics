@@ -1,11 +1,8 @@
 package tri.covid19.data
 
+import tri.area.*
 import tri.covid19.*
-import tri.area.CbsaInfo
-import tri.area.AreaLookup
-import tri.area.UnitedStates
 import tri.timeseries.MetricTimeSeries
-import tri.area.AreaInfo
 import tri.timeseries.intTimeSeries
 import tri.util.csvKeyValues
 import tri.util.toLocalDate
@@ -97,8 +94,14 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
                           var Confirmed: Int, var Deaths: Int, var Recovered: Int, var Active: Int,
                           var People_Tested: Int?, var People_Hospitalized: Int?) {
 
+    /** Construct as aggregate, with metrics summed from other rows. */
+    constructor(FIPS: String, Admin2: String, Province_State: String, Country_Region: String, data: List<DailyReportRow>)
+            : this(FIPS, Admin2, Province_State, Country_Region, data.first().Last_Update, null, null,
+            data.sumBy { it.Confirmed }, data.sumBy { it.Deaths }, data.sumBy { it.Recovered },
+            data.sumBy { it.Active }, data.sumBy { it.People_Tested ?: 0 }, data.sumBy { it.People_Hospitalized ?: 0 })
+
     val area: AreaInfo
-        get() = AreaLookup(Combined_Key)
+        get() = Lookup.area(Combined_Key)
     val Combined_Key
         get() = listOf(Admin2, Province_State, Country_Region).filter { it.isNotEmpty() }.joinToString(", ")
 
@@ -175,9 +178,9 @@ private val COUNTRIES_TO_NOT_AGGREGATE = listOf("United Kingdom", "Netherlands",
 /** Add state and country aggregate information to the rows. */
 fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
     val cbsaAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
-            .groupBy { UnitedStates.countyFipsToCbsaInfo(it.FIPS.toIntOrNull() ?: 0) ?: CbsaInfo(-1, -1, "", "", "", emptyList()) }
-            .filter { it.key.cbsaCode > 0 }
-            .mapValues { it.value.sumWithinCbsa(it.key) }.values
+            .groupBy { Usa.cbsaCodeByCounty[it.FIPS.toIntOrNull() ?: 0] ?: 0 }
+            .filter { Usa.cbsas[it.key] != null }
+            .mapValues { it.value.sumWithinCbsa(Usa.cbsas[it.key]!!) }.values
     val stateAggregates = filter { it.isWithinStateData && it.Country_Region !in COUNTRIES_TO_NOT_AGGREGATE }
             .groupBy { it.Province_State + "__" + it.Country_Region }
             .mapValues { it.value.sumWithinState() }.values
@@ -188,19 +191,15 @@ fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
 }
 
 /** Sums all counts within CBSA. */
-private fun List<DailyReportRow>.sumWithinCbsa(region: CbsaInfo) = DailyReportRow("", "", region.cbsaTitle, first().Country_Region, first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
+private fun List<DailyReportRow>.sumWithinCbsa(region: UsCbsaInfo) = DailyReportRow("", "", region.cbsaTitle, first().Country_Region, this)
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
-private fun List<DailyReportRow>.sumWithinState() = DailyReportRow("", "", first().Province_State, first().Country_Region, first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
+private fun List<DailyReportRow>.sumWithinState() = DailyReportRow("", "", first().Province_State, first().Country_Region, this)
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
-private fun List<DailyReportRow>.sumWithinCountry() = DailyReportRow("", "", "", first().Country_Region, first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
+private fun List<DailyReportRow>.sumWithinCountry() = DailyReportRow("", "", "", first().Country_Region, this)
 
 /** Sum of all data as a world row. */
-private fun List<DailyReportRow>.global() = DailyReportRow("", "", "", "Global", first().Last_Update, null, null,
-        sumBy { it.Confirmed }, sumBy { it.Deaths }, sumBy { it.Recovered }, sumBy { it.Active }, sumBy { it.People_Tested ?: 0 }, sumBy { it.People_Hospitalized ?: 0 })
+private fun List<DailyReportRow>.global() = DailyReportRow("", "", "", "Earth", this)
 
 //endregion

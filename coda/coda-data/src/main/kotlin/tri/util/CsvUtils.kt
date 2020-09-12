@@ -4,8 +4,10 @@
 package tri.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.*
 import java.net.URL
+import kotlin.reflect.KClass
 
 /** Split lines of the CSV file, accommodating quotes and empty entries. */
 object CsvLineSplitter {
@@ -53,12 +55,17 @@ fun File.csvKeyValues() = toURI().toURL().csvKeyValues()
 /** Maps lines of data from a file. */
 fun <X> File.mapCsvKeyValues(op: (Map<String, String>) -> X) = csvKeyValues().map { op(it) }
 /** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
-inline fun <reified X> File.mapCsvKeyValues() = csvKeyValues().map { ObjectMapper().convertValue(it, X::class.java) }
+inline fun <reified X> File.mapCsvKeyValues() = csvKeyValues().map { ObjectMapper().registerKotlinModule().convertValue(it, X::class.java) }
 
 /** Reads lines of data from a URL. */
 fun URL.csvLines() = CsvLineSplitter.readData(this).second
 /** Reads lines of data from a URL. */
 fun URL.csvKeyValues() = CsvLineSplitter.readData(this).keyValues()
+/** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> URL.mapCsvKeyValues() = csvKeyValues().map { ObjectMapper().registerKotlinModule().convertValue(it, X::class.java) }
+
+/** Maps CSV file to target object, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> KClass<*>.csvResource(name: String) = java.getResource(name).mapCsvKeyValues<X>().toList()
 
 /** Pairs up header with content. */
 private fun Pair<List<String>, List<List<String>>>.keyValues() = second.map { datum -> datum

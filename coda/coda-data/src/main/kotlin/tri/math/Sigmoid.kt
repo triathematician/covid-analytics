@@ -147,7 +147,6 @@ object SigmoidCurveFitting {
         Sigmoid.GEN_LOGISTIC -> generalLogistic(x, params[0], params[1], params[2], params[3])
         Sigmoid.GAUSSIAN -> gaussianErf(x, params[0], params[1], params[2])
         Sigmoid.GOMPERTZ -> gompertz(x, params[0], params[1], params[2])
-        else -> throw IllegalStateException()
     }
 
     /** Compute curve for explicit set of parameters. */

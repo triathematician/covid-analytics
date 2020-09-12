@@ -1,4 +1,4 @@
-CBSA Code,Metropolitan Division Code,CSA Code,CBSA Title,CBSA Type,Metropolitan Division Title,CSA Title,County/County Equivalent,State Name,FIPS State Code,FIPS County Code,FIPS Combined,Central/Outlying County
+CBSA_Code,Metropolitan_Division_Code,CSA_Code,CBSA_Title,CBSA_Type,Metropolitan_Division_Title,CSA_Title,County_or_Equivalent,State_Name,FIPS_State_Code,FIPS_County_Code,FIPS_Combined,Central_Outlying_County
 10100,,,"Aberdeen, SD",Micropolitan Statistical Area,,,Brown County,South Dakota,46,013,46013,Central
 10100,,,"Aberdeen, SD",Micropolitan Statistical Area,,,Edmunds County,South Dakota,46,045,46045,Outlying
 10140,,,"Aberdeen, WA",Micropolitan Statistical Area,,,Grays Harbor County,Washington,53,027,53027,Central

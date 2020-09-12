@@ -2,8 +2,8 @@ package tri.covid19.data
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import tri.area.AreaInfo
-import tri.area.AreaLookup
-import tri.area.UnitedStates
+import tri.area.Lookup
+import tri.area.Usa
 import tri.timeseries.*
 import tri.util.DefaultMapper
 import tri.util.toLocalDate
@@ -78,12 +78,7 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
 
     /** Easy way to construct metric from string value content. */
     protected open fun metric(region: String, metric: String?, date: String, value: Double)
-            = metric?.let { MetricTimeSeries(AreaLookup(region.maybeFixId()), it, 0.0, date.toLocalDate(FORMAT), value) }
-
-    private fun String.maybeFixId() = when {
-        addIdSuffixes && "$this, US" in UnitedStates.stateNames -> "$this, US"
-        else -> this
-    }
+            = metric?.let { MetricTimeSeries(Lookup.area(region), it, 0.0, date.toLocalDate(FORMAT), value) }
 
     fun forecastId(model: String, area: AreaInfo, fullMetricId: String): ForecastId? {
         val s = fullMetricId.substringBefore(" ")

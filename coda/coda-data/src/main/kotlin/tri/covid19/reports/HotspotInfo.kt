@@ -92,7 +92,7 @@ data class HotspotInfo(var area: AreaInfo, var metric: String, var start: LocalD
         get() = area.population
 
     private val currentTrend
-        get() = MinMaxFinder(10).invoke(MetricTimeSeries(AreaInfo("", RegionType.UNKNOWN, ""), "", false, 0.0, LocalDate.now(), deltas)
+        get() = MinMaxFinder(10).invoke(MetricTimeSeries(area, "", false, 0.0, LocalDate.now(), deltas)
                 .restrictNumberOfStartingZerosTo(1).movingAverage(7))
                 .let { CurrentTrend(it.extrema) }
 
