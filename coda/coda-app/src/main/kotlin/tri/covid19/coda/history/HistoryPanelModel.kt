@@ -1,9 +1,12 @@
 package tri.covid19.coda.history
 
 import javafx.beans.property.SimpleBooleanProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
+import tri.area.Lookup
+import tri.area.USA
 import tri.covid19.ACTIVE
 import tri.covid19.CASES
 import tri.covid19.DEATHS
@@ -44,7 +47,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> onChange() } }
     val includeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
     val excludeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
-    val parentRegion = SimpleStringProperty("").apply { addListener { _ -> onChange() } }
+    val parentRegion = SimpleStringProperty("USA").apply { addListener { _ -> onChange() } }
     val includeRegion = SimpleStringProperty("").apply { addListener { _ -> if (includeRegionActive.get()) onChange() } }
     val excludeRegion = SimpleStringProperty("").apply { addListener { _ -> if (excludeRegionActive.get()) onChange() } }
 
@@ -102,7 +105,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
-                    .filter { parentRegion.value.isEmpty() || it.area.parent == parentRegion.value }
+                    .filter { parentRegion.value == null || it.area.parent == Lookup.area(parentRegion.value) }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
                     .filter { it.area.population.let { it == null || it in minPopulation..maxPopulation } }
                     .filter { exclude(it.area.id) }

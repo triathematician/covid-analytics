@@ -1,11 +1,13 @@
 package tri.area
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+
 /**
  * Key information associated with a geographic area or region. The design of this library assumes there is a unique ID
  * for every area so these can be identified uniquely, so the id is expected to be a comma-delimited set of identifiers
  * that together make it uniquely defined.
  */
-open class AreaInfo(val id: String, val type: RegionType, val parent: AreaInfo?, val fips: Int? = null, val metrics: AreaMetrics) {
+open class AreaInfo(val id: String, val type: RegionType, @JsonIgnore val parent: AreaInfo?, val fips: Int? = null, val metrics: AreaMetrics) {
     init {
         require(if (parent == null) type.parents.isEmpty() else parent.type in type.parents) { "Parent type of $id was invalid: $type cannot have parent $parent" }
     }

@@ -29,6 +29,9 @@ object Usa {
         UsStateInfo(it.key as String, it.value.provinceOrState, it.value.fips!!, it.value.population)
     }.mapKeys { it.key as String }
 
+    /** List of US state names, e.g. "Ohio". */
+    val stateNames = states.map { it.value.fullName }
+
     /** US states, indexed by full name, e.g. "Ohio". */
     val statesByLongName = states.mapKeys { it.value.fullName }
 

@@ -5,6 +5,7 @@ import tri.covid19.DEATHS
 import tri.timeseries.MetricTimeSeries
 import tri.area.AreaInfo
 import tri.area.RegionType
+import tri.area.USA
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 import kotlin.time.milliseconds
@@ -18,10 +19,10 @@ import kotlin.time.milliseconds
 val DEATHS_PER_100K = DEATHS.perCapita
 val CASES_PER_100K = CASES.perCapita
 
-internal val US_STATE_ID_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.PROVINCE_STATE && it.parent == "US" }
-internal val US_CBSA_ID_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.METRO && it.parent == "US" }
-internal val US_COUNTY_ID_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.COUNTY && "US" in it.parent }
-internal val COUNTRY_ID_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.COUNTRY_REGION }
+internal val US_STATE_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.PROVINCE_STATE && it.parent == USA }
+internal val US_CBSA_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.METRO && it.parent == USA }
+internal val US_COUNTY_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.COUNTY && it.parent?.parent == USA }
+internal val COUNTRY_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.COUNTRY_REGION }
 
 internal val String.perCapita
     get() = "$this (per 100k)"
@@ -32,25 +33,20 @@ internal val String.perCapita
 @ExperimentalTime
 object CovidTimeSeriesSources {
 
-    val dailyCountryReports by lazy { dailyReports(COUNTRY_ID_FILTER) }
-    val dailyUsCountyReports by lazy { dailyReports(US_COUNTY_ID_FILTER) }
-    val dailyUsStateReports by lazy { dailyReports(US_STATE_ID_FILTER) }
-    val dailyUsCbsaReports by lazy { dailyReports(US_CBSA_ID_FILTER) }
+    val dailyCountryReports by lazy { dailyReports(COUNTRY_FILTER) }
+    val dailyUsCountyReports by lazy { dailyReports(US_COUNTY_FILTER) }
+    val dailyUsStateReports by lazy { dailyReports(US_STATE_FILTER) }
+    val dailyUsCbsaReports by lazy { dailyReports(US_CBSA_FILTER) }
 
     /** Easy access to county data. */
-    fun usCountyData() = dailyUsCountyReports
-            .map { it.copy(area = it.area.copy(id = it.area.id.removeSuffix(", US"))) }
-            .sortedBy { it.area.id }
+    fun usCountyData() = dailyUsCountyReports.sortedBy { it.area.id }
 
     /** Easy access to county data. */
-    fun usCbsaData() = dailyUsCbsaReports
-            .map { it.copy(area = it.area.copy(id = it.area.id.removeSuffix(", US"))) }
-            .sortedBy { it.area.id }
+    fun usCbsaData() = dailyUsCbsaReports.sortedBy { it.area.id }
 
     /** Easy access to state data. */
     fun usStateData(includeUS: Boolean = true) = dailyUsStateReports
             .filter { includeUS || it.area.id != "US" }
-            .map { it.copy(area = it.area.copy(id = it.area.id.removeSuffix(", US"))) }
             .sortedBy { it.area.id }
 
     /** Easy access to country data. */
