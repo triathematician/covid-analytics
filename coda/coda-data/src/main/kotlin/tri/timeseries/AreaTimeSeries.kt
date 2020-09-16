@@ -3,24 +3,24 @@ package tri.timeseries
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import tri.area.AreaInfo
+import tri.area.Lookup
 import java.time.LocalDate
 
 /**
  * Aggregates all time series for a single region.
  */
-class RegionTimeSeries @JsonCreator constructor(var area: AreaInfo, var metrics: MutableList<MetricInfo> = mutableListOf()) {
-
-    constructor(area: AreaInfo, vararg metrics: MetricTimeSeries): this(area) {
+class AreaTimeSeries @JsonCreator constructor(var areaId: String, var metrics: MutableList<MetricInfo> = mutableListOf()) {
+    constructor(areaId: String, vararg metrics: MetricTimeSeries): this(areaId) {
         metrics.forEach { this += it }
     }
+    constructor(areaId: String, vararg metrics: MetricInfo): this(areaId, mutableListOf(*metrics))
 
-    constructor(area: AreaInfo, vararg metrics: MetricInfo): this(area, mutableListOf(*metrics))
+    @get:JsonIgnore
+    val area = Lookup.areaOrNull(areaId)!!
 
     operator fun plusAssign(m: MetricTimeSeries) {
         metrics.add(MetricInfo(m.metric, m.intSeries, m.start, m.defValue, m.values))
     }
-
 }
 
 /** Simple version of time series metric. */
@@ -41,6 +41,6 @@ class MetricInfo(var id: String, var intSeries: Boolean, var start: LocalDate, v
             }
         }
 
-    fun toMetricTimeSeries(area: AreaInfo) = MetricTimeSeries(area, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
+    fun toMetricTimeSeries(areaId: String) = MetricTimeSeries(areaId, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
 
 }

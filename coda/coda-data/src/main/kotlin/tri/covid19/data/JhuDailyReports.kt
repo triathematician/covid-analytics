@@ -43,7 +43,7 @@ object JhuDailyReports: CovidDataNormalizer() {
         } catch (x: Exception) { println("Failed to read $url"); throw x }
 
         return rows.flatMap { row ->
-            val region = row.area
+            val region = row.areaId
             listOfNotNull(intTimeSeries(region, CASES, row.Last_Update, row.Confirmed),
                     intTimeSeries(region, DEATHS, row.Last_Update, row.Deaths),
                     intTimeSeries(region, RECOVERED, row.Last_Update, row.Recovered),
@@ -100,10 +100,9 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
             data.sumBy { it.Confirmed }, data.sumBy { it.Deaths }, data.sumBy { it.Recovered },
             data.sumBy { it.Active }, data.sumBy { it.People_Tested ?: 0 }, data.sumBy { it.People_Hospitalized ?: 0 })
 
-    val area: AreaInfo
-        get() = Lookup.area(Combined_Key)
-    val Combined_Key
+    val areaId
         get() = listOf(Admin2, Province_State, Country_Region).filter { it.isNotEmpty() }.joinToString(", ")
+    val area: AreaInfo = Lookup.area(areaId)
 
     /** Data that can be aggregated at a state level. */
     val isWithinStateData

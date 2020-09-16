@@ -27,7 +27,8 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return keys.filter { it.startsWith("predicted_total_deaths") || it.startsWith("predicted_total_infected") }
                 .filter { !get(it).isNullOrEmpty() }
                 .mapNotNull {
-                    metric(yygRegion(get("region")!!, get("country")!!), metricName(it, date), get("date")!!, get(it)!!.toDouble())
+                    metric(yygArea(get("region")!!, get("country")!!), false,
+                            metricName(it, date), get("date")!!, get(it)!!.toDouble())
                 }
     }
 
@@ -44,10 +45,10 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return "$YYG-$date $revisedName"
     }
 
-    private fun yygRegion(region: String, country: String): String {
+    private fun yygArea(region: String, country: String): String {
         if (region == "ALL" || region == "")
             return country
-        val lookup = Lookup.area("$region, $country")
+        val lookup = Lookup.areaOrNull(region) ?: Lookup.area("$region, $country")
         if (lookup.type != RegionType.UNKNOWN) {
             return lookup.id
         } else {

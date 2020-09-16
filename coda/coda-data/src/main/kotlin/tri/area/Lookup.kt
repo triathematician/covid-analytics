@@ -1,7 +1,5 @@
 package tri.area
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
 import tri.util.csvResource
 
 /** Quick access to looking up areas/elements by region name. */
@@ -23,20 +21,30 @@ object Lookup {
 
     //region PRIMARY LOOKUP
 
-    /** Get object for area with given name. */
-    fun area(lookupName: String): AreaInfo {
-        val name = aliases[lookupName] ?: lookupName
-        areaCache[name]?.let { return it }
-        notFound[name]?.let { return it }
+    /**
+     * Get object for area with given name. Logs an error and returns a generic "Unknown" area if not found.
+     * @param lookupName name to lookup
+     * @param assumeUsState if true, lookup will assume the area is part of the USA if not found or ambiguous
+     */
+    fun area(lookupName: String, assumeUsState: Boolean = false) = areaOrNull(lookupName, assumeUsState) ?: UNKNOWN
 
-        val region = JhuAreaData.lookupCaseInsensitive(name)?.toAreaInfo()
-        return if (region == null) {
+    /** Get object for area with given name. Logs an error and returns null if not found. */
+    fun areaOrNull(lookupName: String, assumeUsState: Boolean = false): AreaInfo? {
+        val name = aliases[lookupName] ?: lookupName
+        val altName = if (assumeUsState) "$name, US" else null
+        areaCache[name]?.let { return it }
+        areaCache[altName]?.let { return it }
+        notFound[name]?.let { return null }
+
+        val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
+        val areaInfo = jhuArea?.toAreaInfo()
+        return if (areaInfo == null) {
             println("Area not found: $name")
             notFound[name] = UNKNOWN
-            UNKNOWN
+            null
         } else {
-            areaCache[name] = region
-            region
+            areaCache[name] = areaInfo
+            areaInfo
         }
     }
 

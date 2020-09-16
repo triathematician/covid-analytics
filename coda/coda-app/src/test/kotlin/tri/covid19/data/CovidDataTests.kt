@@ -26,11 +26,11 @@ fun testGrowth() {
         }
         println("$date: ${filtered.size}")
         filtered.filter {
-            val lastOn = latest.getOrElse(it.series.area.id) { LocalDate.of(2020, 1, 1) }
+            val lastOn = latest.getOrElse(it.series.areaId) { LocalDate.of(2020, 1, 1) }
             val new = date.minus(lastOn) > 21
-            latest.put(it.series.area.id, date)
+            latest.put(it.series.areaId, date)
             new
-        }.let { println("  ${it.size}: ${it.map { it.series.area.id }}") }
+        }.let { println("  ${it.size}: ${it.map { it.series.areaId }}") }
     }
 }
 
@@ -51,7 +51,7 @@ private operator fun LocalDate.minus(i: Int) = minusDays(i.toLong())
 
 @ExperimentalTime
 fun testKernel() {
-    val data = CovidHistory.allData.first { it.area.id == "United Kingdom" && it.metric == CASES }
+    val data = CovidHistory.allData.first { it.areaId == "United Kingdom" && it.metric == CASES }
     println(data.values)
     println(data.values.deltas().movingAverage(7))
     val kernels = data.values.deltas().movingAverage(7).windowed(6).map { bestKernel(it) }

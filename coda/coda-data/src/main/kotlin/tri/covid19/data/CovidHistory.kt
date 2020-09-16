@@ -9,7 +9,7 @@ object CovidHistory {
 
     val allData: List<MetricTimeSeries> by lazy {
         loadTimeSeries("../data/normalized/jhu-historical.json").flatMap { rts ->
-            rts.metrics.map { it.toMetricTimeSeries(rts.area) }
+            rts.metrics.map { it.toMetricTimeSeries(rts.areaId) }
         }
     }
 

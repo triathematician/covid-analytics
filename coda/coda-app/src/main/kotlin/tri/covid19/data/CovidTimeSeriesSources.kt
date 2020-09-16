@@ -4,6 +4,7 @@ import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.timeseries.MetricTimeSeries
 import tri.area.AreaInfo
+import tri.area.EARTH
 import tri.area.RegionType
 import tri.area.USA
 import kotlin.time.ExperimentalTime
@@ -39,25 +40,25 @@ object CovidTimeSeriesSources {
     val dailyUsCbsaReports by lazy { dailyReports(US_CBSA_FILTER) }
 
     /** Easy access to county data. */
-    fun usCountyData() = dailyUsCountyReports.sortedBy { it.area.id }
+    fun usCountyData() = dailyUsCountyReports.sortedBy { it.areaId }
 
     /** Easy access to county data. */
-    fun usCbsaData() = dailyUsCbsaReports.sortedBy { it.area.id }
+    fun usCbsaData() = dailyUsCbsaReports.sortedBy { it.areaId }
 
     /** Easy access to state data. */
     fun usStateData(includeUS: Boolean = true) = dailyUsStateReports
-            .filter { includeUS || it.area.id != "US" }
-            .sortedBy { it.area.id }
+            .filter { includeUS || it.area != USA }
+            .sortedBy { it.areaId }
 
     /** Easy access to country data. */
     fun countryData(includeGlobal: Boolean = true) = dailyCountryReports
-            .filter { includeGlobal || it.area.id != "Global" }
-            .sortedBy { it.area.id }
+            .filter { includeGlobal || it.area != EARTH }
+            .sortedBy { it.areaId }
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
-    fun dailyReports(idFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
+    fun dailyReports(areaFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
         CovidHistory.allData
-                .filter { idFilter(it.area) }
+                .filter { areaFilter(it.area) }
                 .flatMap {
                     listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)

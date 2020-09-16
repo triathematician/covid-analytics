@@ -12,6 +12,7 @@ open class AreaInfo(val id: String, val type: RegionType, @JsonIgnore val parent
         require(if (parent == null) type.parents.isEmpty() else parent.type in type.parents) { "Parent type of $id was invalid: $type cannot have parent $parent" }
     }
 
+    @get:JsonIgnore
     val population
         get() = metrics.population
 

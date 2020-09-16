@@ -39,8 +39,8 @@ internal data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String
     val regionParent
         get() = when {
             admin2.isEmpty() && provinceOrState.isEmpty() -> EARTH
-            provinceOrState.isEmpty() || admin2.isEmpty() -> Lookup.area(countryOrRegion)
-            else -> Lookup.area("$provinceOrState, $countryOrRegion")
+            provinceOrState.isEmpty() || admin2.isEmpty() -> Lookup.areaOrNull(countryOrRegion)!!
+            else -> Lookup.areaOrNull("$provinceOrState, $countryOrRegion")!!
         }
 
     /** Convert to general area info object. */

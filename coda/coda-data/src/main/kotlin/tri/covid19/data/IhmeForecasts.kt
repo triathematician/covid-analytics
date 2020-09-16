@@ -18,6 +18,7 @@ object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
                 .filter { it["totdea_lower"] != it["totdea_upper"] }.toList()
                 .flatMap {
                     it.extractMetrics(regionField = "location_name", dateField = "date",
+                            assumeUsState = true,
                             metricFieldPattern = { "_" in it && !it.startsWith("location") },
                             metricNameMapper = { metricName(it, date) })
                 }

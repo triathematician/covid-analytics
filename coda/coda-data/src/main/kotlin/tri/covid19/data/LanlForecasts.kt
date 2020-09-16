@@ -17,7 +17,9 @@ object LanlForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         return url.csvKeyValues()
                 .filter { it["obs"] == "0" }.toList()
                 .flatMap {
-                    it.extractMetrics(regionField = "state", dateField = "dates",
+                    it.extractMetrics(regionField = "state",
+                            assumeUsState = true,
+                            dateField = "dates",
                             metricFieldPattern = { it.startsWith("q.") },
                             metricNameMapper = { metricName(it, date) })
                 }
