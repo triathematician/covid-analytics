@@ -1,21 +1,228 @@
 alias,name
-Burma,Myanmar
-Congo (Kinshasa),Congo
-Cote d'Ivoire,Côte d'Ivoire
-Curacao,Curaçao
-"Curacao, Netherlands",Curaçao
+UK,United Kingdom
+Myanmar,Burma
+Congo,Congo (Kinshasa)
+Republic of the Congo,Congo (Kinshasa)
+Côte d'Ivoire,Cote d'Ivoire
+Ivory Coast,Cote d'Ivoire
+Republic of Moldova,Moldova
+Curacao,"Curacao, Netherlands"
+Curaçao,"Curacao, Netherlands"
 Czech Republic (Czechia),Czechia
-Faroe Islands,Faeroe Islands
-"Faroe Islands, Denmark",Faeroe Islands
-Reunion,Réunion
-"Reunion, France",Réunion
-Saint Kitts and Nevis,Saint Kitts & Nevis
-Saint Vincent and the Grenadines,St. Vincent & Grenadines
+Czech Republic,Czechia
+Faroe Islands,"Faroe Islands, Denmark"
+Faeroe Islands,"Faroe Islands, Denmark"
+French Guiana,"French Guiana, France"
+Martinique,"Martinique, France"
+Reunion,"Reunion, France"
+Réunion,"Reunion, France"
+Saint Kitts & Nevis,Saint Kitts and Nevis
+St. Vincent & Grenadines,Saint Vincent and the Grenadines
 South Korea,"Korea, South"
-St Martin,Saint Martin
-"St Martin, France",Saint Martin
-Taiwan*,Taiwan
-Turks and Caicos Islands,Turks and Caicos
-"Turks and Caicos Islands, United Kingdom",Turks and Caicos
+Republic of Korea,"Korea, South"
+Saint Barthelemy,"Saint Barthelemy, France"
+Turks and Caicos Islands,"Turks and Caicos Islands, United Kingdom"
+Turks and Caicos,"Turks and Caicos Islands, United Kingdom"
+Gibraltar,"Gibraltar, United Kingdom"
 US,United States
 U.S. Virgin Islands,"Virgin Islands, US"
+"Virgin Islands, U.S., US","Virgin Islands, US"
+Abruzzo,"Abruzzo, Italy"
+Basilicata,"Basilicata, Italy"
+Calabria,"Calabria, Italy"
+Campania,"Campania, Italy"
+Emilia-Romagna,"Emilia-Romagna, Italy"
+Friuli Venezia Giulia,"Friuli Venezia Giulia, Italy"
+Friuli-Venezia Giulia,"Friuli Venezia Giulia, Italy"
+Lazio,"Lazio, Italy"
+Liguria,"Liguria, Italy"
+Lombardia,"Lombardia, Italy"
+Marche,"Marche, Italy"
+Molise,"Molise, Italy"
+P.A. Bolzano,"P.A. Bolzano, Italy"
+Provincia autonoma di Bolzano,"P.A. Bolzano, Italy"
+P.A. Trento,"P.A. Trento, Italy"
+Provincia autonoma di Trento,"P.A. Trento, Italy"
+Piemonte,"Piemonte, Italy"
+Puglia,"Puglia, Italy"
+Sardegna,"Sardegna, Italy"
+Sicilia,"Sicilia, Italy"
+Toscana,"Toscana, Italy"
+Umbria,"Umbria, Italy"
+Valle d'Aosta,"Valle d'Aosta, Italy"
+Veneto,"Veneto, Italy"
+Baden-Wurttemberg,"Baden-Wurttemberg, Germany"
+Bayern,"Bayern, Germany"
+Bavaria,"Bayern, Germany"
+"Bavaria, Germany","Bayern, Germany"
+Berlin,"Berlin, Germany"
+Brandenburg,"Brandenburg, Germany"
+Bremen,"Bremen, Germany"
+Hamburg,"Hamburg, Germany"
+Hessen,"Hessen, Germany"
+Hesse,"Hessen, Germany"
+Mecklenburg-Vorpommern,"Mecklenburg-Vorpommern, Germany"
+Niedersachsen,"Niedersachsen, Germany"
+Lower Saxony,"Niedersachsen, Germany"
+Nordrhein-Westfalen,"Nordrhein-Westfalen, Germany"
+North Rhine-Westphalia,"Nordrhein-Westfalen, Germany"
+Rheinland-Pfalz,"Rheinland-Pfalz, Germany"
+Rhineland-Palatinate,"Rheinland-Pfalz, Germany"
+Saarland,"Saarland, Germany"
+Sachsen,"Sachsen, Germany"
+Saxony,"Sachsen, Germany"
+Sachsen-Anhalt,"Sachsen-Anhalt, Germany"
+Saxony-Anhalt,"Sachsen-Anhalt, Germany"
+Schleswig-Holstein,"Schleswig-Holstein, Germany"
+Thuringen,"Thuringen, Germany"
+Thuringia,"Thuringen, Germany"
+Andalusia,"Andalusia, Spain"
+Andalucia,"Andalusia, Spain"
+Aragon,"Aragon, Spain"
+Asturias,"Asturias, Spain"
+Baleares,"Baleares, Spain"
+Balearic Islands,"Baleares, Spain"
+Canarias,"Canarias, Spain"
+Canary Islands,"Canarias, Spain"
+Cantabria,"Cantabria, Spain"
+Castilla - La Mancha,"Castilla - La Mancha, Spain"
+Castilla-La Mancha,"Castilla - La Mancha, Spain"
+Castilla y Leon,"Castilla y Leon, Spain"
+Castile and Leon,"Castilla y Leon, Spain"
+Catalonia,"Catalonia, Spain"
+Ceuta,"Ceuta, Spain"
+C. Valenciana,"C. Valenciana, Spain"
+Extremadura,"Extremadura, Spain"
+Galicia,"Galicia, Spain"
+Madrid,"Madrid, Spain"
+Community of Madrid,"Madrid, Spain"
+Melilla,"Melilla, Spain"
+Murcia,"Murcia, Spain"
+Navarra,"Navarra, Spain"
+Navarre,"Navarra, Spain"
+Pais Vasco,"Pais Vasco, Spain"
+Basque Country,"Pais Vasco, Spain"
+La Rioja,"La Rioja, Spain"
+Alberta,"Alberta, Canada"
+British Columbia,"British Columbia, Canada"
+Manitoba,"Manitoba, Canada"
+New Brunswick,"New Brunswick, Canada"
+Newfoundland and Labrador,"Newfoundland and Labrador, Canada"
+Northwest Territories,"Northwest Territories,Canada"
+Nova Scotia,"Nova Scotia, Canada"
+Ontario,"Ontario, Canada"
+Prince Edward Island,"Prince Edward Island, Canada"
+Quebec,"Quebec, Canada"
+Saskatchewan,"Saskatchewan, Canada"
+Yukon,"Yukon, Canada"
+Acre,"Acre, Brazil"
+Alagoas,"Alagoas, Brazil"
+Amapa,"Amapa, Brazil"
+Amazonas,"Amazonas, Brazil"
+Bahia,"Bahia, Brazil"
+Ceara,"Ceara, Brazil"
+Distrito Federal,"Distrito Federal, Brazil"
+Espirito Santo,"Espirito Santo, Brazil"
+Goias,"Goias, Brazil"
+Maranhao,"Maranhao, Brazil"
+Mato Grosso,"Mato Grosso, Brazil"
+Mato Grosso do Sul,"Mato Grosso do Sul, Brazil"
+Minas Gerais,"Minas Gerais, Brazil"
+Para,"Para, Brazil"
+Paraiba,"Paraiba, Brazil"
+Parana,"Parana, Brazil"
+Pernambuco,"Pernambuco, Brazil"
+Piaui,"Piaui, Brazil"
+Rio de Janeiro,"Rio de Janeiro, Brazil"
+Rio Grande do Norte,"Rio Grande do Norte, Brazil"
+Rio Grande do Sul,"Rio Grande do Sul, Brazil"
+Rondonia,"Rondonia, Brazil"
+Roraima,"Roraima, Brazil"
+Santa Catarina,"Santa Catarina, Brazil"
+Sao Paulo,"Sao Paulo, Brazil"
+Sergipe,"Sergipe, Brazil"
+Tocantins,"Tocantins, Brazil"
+Mexico_country,Mexico
+Aguascalientes,"Aguascalientes, Mexico"
+Baja California,"Baja California, Mexico"
+Baja California Sur,"Baja California Sur, Mexico"
+Campeche,"Campeche, Mexico"
+Chiapas,"Chiapas, Mexico"
+Chihuahua,"Chihuahua, Mexico"
+Ciudad de Mexico,"Ciudad de Mexico, Mexico"
+Coahuila,"Coahuila, Mexico"
+Colima,"Colima, Mexico"
+Durango,"Durango, Mexico"
+Guanajuato,"Guanajuato, Mexico"
+Guerrero,"Guerrero, Mexico"
+Hidalgo,"Hidalgo, Mexico"
+Jalisco,"Jalisco, Mexico"
+Michoacan,"Michoacan, Mexico"
+Morelos,"Morelos, Mexico"
+Nayarit,"Nayarit, Mexico"
+Nuevo Leon,"Nuevo Leon, Mexico"
+Oaxaca,"Oaxaca, Mexico"
+Puebla,"Puebla, Mexico"
+Queretaro,"Queretaro, Mexico"
+Quintana Roo,"Quintana Roo, Mexico"
+San Luis Potosi,"San Luis Potosi, Mexico"
+Sinaloa,"Sinaloa, Mexico"
+Sonora,"Sonora, Mexico"
+Tabasco,"Tabasco, Mexico"
+Tamaulipas,"Tamaulipas, Mexico"
+Tlaxcala,"Tlaxcala, Mexico"
+Veracruz,"Veracruz, Mexico"
+Yucatan,"Yucatan, Mexico"
+Zacatecas,"Zacatecas, Mexico"
+Hong Kong,"Hong Kong, China"
+"Hong Kong, Hong Kong","Hong Kong, China"
+"Hong Kong, Hong Kong SAR","Hong Kong, China"
+"Hong Kong SAR","Hong Kong, China"
+Macau,"Macau, China"
+"Macau, Macau","Macau, China"
+"Macau, Macao SAR","Macau, China"
+"Macao SAR","Macau, China"
+Taiwan*,Taiwan
+"Taiwan, Taiwan",Taiwan
+"Taiwan, Taipei and environs",Taiwan
+"Taipei and environs",Taiwan
+"San Diego County, CA, US","San Diego, California, US"
+North Ireland,"Northern Ireland, United Kingdom"
+"Unassigned Location, WA","Unassigned, Washington, US"
+Vatican City,Holy See
+"Jackson, OR , US","Jackson, Oregon, US"
+Republic of Ireland,Ireland
+"Washington, D.C., US","District of Columbia, US"
+"D.C., US","District of Columbia, US"
+St. Martin,"St Martin, France"
+Saint Martin,"St Martin, France"
+Iran (Islamic Republic of),Iran
+Viet Nam,Vietnam
+Russian Federation,Russia
+Channel Islands,"Channel Islands, United Kingdom"
+"France, France",France
+"UK, United Kingdom",United Kingdom
+"United Kingdom, United Kingdom",United Kingdom
+"Denmark, Denmark",Denmark
+Cayman Islands,"Cayman Islands, United Kingdom"
+Guadeloupe,"Guadeloupe, France"
+Aruba,"Aruba, Netherlands"
+Jersey,Invalid
+"Netherlands, Netherlands",Netherlands
+Guam,"Guam, US"
+Puerto Rico,"Puerto Rico, US"
+Greenland,"Greenland, Denmark"
+Mayotte,"Mayotte, France"
+The Bahamas,Bahamas
+"Bahamas, The",Bahamas
+The Gambia,Gambia
+"Gambia, The",Gambia
+"United States Virgin Islands, US","Virgin Islands, US"
+Cape Verde,Cabo Verde
+East Timor,Timor-Leste
+"LeSeur, Minnesota, US","Le Sueur, Minnesota, US"
+"Bristol Bay, Alaska, US","Bristol Bay plus Lake Peninsula, Alaska, US"
+"Doña Ana, New Mexico, US","Dona Ana, New Mexico, US"
+"Falkland Islands (Islas Malvinas), United Kingdom","Falkland Islands (Malvinas), United Kingdom"
+"Southwest, Utah, US","Southwest Utah, Utah, US"
+"Dadar Nagar Haveli, India","Dadra and Nagar Haveli and Daman and Diu, India"

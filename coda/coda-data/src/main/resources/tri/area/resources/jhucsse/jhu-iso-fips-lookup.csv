@@ -624,7 +624,7 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 75222,SE,SWE,752,,,Unknown,Sweden,,,"Unknown, Sweden",
 756,CH,CHE,756,,,,Switzerland,46.8182,8.2275,Switzerland,8654618
 760,SY,SYR,760,,,,Syria,34.802075,38.996815,Syria,17500657
-158,TW,TWN,158,,,,Taiwan*,23.7,121,Taiwan*,23816775
+158,TW,TWN,158,,,,Taiwan,23.7,121,Taiwan,23816775
 762,TJ,TJK,762,,,,Tajikistan,38.861,71.2761,Tajikistan,9537642
 834,TZ,TZA,834,,,,Tanzania,-6.369028,34.888822,Tanzania,59734213
 764,TH,THA,764,,,,Thailand,15.870032,100.992541,Thailand,69799978
@@ -704,7 +704,7 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 12403,CA,CAN,124,,,Manitoba,Canada,53.7609,-98.8139,"Manitoba, Canada",1377517
 12404,CA,CAN,124,,,New Brunswick,Canada,46.5653,-66.4619,"New Brunswick, Canada",779993
 12405,CA,CAN,124,,,Newfoundland and Labrador,Canada,53.1355,-57.6604,"Newfoundland and Labrador, Canada",521365
-12406,CA,CAN,124,,,Northwest Territories,Canada,64.8255,-124.8457,"Northwest Territories,Canada",44904
+12406,CA,CAN,124,,,Northwest Territories,Canada,64.8255,-124.8457,"Northwest Territories, Canada",44904
 12407,CA,CAN,124,,,Nova Scotia,Canada,44.682,-63.7443,"Nova Scotia, Canada",977457
 12408,CA,CAN,124,,,Ontario,Canada,51.2538,-85.3232,"Ontario, Canada",14711827
 12409,CA,CAN,124,,,Prince Edward Island,Canada,46.5107,-63.4168,"Prince Edward Island, Canada",158158

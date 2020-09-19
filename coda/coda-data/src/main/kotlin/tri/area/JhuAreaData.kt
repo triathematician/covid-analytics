@@ -5,8 +5,11 @@ import tri.util.csvResource
 
 /** Loads JHU region/population data. */
 internal object JhuAreaData {
-    val data = JhuAreaData::class.csvResource<JhuAreaInfo>("resources/jhucsse/jhu-iso-fips-lookup.csv")
+    private val data = JhuAreaData::class.csvResource<JhuAreaInfo>("resources/jhucsse/jhu-iso-fips-lookup.csv")
+
     val index = data.groupByOne { it.indexKey }
+    val areas = index.values
+
     private val lowerIndex by lazy { index.mapKeys { it.key.toString().toLowerCase() } }
 
     /** Looks up area by name, case-insensitive. */
@@ -20,12 +23,12 @@ internal data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String
                        @JsonProperty("Lat") val latitude: Float, @JsonProperty("Long_") val longitude: Float,
                        @JsonProperty("Combined_Key") val combinedKey: String, @JsonProperty("Population") val population: Long) {
 
-    /** Get unique key used to lookup this region. */
-    val indexKey: Any
+    /** Get unique key used to lookup this region. Regions with FIPS have more than one possible key. */
+    val indexKey: List<Any>
         get() = when {
-            fips == null -> combinedKey
-            fips < 100 -> Usa.abbreviationsByState[provinceOrState]!!
-            else -> fips
+            fips == null -> listOf(combinedKey)
+            fips < 100 -> listOf(fips, Usa.abbreviationsByState[provinceOrState]!!)
+            else -> listOf(fips, combinedKey)
         }
 
     val regionType
@@ -45,18 +48,23 @@ internal data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String
 
     /** Convert to general area info object. */
     fun toAreaInfo(): AreaInfo {
-        require(fips == null) { "Use Usa object to access areas within the US." }
+        require(fips == null || fips >= 80000) { "Use Usa object to access areas within the US: $this" }
         return AreaInfo(combinedKey, regionType, regionParent, fips, AreaMetrics(population, latitude, longitude))
     }
 }
 
 //region UTILS
 
-private fun <X, Y> List<X>.groupByOne(map: (X) -> Y) = groupBy(map).mapValues {
-    if (it.value.size > 1) {
-        println("Duplicate keys: ${it.value}")
+private fun <X, Y> List<X>.groupByOne(keySelectors: (X) -> List<Y>): Map<Y, X> {
+    val res = mutableMapOf<Y, MutableList<X>>()
+    for (element in this) {
+        keySelectors(element).forEach { key ->
+            val list = res.getOrPut(key) { ArrayList() }
+            list.add(element)
+        }
     }
-    it.value.first()
+    res.values.forEach { if (it.size > 1) println("Two values had the same key: $it") }
+    return res.mapValues { it.value.first() }
 }
 
 //endregion

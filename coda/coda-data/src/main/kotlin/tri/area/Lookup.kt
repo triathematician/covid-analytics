@@ -1,8 +1,12 @@
 package tri.area
 
 import tri.util.csvResource
+import tri.util.javaTrim
 
-/** Quick access to looking up areas/elements by region name. */
+/**
+ * Quick access to looking up areas/elements by region name. Maintains a cache so that only one lookup is performed per
+ * request string.
+ */
 object Lookup {
 
     //region CACHE
@@ -10,9 +14,20 @@ object Lookup {
     private val areaCache = mutableMapOf<String, AreaInfo>().apply {
         listOf("US", "USA", "United States", "United States of America").forEach { this[it] = USA }
         listOf("Earth", "World").forEach { this[it] = EARTH }
+        // prepopulate with state abbreviation "OH" and full name "Ohio, US"
+        //   -- do not use name without US suffix because e.g. Georgia is ambiguous
         Usa.states.forEach {
             this[it.key] = it.value
             this["${it.value.fullName}, US"] = it.value
+        }
+        // prepopulate with county FIPS and combined id, e.g. "Cook, Illinois, US"
+        Usa.counties.forEach {
+            this[it.key.toString()] = it.value
+            this[it.value.id] = it.value
+        }
+        // prepopulate with e.g. "Unassigned, Ohio, US"
+        Usa.unassigned.forEach {
+            this[it.key] = it.value
         }
     }
     private val notFound = mutableMapOf<String, AreaInfo>()
@@ -30,14 +45,14 @@ object Lookup {
 
     /** Get object for area with given name. Logs an error and returns null if not found. */
     fun areaOrNull(lookupName: String, assumeUsState: Boolean = false): AreaInfo? {
-        val name = aliases[lookupName] ?: lookupName
+        val name = aliases[lookupName.javaTrim()] ?: lookupName
         val altName = if (assumeUsState) "$name, US" else null
         areaCache[name]?.let { return it }
         areaCache[altName]?.let { return it }
         notFound[name]?.let { return null }
 
         val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
-        val areaInfo = jhuArea?.toAreaInfo()
+        val areaInfo = if (jhuArea?.fips != null) Usa.counties[jhuArea.fips] else jhuArea?.toAreaInfo()
         return if (areaInfo == null) {
             println("Area not found: $name")
             notFound[name] = UNKNOWN

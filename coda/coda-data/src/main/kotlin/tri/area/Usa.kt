@@ -25,10 +25,12 @@ object Usa {
     //region MASTER AREA INDICES
 
     /** US states, indexed by abbreviation. */
-    val states = JhuAreaData.index.filterValues { it.fips != null && it.fips < 100 }.mapValues {
-        UsStateInfo(it.key as String, it.value.provinceOrState, it.value.fips!!, it.value.population)
-    }.mapKeys { it.key as String }
+    val states = JhuAreaData.index.filter { it.key is String && it.value.fips != null && it.value.fips!! < 100 }
+            .map { it.key as String to UsStateInfo(it.key as String, it.value.provinceOrState, it.value.fips!!, it.value.population) }
+            .toMap()
 
+    /** List of US state abbreviations. */
+    val stateAbbreviations = stateFips.map { it.state_abbr }
     /** List of US state names, e.g. "Ohio". */
     val stateNames = states.map { it.value.fullName }
 
@@ -44,10 +46,21 @@ object Usa {
     val femaByState = stateFips.map { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }.toMap()
 
     /** Counties, indexed by FIPS. */
-    val counties = JhuAreaData.index.filterValues { validCountyFips(it.fips) }.map {
-        it.value.fips!! to UsCountyInfo(it.value.combinedKey, statesByLongName[it.value.provinceOrState] ?: error("Invalid state: ${it.value.provinceOrState}"),
-                it.value.fips!!, it.value.population)
-    }.toMap()
+    val counties = JhuAreaData.index.filterValues { validCountyFips(it.fips) }
+            .map {
+                it.value.fips!! to UsCountyInfo(it.value.combinedKey, statesByLongName[it.value.provinceOrState]
+                        ?: error("Invalid state: ${it.value.provinceOrState}"),
+                        it.value.fips!!, it.value.population)
+            }.toMap()
+
+    /** Unassigned regions, indexed by state. */
+    val unassigned = JhuAreaData.index
+            .filterValues { it.combinedKey.startsWith("Unassigned, ") && it.combinedKey.endsWith(", US") && it.provinceOrState in stateNames }
+            .map {
+                it.value.combinedKey to UsCountyInfo(it.value.combinedKey, statesByLongName[it.value.provinceOrState]
+                        ?: error("Invalid state: ${it.value.provinceOrState}"),
+                        it.value.fips!!, it.value.population)
+            }.toMap()
 
     /** CBSAs, indexed by CBSA Code. */
     val cbsas = cbsaData.groupBy { listOf(it.CBSA_Code, it.CSA_Code, it.CBSA_Title, it.CSA_Title) }
