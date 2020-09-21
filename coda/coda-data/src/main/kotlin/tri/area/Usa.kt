@@ -43,7 +43,7 @@ object Usa {
     }.toMap()
 
     /** FEMA regions by state */
-    val femaByState = stateFips.map { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }.toMap()
+    val femaRegionByState = stateFips.map { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }.toMap()
 
     /** Counties, indexed by FIPS. */
     val counties = JhuAreaData.index.filterValues { validCountyFips(it.fips) }
@@ -68,6 +68,8 @@ object Usa {
                 info[0] as Int to UsCbsaInfo(info[0] as Int, info[1] as Int, info[2] as String, info[3] as String,
                         mappings.map { counties[it.fipsCombined] ?: error("County FIPS not found: ${it.FIPS_County_Code}") })
             }.toMap()
+    /** CBSAs, indexed by CBSA title. */
+    val cbsaByName = cbsas.mapKeys { it.value.cbsaTitle }
 
     //endregion
 
@@ -80,7 +82,7 @@ object Usa {
     fun state(abbrev: String) = states[abbrev] ?: error("Invalid state abbreviation $abbrev")
 
     /** Lookup FEMA region by abbreviation. */
-    fun stateFemaRegion(abbrev: String) = femaByState[abbrev] ?: error("Invalid state abbreviation $abbrev")
+    fun stateFemaRegion(abbrev: String) = femaRegionByState[abbrev] ?: error("Invalid state abbreviation $abbrev")
 
     //endregions
 

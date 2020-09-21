@@ -74,6 +74,9 @@ object Lookup {
     /** Get population for area with given name. */
     fun population(name: String) = area(name).metrics.population
 
+    /** Lookup area based on CBSA name. */
+    fun cbsa(name: String) = Usa.cbsaByName[name]!!
+
     //region CHECKS
 
     private val aliases = Lookup::class.csvResource<AreaAlias>("resources/area-aliases.csv")

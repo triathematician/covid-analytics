@@ -1,15 +1,19 @@
 package tri.area
 
+import org.junit.Test
+
 fun main() {
     println(Lookup.area("Los Angeles, California, US"))
 }
 
 class LookupTest {
 
+    @Test
     fun testLookups() {
         println(Lookup.area("Los Angeles, CA, US"))
     }
 
+    @Test
     fun testPopulations() {
         println(Lookup.population("Los Angeles, CA, US"))
 
@@ -21,8 +25,8 @@ class LookupTest {
         println(Lookup.areaByFips(36061))
 
         println("\n--")
-        Lookup.area("New York-Newark-Jersey City, NY-NJ-PA").let { println(it.population) }
-        (Lookup.area("New York-Newark-Jersey City, NY-NJ-PA") as UsCbsaInfo).let {
+        println(Lookup.area("New York-Newark-Jersey City, NY-NJ-PA").population)
+        Lookup.cbsa("New York-Newark-Jersey City, NY-NJ-PA").let {
             it.counties.forEach {
                 println("${it.fips}, ${it.id}, ${it.population}")
             }

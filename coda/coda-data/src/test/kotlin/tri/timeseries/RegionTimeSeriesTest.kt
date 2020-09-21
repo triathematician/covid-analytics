@@ -1,12 +1,14 @@
 package tri.timeseries
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.junit.Test
 import tri.area.Lookup
 import tri.util.DefaultMapper
 import java.time.LocalDate
 
 class RegionTimeSeriesTest {
 
+    @Test
     fun testJson() {
         val r = AreaTimeSeries("IA", MetricInfo("test", true, LocalDate.now(), 0, listOf(5, 6)))
         val json = DefaultMapper.prettyPrint(r)
