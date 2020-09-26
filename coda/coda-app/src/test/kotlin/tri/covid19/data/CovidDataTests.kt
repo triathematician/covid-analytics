@@ -3,7 +3,7 @@ package tri.covid19.data
 import org.junit.Test
 import tri.covid19.CASES
 import tri.timeseries.MetricTimeSeries
-import tri.area.RegionType
+import tri.area.AreaType
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
 import tri.util.minus
@@ -17,7 +17,7 @@ class CovidDataTests {
     @ExperimentalTime
     fun testGrowth() {
         println(File("").absolutePath)
-        val data = CovidHistory.allData.filter { it.area.type == RegionType.COUNTY && it.metric == CASES }
+        val data = CovidHistory.allData.filter { it.area.type == AreaType.COUNTY && it.metric == CASES }
         val latest = mutableMapOf<String, LocalDate>()
         (LocalDate.of(2020, 6, 15)..LocalDate.now()).forEach { date ->
             val filtered = data.map { Growth(it, date) }.filter {

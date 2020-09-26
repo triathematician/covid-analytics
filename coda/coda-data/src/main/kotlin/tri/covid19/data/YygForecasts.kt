@@ -3,7 +3,7 @@ package tri.covid19.data
 import tri.area.Lookup
 import tri.covid19.*
 import tri.timeseries.MetricTimeSeries
-import tri.area.RegionType
+import tri.area.AreaType
 import tri.util.csvKeyValues
 import java.lang.IllegalArgumentException
 import java.net.URL
@@ -49,7 +49,7 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
         if (region == "ALL" || region == "")
             return country
         val lookup = Lookup.areaOrNull(region) ?: Lookup.area("$region, $country")
-        if (lookup.type != RegionType.UNKNOWN) {
+        if (lookup.type != AreaType.UNKNOWN) {
             return lookup.id
         } else {
             throw IllegalArgumentException("Invalid: $region, $country")

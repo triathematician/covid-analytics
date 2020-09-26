@@ -33,10 +33,10 @@ internal data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String
 
     val regionType
         get() = when {
-            admin2.isEmpty() && provinceOrState.isEmpty() -> RegionType.COUNTRY_REGION
-            provinceOrState.isEmpty() -> RegionType.METRO
-            admin2.isEmpty() -> RegionType.PROVINCE_STATE
-            else -> RegionType.COUNTY
+            admin2.isEmpty() && provinceOrState.isEmpty() -> AreaType.COUNTRY_REGION
+            provinceOrState.isEmpty() -> AreaType.METRO
+            admin2.isEmpty() -> AreaType.PROVINCE_STATE
+            else -> AreaType.COUNTY
         }
 
     val regionParent

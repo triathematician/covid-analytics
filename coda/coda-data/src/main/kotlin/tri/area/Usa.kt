@@ -39,7 +39,7 @@ object Usa {
 
     /** FEMA regions, indexed by number. */
     val femaRegions = (1..10).map {
-        it to UsRegionInfo("Region $it", statesInRegion(it))
+        it to UsRegionInfo("Region $it", it, statesInRegion(it))
     }.toMap()
 
     /** FEMA regions by state */
@@ -73,7 +73,24 @@ object Usa {
 
     //endregion
 
-    //region LOOKUPS
+    //region COUNTY LOOKUPS
+
+    /** Get county for the given FIPS. */
+    fun county(fips: Int) = counties[fips]
+
+    //endregion
+
+    //region CBSA LOOKUPS
+
+    /** Get CBSA by given code. */
+    fun cbsa(code: Int) = cbsas[code]
+
+    /** Get CBSA by given name. */
+    fun cbsa(name: String) = cbsaByName[name]
+
+    //endregion
+
+    //region STATE LOOKUPS
 
     /** Lookup state by long name. */
     fun stateByLongName(name: String) = statesByLongName[name] ?: error("Invalid state name $name")
@@ -100,16 +117,20 @@ object Usa {
 //region US AREA TYPES
 
 /** Information about a US region (multiple states). */
-class UsRegionInfo(name: String, val states: List<UsStateInfo>)
-    : AreaInfo(name, RegionType.PROVINCE_STATE_AGGREGATE, USA, null, AreaMetrics.aggregate(states))
+class UsRegionInfo(name: String, val num: Int, val states: List<UsStateInfo>)
+    : AreaInfo(name, AreaType.PROVINCE_STATE_AGGREGATE, USA, null, AreaMetrics.aggregate(states))
 
 /** Information about a US state or territory. */
-class UsStateInfo(abbreviation: String, val fullName: String, fips: Int, pop: Long)
-    : AreaInfo(checkState(abbreviation), RegionType.PROVINCE_STATE, USA, fips, AreaMetrics(pop))
+class UsStateInfo(val abbreviation: String, val fullName: String, fips: Int, pop: Long)
+    : AreaInfo(checkState(abbreviation), AreaType.PROVINCE_STATE, USA, fips, AreaMetrics(pop)) {
+
+    val femaRegion
+        get() = Usa.femaRegionByState[abbreviation]!!
+}
 
 /** Information about a US CBSA. */
 class UsCbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, val csaTitle: String, val counties: List<UsCountyInfo>)
-    : AreaInfo(checkCbsaTitle(cbsaTitle), RegionType.METRO, USA, cbsaCode, AreaMetrics.aggregate(counties)) {
+    : AreaInfo(checkCbsaTitle(cbsaTitle), AreaType.METRO, USA, cbsaCode, AreaMetrics.aggregate(counties)) {
 
     /** Portion of CBSA name with states. */
     private val statesText = cbsaTitle.substringAfter(",").trim()
@@ -122,14 +143,26 @@ class UsCbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, va
 
     /** All regions in CBSA. */
     val regions = statesAbbr.map { Usa.stateFemaRegion(it) }
+
+    /** Get list of county FIPS numbers in this CBSA. */
+    val countyFips
+        get() = counties.map { it.fips!! }
 }
 
 /** Information about a US county or county-equivalent. */
 class UsCountyInfo(name: String, state: UsStateInfo, fips: Int, population: Long)
-    : AreaInfo(checkCountyName(name), RegionType.COUNTY, state, fips, AreaMetrics(population))
+    : AreaInfo(checkCountyName(name), AreaType.COUNTY, state, fips, AreaMetrics(population)) {
+
+    val fullName: String
+        get() = id
+
+    /** Lookup CBSA corresponding to this county. */
+    val cbsa: UsCbsaInfo?
+        get() = Usa.cbsaCodeByCounty[fips]?.let { Usa.cbsa(it) }
+}
 
 /** Information about a zipcode. */
-class UsZipInfo(val zipcode: Int) : AreaInfo(checkZipCode(zipcode).toString(), RegionType.ZIPCODE, null, checkZipCode(zipcode), TODO())
+class UsZipInfo(val zipcode: Int) : AreaInfo(checkZipCode(zipcode).toString(), AreaType.ZIPCODE, null, checkZipCode(zipcode), TODO())
 
 //endregion
 

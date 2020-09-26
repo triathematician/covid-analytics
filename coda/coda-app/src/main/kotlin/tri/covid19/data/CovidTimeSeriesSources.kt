@@ -5,7 +5,7 @@ import tri.covid19.DEATHS
 import tri.timeseries.MetricTimeSeries
 import tri.area.AreaInfo
 import tri.area.EARTH
-import tri.area.RegionType
+import tri.area.AreaType
 import tri.area.USA
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -20,10 +20,10 @@ import kotlin.time.milliseconds
 val DEATHS_PER_100K = DEATHS.perCapita
 val CASES_PER_100K = CASES.perCapita
 
-internal val US_STATE_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.PROVINCE_STATE && it.parent == USA }
-internal val US_CBSA_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.METRO && it.parent == USA }
-internal val US_COUNTY_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.COUNTY && it.parent?.parent == USA }
-internal val COUNTRY_FILTER: (AreaInfo) -> Boolean = { it.type == RegionType.COUNTRY_REGION }
+internal val US_STATE_FILTER: (AreaInfo) -> Boolean = { it.type == AreaType.PROVINCE_STATE && it.parent == USA }
+internal val US_CBSA_FILTER: (AreaInfo) -> Boolean = { it.type == AreaType.METRO && it.parent == USA }
+internal val US_COUNTY_FILTER: (AreaInfo) -> Boolean = { it.type == AreaType.COUNTY && it.parent?.parent == USA }
+internal val COUNTRY_FILTER: (AreaInfo) -> Boolean = { it.type == AreaType.COUNTRY_REGION }
 
 internal val String.perCapita
     get() = "$this (per 100k)"

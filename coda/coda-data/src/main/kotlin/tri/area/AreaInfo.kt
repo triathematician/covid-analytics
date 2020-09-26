@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
  * for every area so these can be identified uniquely, so the id is expected to be a comma-delimited set of identifiers
  * that together make it uniquely defined.
  */
-open class AreaInfo(val id: String, val type: RegionType, @JsonIgnore val parent: AreaInfo?, val fips: Int? = null, val metrics: AreaMetrics) {
+open class AreaInfo(val id: String, val type: AreaType, @JsonIgnore val parent: AreaInfo?, val fips: Int? = null, val metrics: AreaMetrics) {
     init {
         require(if (parent == null) type.parents.isEmpty() else parent.type in type.parents) { "Parent type of $id was invalid: $type cannot have parent $parent" }
     }
@@ -23,15 +23,15 @@ open class AreaInfo(val id: String, val type: RegionType, @JsonIgnore val parent
 
 //region UNIQUE AREAS
 
-val EARTH = AreaInfo("Earth", RegionType.PLANET, null, null, AreaMetrics(7775510000L))
+val EARTH = AreaInfo("Earth", AreaType.PLANET, null, null, AreaMetrics(7775510000L))
 //val NORTH_AMERICA = AreaInfo("North America", RegionType.CONTINENT, EARTH, null, TODO())
-val USA = AreaInfo("United States", RegionType.COUNTRY_REGION, EARTH, null, AreaMetrics(-1L))
-val UNKNOWN = AreaInfo("Unknown", RegionType.UNKNOWN, EARTH, null, AreaMetrics(0L))
+val USA = AreaInfo("United States", AreaType.COUNTRY_REGION, EARTH, null, AreaMetrics(-1L))
+val UNKNOWN = AreaInfo("Unknown", AreaType.UNKNOWN, EARTH, null, AreaMetrics(0L))
 
 //endregion
 
-/** Region type. */
-enum class RegionType(vararg parentTypes: RegionType) {
+/** Area type. */
+enum class AreaType(vararg parentTypes: AreaType) {
     PLANET,
     CONTINENT(PLANET),
     COUNTRY_REGION(PLANET, CONTINENT),
