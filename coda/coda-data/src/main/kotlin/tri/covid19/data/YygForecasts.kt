@@ -28,7 +28,7 @@ object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
                 .filter { !get(it).isNullOrEmpty() }
                 .mapNotNull {
                     metric(yygArea(get("region")!!, get("country")!!), false,
-                            metricName(it, date), get("date")!!, get(it)!!.toDouble())
+                            metricName(it, date), "", get("date")!!, get(it)!!.toDouble())
                 }
     }
 

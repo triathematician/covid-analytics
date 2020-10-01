@@ -9,16 +9,14 @@ object Usa {
     private val stateFips = Usa::class.csvResource<StateFips>("resources/state-fips.csv")
     private val cbsaData = Usa::class.csvResource<CbsaCountyMapping>("resources/census/Mar2020cbsaDelineation.csv")
 
-    //region LOOKUPS
+    //region LOOKUP TABLES
 
     /** Mapping of US state abbreviations to state names. */
     val statesByAbbreviation = stateFips.map { it.state_abbr to it.state_name }.toMap()
-
     /** Mapping of US state abbreviations from state names. */
     val abbreviationsByState = stateFips.map { it.state_name to it.state_abbr }.toMap()
-
     /** CBSA code by county FIPS */
-    val cbsaCodeByCounty = cbsaData.map { it.FIPS_County_Code to it.CBSA_Code }.toMap()
+    val cbsaCodeByCounty = cbsaData.map { it.fipsCombined to it.CBSA_Code }.toMap()
 
     //endregion
 
@@ -77,6 +75,9 @@ object Usa {
 
     /** Get county for the given FIPS. */
     fun county(fips: Int) = counties[fips]
+
+    /** Get county by a given name. */
+    fun county(name: String) = checkCountyName(name).let { Lookup.area(name) as? UsCountyInfo }
 
     //endregion
 
@@ -157,7 +158,7 @@ class UsCountyInfo(name: String, state: UsStateInfo, fips: Int, population: Long
         get() = id
 
     /** Lookup CBSA corresponding to this county. */
-    val cbsa: UsCbsaInfo?
+    val cbsa
         get() = Usa.cbsaCodeByCounty[fips]?.let { Usa.cbsa(it) }
 }
 

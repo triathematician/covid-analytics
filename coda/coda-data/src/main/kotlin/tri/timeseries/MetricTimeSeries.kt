@@ -13,18 +13,18 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric.
  * Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
-data class MetricTimeSeries(var areaId: String, var metric: String = "",
+data class MetricTimeSeries(var areaId: String, var metric: String, var group: String,
                             var intSeries: Boolean, val defValue: Double = 0.0,
                             var start: LocalDate = LocalDate.now(), val values: List<Double> = listOf()) {
 
-    constructor(areaId: String, metric: String, defValue: Double = 0.0, start: LocalDate, value: Double)
-            : this(areaId, metric, false, defValue, start, listOf(value))
+    constructor(areaId: String, metric: String, group: String, defValue: Double = 0.0, start: LocalDate, value: Double)
+            : this(areaId, metric, group, false, defValue, start, listOf(value))
 
-    constructor(areaId: String, metric: String, defValue: Int = 0, start: LocalDate, values: List<Int>)
-            : this(areaId, metric, false, defValue.toDouble(), start, values.map { it.toDouble() })
+    constructor(areaId: String, metric: String, group: String, defValue: Int = 0, start: LocalDate, values: List<Int>)
+            : this(areaId, metric, group, false, defValue.toDouble(), start, values.map { it.toDouble() })
 
-    constructor(areaId: String, metric: String, defValue: Int = 0, start: LocalDate, value: Int)
-            : this(areaId, metric, true, defValue.toDouble(), start, listOf(value.toDouble()))
+    constructor(areaId: String, metric: String, group: String, defValue: Int = 0, start: LocalDate, value: Int)
+            : this(areaId, metric, group, true, defValue.toDouble(), start, listOf(value.toDouble()))
 
     val area = Lookup.areaOrNull(areaId)!!
 
@@ -161,8 +161,8 @@ data class MetricTimeSeries(var areaId: String, var metric: String = "",
 
 //region factories
 
-fun intTimeSeries(areaId: String, metric: String, start: LocalDate, values: List<Int>) = MetricTimeSeries(areaId, metric, 0, start, values)
-fun intTimeSeries(areaId: String, metric: String, date: LocalDate, value: Int) = MetricTimeSeries(areaId, metric, 0, date, value)
+fun intTimeSeries(areaId: String, metric: String, group: String, start: LocalDate, values: List<Int>) = MetricTimeSeries(areaId, metric, group,0, start, values)
+fun intTimeSeries(areaId: String, metric: String, group: String, date: LocalDate, value: Int) = MetricTimeSeries(areaId, metric, group, 0, date, value)
 
 //endregion
 
@@ -183,18 +183,18 @@ val Collection<MetricTimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric) }
+fun List<MetricTimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.group) }
         .map { it.value.merge() }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Sums a bunch of time series by id and metric. */
-fun List<MetricTimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric) }
+fun List<MetricTimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.group) }
         .map { it.value.sum(it.key[0]) }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
-/** Merge a bunch of separate time series into a single time series object. */
+/** Merge a bunch of separate time series into a single time series object, using the max value in two series. */
 private fun List<MetricTimeSeries>.merge() = reduce { s1, s2 ->
     require(s1.areaId == s2.areaId)
     require(s1.metric == s2.metric)

@@ -25,6 +25,11 @@ object Lookup {
             this[it.key.toString()] = it.value
             this[it.value.id] = it.value
         }
+        // prepopulate with CBSA ids and titles
+        Usa.cbsas.forEach {
+            this[it.key.toString()] = it.value
+            this[it.value.id] = it.value
+        }
         // prepopulate with e.g. "Unassigned, Ohio, US"
         Usa.unassigned.forEach {
             this[it.key] = it.value

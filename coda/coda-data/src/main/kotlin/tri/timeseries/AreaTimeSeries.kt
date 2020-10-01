@@ -41,6 +41,6 @@ class MetricInfo(var id: String, var intSeries: Boolean, var start: LocalDate, v
             }
         }
 
-    fun toMetricTimeSeries(areaId: String) = MetricTimeSeries(areaId, id, intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
+    fun toMetricTimeSeries(areaId: String) = MetricTimeSeries(areaId, id, "", intSeries, defValue.toDouble(), start, values.map { it.toDouble() })
 
 }

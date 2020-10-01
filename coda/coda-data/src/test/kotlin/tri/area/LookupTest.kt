@@ -11,6 +11,11 @@ class LookupTest {
     @Test
     fun testLookups() {
         println(Lookup.area("Los Angeles, CA, US"))
+        println(Lookup.area("Los Angeles, California, US"))
+        println((Lookup.area("Los Angeles, California, US") as UsCountyInfo).cbsa)
+        println(Lookup.area("St. Louis City, Missouri, US"))
+        println(Lookup.area("Virginia Beach city, Virginia, US"))
+        println(Lookup.area("Virginia Beach, Virginia, US"))
     }
 
     @Test

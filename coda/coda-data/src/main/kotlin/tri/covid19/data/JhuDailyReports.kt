@@ -58,8 +58,8 @@ object JhuDailyReports : CovidDataNormalizer() {
         return rows.flatMap { row ->
             val areaId = row.areaId
             val area = Lookup.areaOrNull(areaId)!!
-            listOfNotNull(intTimeSeries(areaId, CASES, row.Last_Update, row.Confirmed),
-                    intTimeSeries(areaId, DEATHS, row.Last_Update, row.Deaths)
+            listOfNotNull(intTimeSeries(areaId, CASES, "", row.Last_Update, row.Confirmed),
+                    intTimeSeries(areaId, DEATHS, "", row.Last_Update, row.Deaths)
 //                    intTimeSeries(areaId, RECOVERED, row.Last_Update, row.Recovered)
 //                    intTimeSeries(areaId, ACTIVE, row.Last_Update, row.Active),
 //                    row.People_Tested?.let { intTimeSeries(areaId, TESTS, row.Last_Update, it) },

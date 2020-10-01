@@ -71,15 +71,15 @@ abstract class CovidDataNormalizer(val addIdSuffixes: Boolean = false) {
             when {
                 value == null || name == null -> null
                 else -> metric(get(regionField) ?: throw IllegalArgumentException(), assumeUsState,
-                        name,get(dateField) ?: throw IllegalArgumentException(), value)
+                        name, "",get(dateField) ?: throw IllegalArgumentException(), value)
             }
         }
     }
 
     /** Easy way to construct metric from string value content. */
-    protected open fun metric(areaId: String, assumeUsState: Boolean, metric: String?, date: String, value: Double) = metric?.let {
+    protected open fun metric(areaId: String, assumeUsState: Boolean, metric: String?, group: String, date: String, value: Double) = metric?.let {
         val area = Lookup.areaOrNull(areaId, assumeUsState)!!
-        MetricTimeSeries(area.id, it, 0.0, date.toLocalDate(FORMAT), value)
+        MetricTimeSeries(area.id, it, group, 0.0, date.toLocalDate(FORMAT), value)
     }
 
     fun forecastId(model: String, areaId: String, fullMetricId: String): ForecastId? {
