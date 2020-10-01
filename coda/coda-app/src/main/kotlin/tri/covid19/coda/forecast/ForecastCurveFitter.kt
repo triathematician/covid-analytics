@@ -18,7 +18,7 @@ private const val MODEL_NAME = "User"
 
 private val K_FIT_RANGE = 0.03..0.25
 private val L_FIT_RANGE = 1E1..1E7
-private val X0_FIT_RANGE = 10.0..200.0
+private val X0_FIT_RANGE = 10.0..400.0
 private val V_FIT_RANGE = 1E-2..1E2
 
 internal val DAY0 = LocalDate.of(2020, 1, 1)
@@ -93,7 +93,7 @@ class ForecastCurveFitter: (Number) -> Double {
         val forecastDomain = DateRange(DAY0, JULY31)
         val forecastValues = forecastDomain.map { invoke(it.minus(DAY0)) }
         val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = DAY0, values = forecastValues)
-        val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.area, empirical.metric, listOf(series))
+        val f = Forecast(MODEL_NAME, LocalDate.now(), empirical.areaId, empirical.metric, listOf(series))
 
         return ForecastStats(f).apply {
             sigmoidParameters = this@ForecastCurveFitter.sigmoidParameters

@@ -10,14 +10,20 @@ const val IHME = "IHME"
 /** Loads IHME models. */
 object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
 
+    private val EXCLUDE_LOCATIONS = listOf(
+            "Other Counties, WA", "Life Care Center, Kirkland, WA", "King and Snohomish Counties (excluding Life Care Center), WA",
+            "Valencian Community", "Mexico City")
+
     override fun sources() = forecasts { it.name.startsWith("ihme") && it.extension == "csv" }
 
     override fun readSource(url: URL): List<MetricTimeSeries> {
         val date = url.path.substringAfter("ihme-").substringBefore(".csv")
         return url.csvKeyValues()
                 .filter { it["totdea_lower"] != it["totdea_upper"] }.toList()
+                .filter { it["location_name"] !in EXCLUDE_LOCATIONS }
                 .flatMap {
                     it.extractMetrics(regionField = "location_name", dateField = "date",
+                            assumeUsState = true,
                             metricFieldPattern = { "_" in it && !it.startsWith("location") },
                             metricNameMapper = { metricName(it, date) })
                 }

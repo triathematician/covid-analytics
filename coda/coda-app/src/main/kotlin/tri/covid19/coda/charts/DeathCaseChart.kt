@@ -29,7 +29,7 @@ class DeathCaseChart : LineChart<Number, Number>(NumberAxis(), NumberAxis()) {
         set(value) {
             val commonIndices = value.first.indices.intersect(value.second.indices)
             dataSeries = commonIndices.map { value.first[it] to value.second[it] }
-                    .map { series(it.first.area.id, it.first, it.second) }
+                    .map { series(it.first.areaId, it.first, it.second) }
         }
 
 }

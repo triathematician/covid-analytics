@@ -1,6 +1,7 @@
 package tri.timeseries
 
-import tri.area.RegionType
+import tri.area.Lookup
+import tri.area.AreaType
 import tri.covid19.data.CovidHistory
 import java.time.LocalDate
 import kotlin.math.abs
@@ -72,10 +73,10 @@ data class ExtremaInfo(var date: LocalDate, var value: Double, var type: Extrema
 
 @ExperimentalTime
 fun main() {
-    CovidHistory.allData.filter { it.area.id.endsWith(", US") && it.area.type == RegionType.PROVINCE_STATE }
+    CovidHistory.allData.filter { it.areaId.endsWith(", US") && Lookup.area(it.areaId).type == AreaType.PROVINCE_STATE }
             .onEach {
                 val series = it.deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)
-                println("${it.area.id} - ${it.metric} - ${series.values.map { it.toInt() }}")
+                println("${it.areaId} - ${it.metric} - ${series.values.map { it.toInt() }}")
                 println("  " + MinMaxFinder(10).invoke(series))
             }
 }

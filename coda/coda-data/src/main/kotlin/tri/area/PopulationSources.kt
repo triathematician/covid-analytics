@@ -6,13 +6,10 @@ import tri.util.csvLines
 // This file provides access to population data tables.
 //
 
-private const val COUNTY_CENSUS_DATA = "resources/county census.csv"
-private const val STATE_CENSUS_DATA = "resources/state census.csv"
+private const val COUNTY_CENSUS_DATA = "resources/census/county census.csv"
+private const val STATE_CENSUS_DATA = "resources/census/state census.csv"
 private const val METRO_DATA = "resources/metro.csv"
 private const val COUNTRY_DATA = "resources/countries.csv"
-private const val CANADA_DATA = "resources/canada.csv"
-private const val CHINA_DATA = "resources/china.csv"
-private const val AUSTRALIA_DATA = "resources/australia.csv"
 
 sealed class PopulationLookupData(resource: String): (String) -> Long? {
     val dataLines = CountyData::class.java.getResource(resource).csvLines().toList()
@@ -53,21 +50,6 @@ object StateData: PopulationLookupData(STATE_CENSUS_DATA) {
 object MetroData: PopulationLookupData(METRO_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].toLong() } }
     override fun invoke(input: String) = dataTable[input.toLowerCase()]
-}
-
-object CanadaProvinceData: PopulationLookupData(CANADA_DATA) {
-    init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[5].replace(",", "").toLong() } }
-    override fun invoke(input: String) = dataTable[input.removeSuffix(", Canada").toLowerCase()]
-}
-
-object AustraliaData: PopulationLookupData(AUSTRALIA_DATA) {
-    init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].toLong() } }
-    override fun invoke(input: String) = dataTable[input.removeSuffix(", Australia").toLowerCase()]
-}
-
-object ChinaData: PopulationLookupData(CHINA_DATA) {
-    init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].replace(",", "").toLong() } }
-    override fun invoke(input: String) = dataTable[input.removeSuffix(", China").toLowerCase()]
 }
 
 object CountryData: PopulationLookupData(COUNTRY_DATA) {

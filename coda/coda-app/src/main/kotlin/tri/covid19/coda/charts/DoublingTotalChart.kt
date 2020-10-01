@@ -28,7 +28,7 @@ class DoublingTotalChart : LineChart<Number, Number>(NumberAxis(0.0, 56.0, 7.0),
         get() = TODO()
         set(value) {
             dataSeries = value.map { it.changeDoublingDataSeries(1) }
-                    .map { series(it.first.area.id, it.first.domain.shift(1, 0), it.first, it.second) }
+                    .map { series(it.first.areaId, it.first.domain.shift(1, 0), it.first, it.second) }
         }
 
 }

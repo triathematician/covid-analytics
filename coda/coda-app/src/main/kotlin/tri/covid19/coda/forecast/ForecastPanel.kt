@@ -103,7 +103,7 @@ class ForecastPanel : SplitPane() {
                         style = "-fx-background-radius: 3 0 0 3; -fx-padding: 4"
                         action { model.goToPreviousUsState() }
                     }
-                    autocompletetextfield(model.regions) {
+                    autocompletetextfield(model.areas) {
                         hgrow = Priority.ALWAYS
                         style = "-fx-background-radius: 0"
                         contextmenu {

@@ -5,6 +5,7 @@ import javafx.event.EventTarget
 import javafx.scene.control.SplitPane
 import javafx.scene.control.TableView
 import tornadofx.*
+import tri.area.Lookup
 import tri.covid19.DEATHS
 import tri.covid19.coda.history.*
 import tri.covid19.coda.utils.*
@@ -28,7 +29,7 @@ class HotspotTable: SplitPane() {
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> updateTableData() } }
-    val parentRegion = SimpleStringProperty("").apply { addListener { _ -> updateTableData() } }
+    val parentRegion = SimpleStringProperty("USA").apply { addListener { _ -> updateTableData() } }
 
     lateinit var table: TableView<HotspotInfo>
 
@@ -125,7 +126,7 @@ class HotspotTable: SplitPane() {
 
     private fun updateTableData() {
         hotspotData.setAll(data()
-                .filter { parentRegion.value.isEmpty() || it.area.parent == parentRegion.value }
+                .filter { parentRegion.value == null || it.area.parent == Lookup.area(parentRegion.value) }
                 .filter { it.lastValue >= minCount.value && it.deltas().last(0..6).sum() >= minLastWeekCount.value }
                 .filter { it.area.population == null || it.lastValue / it.area.population!! * 1E5 >= minPerCapitaCount.value }
                 .filter { it.area.population == null || it.deltas().last(0..6).sum() / it.area.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
