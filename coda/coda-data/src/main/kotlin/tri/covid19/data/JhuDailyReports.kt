@@ -1,8 +1,12 @@
 package tri.covid19.data
 
-import tri.area.*
-import tri.covid19.*
-import tri.timeseries.MetricTimeSeries
+import tri.area.Lookup
+import tri.area.UsCbsaInfo
+import tri.area.Usa
+import tri.covid19.CASES
+import tri.covid19.DEATHS
+import tri.timeseries.TimeSeries
+import tri.timeseries.TimeSeriesFileProcessor
 import tri.timeseries.intTimeSeries
 import tri.util.csvKeyValues
 import tri.util.javaTrim
@@ -11,30 +15,12 @@ import java.net.URL
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-private val FORMAT1 = DateTimeFormatter.ofPattern("M/d/yy H:mm")
-private val FORMAT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-private val FORMAT3 = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
-private val FORMAT4 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-
-val M_D_YYYY = DateTimeFormatter.ofPattern("M-d-yyyy")
-
-private val FORMATS = arrayOf(FORMAT1, FORMAT2, FORMAT3, FORMAT4)
-
-/** List of substrings to exclude if found anywhere in area name. */
-private val EXCLUDED_AREAS = listOf("Madison, Wisconsin, US", "Ashland, Nebraska, US", "Travis, California, US",
-        "Madison, WI, US", "London, ON, Canada", "Others", "New York City, New York, US", "Berkeley, California, US", "US, US",
-        "occupied Palestinian territory", "Fench Guiana", "Invalid", "Wuhan Evacuee", "External territories", "Jervis Bay",
-        "Diamond Princess", "Grand Princess", "Cruise Ship", "Palestine", "Calgary", "Toronto", "Montreal", "Edmonton",
-        "Chicago", "Boston", "Lackland", "San Antonio", "Seattle", "Tempe", "Portland", "Norwell", "Nashua",
-        "Brockton", "Soldotna", "Sterling"
-)
-
 /** Processes daily time series reports into a unified time series structure. */
-object JhuDailyReports : CovidDataNormalizer() {
+object JhuDailyReports : TimeSeriesFileProcessor(
+        { LocalCovidData.jhuCsseDailyData { it.extension == "csv" } },
+        { LocalCovidData.jhuCsseProcessedData }) {
 
-    override fun sources() = historicalData { it.extension == "csv" }
-
-    override fun readSource(url: URL): List<MetricTimeSeries> {
+    override fun inprocess(url: URL): List<TimeSeries> {
         println("Reading $url")
         val name = url.path.substringAfterLast("/")
         val date = name.substringBeforeLast(".").toLocalDate(M_D_YYYY)
@@ -47,7 +33,7 @@ object JhuDailyReports : CovidDataNormalizer() {
         }
 
         val rows = try {
-            url.csvKeyValues().map(lineReader)
+            url.csvKeyValues(true).map(lineReader)
                     .filterNot { EXCLUDED_AREAS.any { t -> t in it.areaId } }
                     .onEach { it.updateTimestampsIfAfter(date) }.toList()
                     .withAggregations()
@@ -57,7 +43,7 @@ object JhuDailyReports : CovidDataNormalizer() {
 
         return rows.flatMap { row ->
             val areaId = row.areaId
-            val area = Lookup.areaOrNull(areaId)!!
+            Lookup.areaOrNull(areaId)!!
             listOfNotNull(intTimeSeries(areaId, CASES, "", row.Last_Update, row.Confirmed),
                     intTimeSeries(areaId, DEATHS, "", row.Last_Update, row.Deaths)
 //                    intTimeSeries(areaId, RECOVERED, row.Last_Update, row.Recovered)
@@ -67,8 +53,6 @@ object JhuDailyReports : CovidDataNormalizer() {
             )
         }
     }
-
-    override fun processTimeSeries(data: List<MetricTimeSeries>, coerceIncreasing: Boolean) = super.processTimeSeries(data, true)
 
     // region LOADING FILES INTO COMMON FORMAT
 
@@ -83,7 +67,8 @@ object JhuDailyReports : CovidDataNormalizer() {
     // Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered,Latitude,Longitude
     private fun Map<String, String>.read2() = DailyReportRow("",
             get("Province/State")?.removeSuffix(", U.S.")?.substringBefore(",", "")?.adminFix() ?: "",
-            get("Province/State")?.removeSuffix(", U.S.")?.substringAfter(", ")?.javaTrim()?.stateFix() ?: throw readError(),
+            get("Province/State")?.removeSuffix(", U.S.")?.substringAfter(", ")?.javaTrim()?.stateFix()
+                    ?: throw readError(),
             this["Country/Region"]!!.countryFix(), gdate("Last Update"),
             gint("Confirmed"), gint("Deaths"), gint("Recovered"), 0, 0, 0)
 
@@ -120,8 +105,7 @@ object JhuDailyReports : CovidDataNormalizer() {
     private fun Map<String, String>.gint(f: String) = this[f]?.toIntOrNull() ?: 0
     private fun Map<String, String>.gintn(f: String) = this[f]?.toIntOrNull()
 
-    //endregion
-
+//endregion
 }
 
 /** Daily report row info. */
@@ -155,6 +139,24 @@ data class DailyReportRow(var FIPS: String, var Admin2: String, var Province_Sta
 
     //endregion
 }
+
+private val FORMAT1 = DateTimeFormatter.ofPattern("M/d/yy H:mm")
+private val FORMAT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+private val FORMAT3 = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
+private val FORMAT4 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+
+val M_D_YYYY = DateTimeFormatter.ofPattern("M-d-yyyy")
+
+private val FORMATS = arrayOf(FORMAT1, FORMAT2, FORMAT3, FORMAT4)
+
+/** List of substrings to exclude if found anywhere in area name. */
+private val EXCLUDED_AREAS = listOf("Madison, Wisconsin, US", "Ashland, Nebraska, US", "Travis, California, US",
+        "Madison, WI, US", "London, ON, Canada", "Others", "New York City, New York, US", "Berkeley, California, US", "US, US",
+        "occupied Palestinian territory", "Fench Guiana", "Invalid", "Wuhan Evacuee", "External territories", "Jervis Bay",
+        "Diamond Princess", "Grand Princess", "Cruise Ship", "Palestine", "Calgary", "Toronto", "Montreal", "Edmonton",
+        "Chicago", "Boston", "Lackland", "San Antonio", "Seattle", "Tempe", "Portland", "Norwell", "Nashua",
+        "Brockton", "Soldotna", "Sterling"
+)
 
 //region aggregation across sub-regions
 

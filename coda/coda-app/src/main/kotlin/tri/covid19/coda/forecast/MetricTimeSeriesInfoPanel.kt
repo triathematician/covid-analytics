@@ -15,8 +15,8 @@ import tri.util.percentFormat
 import tri.util.userFormat
 import kotlin.math.absoluteValue
 
-/** Panel that shows information about an underlying [MetricTimeSeries]. */
-class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<MetricTimeSeries?>) : View() {
+/** Panel that shows information about an underlying [TimeSeries]. */
+class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View() {
 
     private val popText = SimpleStringProperty("")
     private val peakText = SimpleStringProperty("")
@@ -46,7 +46,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<MetricTimeSerie
         }
     }
 
-    fun update(s: MetricTimeSeries?) {
+    fun update(s: TimeSeries?) {
         if (s == null) {
             popText.value = ""
             peakText.value = ""
@@ -79,7 +79,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<MetricTimeSerie
         dataInfo.setAll(extrema.textInfo())
     }
 
-    private fun MetricTimeSeries.extrema() = MinMaxFinder(10).invoke(restrictNumberOfStartingZerosTo(1).movingAverage(7))
+    private fun TimeSeries.extrema() = MinMaxFinder(10).invoke(restrictNumberOfStartingZerosTo(1).movingAverage(7))
 
     //region EXTREMA TEXT
 

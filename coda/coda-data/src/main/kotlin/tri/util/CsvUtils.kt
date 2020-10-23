@@ -3,36 +3,67 @@
  */
 package tri.util
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.*
+import java.lang.UnsupportedOperationException
 import java.net.URL
 import kotlin.reflect.KClass
 
 /** Split lines of the CSV file, accommodating quotes and empty entries. */
 object CsvLineSplitter {
-    private val regex = "(?m)(?s)(?<=^)(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+(?=$)".toRegex()
-    private val inlineRegex = "(?m)(?<=^|,)(?:\"\"|(?:)|[^,\"\\r\\n]+|\"(?:\"\"|[^\"]+)+\")(?=,|$)".toRegex()
+    internal val FIND_REGEX = "(?m)(?s)(?<=^)(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+(?=$)".toRegex()
+    internal val FIND_REGEX2 = "(?s)^(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+$".toRegex()
+
+    internal const val QUOTED = "(?<=^|,)\"(?:\"\"|[^\"]+)++\"(?=,|$)"
+    internal const val PARTIAL = "(?:[^,\"\\r\\n]+|$QUOTED)"
+
+    internal val MATCH_ONE_MULTILINE_CSV_RECORD = "(?s)^,*(?:$PARTIAL,*)+$".toRegex()
+    internal val INLINE_REGEX = "(?m)(?<=^|,)(?:\"\"|(?:)|[^,\"\\r\\n]+|\"(?:\"\"|[^\"]+)+\")(?=,|$)".toRegex()
 
     /** Reads data from the given URL, returning the header line and content lines. */
-    fun readData(url: URL) = readData { InputStreamReader(url.openStream()) }
+    fun readData(splitOnNewLines: Boolean, url: URL) = readData(splitOnNewLines) { InputStreamReader(url.openStream()) }
 
     /** Reads data from the given string, returning the header line and content lines. */
-    fun readData(string: String) = readData { StringReader(string) }
+    fun readData(splitOnNewLines: Boolean, string: String) = readData(splitOnNewLines) { StringReader(string) }
 
     /** Reads data from a reader, returning the header line and content lines. */
-    fun readData(reader: () -> Reader): Pair<List<String>, List<List<String>>> {
-        val header = splitLine(reader().firstLine()).map { it.javaTrim() }
-        val otherLines = BufferedReader(reader()).lineSequence().drop(1).joinToString("\n")
-        val others = regex.findAll(otherLines).map { it.value }.toList()
-        return header to others.map { splitLine(it) }
+    fun readData(splitOnNewLines: Boolean, reader: () -> Reader): Pair<List<String>, Sequence<List<String>>> {
+        val header = splitLine(reader().firstLine())!!.map { it.javaTrim() }
+
+        val seq = reader().buffered().lineSequence().drop(1).reconstitute().mapNotNull { splitLine(it) }
+        return header to seq
+
+//        val otherLines = BufferedReader(reader()).lineSequence().drop(1)
+//        val others = if (splitOnNewLines) otherLines else FIND_REGEX.findAll(otherLines.joinToString("\n")).map { it.value }
+//        return header to others.mapNotNull { splitLine(it) }
+    }
+
+    /** Converts sequence from raw to one where line breaks inside quotes have been merged. */
+    internal fun Sequence<String>.reconstitute(): Sequence<String> {
+        val iterator = iterator()
+        return object : Iterator<String> {
+            var next = ""
+            override fun hasNext(): Boolean {
+                val seq = mutableListOf<String>()
+                while (seq.isEmpty() || !MATCH_ONE_MULTILINE_CSV_RECORD.matches(seq.joinToString("\n"))) {
+                    if (seq.size > 100) println("Multiline string: ${seq.size}")
+                    if (iterator.hasNext()) iterator.next().let { if (it.isNotEmpty()) seq += it }
+                    else return false
+                }
+                next = seq.joinToString("\n")
+                return true
+            }
+            override fun next() = next
+        }.asSequence()
     }
 
     /** Splits a comma-separated lines. An empty line will generate an exception. */
-    fun splitLine(line: String): List<String> {
-        require(line.isNotBlank())
-        return inlineRegex.findAll(line).map {
+    fun splitLine(line: String): List<String>? {
+        if (line.isBlank()) return null
+        return INLINE_REGEX.findAll(line).map {
             var res = it.value
             while (res.startsWith("\"") && res.endsWith("\"")) {
                 res = res.substring(1, res.length - 1)
@@ -62,37 +93,39 @@ private fun Reader.firstLine() = useLines {
     it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
 }
 
-val MAPPER = ObjectMapper().registerKotlinModule()
+val MAPPER = ObjectMapper().registerKotlinModule().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
 /** Maps lines of data from a string. */
-fun <X> String.mapCsvKeyValues(op: (Map<String, String>) -> X) = csvKeyValues().map { op(it) }
+fun <X> String.mapCsvKeyValues(splitOnNewLines: Boolean, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
 /** Reads lines of data from a URL. */
-fun String.csvKeyValues() = CsvLineSplitter.readData(this).keyValues()
+fun String.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines,this).keyValues()
 
 /** Reads lines of data from a file. */
-fun File.csvKeyValues() = toURI().toURL().csvKeyValues()
+fun File.csvKeyValues(splitOnNewLines: Boolean = true) = toURI().toURL().csvKeyValues(splitOnNewLines)
 /** Reads lines of data from a file. */
 fun File.csvKeyValuesFast() = toURI().toURL().csvKeyValuesFast()
 /** Maps lines of data from a file. */
-fun <X> File.mapCsvKeyValues(op: (Map<String, String>) -> X) = csvKeyValues().map { op(it) }
+fun <X> File.mapCsvKeyValues(splitOnNewLines: Boolean = true, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
+/** Maps lines of data from a file. */
+fun <X> File.mapCsvKeyValuesFast(op: (Map<String, String>) -> X) = csvKeyValuesFast().map { op(it) }
 /** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
-inline fun <reified X> File.mapCsvKeyValues() = csvKeyValues().map { MAPPER.convertValue<X>(it) }
+inline fun <reified X> File.mapCsvKeyValues(splitOnNewLines: Boolean = true) = csvKeyValues(splitOnNewLines).map { MAPPER.convertValue<X>(it) }
 /** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
 inline fun <reified X> File.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPPER.convertValue<X>(it) }
 
 /** Reads lines of data from a URL. */
-fun URL.csvLines() = CsvLineSplitter.readData(this).second
+fun URL.csvLines(splitOnNewLines: Boolean) = CsvLineSplitter.readData(splitOnNewLines, this).second
 /** Reads lines of data from a URL. */
-fun URL.csvKeyValues() = CsvLineSplitter.readData(this).keyValues()
+fun URL.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines, this).keyValues()
 /** For files that don't use escape quotes, reads lines of data from a URL. */
 fun URL.csvKeyValuesFast() = CsvLineSplitterFast.readData(this).keyValues()
 /** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
-inline fun <reified X> URL.mapCsvKeyValues() = csvKeyValues().map { MAPPER.convertValue<X>(it) }
+inline fun <reified X> URL.mapCsvKeyValues(splitOnNewLines: Boolean) = csvKeyValues(splitOnNewLines).map { MAPPER.convertValue<X>(it) }
 /** For files that don't use escape quotes, maps lines of CSV data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
 inline fun <reified X> URL.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPPER.convertValue<X>(it) }
 
 /** Maps CSV file to target object, using Jackson [ObjectMapper] for conversions. */
-inline fun <reified X> KClass<*>.csvResource(name: String) = java.getResource(name).mapCsvKeyValues<X>().toList()
+inline fun <reified X> KClass<*>.csvResource(splitOnNewLines: Boolean, name: String) = java.getResource(name).mapCsvKeyValues<X>(splitOnNewLines).toList()
 
 //region CONVERTING TO KEY VALUES
 
@@ -134,6 +167,7 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
 
 //region GETTING VALUES FROM STRING KEY-VALUE MAPS
 
+fun Map<String, String>.stringNonnull(n: String) = get(n)?.let { if (it.isEmpty()) null else it } ?: throw UnsupportedOperationException("Unexpected $n = ${get(n)}")
 fun Map<String, String>.string(n: String) = get(n)?.let { if (it.isEmpty()) null else it }
 fun Map<String, String>.boolean(n: String) = get(n)?.let { "TRUE".equals(it, ignoreCase = true) } ?: false
 fun Map<String, String>.int(n: String) = get(n)?.toIntOrNull() ?: get(n)?.toDoubleOrNull()?.toInt()

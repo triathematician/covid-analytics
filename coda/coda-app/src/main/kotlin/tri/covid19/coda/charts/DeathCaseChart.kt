@@ -9,7 +9,7 @@ import tornadofx.gridpaneConstraints
 import tri.covid19.coda.utils.chartContextMenu
 import tri.covid19.coda.utils.dataSeries
 import tri.covid19.coda.utils.series
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 
 /** Displays total on x-axis, doubling time on vertical axis. */
 class DeathCaseChart : LineChart<Number, Number>(NumberAxis(), NumberAxis()) {
@@ -24,7 +24,7 @@ class DeathCaseChart : LineChart<Number, Number>(NumberAxis(), NumberAxis()) {
     }
 
     /** Set mapping of deaths (first set of series) to cases (second set of series). */
-    var series: Pair<List<MetricTimeSeries>, List<MetricTimeSeries>>
+    var series: Pair<List<TimeSeries>, List<TimeSeries>>
         get() = TODO()
         set(value) {
             val commonIndices = value.first.indices.intersect(value.second.indices)

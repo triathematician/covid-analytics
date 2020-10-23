@@ -2,7 +2,7 @@ package tri.covid19.data
 
 import tri.covid19.CASES
 import tri.covid19.DEATHS
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.area.AreaInfo
 import tri.area.EARTH
 import tri.area.AreaType
@@ -57,8 +57,7 @@ object CovidTimeSeriesSources {
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
     fun dailyReports(areaFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
-        CovidHistory.allData
-                .filter { areaFilter(it.area) }
+        LocalCovidData.byArea(areaFilter)
                 .flatMap {
                     listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)
@@ -74,7 +73,7 @@ object CovidTimeSeriesSources {
 
 //region population lookups
 
-fun MetricTimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = area.population) {
+fun TimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = area.population) {
     null -> null
     else -> (this / (pop.toDouble() / 100000)).also {
         it.intSeries = false

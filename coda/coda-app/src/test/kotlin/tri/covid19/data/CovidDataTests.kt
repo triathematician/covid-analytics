@@ -2,7 +2,7 @@ package tri.covid19.data
 
 import org.junit.Test
 import tri.covid19.CASES
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.area.AreaType
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
@@ -17,7 +17,7 @@ class CovidDataTests {
     @ExperimentalTime
     fun testGrowth() {
         println(File("").absolutePath)
-        val data = CovidHistory.allData.filter { it.area.type == AreaType.COUNTY && it.metric == CASES }
+        val data = LocalCovidData.by { it.area.type == AreaType.COUNTY && it.metric == CASES }
         val latest = mutableMapOf<String, LocalDate>()
         (LocalDate.of(2020, 6, 15)..LocalDate.now()).forEach { date ->
             val filtered = data.map { Growth(it, date) }.filter {
@@ -37,7 +37,7 @@ class CovidDataTests {
     @Test
     @ExperimentalTime
     fun testKernel() {
-        val data = CovidHistory.allData.first { it.areaId == "United Kingdom" && it.metric == CASES }
+        val data = LocalCovidData.by { it.areaId == "United Kingdom" && it.metric == CASES }.first()
         println(data.values)
         println(data.values.deltas().movingAverage(7))
         val kernels = data.values.deltas().movingAverage(7).windowed(6).map { bestKernel(it) }
@@ -47,7 +47,7 @@ class CovidDataTests {
     }
 }
 
-class Growth(val series: MetricTimeSeries, val date: LocalDate) {
+class Growth(val series: TimeSeries, val date: LocalDate) {
     val count7
         get() = series[date] - series[date-7]
     val countPerCapita7

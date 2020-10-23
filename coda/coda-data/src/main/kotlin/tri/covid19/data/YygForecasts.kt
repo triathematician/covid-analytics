@@ -2,28 +2,30 @@ package tri.covid19.data
 
 import tri.area.Lookup
 import tri.covid19.*
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.area.AreaType
+import tri.covid19.data.LocalCovidData.forecasts
+import tri.covid19.data.LocalCovidData.metric
+import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
+import java.io.File
 import java.lang.IllegalArgumentException
 import java.net.URL
 
 const val YYG = "YYG"
 
 /** Loads YYG models. */
-object YygForecasts: CovidDataNormalizer(addIdSuffixes = true) {
+object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("yyg") && it.extension == "csv" } }, { File("../data/normalized/yyg-forecasts.json") }) {
 
-    override fun sources() = forecasts { it.name.startsWith("yyg") && it.extension == "csv" }
-
-    override fun readSource(url: URL): List<MetricTimeSeries> {
+    override fun inprocess(url: URL): List<TimeSeries> {
         val date = url.path.substringAfter("yyg-").substringBeforeLast("-")
-        return url.csvKeyValues()
+        return url.csvKeyValues(true)
                 .filter { it["predicted_deaths_mean"] != "" }.toList()
                 .flatMap { it.extractMetrics(date) }
     }
 
     /** Extracts any number of metrics from given row of data, based on a field name predicate. */
-    private fun Map<String, String>.extractMetrics(date: String): List<MetricTimeSeries> {
+    private fun Map<String, String>.extractMetrics(date: String): List<TimeSeries> {
         return keys.filter { it.startsWith("predicted_total_deaths") || it.startsWith("predicted_total_infected") }
                 .filter { !get(it).isNullOrEmpty() }
                 .mapNotNull {

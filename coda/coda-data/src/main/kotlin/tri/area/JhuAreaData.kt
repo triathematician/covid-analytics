@@ -5,7 +5,7 @@ import tri.util.csvResource
 
 /** Loads JHU region/population data. */
 internal object JhuAreaData {
-    private val data = JhuAreaData::class.csvResource<JhuAreaInfo>("resources/jhucsse/jhu-iso-fips-lookup.csv")
+    private val data = JhuAreaData::class.csvResource<JhuAreaInfo>(true, "resources/jhucsse/jhu-iso-fips-lookup.csv")
 
     val index = data.groupByOne { it.indexKey }
     val areas = index.values

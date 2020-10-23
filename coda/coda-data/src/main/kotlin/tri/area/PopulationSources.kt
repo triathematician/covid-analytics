@@ -12,7 +12,7 @@ private const val METRO_DATA = "resources/metro.csv"
 private const val COUNTRY_DATA = "resources/countries.csv"
 
 sealed class PopulationLookupData(resource: String): (String) -> Long? {
-    val dataLines = CountyData::class.java.getResource(resource).csvLines().toList()
+    val dataLines = CountyData::class.java.getResource(resource).csvLines(true).toList()
     val dataTable: MutableMap<String, Long> = mutableMapOf()
 }
 

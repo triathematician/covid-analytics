@@ -7,7 +7,7 @@ private const val PVI = "resources/538-partisan-lean.csv"
 /** Access to various regional demographic information. */
 object Demographics {
     /** Get partisan voting index from 538 data. */
-    val statePvi538 = Demographics::class.csvResource<PviEntry>(PVI)
+    val statePvi538 = Demographics::class.csvResource<PviEntry>(true, PVI)
             .map { Usa.stateByLongName(it.state) to it.pvi }.toMap()
 }
 

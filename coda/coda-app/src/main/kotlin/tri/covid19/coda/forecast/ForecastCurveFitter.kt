@@ -8,7 +8,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import tornadofx.property
 import tri.math.*
 import tri.timeseries.Forecast
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.monthDay
@@ -89,7 +89,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * Creates new forecast from current settings.
      * @param empirical empirical data for metrics
      */
-    fun userForecastInfo(empirical: MetricTimeSeries): ForecastStats {
+    fun userForecastInfo(empirical: TimeSeries): ForecastStats {
         val forecastDomain = DateRange(DAY0, JULY31)
         val forecastValues = forecastDomain.map { invoke(it.minus(DAY0)) }
         val series = empirical.copy(metric = "${empirical.metric} (user forecast)", start = DAY0, values = forecastValues)
@@ -126,7 +126,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * Creates new forecast from current settings.
      * @param empirical empirical data for metrics
      */
-    fun forecastStats(forecast: Forecast, empirical: MetricTimeSeries) = ForecastStats(forecast).apply {
+    fun forecastStats(forecast: Forecast, empirical: TimeSeries) = ForecastStats(forecast).apply {
         sigmoidParameters = null
         fitDateRange = null
 
@@ -200,7 +200,7 @@ class ForecastCurveFitter: (Number) -> Double {
 
     //region FITTING AND STATS
 
-    fun autofit(series: MetricTimeSeries?) {
+    fun autofit(series: TimeSeries?) {
         updateFitLabel()
 
         if (series != null) {
@@ -222,12 +222,12 @@ class ForecastCurveFitter: (Number) -> Double {
         }
     }
 
-    internal fun empiricalDataForFitting(empirical: MetricTimeSeries?): List<Vector2D>? {
+    internal fun empiricalDataForFitting(empirical: TimeSeries?): List<Vector2D>? {
         val domain = empirical?.let { fitDateRange.intersect(empirical.domain) } ?: return null
         return domain.map { Vector2D(it.toNumber.toDouble(), empirical[it]) }
     }
 
-    private fun empiricalDataForEvaluation(empirical: MetricTimeSeries?): List<Vector2D>? {
+    private fun empiricalDataForEvaluation(empirical: TimeSeries?): List<Vector2D>? {
         val domain = empirical?.let { evalDateRange.intersect(empirical.domain) } ?: return null
         return domain.map { Vector2D(it.toNumber.toDouble(), empirical[it]) }
     }
@@ -238,7 +238,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @return error
      */
-    fun cumulativeRmse(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+    fun cumulativeRmse(curve: TimeSeries? = null, empirical: TimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
         return rootMeanSquareError(observedPoints) { n ->
             curve?.let { it[numberToDate(n)] } ?: invoke(n)
@@ -251,7 +251,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @return error
      */
-    fun deltaRmse(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+    fun deltaRmse(deltaCurve: TimeSeries? = null, empirical: TimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
         return rootMeanSquareError(observedPoints) { n ->
             deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n)
@@ -264,7 +264,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @return error
      */
-    fun cumulativeMase(curve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+    fun cumulativeMase(curve: TimeSeries? = null, empirical: TimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical) ?: return null
         return meanAbsoluteScaledError(observedPoints) { n ->
             curve?.let { it[numberToDate(n)] } ?: invoke(n)
@@ -277,7 +277,7 @@ class ForecastCurveFitter: (Number) -> Double {
      * @param empirical the empirical data
      * @return error
      */
-    fun deltaMase(deltaCurve: MetricTimeSeries? = null, empirical: MetricTimeSeries?): Double? {
+    fun deltaMase(deltaCurve: TimeSeries? = null, empirical: TimeSeries?): Double? {
         val observedPoints = empiricalDataForEvaluation(empirical?.deltas()) ?: return null
         return meanAbsoluteScaledError(observedPoints) { n ->
             deltaCurve?.let { it[numberToDate(n)] } ?: derivative(n)

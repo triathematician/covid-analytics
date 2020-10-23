@@ -1,8 +1,10 @@
 package tri.covid19.data
 
-import tri.covid19.data.LanlForecasts.forecastId
 import tri.timeseries.Forecast
+import tri.timeseries.ForecastId
+import tri.timeseries.TimeSeriesFileFormat
 import java.io.File
+import java.time.LocalDate
 import kotlin.time.ExperimentalTime
 
 /** Access to forecasts by model and date. */
@@ -27,11 +29,10 @@ object CovidForecasts {
 
     private fun fileForecasts(file: File): List<Forecast> {
         val model = file.nameWithoutExtension.substringBefore("-").toUpperCase()
-        return loadTimeSeries(file).flatMap { regionData ->
-            regionData.metrics.groupBy { forecastId(model, regionData.areaId, it.id) }
-                    .filter { it.key != null }
-                    .map { Forecast(it.key!!, it.value) }
-        }
+        return TimeSeriesFileFormat.readSeries(file).groupBy {
+            // TODO - doesn't handle different forecast dates
+            ForecastId(model, LocalDate.now(), it.areaId, it.metric)
+        }.map { Forecast(it.key, it.value) }
     }
 
 }

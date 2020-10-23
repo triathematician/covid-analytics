@@ -9,21 +9,17 @@ import tornadofx.*
 import tri.area.Lookup
 import tri.area.USA
 import tri.area.Usa
-import tri.covid19.data.CovidForecasts
-import tri.covid19.data.CovidHistory
-import tri.covid19.data.IHME
-import tri.covid19.data.YYG
 import tri.covid19.coda.history.METRIC_OPTIONS
 import tri.covid19.coda.history.changeDoublingDataSeries
 import tri.covid19.coda.history.hubbertSeries
 import tri.covid19.coda.utils.ChartDataSeries
+import tri.covid19.data.*
 import tri.math.Sigmoid
 import tri.timeseries.Forecast
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
-import tri.covid19.data.CovidTimeSeriesSources
 import java.time.LocalDate
 import java.util.*
 import kotlin.reflect.KMutableProperty1
@@ -117,7 +113,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** List of areas available for panel. */
     val areas: SortedSet<String> by lazy {
-        val dataAreas = CovidHistory.allData.map { it.areaId }.toSet()
+        val dataAreas = LocalCovidData.areas().map { it.id }
         val forecastAreas = CovidForecasts.allForecasts.map { it.areaId }.toSet()
         (dataAreas + forecastAreas).toSortedSet()
     }
@@ -126,9 +122,9 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     var domain: DateRange? = null
 
     /** The primary time series for the selected metric. */
-    val mainSeries = SimpleObjectProperty<MetricTimeSeries?>()
+    val mainSeries = SimpleObjectProperty<TimeSeries?>()
     /** User's projection. */
-    var userForecast: MetricTimeSeries? = null
+    var userForecast: TimeSeries? = null
 
     /** Past forecasts. */
     var pastForecasts = PastForecasts()
@@ -144,7 +140,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         userForecast = when {
             !showForecast -> null
             domain == null -> null
-            else -> MetricTimeSeries(areaId, "$selectedMetric (curve)", "",false, 0.0, domain!!.start,
+            else -> TimeSeries(areaId, "$selectedMetric (curve)", "",false, 0.0, domain!!.start,
                     domain!!.map { d -> curveFitter(d, shift) })
         }
 
@@ -191,7 +187,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         series(externalForecasts.deltas.mapNotNull { it.residuals(daily) })
     }
 
-    private fun MetricTimeSeries.residuals(empirical: MetricTimeSeries?): MetricTimeSeries? {
+    private fun TimeSeries.residuals(empirical: TimeSeries?): TimeSeries? {
         empirical ?: return null
         val commonDomain = domain.intersect(empirical.domain)
         commonDomain ?: return null
@@ -199,16 +195,16 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     }
 
     private fun dataseries(op: MutableList<ChartDataSeries>.() -> Unit) = mutableListOf<ChartDataSeries>().apply { op() }
-    private fun MutableList<ChartDataSeries>.series(s: MetricTimeSeries?) { series(listOfNotNull(s)) }
-    private fun MutableList<ChartDataSeries>.series(ss: List<MetricTimeSeries>) {
-        domain?.let { domain -> ss.forEach { this += tri.covid19.coda.utils.series(it.metric, domain, it) } }
+    private fun MutableList<ChartDataSeries>.series(s: TimeSeries?) { series(listOfNotNull(s)) }
+    private fun MutableList<ChartDataSeries>.series(s: List<TimeSeries>) {
+        domain?.let { domain -> s.forEach { this += tri.covid19.coda.utils.series(it.metric, domain, it) } }
     }
-    private fun MutableList<ChartDataSeries>.series(xy: Pair<MetricTimeSeries, MetricTimeSeries>?, idFirst: Boolean = true) { series(listOfNotNull(xy), idFirst) }
-    private fun MutableList<ChartDataSeries>.series(xyxy: List<Pair<MetricTimeSeries, MetricTimeSeries>>, idFirst: Boolean = true) {
+    private fun MutableList<ChartDataSeries>.series(xy: Pair<TimeSeries, TimeSeries>?, idFirst: Boolean = true) { series(listOfNotNull(xy), idFirst) }
+    private fun MutableList<ChartDataSeries>.series(xyxy: List<Pair<TimeSeries, TimeSeries>>, idFirst: Boolean = true) {
         domain?.let { domain -> xyxy.forEach { this += tri.covid19.coda.utils.series(if (idFirst) it.first.metric else it.second.metric, domain, it.first, it.second) } }
     }
 
-    private fun MetricTimeSeries.maybeSmoothed() = if (smooth) movingAverage(7) else this
+    private fun TimeSeries.maybeSmoothed() = if (smooth) movingAverage(7) else this
 
     //endregion
 
@@ -310,7 +306,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     //region DATA MANAGEMENT
 
     /** Provides access to past forecasts. */
-    class PastForecasts(var metrics: List<MetricTimeSeries> = listOf())
+    class PastForecasts(var metrics: List<TimeSeries> = listOf())
     /** Provides access to external forecasts. */
     class ExternalForecasts(var forecasts: List<Forecast> = listOf())
 

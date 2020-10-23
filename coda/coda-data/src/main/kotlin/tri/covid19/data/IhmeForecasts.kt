@@ -1,24 +1,27 @@
 package tri.covid19.data
 
 import tri.covid19.*
-import tri.timeseries.MetricTimeSeries
+import tri.covid19.data.LocalCovidData.extractMetrics
+import tri.covid19.data.LocalCovidData.forecasts
+import tri.timeseries.TimeSeries
+import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
+import java.io.File
 import java.net.URL
 
 const val IHME = "IHME"
 
 /** Loads IHME models. */
-object IhmeForecasts: CovidDataNormalizer(addIdSuffixes = true) {
+object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith("ihme") && it.extension == "csv" } },
+        { File("../data/normalized/ihme-forecasts.json") }) {
 
     private val EXCLUDE_LOCATIONS = listOf(
             "Other Counties, WA", "Life Care Center, Kirkland, WA", "King and Snohomish Counties (excluding Life Care Center), WA",
             "Valencian Community", "Mexico City")
 
-    override fun sources() = forecasts { it.name.startsWith("ihme") && it.extension == "csv" }
-
-    override fun readSource(url: URL): List<MetricTimeSeries> {
+    override fun inprocess(url: URL): List<TimeSeries> {
         val date = url.path.substringAfter("ihme-").substringBefore(".csv")
-        return url.csvKeyValues()
+        return url.csvKeyValues(true)
                 .filter { it["totdea_lower"] != it["totdea_upper"] }.toList()
                 .filter { it["location_name"] !in EXCLUDE_LOCATIONS }
                 .flatMap {

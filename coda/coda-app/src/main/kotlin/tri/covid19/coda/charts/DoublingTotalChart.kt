@@ -10,7 +10,7 @@ import tri.covid19.coda.history.changeDoublingDataSeries
 import tri.covid19.coda.utils.chartContextMenu
 import tri.covid19.coda.utils.dataSeries
 import tri.covid19.coda.utils.series
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 
 /** Displays total on x-axis, doubling time on vertical axis. */
 class DoublingTotalChart : LineChart<Number, Number>(NumberAxis(0.0, 56.0, 7.0), NumberAxis()) {
@@ -24,7 +24,7 @@ class DoublingTotalChart : LineChart<Number, Number>(NumberAxis(0.0, 56.0, 7.0),
         chartContextMenu()
     }
 
-    var series: Collection<MetricTimeSeries>
+    var series: Collection<TimeSeries>
         get() = TODO()
         set(value) {
             dataSeries = value.map { it.changeDoublingDataSeries(1) }

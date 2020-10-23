@@ -11,7 +11,7 @@ import tri.covid19.DEATHS
 import tri.covid19.RECOVERED
 import tri.covid19.coda.utils.ChartDataSeries
 import tri.covid19.coda.utils.series
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.timeseries.dateRange
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
@@ -99,7 +99,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     //region DATA
 
     /** Get historical data for current config. Matching "includes" are first. */
-    internal fun historicalData(metric: String? = null): List<MetricTimeSeries> {
+    internal fun historicalData(metric: String? = null): List<TimeSeries> {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
@@ -118,7 +118,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         }
     }
 
-    private val MetricTimeSeries.sortMetric
+    private val TimeSeries.sortMetric
         get() = when(sort) {
             TimeSeriesSort.ALL -> lastValue
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
@@ -141,7 +141,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     //region
 
     /** Smooth using current settings. */
-    internal val List<MetricTimeSeries>.smoothed: List<MetricTimeSeries>
+    internal val List<TimeSeries>.smoothed: List<TimeSeries>
         get() {
             var res = this
             if (smooth != 1) {
@@ -184,18 +184,18 @@ enum class TimeSeriesSort {
 }
 
 /** Creates Hubbert series from monotonic metric. */
-fun MetricTimeSeries.hubbertSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+fun TimeSeries.hubbertSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     val totals = movingAverage(window).restrictNumberOfStartingZerosTo(0)
     val growths = totals.growthPercentages()
     return totals to growths
 }
 
 /** Creates doubling-change series from monotonic metric. */
-fun MetricTimeSeries.changeDoublingDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+fun TimeSeries.changeDoublingDataSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     return movingAverage(window).doublingTimes() to movingAverage(window).deltas()
 }
 
 /** Creates total-doubling series from monotonic metric. */
-fun MetricTimeSeries.doublingTotalDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+fun TimeSeries.doublingTotalDataSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     return movingAverage(window) to movingAverage(window).doublingTimes()
 }

@@ -5,9 +5,9 @@ import tri.util.csvResource
 /** Areas and associated data sources for USA. */
 object Usa {
 
-    private val fips = Usa::class.csvResource<CountyFips>("resources/fips.csv")
-    private val stateFips = Usa::class.csvResource<StateFips>("resources/state-fips.csv")
-    private val cbsaData = Usa::class.csvResource<CbsaCountyMapping>("resources/census/Mar2020cbsaDelineation.csv")
+    private val fips = Usa::class.csvResource<CountyFips>(true, "resources/fips.csv")
+    private val stateFips = Usa::class.csvResource<StateFips>(true, "resources/state-fips.csv")
+    private val cbsaData = Usa::class.csvResource<CbsaCountyMapping>(true, "resources/census/Mar2020cbsaDelineation.csv")
 
     //region LOOKUP TABLES
 
@@ -52,13 +52,9 @@ object Usa {
             }.toMap()
 
     /** Unassigned regions, indexed by state. */
-    val unassigned = JhuAreaData.index
-            .filterValues { it.combinedKey.startsWith("Unassigned, ") && it.combinedKey.endsWith(", US") && it.provinceOrState in stateNames }
-            .map {
-                it.value.combinedKey to UsCountyInfo(it.value.combinedKey, statesByLongName[it.value.provinceOrState]
-                        ?: error("Invalid state: ${it.value.provinceOrState}"),
-                        it.value.fips!!, it.value.population)
-            }.toMap()
+    val unassigned = states
+            .map { it.value.abbreviation to UsCountyInfo("Unassigned, ${it.value.fullName}, US", it.value, it.value.fips!!*1000, 0L) }
+            .toMap()
 
     /** CBSAs, indexed by CBSA Code. */
     val cbsas = cbsaData.groupBy { listOf(it.CBSA_Code, it.CSA_Code, it.CBSA_Title, it.CSA_Title) }
@@ -72,6 +68,13 @@ object Usa {
     //endregion
 
     //region COUNTY LOOKUPS
+
+    /** Get unassigned county b GIPS. */
+    fun unassignedCounty(fips: Int): UsCountyInfo? {
+        val stateF = if (fips < 1000) fips else fips/1000
+        val state = stateFips.firstOrNull { it.fips == stateF }?.state_abbr ?: return null
+        return unassigned[state]
+    }
 
     /** Get county for the given FIPS. */
     fun county(fips: Int) = counties[fips]
@@ -130,7 +133,7 @@ class UsStateInfo(val abbreviation: String, val fullName: String, fips: Int, pop
 }
 
 /** Information about a US CBSA. */
-class UsCbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, val csaTitle: String, val counties: List<UsCountyInfo>)
+data class UsCbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, val csaTitle: String, val counties: List<UsCountyInfo>)
     : AreaInfo(checkCbsaTitle(cbsaTitle), AreaType.METRO, USA, cbsaCode, AreaMetrics.aggregate(counties)) {
 
     /** Portion of CBSA name with states. */
@@ -151,7 +154,7 @@ class UsCbsaInfo(val cbsaCode: Int, val csaCode: Int?, val cbsaTitle: String, va
 }
 
 /** Information about a US county or county-equivalent. */
-class UsCountyInfo(name: String, state: UsStateInfo, fips: Int, population: Long)
+class UsCountyInfo(name: String, val state: UsStateInfo, fips: Int, population: Long)
     : AreaInfo(checkCountyName(name), AreaType.COUNTY, state, fips, AreaMetrics(population)) {
 
     val fullName: String

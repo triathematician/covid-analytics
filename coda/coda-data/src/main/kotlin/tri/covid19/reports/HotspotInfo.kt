@@ -1,6 +1,5 @@
 package tri.covid19.reports
 
-import tri.area.AreaInfo
 import tri.area.Lookup
 import tri.covid19.CovidRiskLevel
 import tri.covid19.risk_DoublingTime
@@ -15,7 +14,7 @@ import kotlin.math.sign
 /** Aggregates information about a single hotspot associated with a region. */
 data class HotspotInfo(var areaId: String, var metric: String, var start: LocalDate, var values: List<Double>, val averageDays: Int = 7) {
 
-    constructor(series: MetricTimeSeries): this(series.areaId, series.metric, series.start, series.values)
+    constructor(series: TimeSeries): this(series.areaId, series.metric, series.start, series.values)
 
     val area = Lookup.areaOrNull(areaId)!!
 
@@ -94,7 +93,7 @@ data class HotspotInfo(var areaId: String, var metric: String, var start: LocalD
         get() = area.population
 
     private val currentTrend
-        get() = MinMaxFinder(10).invoke(MetricTimeSeries(areaId, "", "", false, 0.0, LocalDate.now(), deltas)
+        get() = MinMaxFinder(10).invoke(TimeSeries(areaId, "", "", false, 0.0, LocalDate.now(), deltas)
                 .restrictNumberOfStartingZerosTo(1).movingAverage(7))
                 .let { CurrentTrend(it.extrema) }
 

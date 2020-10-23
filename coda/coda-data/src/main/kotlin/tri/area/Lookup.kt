@@ -29,10 +29,11 @@ object Lookup {
         Usa.cbsas.forEach {
             this[it.key.toString()] = it.value
             this[it.value.id] = it.value
+            this["${it.value.id}, US"] = it.value
         }
         // prepopulate with e.g. "Unassigned, Ohio, US"
         Usa.unassigned.forEach {
-            this[it.key] = it.value
+            this["Unassigned, ${Usa.statesByAbbreviation[it.key]}, US"] = it.value
         }
     }
     private val notFound = mutableMapOf<String, AreaInfo>()
@@ -84,7 +85,7 @@ object Lookup {
 
     //region CHECKS
 
-    private val aliases = Lookup::class.csvResource<AreaAlias>("resources/area-aliases.csv")
+    private val aliases = Lookup::class.csvResource<AreaAlias>(true, "resources/area-aliases.csv")
             .map { it.alias to it.name }.toMap()
 
     private class AreaAlias(val alias: String, val name: String)
