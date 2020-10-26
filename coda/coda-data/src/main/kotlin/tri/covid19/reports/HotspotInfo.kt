@@ -93,7 +93,7 @@ data class HotspotInfo(var areaId: String, var metric: String, var start: LocalD
         get() = area.population
 
     private val currentTrend
-        get() = MinMaxFinder(10).invoke(TimeSeries(areaId, "", "", false, 0.0, LocalDate.now(), deltas)
+        get() = MinMaxFinder(10).invoke(TimeSeries("", areaId, "", "", false, 0.0, LocalDate.now(), deltas)
                 .restrictNumberOfStartingZerosTo(1).movingAverage(7))
                 .let { CurrentTrend(it.extrema) }
 
@@ -124,7 +124,8 @@ private infix fun Double?.divideOrNull(y: Double?) = when {
     else -> this/y
 }
 
-private fun Double.percentChangeTo(count: Double) = (count - this) / this
+/** Compute percentage change from this value to the provided value. */
+fun Double.percentChangeTo(count: Double) = (count - this) / this
 
 private class CurrentTrend(map: SortedMap<LocalDate, ExtremaInfo>) {
     val curValue by lazy { map.values.last().value }

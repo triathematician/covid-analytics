@@ -14,12 +14,14 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric. Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
 data class TimeSeries(
+        /** Source for the time series. */
+        var source: String,
         /** ID of the area for this time series. */
         var areaId: String,
         /** Metric reported in this time series. */
         var metric: String,
-        /** Group for this time series, e.g. for breakdowns by age/demographics. */
-        var group: String,
+        /** Qualifier for this time series, e.g. for breakdowns by age/demographics. */
+        var qualifier: String = "",
         /** If true, values are reported/serialized as integers. */
         var intSeries: Boolean = false,
         /** Default value, when none is stored for a given date. */
@@ -30,16 +32,16 @@ data class TimeSeries(
         val values: List<Double> = listOf()) {
 
     /** Construct with explicit floating-point values. */
-    constructor(areaId: String, metric: String, group: String, defValue: Double = 0.0, start: LocalDate, vararg values: Double)
-            : this(areaId, metric, group, false, defValue, start, values.toList())
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, start: LocalDate, vararg values: Double)
+            : this(source, areaId, metric, qualifier, false, defValue, start, values.toList())
 
     /** Construct with a set of integer values. */
-    constructor(areaId: String, metric: String, group: String, defValue: Int = 0, start: LocalDate, values: List<Int>)
-            : this(areaId, metric, group, true, defValue.toDouble(), start, values.map { it.toDouble() })
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, values: List<Int>)
+            : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     /** Construct with a set of integer values. */
-    constructor(areaId: String, metric: String, group: String, defValue: Int = 0, start: LocalDate, vararg values: Int)
-            : this(areaId, metric, group, true, defValue.toDouble(), start, values.map { it.toDouble() })
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, vararg values: Int)
+            : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     val area
         get() = Lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
@@ -177,13 +179,6 @@ data class TimeSeries(
     //endregion
 }
 
-//region factories
-
-fun intTimeSeries(areaId: String, metric: String, group: String, start: LocalDate, values: List<Int>) = TimeSeries(areaId, metric, group,0, start, values)
-fun intTimeSeries(areaId: String, metric: String, group: String, date: LocalDate, value: Int) = TimeSeries(areaId, metric, group, 0, date, value)
-
-//endregion
-
 //region List<MetricTimeSeries> XF
 
 /** First date with a positive number of values for any of the given series. */
@@ -201,13 +196,13 @@ val Collection<TimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.group) }
+fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.qualifier) }
         .map { it.value.merge() }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Sums a bunch of time series by id and metric. */
-fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.group) }
+fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.qualifier) }
         .map { it.value.sum(it.key[0]) }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }

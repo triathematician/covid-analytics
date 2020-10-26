@@ -6,6 +6,7 @@ import tri.timeseries.TimeSeries
 import tri.area.AreaType
 import tri.covid19.data.LocalCovidData.forecasts
 import tri.covid19.data.LocalCovidData.metric
+import tri.covid19.data.LocalCovidData.normalizedDataFile
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
 import java.io.File
@@ -15,7 +16,8 @@ import java.net.URL
 const val YYG = "YYG"
 
 /** Loads YYG models. */
-object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("yyg") && it.extension == "csv" } }, { File("../data/normalized/yyg-forecasts.json") }) {
+object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("yyg") && it.extension == "csv" } },
+        { normalizedDataFile("yyg-forecasts.csv") }) {
 
     override fun inprocess(url: URL): List<TimeSeries> {
         val date = url.path.substringAfter("yyg-").substringBeforeLast("-")
@@ -29,7 +31,7 @@ object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("y
         return keys.filter { it.startsWith("predicted_total_deaths") || it.startsWith("predicted_total_infected") }
                 .filter { !get(it).isNullOrEmpty() }
                 .mapNotNull {
-                    metric(yygArea(get("region")!!, get("country")!!), false,
+                    metric(YYG, yygArea(get("region")!!, get("country")!!), false,
                             metricName(it, date), "", get("date")!!, get(it)!!.toDouble())
                 }
     }

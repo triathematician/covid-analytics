@@ -20,15 +20,15 @@ object TimeSeriesFileFormat {
     }
 
     /** Writes a single series to the writer. */
-    fun writeSeriesAsString(m: TimeSeries) = "${m.areaId}\t${m.metric}\t${m.group}\t${m.intSeries}\t" +
-            "${if (m.intSeries) m.defValue.toInt() else m.defValue}\t${m.start}\t" +
-            if (m.intSeries) m.values.joinToString("\t") { it.toInt().toString() } else m.values.joinToString("\t")
+    fun writeSeriesAsString(m: TimeSeries) =
+            (listOf(m.source, m.areaId, m.metric, m.qualifier, m.intSeries, if (m.intSeries) m.defValue.toInt() else m.defValue, m.start)
+                    + (if (m.intSeries) m.values.map { it.toInt() } else m.values)).joinToString("\t")
 
     /** Reads a series from a writer line. */
     fun readSeries(line: String): TimeSeries {
         val split = line.split("\t")
-        return TimeSeries(split[0], split[1], split[2], split[3].toBoolean(), split[4].toDouble(), split[5].toLocalDate(),
-                split.subList(6, split.size).map { it.toDouble() })
+        return TimeSeries(split[0], split[1], split[2], split[3], split[4].toBoolean(), split[5].toDouble(), split[6].toLocalDate(),
+                split.subList(7, split.size).map { it.toDouble() })
     }
 
 }

@@ -10,29 +10,30 @@ import java.time.format.DateTimeFormatter
 /** Maintains access locations for local COVID data. */
 object LocalCovidData : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlForecasts, YygForecasts) {
 
-    //region QUERY METHODS
-
-    //endregion
-
-    val jhuCsseProcessedData = File("../data/normalized/jhucsse-processed.csv")
+    internal val dataDir = object : Iterator<File> { var file = File("").absoluteFile
+        override fun hasNext() = file.parentFile != null
+        override fun next() = file.also { file = file.parentFile }
+    }.asSequence().map { File(it, "data/") }.first { it.exists() }
+    internal fun normalizedDataFile(s: String) = File(dataDir, "normalized/$s")
+    internal val jhuCsseProcessedData = normalizedDataFile("jhucsse-processed.csv")
 
     /** Read forecasts from data dir by pattern. */
-    fun jhuCsseDailyData(filter: (File) -> Boolean) = File("../data/historical/").walk().filter(filter)
+    internal fun jhuCsseDailyData(filter: (File) -> Boolean) = File(dataDir, "historical/").walk().filter(filter)
             .map { it.toURI().toURL() }.toList().also { println("$this ${it.map { it.path.substringAfterLast('/') }}") }
 
     /** Read forecasts from data dir by pattern. */
-    fun forecasts(filter: (File) -> Boolean) = File("../data/forecasts/").walk().filter(filter)
+    internal fun forecasts(filter: (File) -> Boolean) = File(dataDir, "forecasts/").walk().filter(filter)
             .map { it.toURI().toURL() }.toList().also { println("$this ${it.map { it.path.substringAfterLast('/') } }") }
 
     /** Extracts any number of metrics from given row of data, based on a field name predicate. */
-    fun Map<String, String>.extractMetrics(regionField: String, assumeUsState: Boolean = false, dateField: String,
+    internal fun Map<String, String>.extractMetrics(source: String, regionField: String, assumeUsState: Boolean = false, dateField: String,
                                            metricFieldPattern: (String) -> Boolean, metricNameMapper: (String) -> String?): List<TimeSeries> {
         return keys.filter { metricFieldPattern(it) }.mapNotNull {
             val value = get(it)?.toDoubleOrNull()
             val name = metricNameMapper(it)
             when {
                 value == null || name == null -> null
-                else -> metric(get(regionField) ?: throw IllegalArgumentException(), assumeUsState,
+                else -> metric(source, get(regionField) ?: throw IllegalArgumentException(), assumeUsState,
                         name, "",get(dateField) ?: throw IllegalArgumentException(), value)
             }
         }
@@ -41,9 +42,9 @@ object LocalCovidData : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlFore
     private val FORMAT = DateTimeFormatter.ofPattern("yyyy-M-dd")
 
     /** Easy way to construct metric from string value content. */
-    fun metric(areaId: String, assumeUsState: Boolean, metric: String?, group: String, date: String, value: Double) = metric?.let {
+    internal fun metric(source: String, areaId: String, assumeUsState: Boolean, metric: String?, qualifier: String, date: String, value: Double) = metric?.let {
         val area = Lookup.areaOrNull(areaId, assumeUsState)!!
-        TimeSeries(area.id, it, group, 0.0, date.toLocalDate(FORMAT), value)
+        TimeSeries(source, area.id, it, qualifier, 0.0, date.toLocalDate(FORMAT), value)
     }
 
 }

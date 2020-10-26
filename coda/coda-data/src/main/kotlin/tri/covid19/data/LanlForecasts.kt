@@ -3,6 +3,7 @@ package tri.covid19.data
 import tri.covid19.*
 import tri.covid19.data.LocalCovidData.extractMetrics
 import tri.covid19.data.LocalCovidData.forecasts
+import tri.covid19.data.LocalCovidData.normalizedDataFile
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
@@ -12,16 +13,15 @@ import java.net.URL
 const val LANL = "LANL"
 
 /** Loads LANL models. */
-object LanlForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("lanl") && it.extension == "csv" } }, { File("../data/normalized/lanl-forecasts.json") }) {
+object LanlForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("lanl") && it.extension == "csv" } },
+        { normalizedDataFile("lanl-forecasts.csv") }) {
 
     override fun inprocess(url: URL): List<TimeSeries> {
         val date = url.path.substringAfter("lanl-").substringBefore(".csv")
         return url.csvKeyValues(true)
                 .filter { it["obs"] == "0" }.toList()
                 .flatMap {
-                    it.extractMetrics(regionField = "state",
-                            assumeUsState = true,
-                            dateField = "dates",
+                    it.extractMetrics(source = LANL, regionField = "state", assumeUsState = true, dateField = "dates",
                             metricFieldPattern = { it.startsWith("q.") },
                             metricNameMapper = { metricName(it, date) })
                 }

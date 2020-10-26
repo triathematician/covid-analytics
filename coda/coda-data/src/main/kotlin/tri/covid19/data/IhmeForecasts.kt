@@ -13,7 +13,7 @@ const val IHME = "IHME"
 
 /** Loads IHME models. */
 object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith("ihme") && it.extension == "csv" } },
-        { File("../data/normalized/ihme-forecasts.json") }) {
+        { LocalCovidData.normalizedDataFile("ihme-forecasts.csv") }) {
 
     private val EXCLUDE_LOCATIONS = listOf(
             "Other Counties, WA", "Life Care Center, Kirkland, WA", "King and Snohomish Counties (excluding Life Care Center), WA",
@@ -25,8 +25,7 @@ object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith(
                 .filter { it["totdea_lower"] != it["totdea_upper"] }.toList()
                 .filter { it["location_name"] !in EXCLUDE_LOCATIONS }
                 .flatMap {
-                    it.extractMetrics(regionField = "location_name", dateField = "date",
-                            assumeUsState = true,
+                    it.extractMetrics(source = IHME, dateField = "date", regionField = "location_name", assumeUsState = true,
                             metricFieldPattern = { "_" in it && !it.startsWith("location") },
                             metricNameMapper = { metricName(it, date) })
                 }

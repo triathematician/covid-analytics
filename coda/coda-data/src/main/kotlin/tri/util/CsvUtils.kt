@@ -120,7 +120,7 @@ fun URL.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData
 /** For files that don't use escape quotes, reads lines of data from a URL. */
 fun URL.csvKeyValuesFast() = CsvLineSplitterFast.readData(this).keyValues()
 /** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
-inline fun <reified X> URL.mapCsvKeyValues(splitOnNewLines: Boolean) = csvKeyValues(splitOnNewLines).map { MAPPER.convertValue<X>(it) }
+inline fun <reified X> URL.mapCsvKeyValues(splitOnNewLines: Boolean = true) = csvKeyValues(splitOnNewLines).map { MAPPER.convertValue<X>(it) }
 /** For files that don't use escape quotes, maps lines of CSV data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
 inline fun <reified X> URL.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPPER.convertValue<X>(it) }
 

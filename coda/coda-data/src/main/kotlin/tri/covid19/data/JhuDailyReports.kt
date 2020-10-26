@@ -7,13 +7,14 @@ import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
-import tri.timeseries.intTimeSeries
 import tri.util.csvKeyValues
 import tri.util.javaTrim
 import tri.util.toLocalDate
 import java.net.URL
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
+const val JHU_CSSE = "JHU CSSE"
 
 /** Processes daily time series reports into a unified time series structure. */
 object JhuDailyReports : TimeSeriesFileProcessor(
@@ -44,8 +45,8 @@ object JhuDailyReports : TimeSeriesFileProcessor(
         return rows.flatMap { row ->
             val areaId = row.areaId
             Lookup.areaOrNull(areaId)!!
-            listOfNotNull(intTimeSeries(areaId, CASES, "", row.Last_Update, row.Confirmed),
-                    intTimeSeries(areaId, DEATHS, "", row.Last_Update, row.Deaths)
+            listOfNotNull(TimeSeries(JHU_CSSE, areaId, CASES, "", 0, row.Last_Update, row.Confirmed),
+                    TimeSeries(JHU_CSSE, areaId, DEATHS, "", 0, row.Last_Update, row.Deaths)
 //                    intTimeSeries(areaId, RECOVERED, row.Last_Update, row.Recovered)
 //                    intTimeSeries(areaId, ACTIVE, row.Last_Update, row.Active),
 //                    row.People_Tested?.let { intTimeSeries(areaId, TESTS, row.Last_Update, it) },
@@ -105,7 +106,7 @@ object JhuDailyReports : TimeSeriesFileProcessor(
     private fun Map<String, String>.gint(f: String) = this[f]?.toIntOrNull() ?: 0
     private fun Map<String, String>.gintn(f: String) = this[f]?.toIntOrNull()
 
-//endregion
+    //endregion
 }
 
 /** Daily report row info. */
@@ -178,7 +179,7 @@ fun List<DailyReportRow>.withAggregations(): List<DailyReportRow> {
 }
 
 /** Sums all counts within CBSA. */
-private fun List<DailyReportRow>.sumWithinCbsa(region: UsCbsaInfo) = DailyReportRow("", "", region.cbsaTitle, first().Country_Region, this)
+private fun List<DailyReportRow>.sumWithinCbsa(area: UsCbsaInfo) = DailyReportRow("", "", area.cbsaTitle, first().Country_Region, this)
 
 /** Sums all counts. Expects the state/country pair to be the same for all. */
 private fun List<DailyReportRow>.sumWithinState() = DailyReportRow("", "", first().Province_State, first().Country_Region, this)
