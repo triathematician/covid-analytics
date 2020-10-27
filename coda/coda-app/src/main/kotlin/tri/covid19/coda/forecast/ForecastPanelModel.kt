@@ -6,23 +6,20 @@ import javafx.scene.control.Alert
 import org.apache.commons.math3.exception.NoBracketingException
 import org.apache.commons.math3.exception.TooManyEvaluationsException
 import tornadofx.*
-import tri.covid19.data.CovidForecasts
-import tri.covid19.data.CovidHistory
-import tri.covid19.data.IHME
-import tri.covid19.data.YYG
+import tri.area.Lookup
+import tri.area.USA
+import tri.area.Usa
 import tri.covid19.coda.history.METRIC_OPTIONS
 import tri.covid19.coda.history.changeDoublingDataSeries
 import tri.covid19.coda.history.hubbertSeries
 import tri.covid19.coda.utils.ChartDataSeries
+import tri.covid19.data.*
 import tri.math.Sigmoid
-import tri.area.AreaLookup
-import tri.area.UnitedStates
 import tri.timeseries.Forecast
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.util.DateRange
 import tri.util.minus
 import tri.util.userFormat
-import tri.covid19.data.CovidTimeSeriesSources
 import java.time.LocalDate
 import java.util.*
 import kotlin.reflect.KMutableProperty1
@@ -35,7 +32,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     //region UI BOUND PROPERTIES
 
     // metric selection
-    internal var region by property("US")
+    internal var areaId by property(USA.id)
     internal var selectedMetric by property(METRIC_OPTIONS[0])
     internal var perCapita by property(false)
     internal var smooth by property(true)
@@ -80,7 +77,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         }
     }
 
-    internal val _region = property(ForecastPanelModel::region)
+    internal val _region = property(ForecastPanelModel::areaId)
     internal val _selectedMetric = property(ForecastPanelModel::selectedMetric)
     internal val _perCapita = property(ForecastPanelModel::perCapita)
     internal val _smooth = property(ForecastPanelModel::smooth)
@@ -114,20 +111,20 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     //region DATA FOR PROJECTION PLOT
 
-    /** List of regions available for panel. */
-    val regions: SortedSet<String> by lazy {
-        val jhuRegions = CovidHistory.allData.map { it.area.id }.toSet()
-        val forecastRegions = CovidForecasts.allForecasts.map { it.area.id }.toSet()
-        (jhuRegions + forecastRegions).toSortedSet()
+    /** List of areas available for panel. */
+    val areas: SortedSet<String> by lazy {
+        val dataAreas = LocalCovidData.areas().map { it.id }
+        val forecastAreas = CovidForecasts.allForecasts.map { it.areaId }.toSet()
+        (dataAreas + forecastAreas).toSortedSet()
     }
 
     /** Domain for raw data. */
     var domain: DateRange? = null
 
     /** The primary time series for the selected metric. */
-    val mainSeries = SimpleObjectProperty<MetricTimeSeries?>()
+    val mainSeries = SimpleObjectProperty<TimeSeries?>()
     /** User's projection. */
-    var userForecast: MetricTimeSeries? = null
+    var userForecast: TimeSeries? = null
 
     /** Past forecasts. */
     var pastForecasts = PastForecasts()
@@ -135,22 +132,22 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     var externalForecasts = ExternalForecasts()
 
     private fun updateData() {
-        val regionMetrics = CovidTimeSeriesSources.dailyReports(AreaLookup(region), selectedMetric)
-        mainSeries.value = regionMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
+        val areaMetrics = CovidTimeSeriesSources.dailyReports(Lookup.area(areaId), selectedMetric)
+        mainSeries.value = areaMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
         domain = mainSeries.value?.domain?.shift(0, 30)
 
         val shift = if (smooth) -3.5 else 0.0
         userForecast = when {
             !showForecast -> null
             domain == null -> null
-            else -> MetricTimeSeries(AreaLookup(region), "$selectedMetric (curve)", false, 0.0, domain!!.start,
+            else -> TimeSeries(areaId, "$selectedMetric (curve)", "",false, 0.0, domain!!.start,
                     domain!!.map { d -> curveFitter(d, shift) })
         }
 
-        pastForecasts.metrics = regionMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
+        pastForecasts.metrics = areaMetrics.filter { showLogisticPrediction && ("predicted" in it.metric || "peak" in it.metric) }
         externalForecasts.forecasts = CovidForecasts.allForecasts
                 .filter { it.model in otherForecasts }
-                .filter { it.area.id == region && it.metric == selectedMetric }
+                .filter { it.areaId == areaId && it.metric == selectedMetric }
                 .filter { it.forecastDate in forecastDateRange }
     }
 
@@ -190,7 +187,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         series(externalForecasts.deltas.mapNotNull { it.residuals(daily) })
     }
 
-    private fun MetricTimeSeries.residuals(empirical: MetricTimeSeries?): MetricTimeSeries? {
+    private fun TimeSeries.residuals(empirical: TimeSeries?): TimeSeries? {
         empirical ?: return null
         val commonDomain = domain.intersect(empirical.domain)
         commonDomain ?: return null
@@ -198,16 +195,16 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     }
 
     private fun dataseries(op: MutableList<ChartDataSeries>.() -> Unit) = mutableListOf<ChartDataSeries>().apply { op() }
-    private fun MutableList<ChartDataSeries>.series(s: MetricTimeSeries?) { series(listOfNotNull(s)) }
-    private fun MutableList<ChartDataSeries>.series(ss: List<MetricTimeSeries>) {
-        domain?.let { domain -> ss.forEach { this += tri.covid19.coda.utils.series(it.metric, domain, it) } }
+    private fun MutableList<ChartDataSeries>.series(s: TimeSeries?) { series(listOfNotNull(s)) }
+    private fun MutableList<ChartDataSeries>.series(s: List<TimeSeries>) {
+        domain?.let { domain -> s.forEach { this += tri.covid19.coda.utils.series(it.metric, domain, it) } }
     }
-    private fun MutableList<ChartDataSeries>.series(xy: Pair<MetricTimeSeries, MetricTimeSeries>?, idFirst: Boolean = true) { series(listOfNotNull(xy), idFirst) }
-    private fun MutableList<ChartDataSeries>.series(xyxy: List<Pair<MetricTimeSeries, MetricTimeSeries>>, idFirst: Boolean = true) {
+    private fun MutableList<ChartDataSeries>.series(xy: Pair<TimeSeries, TimeSeries>?, idFirst: Boolean = true) { series(listOfNotNull(xy), idFirst) }
+    private fun MutableList<ChartDataSeries>.series(xyxy: List<Pair<TimeSeries, TimeSeries>>, idFirst: Boolean = true) {
         domain?.let { domain -> xyxy.forEach { this += tri.covid19.coda.utils.series(if (idFirst) it.first.metric else it.second.metric, domain, it.first, it.second) } }
     }
 
-    private fun MetricTimeSeries.maybeSmoothed() = if (smooth) movingAverage(7) else this
+    private fun TimeSeries.maybeSmoothed() = if (smooth) movingAverage(7) else this
 
     //endregion
 
@@ -236,9 +233,9 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Load the next US state in alphabetical order. */
     fun goToNextUsState() {
-        val states = UnitedStates.stateNames.toSortedSet()
-        region = when {
-            states.contains(region) -> states.rollAfter(region)
+        val states = Usa.stateNames.toSortedSet()
+        areaId = when {
+            states.contains(areaId) -> states.rollAfter(areaId)
             else -> states.first()
         }
         autofit()
@@ -246,9 +243,9 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Load the next US state in alphabetical order. */
     fun goToPreviousUsState() {
-        val states = UnitedStates.stateNames.toSortedSet()
-        region = when {
-            states.contains(region) -> states.rollBefore(region)
+        val states = Usa.stateNames.toSortedSet()
+        areaId = when {
+            states.contains(areaId) -> states.rollBefore(areaId)
             else -> states.last()
         }
         autofit()
@@ -273,7 +270,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** Loads selected forecast. */
     fun load(f: ForecastStats) {
-        region = f.region.id
+        areaId = f.region.id
         selectedMetric = f.metric
         curveFitter.curve = f.sigmoidCurve
         curveFitter.l = f.sigmoidParameters?.load as Number
@@ -309,7 +306,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     //region DATA MANAGEMENT
 
     /** Provides access to past forecasts. */
-    class PastForecasts(var metrics: List<MetricTimeSeries> = listOf())
+    class PastForecasts(var metrics: List<TimeSeries> = listOf())
     /** Provides access to external forecasts. */
     class ExternalForecasts(var forecasts: List<Forecast> = listOf())
 

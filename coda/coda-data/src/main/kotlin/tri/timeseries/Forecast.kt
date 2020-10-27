@@ -1,15 +1,14 @@
 package tri.timeseries
 
-import tri.area.AreaInfo
+import tri.area.Lookup
 import java.time.LocalDate
 
 /** A single forecast, with model/forecast date, targeted region/metric, and associated time series with forecast data. */
-data class Forecast(val model: String, val forecastDate: LocalDate, val area: AreaInfo, val metric: String, val data: List<MetricTimeSeries>) {
+data class Forecast(val model: String, val forecastDate: LocalDate, val areaId: String, val metric: String, val data: List<TimeSeries>) {
+    val area = Lookup.areaOrNull(areaId)!!
 
-    constructor(id: ForecastId, data: List<MetricInfo>)
-            : this(id.model, id.forecastDate, id.area, id.metric, data.map { it.toMetricTimeSeries(id.area) })
-
+    constructor(forecastId: ForecastId, data: List<TimeSeries>) : this(forecastId.model, forecastId.forecastDate, forecastId.areaId, forecastId.metric, data)
 }
 
 /** Unique tuple describing a forecast. */
-data class ForecastId(val model: String, val forecastDate: LocalDate, val area: AreaInfo, val metric: String)
+data class ForecastId(val model: String, val forecastDate: LocalDate, val areaId: String, val metric: String)

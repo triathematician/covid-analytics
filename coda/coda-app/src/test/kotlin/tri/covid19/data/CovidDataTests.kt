@@ -1,40 +1,53 @@
 package tri.covid19.data
 
+import org.junit.Test
 import tri.covid19.CASES
-import tri.timeseries.MetricTimeSeries
-import tri.area.RegionType
+import tri.timeseries.TimeSeries
+import tri.area.AreaType
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
 import tri.util.minus
 import tri.util.rangeTo
+import java.io.File
 import java.time.LocalDate
 import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
-fun main() {
-    testGrowth()
-}
-
-@ExperimentalTime
-fun testGrowth() {
-    val data = CovidHistory.allData.filter { it.area.type == RegionType.COUNTY && it.metric == CASES }
-    val latest = mutableMapOf<String, LocalDate>()
-    (LocalDate.of(2020, 6, 15)..LocalDate.now()).forEach { date ->
-        val filtered = data.map { Growth(it, date) }.filter {
-            it.count7 >= 100 && it.countPerCapita7 >= 20 &&
-            it.ratio730 >= .31 && (it.change7 >= 1.6 || it.change3 >= 1.6)
+class CovidDataTests {
+    @Test
+    @ExperimentalTime
+    fun testGrowth() {
+        println(File("").absolutePath)
+        val data = LocalCovidData.by { it.area.type == AreaType.COUNTY && it.metric == CASES }
+        val latest = mutableMapOf<String, LocalDate>()
+        (LocalDate.of(2020, 6, 15)..LocalDate.now()).forEach { date ->
+            val filtered = data.map { Growth(it, date) }.filter {
+                it.count7 >= 100 && it.countPerCapita7 >= 20 &&
+                        it.ratio730 >= .31 && (it.change7 >= 1.6 || it.change3 >= 1.6)
+            }
+            println("$date: ${filtered.size}")
+            filtered.filter {
+                val lastOn = latest.getOrElse(it.series.areaId) { LocalDate.of(2020, 1, 1) }
+                val new = date.minus(lastOn) > 21
+                latest.put(it.series.areaId, date)
+                new
+            }.let { println("  ${it.size}: ${it.map { it.series.areaId }}") }
         }
-        println("$date: ${filtered.size}")
-        filtered.filter {
-            val lastOn = latest.getOrElse(it.series.area.id) { LocalDate.of(2020, 1, 1) }
-            val new = date.minus(lastOn) > 21
-            latest.put(it.series.area.id, date)
-            new
-        }.let { println("  ${it.size}: ${it.map { it.series.area.id }}") }
+    }
+
+    @Test
+    @ExperimentalTime
+    fun testKernel() {
+        val data = LocalCovidData.by { it.areaId == "United Kingdom" && it.metric == CASES }.first()
+        println(data.values)
+        println(data.values.deltas().movingAverage(7))
+        val kernels = data.values.deltas().movingAverage(7).windowed(6).map { bestKernel(it) }
+        println(kernels)
+        val kernels2 = kernels.windowed(4).map { kernelChangeRule(it) }
+        println(kernels2)
     }
 }
 
-class Growth(val series: MetricTimeSeries, val date: LocalDate) {
+class Growth(val series: TimeSeries, val date: LocalDate) {
     val count7
         get() = series[date] - series[date-7]
     val countPerCapita7
@@ -48,17 +61,6 @@ class Growth(val series: MetricTimeSeries, val date: LocalDate) {
 }
 
 private operator fun LocalDate.minus(i: Int) = minusDays(i.toLong())
-
-@ExperimentalTime
-fun testKernel() {
-    val data = CovidHistory.allData.first { it.area.id == "United Kingdom" && it.metric == CASES }
-    println(data.values)
-    println(data.values.deltas().movingAverage(7))
-    val kernels = data.values.deltas().movingAverage(7).windowed(6).map { bestKernel(it) }
-    println(kernels)
-    val kernels2 = kernels.windowed(4).map { kernelChangeRule(it) }
-    println(kernels2)
-}
 
 /** 0/1 are before, 2 is at, 3 is after */
 fun kernelChangeRule(priors: List<Kernel>): Kernel {

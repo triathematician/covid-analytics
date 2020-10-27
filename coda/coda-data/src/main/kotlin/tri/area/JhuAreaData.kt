@@ -1,80 +1,70 @@
 package tri.area
 
-import tri.util.csvLines
-
-/** Region representing the world. */
-val GLOBAL_AREA = JhuAreaInfo(region1 = GLOBAL, combinedKey = GLOBAL, pop = GLOBAL_POPULATION)
-/** Region representing the United States. */
-val US_AREA = JhuAreaInfo(840, "US", "USA", 840, null, "", "", "US", 40f, -100f, "US", 329466283)
+import com.fasterxml.jackson.annotation.JsonProperty
+import tri.util.csvResource
 
 /** Loads JHU region/population data. */
-object JhuAreaData {
-    val areaData by lazy { loadJhuAreaData().groupByOne { it.combinedKey } }
-    val cbsaData by lazy { loadCbsaData().groupByOne { it.combinedKey } }
+internal object JhuAreaData {
+    private val data = JhuAreaData::class.csvResource<JhuAreaInfo>(true, "resources/jhucsse/jhu-iso-fips-lookup.csv")
 
-    val data by lazy { (areaData.values + cbsaData.values + listOf(GLOBAL_AREA)).groupByOne { it.combinedKey } }
-    val usStates by lazy { areaData.filterValues { Fips.usState(it.fips) } }
-    val usCounties by lazy { areaData.filterValues { Fips.usCounty(it.fips) } }
-    val fipsData by lazy { areaData.filterValues { it.fips != null }.map { it.value.fips to it.value }.toMap() }
+    val index = data.groupByOne { it.indexKey }
+    val areas = index.values
 
-    private val lowerAreaData by lazy { areaData.mapKeys { it.key.toLowerCase() } }
-
-    /** Looks up area by FIPS. */
-    fun fips(fips: Int) = fipsData[fips]
+    private val lowerIndex by lazy { index.mapKeys { it.key.toString().toLowerCase() } }
 
     /** Looks up area by name, case-insensitive. */
-    fun lookupCaseInsensitive(id: String) = lowerAreaData[id.trim().toLowerCase()]
-
-    private fun loadJhuAreaData() = JhuAreaData::class.java.getResource("resources/jhu-iso-fips-lookup.csv").csvLines()
-                .map { JhuAreaInfo(it[0].toIntOrNull(), it[1], it[2], it[3].toIntOrNull(), it[4].toIntOrNull(),
-                        it[5], it[6], it[7], it[8].toFloatOrNull(), it[9].toFloatOrNull(), it[10], it[11].toLongOrNull()) }
-                .toList()
-
-    private fun loadCbsaData() = areaData.values
-            .filter { it.fips != null && UnitedStates.countyFipsToCbsaInfo(it.fips!!) != null }
-                .groupBy { UnitedStates.countyFipsToCbsaInfo(it.fips!!)!! }
-                .map { it.value.toCbsa(it.key) }
-
-    /** Combines multiple subregions into a CBSA. */
-    private fun List<JhuAreaInfo>.toCbsa(cbsaInfo: CbsaInfo) = JhuAreaInfo(-1, "", "", cbsaInfo.cbsaCode, null, cbsaInfo.cbsaTitle, "",
-            "US", null, null, "${cbsaInfo.cbsaTitle}, US", sumByDouble { it.pop?.toDouble() ?: 0.0 }.toLong())
-
+    fun lookupCaseInsensitive(key: Any) = index.getOrElse(key) { lowerIndex[key.toString().trim().toLowerCase()] }
 }
 
 /** Data structure provided by JHU region data. */
-data class JhuAreaInfo(var uid: Int? = null, var iso2: String = "", var iso3: String = "", var code3: Int? = null, var fips: Int? = null,
-                       var region3: String = "", var region2: String = "", var region1: String,
-                       val latitude: Float? = null, val longitude: Float? = null, var combinedKey: String, val pop: Long? = null) {
+internal data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String, var code3: Int,
+                       @JsonProperty("FIPS") val fips: Int? = null, @JsonProperty("Admin2") val admin2: String,
+                       @JsonProperty("Province_State") val provinceOrState: String, @JsonProperty("Country_Region") val countryOrRegion: String,
+                       @JsonProperty("Lat") val latitude: Float, @JsonProperty("Long_") val longitude: Float,
+                       @JsonProperty("Combined_Key") val combinedKey: String, @JsonProperty("Population") val population: Long) {
+
+    /** Get unique key used to lookup this region. Regions with FIPS have more than one possible key. */
+    val indexKey: List<Any>
+        get() = when {
+            fips == null -> listOf(combinedKey)
+            fips < 100 -> listOf(fips, Usa.abbreviationsByState[provinceOrState]!!)
+            else -> listOf(fips, combinedKey)
+        }
 
     val regionType
         get() = when {
-            region1 == GLOBAL -> RegionType.GLOBAL
-            region2.isEmpty() && region3.isEmpty() -> RegionType.COUNTRY_REGION
-            region2.isEmpty() -> RegionType.METRO
-            region3.isEmpty() -> RegionType.PROVINCE_STATE
-            else -> RegionType.COUNTY
+            admin2.isEmpty() && provinceOrState.isEmpty() -> AreaType.COUNTRY_REGION
+            provinceOrState.isEmpty() -> AreaType.METRO
+            admin2.isEmpty() -> AreaType.PROVINCE_STATE
+            else -> AreaType.COUNTY
         }
 
     val regionParent
         get() = when {
-            region1 == GLOBAL -> ""
-            region2.isEmpty() && region3.isEmpty() -> GLOBAL
-            region2.isEmpty() -> region1
-            region3.isEmpty() -> region1
-            else -> "$region2, $region1"
+            admin2.isEmpty() && provinceOrState.isEmpty() -> EARTH
+            provinceOrState.isEmpty() || admin2.isEmpty() -> Lookup.areaOrNull(countryOrRegion)!!
+            else -> Lookup.areaOrNull("$provinceOrState, $countryOrRegion")!!
         }
 
-    fun toAreaInfo() = AreaInfo(combinedKey, regionType, regionParent, fips, pop, latitude, longitude)
-
+    /** Convert to general area info object. */
+    fun toAreaInfo(): AreaInfo {
+        require(fips == null || fips >= 80000) { "Use Usa object to access areas within the US: $this" }
+        return AreaInfo(combinedKey, regionType, regionParent, fips, AreaMetrics(population, latitude, longitude))
+    }
 }
 
 //region UTILS
 
-private fun <X, Y> List<X>.groupByOne(map: (X) -> Y) = groupBy(map).mapValues {
-    if (it.value.size > 1) {
-        println("Duplicate keys: ${it.value}")
+private fun <X, Y> List<X>.groupByOne(keySelectors: (X) -> List<Y>): Map<Y, X> {
+    val res = mutableMapOf<Y, MutableList<X>>()
+    for (element in this) {
+        keySelectors(element).forEach { key ->
+            val list = res.getOrPut(key) { ArrayList() }
+            list.add(element)
+        }
     }
-    it.value.first()
+    res.values.forEach { if (it.size > 1) println("Two values had the same key: $it") }
+    return res.mapValues { it.value.first() }
 }
 
 //endregion

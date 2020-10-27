@@ -4,13 +4,14 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
+import tri.area.Lookup
 import tri.covid19.ACTIVE
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.RECOVERED
 import tri.covid19.coda.utils.ChartDataSeries
 import tri.covid19.coda.utils.series
-import tri.timeseries.MetricTimeSeries
+import tri.timeseries.TimeSeries
 import tri.timeseries.dateRange
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
@@ -44,7 +45,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> onChange() } }
     val includeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
     val excludeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
-    val parentRegion = SimpleStringProperty("").apply { addListener { _ -> onChange() } }
+    val parentRegion = SimpleStringProperty("USA").apply { addListener { _ -> onChange() } }
     val includeRegion = SimpleStringProperty("").apply { addListener { _ -> if (includeRegionActive.get()) onChange() } }
     val excludeRegion = SimpleStringProperty("").apply { addListener { _ -> if (excludeRegionActive.get()) onChange() } }
 
@@ -98,26 +99,26 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     //region DATA
 
     /** Get historical data for current config. Matching "includes" are first. */
-    internal fun historicalData(metric: String? = null): List<MetricTimeSeries> {
+    internal fun historicalData(metric: String? = null): List<TimeSeries> {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
-                    .filter { parentRegion.value.isEmpty() || it.area.parent == parentRegion.value }
+                    .filter { parentRegion.value == null || it.area.parent == Lookup.area(parentRegion.value) }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
                     .filter { it.area.population.let { it == null || it in minPopulation..maxPopulation } }
-                    .filter { exclude(it.area.id) }
+                    .filter { exclude(it.areaId) }
                     .sortedByDescending { it.sortMetric }
                     .toList()
-            return (sMetrics.filter { include(it.area.id) } + sMetrics).take(regionLimit + skipFirst).drop(skipFirst)
+            return (sMetrics.filter { include(it.areaId) } + sMetrics).take(regionLimit + skipFirst).drop(skipFirst)
         } else {
-            val regions = historicalData(null).map { it.area.id }
+            val regions = historicalData(null).map { it.areaId }
             return data().filter { it.metric == if (perCapita) metric.perCapita else metric }
-                .filter { it.area.id in regions }
-                .sortedBy { regions.indexOf(it.area.id) }
+                .filter { it.areaId in regions }
+                .sortedBy { regions.indexOf(it.areaId) }
         }
     }
 
-    private val MetricTimeSeries.sortMetric
+    private val TimeSeries.sortMetric
         get() = when(sort) {
             TimeSeriesSort.ALL -> lastValue
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
@@ -140,7 +141,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     //region
 
     /** Smooth using current settings. */
-    internal val List<MetricTimeSeries>.smoothed: List<MetricTimeSeries>
+    internal val List<TimeSeries>.smoothed: List<TimeSeries>
         get() {
             var res = this
             if (smooth != 1) {
@@ -162,12 +163,12 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             metrics = metrics.map { it.deltas() }
         }
         val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
-        return domain to metrics.map { series(it.area.id, domain, it) }
+        return domain to metrics.map { series(it.areaId, domain, it) }
     }
 
     /** Plot growth vs counts. */
     internal fun hubbertDataSeries() = smoothedData().map { it.hubbertSeries(1) }
-                .map { series(it.first.area.id, it.first.domain.shift(1, 0), it.first, it.second) }
+                .map { series(it.first.areaId, it.first.domain.shift(1, 0), it.first, it.second) }
 
     //endregion
 }
@@ -183,18 +184,18 @@ enum class TimeSeriesSort {
 }
 
 /** Creates Hubbert series from monotonic metric. */
-fun MetricTimeSeries.hubbertSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+fun TimeSeries.hubbertSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     val totals = movingAverage(window).restrictNumberOfStartingZerosTo(0)
     val growths = totals.growthPercentages()
     return totals to growths
 }
 
 /** Creates doubling-change series from monotonic metric. */
-fun MetricTimeSeries.changeDoublingDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+fun TimeSeries.changeDoublingDataSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     return movingAverage(window).doublingTimes() to movingAverage(window).deltas()
 }
 
 /** Creates total-doubling series from monotonic metric. */
-fun MetricTimeSeries.doublingTotalDataSeries(window: Int): Pair<MetricTimeSeries, MetricTimeSeries> {
+fun TimeSeries.doublingTotalDataSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     return movingAverage(window) to movingAverage(window).doublingTimes()
 }

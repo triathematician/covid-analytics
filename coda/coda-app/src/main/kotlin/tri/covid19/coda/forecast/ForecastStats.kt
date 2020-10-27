@@ -52,7 +52,7 @@ class ForecastStats(var forecast: Forecast) {
         get() = forecast.area
     @get:JsonIgnore
     val regionId
-        get() = forecast.area.id
+        get() = forecast.areaId
     @get:JsonIgnore
     val model
         get() = forecast.model

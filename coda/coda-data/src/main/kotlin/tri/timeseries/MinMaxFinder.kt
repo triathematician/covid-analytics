@@ -1,7 +1,8 @@
 package tri.timeseries
 
-import tri.area.RegionType
-import tri.covid19.data.CovidHistory
+import tri.area.Lookup
+import tri.area.AreaType
+import tri.covid19.data.LocalCovidData
 import java.time.LocalDate
 import kotlin.math.abs
 import kotlin.time.ExperimentalTime
@@ -13,7 +14,7 @@ import kotlin.time.ExperimentalTime
  */
 class MinMaxFinder(var sampleWindow: Int = 7) {
 
-    fun invoke(series: MetricTimeSeries): ExtremaSummary {
+    fun invoke(series: TimeSeries): ExtremaSummary {
         val values = series.values.convolve()
         val minima = findMins(values, sampleWindow)
         val maxima = findMaxs(values, sampleWindow)
@@ -40,16 +41,18 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
     }
 
     /** Find indices of values that are <= values in [x-win, x+win]. */
-    fun findMins(series: List<Double>, win: Int) = series.indices.filter { t -> series.window(t-win, t+win).all { it >= series[t] } }
+    fun findMins(series: List<Double>, win: Int) = series.indices.filter { t -> series.window(t - win, t + win).all { it >= series[t] } }
+
     /** Find indices of values that are >= values in [x-win, x+win]. */
-    fun findMaxs(series: List<Double>, win: Int) = series.indices.filter { t -> series.window(t-win, t+win).all { it <= series[t] } }
+    fun findMaxs(series: List<Double>, win: Int) = series.indices.filter { t -> series.window(t - win, t + win).all { it <= series[t] } }
 
     private fun <X> List<X>.window(min: Int, max: Int) = subList(maxOf(min, 0), minOf(max + 1, size))
-    private fun <X: Comparable<X>> List<X>.argmin(min: Int, max: Int) = (min..max).minBy { get(it) }
-    private fun <X: Comparable<X>> List<X>.argmax(min: Int, max: Int) = (min..max).maxBy { get(it) }
+    private fun <X : Comparable<X>> List<X>.argmin(min: Int, max: Int) = (min..max).minBy { get(it) }
+    private fun <X : Comparable<X>> List<X>.argmax(min: Int, max: Int) = (min..max).maxBy { get(it) }
     private fun List<Double>.convolve() = indices.map { i ->
         (-10..10).sumByDouble { getOrElse(i + it) { 0.0 } * convolveFun(it) }
     }
+
     private fun convolveFun(i: Int) = when (i) {
         0 -> 1.0
         else -> maxOf(0.0, .01 - .001 * abs(i))
@@ -58,7 +61,7 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
 }
 
 /** Summarizes information about extrema by date. */
-class ExtremaSummary(val series: MetricTimeSeries) {
+class ExtremaSummary(val series: TimeSeries) {
     val extrema = sortedMapOf<LocalDate, ExtremaInfo>()
 
     override fun toString() = extrema.toString()
@@ -69,13 +72,3 @@ enum class ExtremaType { LOCAL_MAX, LOCAL_MIN, ENDPOINT }
 
 /** Information associated with a single extremum. */
 data class ExtremaInfo(var date: LocalDate, var value: Double, var type: ExtremaType)
-
-@ExperimentalTime
-fun main() {
-    CovidHistory.allData.filter { it.area.id.endsWith(", US") && it.area.type == RegionType.PROVINCE_STATE }
-            .onEach {
-                val series = it.deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)
-                println("${it.area.id} - ${it.metric} - ${series.values.map { it.toInt() }}")
-                println("  " + MinMaxFinder(10).invoke(series))
-            }
-}
