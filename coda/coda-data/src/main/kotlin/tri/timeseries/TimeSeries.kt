@@ -43,6 +43,8 @@ data class TimeSeries(
     constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, vararg values: Int)
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
+    val uniqueMetricKey = listOf(source, areaId, metric, qualifier).joinToString("::")
+
     val area
         get() = Lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
 
@@ -196,14 +198,14 @@ val Collection<TimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.qualifier) }
+fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
         .map { it.value.merge() }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Sums a bunch of time series by id and metric. */
-fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { listOf(it.areaId, it.metric, it.qualifier) }
-        .map { it.value.sum(it.key[0]) }
+fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
+        .map { it.value.sum() }
         .map { if (coerceIncreasing) it.coerceIncreasing() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
@@ -217,22 +219,14 @@ private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
     s1.copy(start = minDate, values = series)
 }
 
-/** Sums a bunch of separate time series into a single time series object. Requires metrics to match. */
-fun List<TimeSeries>.sum(areaId: String) = reduce { s1, s2 ->
+/** Sums a bunch of separate time series into a single time series object, with an option to update area id and metric name. */
+fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { s1[it] + s2[it] }
     s1.copy(start = minDate, values = series)
-}.copy(areaId = areaId)
-
-/** Sums a bunch of separate time series into a single time series object. Does not require metrics to match, but must provide a metric name. */
-fun List<TimeSeries>.sum(areaId: String, metric: String) = reduce { s1, s2 ->
-    val minDate = minOf(s1.start, s2.start)
-    val maxDate = maxOf(s1.end, s2.end)
-    val series = (minDate..maxDate).map { s1[it] + s2[it] }
-    s1.copy(start = minDate, values = series)
-}.copy(metric = metric, areaId = areaId)
+}.let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
 
 //endregion
 

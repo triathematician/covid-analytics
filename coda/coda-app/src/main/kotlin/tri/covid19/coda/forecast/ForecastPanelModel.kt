@@ -140,7 +140,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
         userForecast = when {
             !showForecast -> null
             domain == null -> null
-            else -> TimeSeries("", areaId, "$selectedMetric (curve)", "",false, 0.0, domain!!.start,
+            else -> TimeSeries("User Forecast", areaId, "$selectedMetric (curve)", "",false, 0.0, domain!!.start,
                     domain!!.map { d -> curveFitter(d, shift) })
         }
 

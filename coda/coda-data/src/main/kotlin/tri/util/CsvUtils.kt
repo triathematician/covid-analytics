@@ -101,9 +101,9 @@ fun <X> String.mapCsvKeyValues(splitOnNewLines: Boolean, op: (Map<String, String
 fun String.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines,this).keyValues()
 
 /** Reads lines of data from a file. */
-fun File.csvKeyValues(splitOnNewLines: Boolean = true) = toURI().toURL().csvKeyValues(splitOnNewLines)
+fun File.csvKeyValues(splitOnNewLines: Boolean = true) = url.csvKeyValues(splitOnNewLines)
 /** Reads lines of data from a file. */
-fun File.csvKeyValuesFast() = toURI().toURL().csvKeyValuesFast()
+fun File.csvKeyValuesFast() = url.csvKeyValuesFast()
 /** Maps lines of data from a file. */
 fun <X> File.mapCsvKeyValues(splitOnNewLines: Boolean = true, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
 /** Maps lines of data from a file. */

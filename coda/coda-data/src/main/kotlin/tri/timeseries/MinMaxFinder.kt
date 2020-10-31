@@ -12,7 +12,7 @@ import kotlin.time.ExperimentalTime
  * The algorithm first finds all local minima and maxima (that are also minima/maxima within the [x-N,x+N] sample window),
  * and then fills in values between adjacent minima/maxima (e.g. if there are two local minima in a row) with the max/min value in between.
  */
-class MinMaxFinder(var sampleWindow: Int = 7) {
+class mMinMaxFinder(var sampleWindow: Int = 7) {
 
     fun invoke(series: TimeSeries): ExtremaSummary {
         val values = series.values.convolve()

@@ -7,11 +7,12 @@ import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
 import java.io.File
-import java.net.URL
+import kotlin.time.ExperimentalTime
 
 const val IHME = "IHME"
 
 /** Loads IHME models. */
+@ExperimentalTime
 object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith("ihme") && it.extension == "csv" } },
         { LocalCovidData.normalizedDataFile("ihme-forecasts.csv") }) {
 
@@ -19,9 +20,9 @@ object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith(
             "Other Counties, WA", "Life Care Center, Kirkland, WA", "King and Snohomish Counties (excluding Life Care Center), WA",
             "Valencian Community", "Mexico City")
 
-    override fun inprocess(url: URL): List<TimeSeries> {
-        val date = url.path.substringAfter("ihme-").substringBefore(".csv")
-        return url.csvKeyValues(true)
+    override fun inprocess(file: File): List<TimeSeries> {
+        val date = file.name.substringAfter("ihme-").substringBefore(".csv")
+        return file.csvKeyValues(true)
                 .filter { it["totdea_lower"] != it["totdea_upper"] }.toList()
                 .filter { it["location_name"] !in EXCLUDE_LOCATIONS }
                 .flatMap {

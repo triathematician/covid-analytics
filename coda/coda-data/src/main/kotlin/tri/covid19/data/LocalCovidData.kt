@@ -6,8 +6,10 @@ import tri.timeseries.TimeSeriesQuery
 import tri.util.toLocalDate
 import java.io.File
 import java.time.format.DateTimeFormatter
+import kotlin.time.ExperimentalTime
 
 /** Maintains access locations for local COVID data. */
+@ExperimentalTime
 object LocalCovidData : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlForecasts, YygForecasts) {
 
     internal val dataDir = object : Iterator<File> { var file = File("").absoluteFile
@@ -18,12 +20,12 @@ object LocalCovidData : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlFore
     internal val jhuCsseProcessedData = normalizedDataFile("jhucsse-processed.csv")
 
     /** Read forecasts from data dir by pattern. */
-    internal fun jhuCsseDailyData(filter: (File) -> Boolean) = File(dataDir, "historical/").walk().filter(filter)
-            .map { it.toURI().toURL() }.toList().also { println("$this ${it.map { it.path.substringAfterLast('/') }}") }
+    internal fun jhuCsseDailyData(filter: (File) -> Boolean) = File(dataDir, "historical/").walk().filter(filter).toList()
+            .also { println("$this ${it.map { it.path.substringAfterLast('/') }}") }
 
     /** Read forecasts from data dir by pattern. */
-    internal fun forecasts(filter: (File) -> Boolean) = File(dataDir, "forecasts/").walk().filter(filter)
-            .map { it.toURI().toURL() }.toList().also { println("$this ${it.map { it.path.substringAfterLast('/') } }") }
+    internal fun forecasts(filter: (File) -> Boolean) = File(dataDir, "forecasts/").walk().filter(filter).toList()
+            .also { println("$this ${it.map { it.path.substringAfterLast('/') } }") }
 
     /** Extracts any number of metrics from given row of data, based on a field name predicate. */
     internal fun Map<String, String>.extractMetrics(source: String, regionField: String, assumeUsState: Boolean = false, dateField: String,

@@ -23,8 +23,8 @@ class TimeSeriesFileFormatTest {
     @Test
     fun testNormalize() {
         println(LocalCovidData.dataDir)
-        val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.raw() }, { File("test3.csv") }) {
-            override fun inprocess(url: URL) = JhuDailyReports.inprocess(url)
+        val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.rawSources() }, { File("test3.csv") }) {
+            override fun inprocess(file: File) = JhuDailyReports.inprocess(file)
         }
         measureTime {
             println(proc0.data().size)

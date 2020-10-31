@@ -10,20 +10,22 @@ import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
 import tri.util.javaTrim
 import tri.util.toLocalDate
-import java.net.URL
+import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.time.ExperimentalTime
 
 const val JHU_CSSE = "JHU CSSE"
 
 /** Processes daily time series reports into a unified time series structure. */
+@ExperimentalTime
 object JhuDailyReports : TimeSeriesFileProcessor(
         { LocalCovidData.jhuCsseDailyData { it.extension == "csv" } },
         { LocalCovidData.jhuCsseProcessedData }) {
 
-    override fun inprocess(url: URL): List<TimeSeries> {
-        println("Reading $url")
-        val name = url.path.substringAfterLast("/")
+    override fun inprocess(file: File): List<TimeSeries> {
+        println("Reading $file")
+        val name = file.path.substringAfterLast("/")
         val date = name.substringBeforeLast(".").toLocalDate(M_D_YYYY)
 
         val lineReader: (Map<String, String>) -> DailyReportRow = when {
@@ -34,12 +36,12 @@ object JhuDailyReports : TimeSeriesFileProcessor(
         }
 
         val rows = try {
-            url.csvKeyValues(true).map(lineReader)
+            file.csvKeyValues(true).map(lineReader)
                     .filterNot { EXCLUDED_AREAS.any { t -> t in it.areaId } }
                     .onEach { it.updateTimestampsIfAfter(date) }.toList()
                     .withAggregations()
         } catch (x: Exception) {
-            println("Failed to read $url"); throw x
+            println("Failed to read $file"); throw x
         }
 
         return rows.flatMap { row ->

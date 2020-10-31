@@ -1,27 +1,28 @@
 package tri.covid19.data
 
-import tri.area.Lookup
-import tri.covid19.*
-import tri.timeseries.TimeSeries
 import tri.area.AreaType
+import tri.area.Lookup
+import tri.covid19.CASES
+import tri.covid19.DEATHS
 import tri.covid19.data.LocalCovidData.forecasts
 import tri.covid19.data.LocalCovidData.metric
 import tri.covid19.data.LocalCovidData.normalizedDataFile
+import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
 import java.io.File
-import java.lang.IllegalArgumentException
-import java.net.URL
+import kotlin.time.ExperimentalTime
 
 const val YYG = "YYG"
 
 /** Loads YYG models. */
+@ExperimentalTime
 object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("yyg") && it.extension == "csv" } },
         { normalizedDataFile("yyg-forecasts.csv") }) {
 
-    override fun inprocess(url: URL): List<TimeSeries> {
-        val date = url.path.substringAfter("yyg-").substringBeforeLast("-")
-        return url.csvKeyValues(true)
+    override fun inprocess(file: File): List<TimeSeries> {
+        val date = file.name.substringAfter("yyg-").substringBeforeLast("-")
+        return file.csvKeyValues(true)
                 .filter { it["predicted_deaths_mean"] != "" }.toList()
                 .flatMap { it.extractMetrics(date) }
     }
