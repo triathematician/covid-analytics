@@ -2,14 +2,11 @@ package tri.area
 
 import org.junit.Test
 
-fun main() {
-    println(Lookup.area("Los Angeles, California, US"))
-}
-
 class LookupTest {
 
     @Test
     fun testLookups() {
+        println(Lookup.area("Bristol Bay plus Lake Peninsula, Alaska, US"))
         println(Lookup.area("Los Angeles, CA, US"))
         println(Lookup.area("Los Angeles, California, US"))
         println((Lookup.area("Los Angeles, California, US") as UsCountyInfo).cbsa)
@@ -20,6 +17,7 @@ class LookupTest {
 
     @Test
     fun testPopulations() {
+        println(Lookup.population("Bristol Bay plus Lake Peninsula, Alaska, US"))
         println(Lookup.population("Los Angeles, CA, US"))
 
         println(Lookup.population("New York City, New York, US"))
