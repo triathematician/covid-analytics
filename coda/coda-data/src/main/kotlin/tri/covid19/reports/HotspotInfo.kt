@@ -127,7 +127,7 @@ private infix fun Double?.divideOrNull(y: Double?) = when {
 /** Compute percentage change from this value to the provided value. */
 fun Double.percentChangeTo(count: Double) = (count - this) / this
 
-private class CurrentTrend(map: SortedMap<LocalDate, ExtremaInfo>) {
+private class CurrentTrend(map: SortedMap<LocalDate, ExtremeInfo>) {
     val curValue by lazy { map.values.last().value }
     val curDate by lazy { map.keys.last()
     }

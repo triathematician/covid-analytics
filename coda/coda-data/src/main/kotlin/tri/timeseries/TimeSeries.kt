@@ -181,7 +181,25 @@ data class TimeSeries(
     //endregion
 }
 
-//region List<MetricTimeSeries> XF
+//region List<TimeSeries> XF
+
+/** Smooth the series over a 7-day window, with either a sum or an average. */
+fun TimeSeries.smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
+/** Smooth all series over a 7-day window, with either a sum or an average. */
+fun List<TimeSeries>.smooth7(total: Boolean) = map { it.smooth7(total) }
+
+/** Organize by area, using first series for each area. */
+fun Collection<TimeSeries>.byArea() = map { it.area to it }.toMap()
+/** Organize by area id, using first series for each area. */
+fun Collection<TimeSeries>.byAreaId() = map { it.areaId to it }.toMap()
+
+/** Group by area. */
+fun Collection<TimeSeries>.groupByArea() = groupBy { it.area }
+/** Group by area id. */
+fun Collection<TimeSeries>.groupByAreaId() = groupBy { it.areaId }
+
+/** Organize by area, using first series for each area. */
+fun Collection<TimeSeries>.deltas() = map { it.deltas() }
 
 /** First date with a positive number of values for any of the given series. */
 val Collection<TimeSeries>.firstPositiveDate
@@ -221,7 +239,6 @@ private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
 
 /** Sums a bunch of separate time series into a single time series object, with an option to update area id and metric name. */
 fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
-    require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { s1[it] + s2[it] }

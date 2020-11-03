@@ -16,7 +16,7 @@ import tri.util.userFormat
 import kotlin.math.absoluteValue
 
 /** Panel that shows information about an underlying [TimeSeries]. */
-class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View() {
+class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View() {
 
     private val popText = SimpleStringProperty("")
     private val peakText = SimpleStringProperty("")
@@ -65,7 +65,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) :
         val peakSmoothed = smoothedDeltas.peak()
         peakText.value = "${peak.second.userFormat()} on ${peak.first.monthDay}, ${peakSmoothed.second.userFormat()} on ${peakSmoothed.first.monthDay} (smoothed)"
 
-        val hotspotInfo = s.let { HotspotInfo(it) }
+        val hotspotInfo = HotspotInfo(s)
         doublingText.value = "${hotspotInfo.doublingTimeDays?.userFormat() ?: "N/A"} days (all time), ${hotspotInfo.doublingTimeDays28?.userFormat() ?: "N/A"} days (last 28 days)"
         recentChangeText.value = "${hotspotInfo.threeDayPercentChange?.percentFormat() ?: "N/A"} (3 day change), ${hotspotInfo.sevenDayPercentChange?.percentFormat() ?: "N/A"} (7 day change)"
 
@@ -107,7 +107,7 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) :
                 .flatMap { it + Text(System.lineSeparator()) }
     }
 
-    private fun ExtremaInfo.text(last: ExtremaInfo?, globalMin: Double, globalMax: Double, isLast: Boolean): List<Text> {
+    private fun ExtremeInfo.text(last: ExtremeInfo?, globalMin: Double, globalMax: Double, isLast: Boolean): List<Text> {
         if (last == null) {
             return listOf(Text("${date.monthDay}:".padStart(6) + "     first data point at ${value.userFormat()}"))
         } else if (value == last.value) {
@@ -126,14 +126,14 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) :
         val text1 = "   ${if (increasing) "▲" else "▼"} ${date.minus(last.date)} days"
         val text2 = "${date.monthDay}:".padStart(6) + "\t${value.userFormat()}"
         val text3 = when (type) {
-            ExtremaType.LOCAL_MIN -> minString(this, globalMin)
-            ExtremaType.LOCAL_MAX -> maxString(this, globalMax)
-            ExtremaType.ENDPOINT -> ""
+            ExtremeType.LOCAL_MIN -> minString(this, globalMin)
+            ExtremeType.LOCAL_MAX -> maxString(this, globalMax)
+            ExtremeType.ENDPOINT -> ""
         }
         val lastReferenceText = when (last.type) {
-            ExtremaType.ENDPOINT -> "first data point"
-            ExtremaType.LOCAL_MAX -> "last peak"
-            ExtremaType.LOCAL_MIN -> "last valley"
+            ExtremeType.ENDPOINT -> "first data point"
+            ExtremeType.LOCAL_MAX -> "last peak"
+            ExtremeType.LOCAL_MIN -> "last valley"
         }
         val text4 = when {
             increasing -> "+${(value - last.value).userFormat()} since $lastReferenceText (+${last.value.percentChangeTo(value).percentFormat()})"
@@ -152,8 +152,8 @@ class MetricTimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) :
                 }
     }
 
-    private fun minString(v: ExtremaInfo, global: Double) = if (v.value == global) "global min" else if (v.type == ExtremaType.ENDPOINT) "" else "local min"
-    private fun maxString(v: ExtremaInfo, global: Double) = if (v.value == global) "global max" else if (v.type == ExtremaType.ENDPOINT) "" else "local max"
+    private fun minString(v: ExtremeInfo, global: Double) = if (v.value == global) "global min" else if (v.type == ExtremeType.ENDPOINT) "" else "local min"
+    private fun maxString(v: ExtremeInfo, global: Double) = if (v.value == global) "global max" else if (v.type == ExtremeType.ENDPOINT) "" else "local max"
 
     private fun Double.percentChangeTo(count: Double) = (count - this) / this
 
