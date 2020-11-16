@@ -131,11 +131,15 @@ val List<TimeSeries>.states
 val List<TimeSeries>.national
     get() = filter { Lookup.areaOrNull(it.areaId) == USA }
 
-/** Adds rollups of series to a list of time series. Does not check that the input data is at the proper level. */
-fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, national: Boolean = false): List<TimeSeries> {
+/**
+ * Adds rollups of series to a list of time series. Does not check that the input data is at the proper level.
+ * If cumulative, fills missing future values with the last value; otherwise assumes those values are zero.
+ */
+fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, regional: Boolean = false, national: Boolean = false): List<TimeSeries> {
     val res = mutableListOf(this)
     if (cbsa) res += aggregateByCbsa().flatMap { it.value }
     if (state) res += aggregateByState().flatMap { it.value }
+    if (regional) res += aggregateByRegion().flatMap { it.value }
     if (national) res += aggregateToNational()
     return res.flatten()
 }
@@ -155,14 +159,22 @@ fun List<TimeSeries>.aggregateByState(): Map<String, List<TimeSeries>> {
 }
 
 /** Sums metric data associated with counties and aggregates to state by summing. Assumes time series are US county info. */
-fun List<TimeSeries>.aggregateByRegion(): Map<String, List<TimeSeries>> {
-    return groupBy { listOf(it.source, (it.area as? UsCountyInfo)?.state?.femaRegion, it.metric, it.qualifier) }.mapValues { data ->
+fun List<TimeSeries>.aggregateByRegion(cumulative: Boolean = false): Map<String, List<TimeSeries>> {
+    return groupBy { listOf(it.source, regionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
         (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
     }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
 }
 
+private fun regionOf(area: AreaInfo) = when(area) {
+    is UsCountyInfo -> area.state.femaRegion
+    is UsCbsaInfo -> area.regions[0]
+    is UsStateInfo -> area.femaRegion
+    else -> throw UnsupportedOperationException()
+}
+
 /** Sums metric data and aggregates to USA national. Assumes time series are disjoint areas covering the USA. */
-fun List<TimeSeries>.aggregateToNational() = groupBy { listOf(it.source, it.metric, it.qualifier) }.map { it.value.sum(USA.id) }
+fun List<TimeSeries>.aggregateToNational() = groupBy { listOf(it.source, it.metric, it.qualifier) }
+        .map { it.value.sum(USA.id) }
 
 //endregion
 

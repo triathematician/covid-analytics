@@ -16,9 +16,13 @@ object Lookup {
         listOf("Earth", "World").forEach { this[it] = EARTH }
         // prepopulate with state abbreviation "OH" and full name "Ohio, US"
         //   -- do not use name without US suffix because e.g. Georgia is ambiguous
-        Usa.states.forEach {
-            this[it.key] = it.value
-            this["${it.value.fullName}, US"] = it.value
+        Usa.states.forEach { (abbrev, state) ->
+            this[abbrev] = state
+            this["${state.fullName}, US"] = state
+        }
+        // prepopulate with FEMA/HHS regions
+        Usa.femaRegions.forEach { (num, area) ->
+            this[area.id] = area
         }
         // prepopulate with county FIPS and combined id, e.g. "Cook, Illinois, US"
         Usa.counties.forEach {
