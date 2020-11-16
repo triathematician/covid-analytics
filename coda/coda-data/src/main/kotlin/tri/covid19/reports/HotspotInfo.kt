@@ -5,6 +5,8 @@ import tri.covid19.CovidRiskLevel
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
 import tri.timeseries.*
+import tri.timeseries.analytics.ExtremeInfo
+import tri.timeseries.analytics.MinMaxFinder
 import tri.util.minus
 import java.time.LocalDate
 import java.util.*

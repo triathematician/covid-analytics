@@ -11,6 +11,18 @@ fun List<Double>.slidingWindow(n: Int, includePartialList: Boolean = false) = wh
 
 /** Compute diffs between entries. */
 fun List<Double>.deltas() = (1 until size).map { get(it) - get(it - 1) }
+
+/** Construct partial sums of values. */
+fun List<Double>.partialSums(): List<Double> {
+    val res = mutableListOf<Double>()
+    var sum = 0.0
+    forEach {
+        sum += it
+        res += sum
+    }
+    return res
+}
+
 /** Compute growth rates between entries (ratio of successive entries). Can produce infinity. */
 fun List<Double>.growthRates(day0: Int = 0) = (1 until size).map {
     when (day0) {
@@ -30,8 +42,9 @@ fun List<Double>.doublingTimes(sinceDaysAgo: Int = 0) = growthRates(sinceDaysAgo
 }
 
 /** Compute average over n entries. The first n-1 entries have partial averages if [includePartialList] is true. */
-fun List<Double>.movingAverage(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.average() }
-
+fun List<Double>.movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map {
+    if (!nonZero) it.average() else it.filter { it != 0.0 }.average()
+}
 /** Compute sum over n entries. The first n-1 entries have partial sums if [includePartialList] is true. */
 fun List<Double>.movingSum(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.sum() }
 

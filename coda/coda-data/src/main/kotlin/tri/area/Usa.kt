@@ -111,7 +111,7 @@ object Usa {
 
     //region UTILS
 
-    private fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
+    internal fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
 
     private fun statesInRegion(n: Int) = stateFips.filter { it.fema_region == n }.map {
         states[it.state_abbr] ?: error("State!")
@@ -123,13 +123,13 @@ object Usa {
 //region SERIES PROCESSORS
 
 val List<TimeSeries>.counties
-    get() = filter { it.area is UsCountyInfo }
+    get() = filter { Lookup.areaOrNull(it.areaId) is UsCountyInfo }
 val List<TimeSeries>.cbsas
-    get() = filter { it.area is UsCbsaInfo }
+    get() = filter { Lookup.areaOrNull(it.areaId) is UsCbsaInfo }
 val List<TimeSeries>.states
-    get() = filter { it.area is UsStateInfo }
+    get() = filter { Lookup.areaOrNull(it.areaId) is UsStateInfo }
 val List<TimeSeries>.national
-    get() = filter { it.area == USA }
+    get() = filter { Lookup.areaOrNull(it.areaId) == USA }
 
 /** Adds rollups of series to a list of time series. Does not check that the input data is at the proper level. */
 fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, national: Boolean = false): List<TimeSeries> {
@@ -152,6 +152,13 @@ fun List<TimeSeries>.aggregateByState(): Map<String, List<TimeSeries>> {
     return groupBy { listOf(it.source, (it.area as? UsCountyInfo)?.state, it.metric, it.qualifier) }.mapValues { data ->
         (data.key[1] as? UsStateInfo)?.let { data.value.sum(it.id) }
     }.mapNotNull { it.value }.groupBy { (it.area as UsStateInfo).abbreviation }
+}
+
+/** Sums metric data associated with counties and aggregates to state by summing. Assumes time series are US county info. */
+fun List<TimeSeries>.aggregateByRegion(): Map<String, List<TimeSeries>> {
+    return groupBy { listOf(it.source, (it.area as? UsCountyInfo)?.state?.femaRegion, it.metric, it.qualifier) }.mapValues { data ->
+        (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
+    }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
 }
 
 /** Sums metric data and aggregates to USA national. Assumes time series are disjoint areas covering the USA. */

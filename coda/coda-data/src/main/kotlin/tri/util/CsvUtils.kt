@@ -29,12 +29,15 @@ object CsvLineSplitter {
     /** Reads data from the given string, returning the header line and content lines. */
     fun readData(splitOnNewLines: Boolean, string: String) = readData(splitOnNewLines) { StringReader(string) }
 
-    /** Reads data from a reader, returning the header line and content lines. */
+    /**
+     * Reads data from a reader, returning the header line and content lines.
+     * @param splitOnNewLines if true, each line will be read as a separate record; if false (slower), multiple lines will be reconstituted into a single record
+     */
     fun readData(splitOnNewLines: Boolean, reader: () -> Reader): Pair<List<String>, Sequence<List<String>>> {
         val header = splitLine(reader().firstLine())!!.map { it.javaTrim() }
 
-        val seq = reader().buffered().lineSequence().drop(1).reconstitute().mapNotNull { splitLine(it) }
-        return header to seq
+        val seq = reader().buffered().lineSequence().drop(1)
+        return header to (if (splitOnNewLines) seq else seq.reconstitute()).mapNotNull { splitLine(it) }
 
 //        val otherLines = BufferedReader(reader()).lineSequence().drop(1)
 //        val others = if (splitOnNewLines) otherLines else FIND_REGEX.findAll(otherLines.joinToString("\n")).map { it.value }

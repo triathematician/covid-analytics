@@ -9,6 +9,10 @@ import javafx.scene.text.Text
 import tornadofx.*
 import tri.covid19.reports.HotspotInfo
 import tri.timeseries.*
+import tri.timeseries.analytics.ExtremaSummary
+import tri.timeseries.analytics.ExtremeInfo
+import tri.timeseries.analytics.ExtremeType
+import tri.timeseries.analytics.MinMaxFinder
 import tri.util.minus
 import tri.util.monthDay
 import tri.util.percentFormat

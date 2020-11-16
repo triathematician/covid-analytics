@@ -42,6 +42,12 @@ object Lookup {
 
     //region PRIMARY LOOKUP
 
+    /** Add area to lookup cache. */
+    fun addArea(area: AreaInfo) {
+        if (area.id !in areaCache.keys)
+            areaCache[area.id] = area
+    }
+
     /**
      * Get object for area with given name. Logs an error and returns a generic "Unknown" area if not found.
      * @param lookupName name to lookup
