@@ -228,6 +228,12 @@ class UsCountyInfo(name: String, val state: UsStateInfo, fips: Int, population: 
 /** Information about a zipcode. */
 class UsZipInfo(val zipcode: Int) : AreaInfo(checkZipCode(zipcode).toString(), AreaType.ZIPCODE, null, checkZipCode(zipcode), TODO())
 
+/** Information about an HSA (hospital service area). */
+class UsHsaInfo(val num: Int, val name: String) : AreaInfo("HSA_${num}", AreaType.UNKNOWN, USA, null, AreaMetrics())
+
+/** Information about an HSA (hospital service area). */
+class UsHrrInfo(val num: Int, val name: String) : AreaInfo("HRR_${num}", AreaType.UNKNOWN, USA, null, AreaMetrics())
+
 //endregion
 
 //region CHECKERS
