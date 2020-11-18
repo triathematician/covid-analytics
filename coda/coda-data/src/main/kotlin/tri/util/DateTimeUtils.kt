@@ -2,10 +2,14 @@ package tri.util
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
+import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
 
+/** Formats date like "15-Sep". */
+val LocalDate.dayDashMonth
+    get() = this.format(DateTimeFormatter.ofPattern("d-MMM"))
 /** Formats date as month and day only. */
 val LocalDate.monthDay
     get() = this.format(DateTimeFormatter.ofPattern("M/d"))

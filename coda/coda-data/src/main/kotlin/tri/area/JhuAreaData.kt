@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import tri.util.csvResource
 
 /** Loads JHU region/population data. */
-internal object JhuAreaData {
+object JhuAreaData {
     private val data = JhuAreaData::class.csvResource<JhuAreaInfo>(true, "resources/jhucsse/jhu-iso-fips-lookup.csv")
 
     val index = data.groupByOne { it.indexKey }
     val areas = index.values
+    val usCounties = data.filter { Usa.validCountyFips(it.fips) }.map { it.fips!! to it }.toMap()
 
     private val lowerIndex by lazy { index.mapKeys { it.key.toString().toLowerCase() } }
 
@@ -17,7 +18,7 @@ internal object JhuAreaData {
 }
 
 /** Data structure provided by JHU region data. */
-internal data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String, var code3: Int,
+data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String, var code3: Int,
                        @JsonProperty("FIPS") val fips: Int? = null, @JsonProperty("Admin2") val admin2: String,
                        @JsonProperty("Province_State") val provinceOrState: String, @JsonProperty("Country_Region") val countryOrRegion: String,
                        @JsonProperty("Lat") val latitude: Float, @JsonProperty("Long_") val longitude: Float,

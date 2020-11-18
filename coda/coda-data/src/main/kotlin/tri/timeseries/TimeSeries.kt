@@ -45,6 +45,8 @@ data class TimeSeries(
 
     val uniqueMetricKey = listOf(source, areaId, metric, qualifier).joinToString("::")
 
+    //region GETTER HELPERS
+
     val area
         get() = Lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
 
@@ -68,29 +70,51 @@ data class TimeSeries(
     val valuesAsMap: Map<LocalDate, Double>
         get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
 
+    //endregion
+
+    //region VALUE AND DATE GETTERS
+
     /** Get value on given date. */
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
     /** Get value on given date, or null if argument is outside range. */
     fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
-    /** Get value by days from end. */
-    fun valueByDaysFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
 
     /** Get date by index. */
     fun date(i: Int) = start.plusDays(i.toLong())
     /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
 
+    //endregion
+
+    //region QUERIES
+
+    /** Get value by days from end. Zero returns the last value. */
+    fun valueByDaysFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
+
+    /** Get sublist with given indices relative to end of list. Zero is the last element. */
+    fun last(range: IntRange): List<Double> {
+        return values.subList(maxOf(0, values.size - range.last - 1), maxOf(0, values.size - range.first))
+    }
+
     /** Get date of peak and value. */
     fun peak(since: LocalDate? = null): Pair<LocalDate, Double> = domain.map { it to get(it) }
             .filter { since == null || !it.first.isBefore(since) }
             .maxBy { it.second }!!
 
-    //region QUERIES
-
+    /** Get values for the given range of dates. */
+    fun values(dates: DateRange) = dates.map { get(it) }
     /** Compute sum over all dates in given range. */
-    fun sum(dates: DateRange) = dates.sumByDouble { get(it) }
+    fun sum(dates: DateRange) = values(dates).sum()
     /** Compute average over all dates in given range. */
-    fun average(dates: DateRange) = dates.map { get(it) }.average()
+    fun average(dates: DateRange) = values(dates).average()
+
+    /** Compute number of days since value was half of its current value. Returns null if current value is not positive. */
+    fun daysSinceHalfCurrentValue(): Int? {
+        val cur = lastValue
+        if (cur <= 0) return null
+        (1..values.size).forEach { if (valueByDaysFromEnd(it) <= .5*cur) return it }
+        return null
+    }
 
     //endregion
 
@@ -100,7 +124,7 @@ data class TimeSeries(
     fun copyWithDataSince(firstDate: LocalDate)
             = copy(metric = metric, start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()), intSeries = intSeries)
 
-    /** Create a copy while adjusting the start day if the number of values changes. */
+    /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. */
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
             = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
 
@@ -110,18 +134,32 @@ data class TimeSeries(
         return res
     }
 
-    operator fun plus(n: Number): TimeSeries = copy(values = values.map { it + n.toDouble() })
-    operator fun minus(n: Number): TimeSeries = copy(values = values.map { it - n.toDouble() })
-    operator fun times(n: Number): TimeSeries = copy(values = values.map { it * n.toDouble() })
-    operator fun div(n: Number): TimeSeries = copy(values = values.map { it / n.toDouble() })
+    /** Apply arbitrary operator to series. */
+    fun transform(op: (Double) -> Double) = copy(values = values.map { op(it) })
+
+    operator fun plus(n: Number) = copy(values = values.map { it + n.toDouble() })
+    operator fun minus(n: Number) = copy(values = values.map { it - n.toDouble() })
+    operator fun times(n: Number) = copy(values = values.map { it * n.toDouble() })
+    operator fun div(n: Number) = copy(values = values.map { it / n.toDouble() })
+
+    operator fun plus(n: TimeSeries) = reduceSeries(this, n) { a, b -> a + b }
+    operator fun minus(n: TimeSeries) = reduceSeries(this, n) { a, b -> a - b }
+    operator fun times(n: TimeSeries) = reduceSeries(this, n) { a, b -> a * b }
+    operator fun div(n: TimeSeries) = reduceSeries(this, n) { a, b -> a / b }
 
     /** Return copy with moving averages. */
-    fun movingAverage(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingAverage(bucket, includePartialList))
+    fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingAverage(bucket, nonZero, includePartialList))
     /** Return copy with moving sum. */
     fun movingSum(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingSum(bucket, includePartialList))
 
     /** Return copy with deltas. */
     fun deltas(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.deltas())
+
+    /** Compute cumulative totals. */
+    fun cumulative(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.partialSums())
+    /** Compute cumulative totals starting on the given day. */
+    fun cumulativeSince(cumulativeStart: LocalDate, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric),
+            values = values(DateRange(cumulativeStart..end)).partialSums())
 
     /** Return copy with growth percentages. */
     fun growthPercentages(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.growthPercentages(), intSeries = false)
@@ -173,15 +211,28 @@ data class TimeSeries(
         }
     }
 
-    /** Get sublist with given indices relative to end of list. Zero is the last element. */
-    fun last(range: IntRange): List<Double> {
-        return values.subList(maxOf(0, values.size - range.last - 1), maxOf(0, values.size - range.first))
-    }
-
     //endregion
 }
 
-//region List<MetricTimeSeries> XF
+//region List<TimeSeries> XF
+
+/** Smooth the series over a 7-day window, with either a sum or an average. */
+fun TimeSeries.smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
+/** Smooth all series over a 7-day window, with either a sum or an average. */
+fun List<TimeSeries>.smooth7(total: Boolean) = map { it.smooth7(total) }
+
+/** Organize by area, using first series for each area. */
+fun Collection<TimeSeries>.byArea() = map { it.area to it }.toMap()
+/** Organize by area id, using first series for each area. */
+fun Collection<TimeSeries>.byAreaId() = map { it.areaId to it }.toMap()
+
+/** Group by area. */
+fun Collection<TimeSeries>.groupByArea() = groupBy { it.area }
+/** Group by area id. */
+fun Collection<TimeSeries>.groupByAreaId() = groupBy { it.areaId }
+
+/** Organize by area, using first series for each area. */
+fun Collection<TimeSeries>.deltas() = map { it.deltas() }
 
 /** First date with a positive number of values for any of the given series. */
 val Collection<TimeSeries>.firstPositiveDate
@@ -220,13 +271,16 @@ private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
 }
 
 /** Sums a bunch of separate time series into a single time series object, with an option to update area id and metric name. */
-fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
-    require(s1.metric == s2.metric)
+fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 -> reduceSeries(s1, s2) { a, b -> a + b } }
+        .let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
+
+/** Reduces two series using the given operation. Result has domain that is the union of the two provided series. */
+fun reduceSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double): TimeSeries {
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
-    val series = (minDate..maxDate).map { s1[it] + s2[it] }
-    s1.copy(start = minDate, values = series)
-}.let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
+    val series = (minDate..maxDate).map { op(s1[it], s2[it]) }
+    return s1.copy(start = minDate, values = series)
+}
 
 //endregion
 

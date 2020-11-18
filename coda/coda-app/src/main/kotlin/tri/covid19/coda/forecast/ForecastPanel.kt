@@ -58,7 +58,7 @@ class ForecastPanel : SplitPane() {
         }
         charts()
         updateForecasts()
-        this += MetricTimeSeriesInfoPanel(model.mainSeries)
+        this += TimeSeriesInfoPanel(model.mainSeries)
     }
 
     /** Charts. */

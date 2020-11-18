@@ -5,6 +5,8 @@ import tri.covid19.CovidRiskLevel
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
 import tri.timeseries.*
+import tri.timeseries.analytics.ExtremeInfo
+import tri.timeseries.analytics.MinMaxFinder
 import tri.util.minus
 import java.time.LocalDate
 import java.util.*
@@ -127,7 +129,7 @@ private infix fun Double?.divideOrNull(y: Double?) = when {
 /** Compute percentage change from this value to the provided value. */
 fun Double.percentChangeTo(count: Double) = (count - this) / this
 
-private class CurrentTrend(map: SortedMap<LocalDate, ExtremaInfo>) {
+private class CurrentTrend(map: SortedMap<LocalDate, ExtremeInfo>) {
     val curValue by lazy { map.values.last().value }
     val curDate by lazy { map.keys.last()
     }
