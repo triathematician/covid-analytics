@@ -4,11 +4,11 @@ import org.junit.Test
 import tri.covid19.data.JhuDailyReports
 import tri.covid19.data.LocalCovidData
 import java.io.File
-import java.net.URL
 import java.time.LocalDate
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
+@ExperimentalTime
 class TimeSeriesFileFormatTest {
 
     @Test
@@ -19,10 +19,19 @@ class TimeSeriesFileFormatTest {
         TimeSeriesFileFormat.writeSeries(t2, System.out)
     }
 
-    @ExperimentalTime
     @Test
     fun testNormalize() {
+        println(File("").absoluteFile)
+        println(File("../data").absoluteFile)
+        println(File("../data").exists())
+        println(File("../../data").absoluteFile)
+        println(File("../../data").exists())
+        println(File("../../../data").absoluteFile)
+        println(File("../../../data").exists())
+        println(File("../../../../data").absoluteFile)
+        println(File("../../../../data").exists())
         println(LocalCovidData.dataDir)
+        println(LocalCovidData.jhuCsseProcessedData)
         val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.rawSources() }, { File("test3.csv") }) {
             override fun inprocess(file: File) = JhuDailyReports.inprocess(file)
         }

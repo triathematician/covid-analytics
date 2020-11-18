@@ -2,30 +2,28 @@ package tri.covid19.data
 
 import tri.area.Lookup
 import tri.timeseries.TimeSeries
-import tri.timeseries.TimeSeriesQuery
+import tri.util.info
 import tri.util.toLocalDate
 import java.io.File
 import java.time.format.DateTimeFormatter
-import kotlin.time.ExperimentalTime
 
 /** Maintains access locations for local COVID data. */
-@ExperimentalTime
-object LocalCovidData : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlForecasts, YygForecasts) {
+object LocalCovidData {
 
-    internal val dataDir = object : Iterator<File> { var file = File("").absoluteFile
-        override fun hasNext() = file.parentFile != null
-        override fun next() = file.also { file = file.parentFile }
-    }.asSequence().map { File(it, "data/") }.first { it.exists() }
+    internal val dataDir by lazy { listOf(".\\data", "..\\data", "..\\..\\data", "..\\..\\..\\data", "..\\..\\..\\..\\data")
+            .firstOrNull { File(it).exists() }
+            .let { File(it) }
+            .also { info<LocalCovidData>("Data dir: ${it.absolutePath}") } }
     internal fun normalizedDataFile(s: String) = File(dataDir, "normalized/$s")
-    internal val jhuCsseProcessedData = normalizedDataFile("jhucsse-processed.csv")
+    internal val jhuCsseProcessedData by lazy { normalizedDataFile("jhucsse-processed.csv") }
 
     /** Read forecasts from data dir by pattern. */
     internal fun jhuCsseDailyData(filter: (File) -> Boolean) = File(dataDir, "historical/").walk().filter(filter).toList()
-            .also { println("$this ${it.map { it.path.substringAfterLast('/') }}") }
+            .also { info<LocalCovidData>("$this ${it.map { it.path.substringAfterLast('/') }}") }
 
     /** Read forecasts from data dir by pattern. */
     internal fun forecasts(filter: (File) -> Boolean) = File(dataDir, "forecasts/").walk().filter(filter).toList()
-            .also { println("$this ${it.map { it.path.substringAfterLast('/') } }") }
+            .also { info<LocalCovidData>("$this ${it.map { it.path.substringAfterLast('/') } }") }
 
     /** Extracts any number of metrics from given row of data, based on a field name predicate. */
     internal fun Map<String, String>.extractMetrics(source: String, regionField: String, assumeUsState: Boolean = false, dateField: String,

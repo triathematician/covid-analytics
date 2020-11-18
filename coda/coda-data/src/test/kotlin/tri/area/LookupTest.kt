@@ -1,11 +1,14 @@
 package tri.area
 
 import org.junit.Test
+import java.nio.charset.Charset
 
 class LookupTest {
 
     @Test
     fun testLookups() {
+        println(Lookup.area("Doña Ana, New Mexico, US"))
+        println(Lookup.area("Do¦a Ana, New Mexico, US"))
         println(Lookup.area("Bristol Bay plus Lake Peninsula, Alaska, US"))
         println(Lookup.area("Los Angeles, CA, US"))
         println(Lookup.area("Los Angeles, California, US"))

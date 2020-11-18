@@ -130,14 +130,14 @@ class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View(
         val text1 = "   ${if (increasing) "▲" else "▼"} ${date.minus(last.date)} days"
         val text2 = "${date.monthDay}:".padStart(6) + "\t${value.userFormat()}"
         val text3 = when (type) {
-            ExtremeType.LOCAL_MIN -> minString(this, globalMin)
-            ExtremeType.LOCAL_MAX -> maxString(this, globalMax)
+            ExtremeType.LOCAL_MIN, ExtremeType.GLOBAL_MIN -> minString(this, globalMin)
+            ExtremeType.LOCAL_MAX, ExtremeType.GLOBAL_MAX -> maxString(this, globalMax)
             ExtremeType.ENDPOINT -> ""
         }
         val lastReferenceText = when (last.type) {
             ExtremeType.ENDPOINT -> "first data point"
-            ExtremeType.LOCAL_MAX -> "last peak"
-            ExtremeType.LOCAL_MIN -> "last valley"
+            ExtremeType.LOCAL_MAX, ExtremeType.GLOBAL_MAX -> "last peak"
+            ExtremeType.LOCAL_MIN, ExtremeType.GLOBAL_MIN -> "last valley"
         }
         val text4 = when {
             increasing -> "+${(value - last.value).userFormat()} since $lastReferenceText (+${last.value.percentChangeTo(value).percentFormat()})"

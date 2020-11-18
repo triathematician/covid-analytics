@@ -57,9 +57,11 @@ object CovidTimeSeriesSources {
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
     fun dailyReports(areaFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
-        LocalCovidData.byArea(areaFilter)
+        LocalCovidDataQuery.byArea(areaFilter)
+                .flatMap { it.value }
                 .flatMap {
-                    listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" }, it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
+                    listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" },
+                            it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)
                 }
     }.also {

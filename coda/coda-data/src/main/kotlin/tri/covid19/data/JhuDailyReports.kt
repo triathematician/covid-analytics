@@ -10,6 +10,7 @@ import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
 import tri.util.javaTrim
 import tri.util.toLocalDate
+import tri.util.url
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -25,7 +26,7 @@ object JhuDailyReports : TimeSeriesFileProcessor(
 
     override fun inprocess(file: File): List<TimeSeries> {
         println("Reading $file")
-        val name = file.path.substringAfterLast("/")
+        val name = file.url.path.substringAfterLast("/")
         val date = name.substringBeforeLast(".").toLocalDate(M_D_YYYY)
 
         val lineReader: (Map<String, String>) -> DailyReportRow = when {
