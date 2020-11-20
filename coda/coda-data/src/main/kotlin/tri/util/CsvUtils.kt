@@ -10,6 +10,7 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.*
 import java.lang.UnsupportedOperationException
 import java.net.URL
+import java.nio.charset.Charset
 import kotlin.reflect.KClass
 
 /** Split lines of the CSV file, accommodating quotes and empty entries. */
@@ -24,7 +25,8 @@ object CsvLineSplitter {
     internal val INLINE_REGEX = "(?m)(?<=^|,)(?:\"\"|(?:)|[^,\"\\r\\n]+|\"(?:\"\"|[^\"]+)+\")(?=,|$)".toRegex()
 
     /** Reads data from the given URL, returning the header line and content lines. */
-    fun readData(splitOnNewLines: Boolean, url: URL) = readData(splitOnNewLines) { InputStreamReader(url.openStream()) }
+    fun readData(splitOnNewLines: Boolean, url: URL, charset: Charset = Charsets.UTF_8) =
+            readData(splitOnNewLines) { InputStreamReader(url.openStream(), charset) }
 
     /** Reads data from the given string, returning the header line and content lines. */
     fun readData(splitOnNewLines: Boolean, string: String) = readData(splitOnNewLines) { StringReader(string) }
@@ -79,7 +81,7 @@ object CsvLineSplitter {
 /** Split lines of the CSV file, without quotes. */
 object CsvLineSplitterFast {
     /** Reads data from the given URL, returning the header line and content lines. */
-    fun readData(url: URL) = readData { InputStreamReader(url.openStream()) }
+    fun readData(url: URL, charset: Charset = Charsets.UTF_8) = readData { InputStreamReader(url.openStream(), charset) }
 
     /** Reads data from the given string, returning the header line and content lines. */
     fun readData(string: String) = readData { StringReader(string) }

@@ -4,6 +4,8 @@ import org.junit.Test
 import tri.area.AreaType
 import tri.area.USA
 import tri.covid19.data.LocalCovidData
+import tri.covid19.data.LocalCovidDataQuery
+import java.nio.charset.Charset
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -11,7 +13,7 @@ class MinMaxFinderTest {
 
     @Test
     fun testFind() {
-        LocalCovidData.byArea { it.type == AreaType.PROVINCE_STATE && it.parent == USA }.flatMap { it.value }
+        LocalCovidDataQuery.byArea { it.type == AreaType.PROVINCE_STATE && it.parent == USA }.flatMap { it.value }
                 .filter { " " !in it.metric }
                 .onEach {
                     val series = it.deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)

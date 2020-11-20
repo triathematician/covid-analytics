@@ -2,6 +2,8 @@ package tri.area
 
 import tri.util.csvResource
 import tri.util.javaTrim
+import tri.util.warning
+import java.nio.charset.Charset
 
 /**
  * Quick access to looking up areas/elements by region name. Maintains a cache so that only one lookup is performed per
@@ -74,7 +76,9 @@ object Lookup {
         val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
         val areaInfo = if (jhuArea?.fips != null) Usa.counties[jhuArea.fips] else jhuArea?.toAreaInfo()
         return if (areaInfo == null) {
-            println("Area not found: $name")
+            println(Charset.defaultCharset())
+            warning<Lookup>("Area not found: $name")
+            warning<Lookup>(name.map { it.toInt() }.toString())
             notFound[name] = UNKNOWN
             null
         } else {

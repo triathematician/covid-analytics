@@ -2900,6 +2900,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 90004,Unassigned,Arizona,US,2020-08-03 04:34:35,,,0,1,0,,"Unassigned, Arizona, US",,
 90005,Unassigned,Arkansas,US,2020-08-03 04:34:35,,,1578,0,0,1578,"Unassigned, Arkansas, US",,0.0
 90006,Unassigned,California,US,2020-08-03 04:34:35,,,0,0,0,0,"Unassigned, California, US",,
+90008,Unassigned,Colorado,US,2020-08-03 04:34:35,,,18,0,0,0,"Unassigned, Colorado, US",,
 90009,Unassigned,Connecticut,US,2020-08-03 04:34:35,,,243,0,0,243,"Unassigned, Connecticut, US",,0.0
 90010,Unassigned,Delaware,US,2020-08-03 04:34:35,,,226,0,0,226,"Unassigned, Delaware, US",,0.0
 90012,Unassigned,Florida,US,2020-08-03 04:34:35,,,633,0,0,633,"Unassigned, Florida, US",,0.0
@@ -3104,7 +3105,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 54099,Wayne,West Virginia,US,2020-08-03 04:34:35,38.14901357,-82.42287994,184,9,0,175,"Wayne, West Virginia, US",466.9813715039846,4.891304347826087
 51820,Waynesboro,Virginia,US,2020-08-03 04:34:35,38.06451466,-78.90293905,166,3,0,163,"Waynesboro, Virginia, US",733.5395492708792,1.8072289156626506
 47183,Weakley,Tennessee,US,2020-08-03 04:34:35,36.29896232,-88.71990865,260,3,0,257,"Weakley, Tennessee, US",780.1248199711954,1.1538461538461537
-48479,Webb,Texas,US,2020-08-03 04:34:35,27.7610369,-99.33237355,6131,77,0,6054,"Webb, Texas, US",2216.1415785897084,1.2559125754363072
+48479,Webb,Texas,US,2020-08-03 04:34:35,27.7610369,-99.33237355,6131,140,0,6054,"Webb, Texas, US",2216.1415785897084,1.2559125754363072
 ,Weber-Morgan,Utah,US,2020-08-03 04:34:35,41.27116049,-111.9145117,2624,25,0,2599,"Weber-Morgan, Utah, US",963.512119175874,0.9527439024390244
 13307,Webster,Georgia,US,2020-08-03 04:34:35,32.04066113,-84.54742852,36,2,0,34,"Webster, Georgia, US",1380.8975834292291,5.555555555555555
 19187,Webster,Iowa,US,2020-08-03 04:34:35,42.42853483,-94.17987389,712,5,0,707,"Webster, Iowa, US",1983.065953654189,0.702247191011236

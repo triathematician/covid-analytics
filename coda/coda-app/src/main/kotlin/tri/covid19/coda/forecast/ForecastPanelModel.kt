@@ -113,7 +113,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     /** List of areas available for panel. */
     val areas: SortedSet<String> by lazy {
-        val dataAreas = LocalCovidData.areas().map { it.id }
+        val dataAreas = LocalCovidDataQuery.areas.map { it.id }
         val forecastAreas = CovidForecasts.allForecasts.map { it.areaId }.toSet()
         (dataAreas + forecastAreas).toSortedSet()
     }
