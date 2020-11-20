@@ -24,6 +24,10 @@ object Lookup {
         Usa.femaRegions.forEach { (num, area) ->
             this[area.id] = area
         }
+        // prepopulate with Census regions
+        Usa.censusRegions.forEach { (num, area) ->
+            this[area.id] = area
+        }
         // prepopulate with county FIPS and combined id, e.g. "Cook, Illinois, US"
         Usa.counties.forEach {
             this[it.key.toString()] = it.value

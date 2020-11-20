@@ -38,12 +38,17 @@ object Usa {
     val statesByLongName = states.mapKeys { it.value.fullName }
 
     /** FEMA regions, indexed by number. */
-    val femaRegions = (1..10).map {
-        it to UsRegionInfo("Region $it", it, statesInRegion(it))
-    }.toMap()
+    val femaRegions = stateFips.groupBy { it.fema_region }.map { (num, states) -> num to region("Region $num", states) }.toMap()
+
+    /** Ordered FEMA regions. */
+    val femaRegionsOrdered = (1..10).map { femaRegions[it]!! }
 
     /** FEMA regions by state */
     val femaRegionByState = stateFips.map { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }.toMap()
+
+    /** Census regions and divisions, indexed by name. */
+    val censusRegions = stateFips.filter { it.region_name.isNotEmpty() }.groupBy { it.region_name }.map { (name, states) -> name to region(name, states) }.toMap() +
+            stateFips.filter { it.division_name.isNotEmpty() }.groupBy { it.division_name }.map { (name, states) -> name to region(name, states) }.toMap()
 
     /** Counties, indexed by FIPS. */
     val counties = JhuAreaData.index.filterValues { validCountyFips(it.fips) }
@@ -112,10 +117,7 @@ object Usa {
     //region UTILS
 
     internal fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
-
-    private fun statesInRegion(n: Int) = stateFips.filter { it.fema_region == n }.map {
-        states[it.state_abbr] ?: error("State!")
-    }
+    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.map { Usa.states[it.state_abbr] ?: error("State!") })
 
     //endregion
 }
@@ -135,11 +137,15 @@ val List<TimeSeries>.national
  * Adds rollups of series to a list of time series. Does not check that the input data is at the proper level.
  * If cumulative, fills missing future values with the last value; otherwise assumes those values are zero.
  */
-fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, regional: Boolean = false, national: Boolean = false): List<TimeSeries> {
+fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, regional: Boolean = false, censusRegional: Boolean = false, national: Boolean = false): List<TimeSeries> {
     val res = mutableListOf(this)
     if (cbsa) res += aggregateByCbsa().flatMap { it.value }
     if (state) res += aggregateByState().flatMap { it.value }
     if (regional) res += aggregateByRegion().flatMap { it.value }
+    if (censusRegional) {
+        res += aggregateByCensusRegion().flatMap { it.value }
+        res += aggregateByCensusDivision().flatMap { it.value }
+    }
     if (national) res += aggregateToNational()
     return res.flatten()
 }
@@ -158,9 +164,23 @@ fun List<TimeSeries>.aggregateByState(): Map<String, List<TimeSeries>> {
     }.mapNotNull { it.value }.groupBy { (it.area as UsStateInfo).abbreviation }
 }
 
-/** Sums metric data associated with counties and aggregates to state by summing. Assumes time series are US county info. */
-fun List<TimeSeries>.aggregateByRegion(cumulative: Boolean = false): Map<String, List<TimeSeries>> {
+/** Sums metric data associated with counties and aggregates to region by summing. Assumes time series are US county info. */
+fun List<TimeSeries>.aggregateByRegion(): Map<String, List<TimeSeries>> {
     return groupBy { listOf(it.source, regionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
+        (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
+    }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
+}
+
+/** Sums metric data associated with counties and aggregates to region by summing. Assumes time series are US county info. */
+fun List<TimeSeries>.aggregateByCensusRegion(): Map<String, List<TimeSeries>> {
+    return filter { censusRegionOf(it.area) != null }.groupBy { listOf(it.source, censusRegionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
+        (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
+    }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
+}
+
+/** Sums metric data associated with counties and aggregates to region by summing. Assumes time series are US county info. */
+fun List<TimeSeries>.aggregateByCensusDivision(): Map<String, List<TimeSeries>> {
+    return filter { censusDivisionOf(it.area) != null }.groupBy { listOf(it.source, censusDivisionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
         (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
     }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
 }
@@ -172,6 +192,24 @@ private fun regionOf(area: AreaInfo) = when(area) {
     else -> throw UnsupportedOperationException()
 }
 
+private fun stateOf(area: AreaInfo) = when(area) {
+    is UsCountyInfo -> area.state
+    is UsCbsaInfo -> area.states[0]
+    is UsStateInfo -> area
+    else -> null
+}
+
+private fun censusRegionOf(area: AreaInfo): UsRegionInfo? {
+    val state = stateOf(area)
+    return Usa.censusRegions.values.firstOrNull { state in it.states }
+}
+
+private fun censusDivisionOf(area: AreaInfo): UsRegionInfo? {
+    val state = stateOf(area)
+    return Usa.censusRegions.values.filter { state in it.states }.getOrNull(1)
+}
+
+
 /** Sums metric data and aggregates to USA national. Assumes time series are disjoint areas covering the USA. */
 fun List<TimeSeries>.aggregateToNational() = groupBy { listOf(it.source, it.metric, it.qualifier) }
         .map { it.value.sum(USA.id) }
@@ -181,7 +219,7 @@ fun List<TimeSeries>.aggregateToNational() = groupBy { listOf(it.source, it.metr
 //region US AREA TYPES
 
 /** Information about a US region (multiple states). */
-class UsRegionInfo(name: String, val num: Int, val states: List<UsStateInfo>)
+class UsRegionInfo(name: String, val states: List<UsStateInfo>)
     : AreaInfo(name, AreaType.PROVINCE_STATE_AGGREGATE, USA, null, AreaMetrics.aggregate(states))
 
 /** Information about a US state or territory. */
