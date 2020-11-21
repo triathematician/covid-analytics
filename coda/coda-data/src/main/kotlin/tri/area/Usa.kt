@@ -156,6 +156,7 @@ fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false
     if (censusRegional) {
         res += aggregateByCensusRegion().flatMap { it.value }
         res += aggregateByCensusDivision().flatMap { it.value }
+        res += aggregateByRegionXY().flatMap { it.value }
     }
     if (national) res += aggregateToNational()
     return res.flatten()
@@ -177,7 +178,14 @@ fun List<TimeSeries>.aggregateByState(): Map<String, List<TimeSeries>> {
 
 /** Sums metric data associated with counties and aggregates to region by summing. Assumes time series are US county info. */
 fun List<TimeSeries>.aggregateByRegion(): Map<String, List<TimeSeries>> {
-    return groupBy { listOf(it.source, regionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
+    return groupBy { listOf(it.source, femaRegionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
+        (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
+    }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
+}
+
+/** Aggregate by region X/Y. */
+fun List<TimeSeries>.aggregateByRegionXY(): Map<String, List<TimeSeries>> {
+    return filter { xyRegionOf(it.area) != null }.groupBy { listOf(it.source, xyRegionOf(it.area), it.metric, it.qualifier) }.mapValues { data ->
         (data.key[1] as? UsRegionInfo)?.let { data.value.sum(it.id) }
     }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
 }
@@ -196,7 +204,7 @@ fun List<TimeSeries>.aggregateByCensusDivision(): Map<String, List<TimeSeries>> 
     }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
 }
 
-private fun regionOf(area: AreaInfo) = when(area) {
+private fun femaRegionOf(area: AreaInfo) = when(area) {
     is UsCountyInfo -> area.state.femaRegion
     is UsCbsaInfo -> area.regions[0]
     is UsStateInfo -> area.femaRegion
@@ -212,14 +220,18 @@ private fun stateOf(area: AreaInfo) = when(area) {
 
 private fun censusRegionOf(area: AreaInfo): UsRegionInfo? {
     val state = stateOf(area)
-    return Usa.censusRegions.values.firstOrNull { state in it.states }
+    return Usa.censusRegionAreas.firstOrNull { state in it.states }
 }
 
 private fun censusDivisionOf(area: AreaInfo): UsRegionInfo? {
     val state = stateOf(area)
-    return Usa.censusRegions.values.filter { state in it.states }.getOrNull(1)
+    return Usa.censusRegionAreas.filter { state in it.states }.getOrNull(1)
 }
 
+private fun xyRegionOf(area: AreaInfo): UsRegionInfo? {
+    val state = stateOf(area)
+    return listOf(Usa.regionX, Usa.regionY).firstOrNull { state in it.states }
+}
 
 /** Sums metric data and aggregates to USA national. Assumes time series are disjoint areas covering the USA. */
 fun List<TimeSeries>.aggregateToNational() = groupBy { listOf(it.source, it.metric, it.qualifier) }
