@@ -12,3 +12,6 @@ fun <T> lazyMonitor(message: String, initializer: () -> T) = lazy {
     println("Loaded $message in ${duration.toSeconds()} seconds")
     res
 }
+
+/** Looks up resource by path relative to given class. */
+inline fun <reified X> resource(path: String) = X::class.java.getResource(path)
