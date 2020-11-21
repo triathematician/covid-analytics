@@ -52,6 +52,9 @@ object Usa {
     /** Census region areas. */
     val censusRegionAreas = censusRegions.values
 
+    /** Region X. */
+    val regionX = UsRegionInfo("X", "WA,OR,CA,NV,AZ,HI,CO,NM,MN,WI,IL,MI,ME,NH,VT,NY,PA,VA,GA,MA,RI,CT,NJ,DE,MD,DC".split(",").map { states[it]!! })
+    val regionY = UsRegionInfo("Y", "AK,ID,MT,WY,UT,ND,SD,NE,KS,OK,TX,IA,MO,AR,LA,IN,OH,KY,WV,TN,MS,AL,NC,SC,FL".split(",").map { states[it]!! })
 
     /** Counties, indexed by FIPS. */
     val counties = JhuAreaData.index.filterValues { validCountyFips(it.fips) }
