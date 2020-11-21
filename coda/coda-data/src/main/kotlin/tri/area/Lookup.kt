@@ -113,34 +113,3 @@ object Lookup {
     //endregion
 
 }
-
-///** Lookup region by FIPS code. */
-//fun fips(fips: Int): AreaInfo? = UnitedStates.fipsToCounty(fips) ?: UnitedStates.countyFipsToCbsaRegion(fips)
-//object PopulationLookup: (String) -> Long? {
-//    fun fips(fips: Int): Long? = JhuAreaData.fips(fips)?.pop
-//
-//    override fun invoke(id: String): Long? {
-//        if (id == GLOBAL) return GLOBAL_POPULATION
-//        val lookupId = alias(id)
-//        MetroData(lookupId)?.let { return it }
-//        CountyData(lookupId)?.let { return it }
-//        CanadaProvinceData(lookupId)?.let { return it }
-//        ChinaData(lookupId)?.let { return it }
-//        AustraliaData(lookupId)?.let { return it }
-//        StateData(lookupId)?.let { return it }
-//        CountryData(lookupId)?.let { return it }
-//        logIfNotFound(lookupId)
-//        return null
-//    }
-//}
-//
-//
-//private val loggedIds = mutableSetOf<String>()
-//private val excludedIds = listOf("Unassigned", "Out-of", "Out of", "Recovered", "Cruise", "Princess", "Evacuee")
-//
-//private fun logIfNotFound(id: String) {
-//    if (excludedIds.none { it in id } && id !in loggedIds) {
-////        println("no pop for $id")
-//        loggedIds += id
-//    }
-//}
