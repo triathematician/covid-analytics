@@ -28,7 +28,8 @@ object Usa {
     val states = JhuAreaData.index.filter { it.key is String && it.value.fips != null && it.value.fips!! < 100 }
             .map { it.key as String to UsStateInfo(it.key as String, it.value.provinceOrState, it.value.fips!!, it.value.population) }
             .toMap()
-
+    /** State area objects. */
+    val stateAreas = states.values.sortedBy { it.id }
     /** List of US state abbreviations. */
     val stateAbbreviations = stateFips.map { it.state_abbr }
     /** List of US state names, e.g. "Ohio". */
@@ -39,9 +40,8 @@ object Usa {
 
     /** FEMA regions, indexed by number. */
     val femaRegions = stateFips.groupBy { it.fema_region }.map { (num, states) -> num to region("Region $num", states) }.toMap()
-
     /** Ordered FEMA regions. */
-    val femaRegionsOrdered = (1..10).map { femaRegions[it]!! }
+    val femaRegionAreas = (1..10).map { femaRegions[it]!! }
 
     /** FEMA regions by state */
     val femaRegionByState = stateFips.map { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }.toMap()
@@ -49,6 +49,9 @@ object Usa {
     /** Census regions and divisions, indexed by name. */
     val censusRegions = stateFips.filter { it.region_name.isNotEmpty() }.groupBy { it.region_name }.map { (name, states) -> name to region(name, states) }.toMap() +
             stateFips.filter { it.division_name.isNotEmpty() }.groupBy { it.division_name }.map { (name, states) -> name to region(name, states) }.toMap()
+    /** Census region areas. */
+    val censusRegionAreas = censusRegions.values
+
 
     /** Counties, indexed by FIPS. */
     val counties = JhuAreaData.index.filterValues { validCountyFips(it.fips) }
@@ -57,6 +60,8 @@ object Usa {
                         ?: error("Invalid state: ${it.value.provinceOrState}"),
                         it.value.fips!!, it.value.population)
             }.toMap()
+    /** County area objects. */
+    val countyAreas = counties.values
 
     /** Unassigned regions, indexed by state. */
     val unassigned = states
@@ -69,6 +74,9 @@ object Usa {
                 info[0] as Int to UsCbsaInfo(info[0] as Int, info[1] as Int, info[2] as String, info[3] as String,
                         mappings.map { counties[it.fipsCombined] ?: error("County FIPS not found: ${it.FIPS_County_Code}") })
             }.toMap()
+    /** CBSA area objects. */
+    val cbsaAreas = cbsas.values
+
     /** CBSAs, indexed by CBSA title. */
     val cbsaByName = cbsas.mapKeys { it.value.cbsaTitle }
 
