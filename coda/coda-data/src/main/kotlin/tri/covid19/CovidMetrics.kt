@@ -2,15 +2,15 @@ package tri.covid19
 
 import tri.timeseries.TimeSeries
 
-const val DEATHS = "Deaths"
-const val CASES = "Confirmed"
-const val RECOVERED = "Recovered"
-const val ACTIVE = "Active"
-const val BEDS = "Beds"
-const val VENTILATORS = "Ventilators"
-const val ICU = "ICU"
-const val TESTS = "Tests"
-const val ADMITS = "Admits"
+const val DEATHS = "deaths"
+const val CASES = "cases"
+const val RECOVERED = "recovered"
+const val ACTIVE = "active"
+const val BEDS = "beds"
+const val VENTILATORS = "vents"
+const val ICU = "icu"
+const val TESTS = "tests"
+const val ADMITS = "admits"
 
 //region FILTER XFs
 
