@@ -279,7 +279,7 @@ fun reduceSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { op(s1[it], s2[it]) }
-    return s1.copy(start = minDate, values = series)
+    return s1.copy(start = minDate, values = series, intSeries = s1.intSeries && s2.intSeries)
 }
 
 //endregion
