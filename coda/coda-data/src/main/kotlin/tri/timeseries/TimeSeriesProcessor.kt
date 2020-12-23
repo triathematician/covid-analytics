@@ -8,20 +8,28 @@ import kotlin.time.measureTimedValue
 /** Tool that supports both reading and processing input data to a normalized format, and storing that data locally so next time it can be more quickly retrieved. */
 abstract class TimeSeriesProcessor {
 
-    fun data(source: String? = null): List<TimeSeries> {
-        val processed = loadProcessed()
-        if (processed.isNotEmpty()) {
-            println("Loaded processed ${processed.size} time series using ${this::class.simpleName}")
-            return processed.bySource(source)
-        }
+    /** Load data by source. */
+    fun data(source: String? = null) = loadProcessedData()?.bySource(source) ?: reloadRawData().bySource(source)
 
+    /** Forces data to be reprocessed from source files. */
+    fun reloadRawData(): List<TimeSeries> {
         val raw = loadRaw()
         if (raw.isNotEmpty()) {
             println("Loaded raw data. Now saving ${raw.size} time series using ${this::class.simpleName}")
             saveProcessed(raw)
-            return raw.bySource(source)
+            return raw
         }
         throw IllegalStateException("Could not find data")
+    }
+
+    /** Loads already processed data, if present. */
+    fun loadProcessedData(): List<TimeSeries>? {
+        val processed = loadProcessed()
+        if (processed.isNotEmpty()) {
+            println("Loaded processed ${processed.size} time series using ${this::class.simpleName}")
+            return processed
+        }
+        return null
     }
 
     /** Load data from original source. */
