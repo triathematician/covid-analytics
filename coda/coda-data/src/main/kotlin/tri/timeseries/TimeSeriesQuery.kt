@@ -1,6 +1,7 @@
 package tri.timeseries
 
 import tri.area.AreaInfo
+import java.time.YearMonth
 
 /** Manages access to a variety of time series, and provides simple query access. */
 open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
@@ -32,12 +33,17 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     /** Query all data based on a generic filter. */
     fun by(filter: (TimeSeries) -> Boolean) = flatData.filter(filter)
 
-    /** Query for daily version of timeseries. */
+    /** Query for daily version of time series. */
     open fun daily(area: AreaInfo, metric: String): TimeSeries? = null
-    /** Query for weekly average version of timeseries. */
+    /** Query for weekly average version of time series. */
     open fun weeklyAverage(area: AreaInfo, metric: String): TimeSeries? = null
-    /** Query for weekly total version of timeseries. */
+    /** Query for weekly total version of time series. */
     open fun weeklyTotal(area: AreaInfo, metric: String): TimeSeries? = null
+
+    /** Query for monthly average value. */
+    open fun monthlyAverage(area: AreaInfo, metric: String, month: YearMonth): Double? = null
+    /** Query for monthly total value. */
+    open fun monthlyTotal(area: AreaInfo, metric: String, month: YearMonth): Double? = null
 
     //endregion
 

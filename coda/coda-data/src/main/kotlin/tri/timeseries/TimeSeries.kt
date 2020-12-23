@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.area.Lookup
 import tri.timeseries.analytics.computeLogisticPrediction
 import tri.util.DateRange
+import tri.util.dateRange
 import tri.util.minus
 import tri.util.rangeTo
 import java.lang.IllegalStateException
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
 /**
@@ -107,6 +109,10 @@ data class TimeSeries(
     fun sum(dates: DateRange) = values(dates).sum()
     /** Compute average over all dates in given range. */
     fun average(dates: DateRange) = values(dates).average()
+    /** Compute sum over all dates in given range. */
+    fun sum(month: YearMonth) = values(month.dateRange).sum()
+    /** Compute average over all dates in given range. */
+    fun average(month: YearMonth) = values(month.dateRange).average()
 
     /** Compute number of days since value was half of its current value. Returns null if current value is not positive. */
     fun daysSinceHalfCurrentValue(): Int? {
