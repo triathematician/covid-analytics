@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>tri.covid19</groupId>
-		<artifactId>coda</artifactId>
-		<version>1.0-SNAPSHOT</version>
+        <groupId>com.googlecode.blaisemath</groupId>
+        <artifactId>coda</artifactId>
+        <version>0.1-SNAPSHOT</version>
 	</parent>
 
     <artifactId>coda-data</artifactId>
