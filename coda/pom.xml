@@ -155,14 +155,11 @@
                 <version>1.20</version>
                 <configuration>
                     <roots>
-                        <root>src/main/java</root>
-                        <root>src/test</root>
+                        <root>src/main/kotlin</root>
+                        <root>src/test/kotlin</root>
                     </roots>
                     <canUpdateCopyright>true</canUpdateCopyright>
                     <sectionDelimiter>--</sectionDelimiter>
-                    <excludes>
-                        <exclude>**/com/google/**</exclude>
-                    </excludes>
                 </configuration>
                 <executions>
                     <execution>
