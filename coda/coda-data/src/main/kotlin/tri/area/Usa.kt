@@ -1,8 +1,30 @@
+/*-
+ * #%L
+ * coda-data
+ * --
+ * Copyright (C) 2020 Elisha Peterson
+ * --
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+*/
 package tri.area
 
 import tri.timeseries.TimeSeries
 import tri.timeseries.sum
 import tri.util.csvResource
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
+import kotlin.time.measureTimedValue
 
 /** Areas and associated data sources for USA. */
 object Usa {
@@ -15,8 +37,10 @@ object Usa {
 
     /** Mapping of US state abbreviations to state names. */
     val statesByAbbreviation = stateFips.map { it.state_abbr to it.state_name }.toMap()
+
     /** Mapping of US state abbreviations from state names. */
     val abbreviationsByState = stateFips.map { it.state_name to it.state_abbr }.toMap()
+
     /** CBSA code by county FIPS */
     val cbsaCodeByCounty = cbsaData.map { it.fipsCombined to it.CBSA_Code }.toMap()
 
@@ -28,10 +52,13 @@ object Usa {
     val states = JhuAreaData.index.filter { it.key is String && it.value.fips != null && it.value.fips!! < 100 }
             .map { it.key as String to UsStateInfo(it.key as String, it.value.provinceOrState, it.value.fips!!, it.value.population) }
             .toMap()
+
     /** State area objects. */
     val stateAreas = states.values.sortedBy { it.id }
+
     /** List of US state abbreviations. */
     val stateAbbreviations = stateFips.map { it.state_abbr }
+
     /** List of US state names, e.g. "Ohio". */
     val stateNames = states.map { it.value.fullName }
 
@@ -40,6 +67,7 @@ object Usa {
 
     /** FEMA regions, indexed by number. */
     val femaRegions = stateFips.groupBy { it.fema_region }.map { (num, states) -> num to region("Region $num", states) }.toMap()
+
     /** Ordered FEMA regions. */
     val femaRegionAreas = (1..10).map { femaRegions[it]!! }
 
@@ -49,6 +77,7 @@ object Usa {
     /** Census regions and divisions, indexed by name. */
     val censusRegions = stateFips.filter { it.region_name.isNotEmpty() }.groupBy { it.region_name }.map { (name, states) -> name to region(name, states) }.toMap() +
             stateFips.filter { it.division_name.isNotEmpty() }.groupBy { it.division_name }.map { (name, states) -> name to region(name, states) }.toMap()
+
     /** Census region areas. */
     val censusRegionAreas = censusRegions.values
 
@@ -63,20 +92,24 @@ object Usa {
                         ?: error("Invalid state: ${it.value.provinceOrState}"),
                         it.value.fips!!, it.value.population)
             }.toMap()
+
     /** County area objects. */
     val countyAreas = counties.values
 
     /** Unassigned regions, indexed by state. */
     val unassigned = states
-            .map { it.value.abbreviation to UsCountyInfo("Unassigned, ${it.value.fullName}, US", it.value, it.value.fips!!*1000, 0L) }
+            .map { it.value.abbreviation to UsCountyInfo("Unassigned, ${it.value.fullName}, US", it.value, it.value.fips!! * 1000, 0L) }
             .toMap()
 
     /** CBSAs, indexed by CBSA Code. */
     val cbsas = cbsaData.groupBy { listOf(it.CBSA_Code, it.CSA_Code, it.CBSA_Title, it.CSA_Title) }
             .map { (info, mappings) ->
                 info[0] as Int to UsCbsaInfo(info[0] as Int, info[1] as Int, info[2] as String, info[3] as String,
-                        mappings.map { counties[it.fipsCombined] ?: error("County FIPS not found: ${it.FIPS_County_Code}") })
+                        mappings.map {
+                            counties[it.fipsCombined] ?: error("County FIPS not found: ${it.FIPS_County_Code}")
+                        })
             }.toMap()
+
     /** CBSA area objects. */
     val cbsaAreas = cbsas.values
 
@@ -89,7 +122,7 @@ object Usa {
 
     /** Get unassigned county b GIPS. */
     fun unassignedCounty(fips: Int): UsCountyInfo? {
-        val stateF = if (fips < 1000) fips else fips/1000
+        val stateF = if (fips < 1000) fips else fips / 1000
         val state = stateFips.firstOrNull { it.fips == stateF }?.state_abbr ?: return null
         return unassigned[state]
     }
@@ -128,7 +161,9 @@ object Usa {
     //region UTILS
 
     internal fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
-    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.map { Usa.states[it.state_abbr] ?: error("State!") })
+    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.map {
+        Usa.states[it.state_abbr] ?: error("State!")
+    })
 
     //endregion
 }
@@ -146,39 +181,20 @@ val List<TimeSeries>.national
 
 /**
  * Adds rollups of series to a list of time series. Does not check that the input data is at the proper level.
- * If cumulative, fills missing future values with the last value;
-/*-
- * #%L
- * coda-data
- * --
- * Copyright (C) 2020 Elisha Peterson
- * --
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
+ * If cumulative, fills missing future values with the last value; otherwise assumes those values are zero.
  */
- otherwise assumes those values are zero.
- */
+@ExperimentalTime
 fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, regional: Boolean = false, censusRegional: Boolean = false, national: Boolean = false): List<TimeSeries> {
     val res = mutableListOf(this)
-    if (cbsa) res += aggregateByCbsa().flatMap { it.value }
-    if (state) res += aggregateByState().flatMap { it.value }
-    if (regional) res += aggregateByRegion().flatMap { it.value }
-    if (censusRegional) {
+    if (cbsa) measureTime { res += aggregateByCbsa().flatMap { it.value } }.also { println("  aggregated $size records to CBSA in $it") }
+    if (state) measureTime { res += aggregateByState().flatMap { it.value } }.also { println("  aggregated $size records to State in $it") }
+    if (regional) measureTime { res += aggregateByRegion().flatMap { it.value } }.also { println("  aggregated $size records to Region in $it") }
+    if (censusRegional) measureTime {
         res += aggregateByCensusRegion().flatMap { it.value }
         res += aggregateByCensusDivision().flatMap { it.value }
         res += aggregateByRegionXY().flatMap { it.value }
-    }
-    if (national) res += aggregateToNational()
+    }.also { println("  aggregated $size records to Census Regional in $it") }
+    if (national) measureTime { res += aggregateToNational() }.also { println("  aggregated $size records to National in $it") }
     return res.flatten()
 }
 
@@ -224,14 +240,14 @@ fun List<TimeSeries>.aggregateByCensusDivision(): Map<String, List<TimeSeries>> 
     }.mapNotNull { it.value }.groupBy { (it.area as UsRegionInfo).id }
 }
 
-private fun femaRegionOf(area: AreaInfo) = when(area) {
+private fun femaRegionOf(area: AreaInfo) = when (area) {
     is UsCountyInfo -> area.state.femaRegion
     is UsCbsaInfo -> area.regions[0]
     is UsStateInfo -> area.femaRegion
     else -> throw UnsupportedOperationException()
 }
 
-private fun stateOf(area: AreaInfo) = when(area) {
+private fun stateOf(area: AreaInfo) = when (area) {
     is UsCountyInfo -> area.state
     is UsCbsaInfo -> area.states[0]
     is UsStateInfo -> area
