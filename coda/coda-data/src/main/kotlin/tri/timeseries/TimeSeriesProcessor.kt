@@ -19,6 +19,7 @@
  */
 package tri.timeseries
 
+import tri.util.ansiYellow
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.charset.Charset
@@ -35,7 +36,7 @@ abstract class TimeSeriesProcessor {
     fun reloadRawData(): List<TimeSeries> {
         val raw = loadRaw()
         if (raw.isNotEmpty()) {
-            println("Loaded raw data. Now saving ${raw.size} time series using ${this::class.simpleName}")
+            processingNote("Loaded raw data. Now saving ${raw.size} time series using ${this::class.simpleName}")
             saveProcessed(raw)
             return raw
         }
@@ -46,7 +47,7 @@ abstract class TimeSeriesProcessor {
     fun loadProcessedData(): List<TimeSeries>? {
         val processed = loadProcessed()
         if (processed.isNotEmpty()) {
-            println("Loaded processed ${processed.size} time series using ${this::class.simpleName}")
+            processingNote("Loaded processed ${processed.size} time series using ${this::class.simpleName}")
             return processed
         }
         return null
@@ -70,10 +71,10 @@ abstract class TimeSeriesProcessor {
 abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val processed: () -> File): TimeSeriesProcessor() {
     override fun loadRaw() = process(rawSources().flatMap { file ->
         measureTimedValue {
-            println("Loading data from $file...")
+            processingNote("Loading data from $file...")
             inprocess(file)
         }.let {
-            println("Loaded ${it.value.size} rows in ${it.duration} from $file")
+            processingNote("Loaded ${it.value.size} rows in ${it.duration} from $file")
             it.value
         }
     })
@@ -84,11 +85,11 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
         return if (file.exists()) {
             measureTimedValue {
                 if (Charset.defaultCharset() != Charsets.UTF_8) {
-                    println("Default charset is ${Charset.defaultCharset()}; loading files with UTF-8 instead.")
+                    processingNote("Default charset is ${Charset.defaultCharset()}; loading files with UTF-8 instead.")
                 }
                 TimeSeriesFileFormat.readSeries(file, Charsets.UTF_8)
             }.let {
-                println("Loaded ${it.value.size} processed time series in ${it.duration} from $file")
+                processingNote("Loaded ${it.value.size} processed time series in ${it.duration} from $file")
                 it.value
             }
         } else {
@@ -102,3 +103,5 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
 
     abstract fun inprocess(file: File): List<TimeSeries>
 }
+
+private fun processingNote(text: String) = println("${ansiYellow("DATA")} $text")
