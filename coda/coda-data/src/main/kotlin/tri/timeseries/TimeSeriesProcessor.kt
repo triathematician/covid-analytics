@@ -21,6 +21,7 @@ package tri.timeseries
 
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.charset.Charset
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
@@ -69,6 +70,7 @@ abstract class TimeSeriesProcessor {
 abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val processed: () -> File): TimeSeriesProcessor() {
     override fun loadRaw() = process(rawSources().flatMap { file ->
         measureTimedValue {
+            println("Loading data from $file...")
             inprocess(file)
         }.let {
             println("Loaded ${it.value.size} rows in ${it.duration} from $file")
@@ -81,7 +83,10 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
         val timestamp = if (file.exists()) file.lastModified() else null
         return if (file.exists()) {
             measureTimedValue {
-                TimeSeriesFileFormat.readSeries(file)
+                if (Charset.defaultCharset() != Charsets.UTF_8) {
+                    println("Default charset is ${Charset.defaultCharset()}; loading files with UTF-8 instead.")
+                }
+                TimeSeriesFileFormat.readSeries(file, Charsets.UTF_8)
             }.let {
                 println("Loaded ${it.value.size} processed time series in ${it.duration} from $file")
                 it.value
@@ -91,7 +96,7 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
         }
     }
 
-    override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, FileOutputStream(processed()))
+    override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, FileOutputStream(processed()), Charsets.UTF_8)
 
     open fun process(series: List<TimeSeries>) = series.regroupAndMerge(coerceIncreasing = false)
 

@@ -5,10 +5,11 @@
     <parent>
         <groupId>com.googlecode.blaisemath</groupId>
         <artifactId>coda</artifactId>
-        <version>0.1</version>
+        <version>0.1.1-SNAPSHOT</version>
 	</parent>
 
     <artifactId>coda-data</artifactId>
+    <name>${artifactId}-${version}</name>
 
     <dependencies>
         <dependency>

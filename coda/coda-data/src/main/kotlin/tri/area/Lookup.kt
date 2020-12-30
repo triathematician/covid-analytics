@@ -97,7 +97,6 @@ object Lookup {
         val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
         val areaInfo = if (jhuArea?.fips != null) Usa.counties[jhuArea.fips] else jhuArea?.toAreaInfo()
         return if (areaInfo == null) {
-            println(Charset.defaultCharset())
             warning<Lookup>("Area not found: $name")
             warning<Lookup>(name.map { it.toInt() }.toString())
             notFound[name] = UNKNOWN

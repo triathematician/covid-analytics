@@ -23,15 +23,16 @@ import tri.util.toLocalDate
 import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream
+import java.nio.charset.Charset
 
 /** Writes to/from files, with one series per row, similar to a CSV format. */
 object TimeSeriesFileFormat {
 
     /** Reads several series from a file. */
-    fun readSeries(file: File) = file.readLines().map { readSeries(it) }
+    fun readSeries(file: File, charset: Charset) = file.readLines(charset).map { readSeries(it) }
 
     /** Writes several series to the writer. */
-    fun writeSeries(m: List<TimeSeries>, out: OutputStream) = PrintStream(out).use { ps -> m.forEach { writeSeries(it, ps) } }
+    fun writeSeries(m: List<TimeSeries>, out: OutputStream, charset: Charset) = PrintStream(out, false, charset).use { ps -> m.forEach { writeSeries(it, ps) } }
 
     /** Writes a single series to the writer. */
     fun writeSeries(m: TimeSeries, out: PrintStream) {

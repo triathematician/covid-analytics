@@ -252,7 +252,7 @@ fun Collection<TimeSeries>.byArea() = map { it.area to it }.toMap()
 fun Collection<TimeSeries>.byAreaId() = map { it.areaId to it }.toMap()
 
 /** Group by area. */
-fun Collection<TimeSeries>.groupByArea() = groupBy { it.area }
+fun Collection<TimeSeries>.groupByArea() = filter { Lookup.areaOrNull(it.areaId) != null }.groupBy { it.area }
 /** Group by area id. */
 fun Collection<TimeSeries>.groupByAreaId() = groupBy { it.areaId }
 

@@ -48,7 +48,7 @@ object CovidForecasts {
 
     private fun fileForecasts(file: File): List<Forecast> {
         val model = file.nameWithoutExtension.substringBefore("-").toUpperCase()
-        return TimeSeriesFileFormat.readSeries(file).groupBy {
+        return TimeSeriesFileFormat.readSeries(file, Charsets.UTF_8).groupBy {
             // TODO - doesn't handle different forecast dates
             ForecastId(model, LocalDate.now(), it.areaId, it.metric)
         }.map { Forecast(it.key, it.value) }
