@@ -1,13 +1,34 @@
+/*-
+ * #%L
+ * coda-data
+ * --
+ * Copyright (C) 2020 Elisha Peterson
+ * --
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package tri.timeseries
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.area.Lookup
 import tri.timeseries.analytics.computeLogisticPrediction
 import tri.util.DateRange
+import tri.util.dateRange
 import tri.util.minus
 import tri.util.rangeTo
 import java.lang.IllegalStateException
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
 /**
@@ -107,6 +128,10 @@ data class TimeSeries(
     fun sum(dates: DateRange) = values(dates).sum()
     /** Compute average over all dates in given range. */
     fun average(dates: DateRange) = values(dates).average()
+    /** Compute sum over all dates in given range. */
+    fun sum(month: YearMonth) = values(month.dateRange).sum()
+    /** Compute average over all dates in given range. */
+    fun average(month: YearMonth) = values(month.dateRange).average()
 
     /** Compute number of days since value was half of its current value. Returns null if current value is not positive. */
     fun daysSinceHalfCurrentValue(): Int? {
@@ -227,7 +252,7 @@ fun Collection<TimeSeries>.byArea() = map { it.area to it }.toMap()
 fun Collection<TimeSeries>.byAreaId() = map { it.areaId to it }.toMap()
 
 /** Group by area. */
-fun Collection<TimeSeries>.groupByArea() = groupBy { it.area }
+fun Collection<TimeSeries>.groupByArea() = filter { Lookup.areaOrNull(it.areaId) != null }.groupBy { it.area }
 /** Group by area id. */
 fun Collection<TimeSeries>.groupByAreaId() = groupBy { it.areaId }
 
@@ -279,7 +304,7 @@ fun reduceSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { op(s1[it], s2[it]) }
-    return s1.copy(start = minDate, values = series)
+    return s1.copy(start = minDate, values = series, intSeries = s1.intSeries && s2.intSeries)
 }
 
 //endregion

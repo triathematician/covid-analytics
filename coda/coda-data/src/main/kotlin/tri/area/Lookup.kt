@@ -1,3 +1,22 @@
+/*-
+ * #%L
+ * coda-data
+ * --
+ * Copyright (C) 2020 Elisha Peterson
+ * --
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package tri.area
 
 import tri.util.csvResource
@@ -26,6 +45,12 @@ object Lookup {
         Usa.femaRegions.forEach { (num, area) ->
             this[area.id] = area
         }
+        // prepopulate with Census regions
+        Usa.censusRegions.forEach { (num, area) ->
+            this[area.id] = area
+        }
+        this["X"] = Usa.regionX
+        this["Y"] = Usa.regionY
         // prepopulate with county FIPS and combined id, e.g. "Cook, Illinois, US"
         Usa.counties.forEach {
             this[it.key.toString()] = it.value
@@ -72,7 +97,6 @@ object Lookup {
         val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
         val areaInfo = if (jhuArea?.fips != null) Usa.counties[jhuArea.fips] else jhuArea?.toAreaInfo()
         return if (areaInfo == null) {
-            println(Charset.defaultCharset())
             warning<Lookup>("Area not found: $name")
             warning<Lookup>(name.map { it.toInt() }.toString())
             notFound[name] = UNKNOWN
@@ -107,34 +131,3 @@ object Lookup {
     //endregion
 
 }
-
-///** Lookup region by FIPS code. */
-//fun fips(fips: Int): AreaInfo? = UnitedStates.fipsToCounty(fips) ?: UnitedStates.countyFipsToCbsaRegion(fips)
-//object PopulationLookup: (String) -> Long? {
-//    fun fips(fips: Int): Long? = JhuAreaData.fips(fips)?.pop
-//
-//    override fun invoke(id: String): Long? {
-//        if (id == GLOBAL) return GLOBAL_POPULATION
-//        val lookupId = alias(id)
-//        MetroData(lookupId)?.let { return it }
-//        CountyData(lookupId)?.let { return it }
-//        CanadaProvinceData(lookupId)?.let { return it }
-//        ChinaData(lookupId)?.let { return it }
-//        AustraliaData(lookupId)?.let { return it }
-//        StateData(lookupId)?.let { return it }
-//        CountryData(lookupId)?.let { return it }
-//        logIfNotFound(lookupId)
-//        return null
-//    }
-//}
-//
-//
-//private val loggedIds = mutableSetOf<String>()
-//private val excludedIds = listOf("Unassigned", "Out-of", "Out of", "Recovered", "Cruise", "Princess", "Evacuee")
-//
-//private fun logIfNotFound(id: String) {
-//    if (excludedIds.none { it in id } && id !in loggedIds) {
-////        println("no pop for $id")
-//        loggedIds += id
-//    }
-//}

@@ -1,3 +1,22 @@
+/*-
+ * #%L
+ * coda-data
+ * --
+ * Copyright (C) 2020 Elisha Peterson
+ * --
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package tri.timeseries
 
 import kotlin.math.log2
@@ -5,7 +24,7 @@ import kotlin.math.max
 
 /** Sliding window of at least n entries. Results in (size-n+1) entries. */
 fun List<Double>.slidingWindow(n: Int, includePartialList: Boolean = false) = when {
-    includePartialList -> (n..size).map { subList(it - n, it) }
+    !includePartialList -> (n..size).map { subList(it - n, it) }
     else -> indices.map { subList(max(0, it - n + 1), it + 1) }
 }
 
@@ -42,9 +61,19 @@ fun List<Double>.doublingTimes(sinceDaysAgo: Int = 0) = growthRates(sinceDaysAgo
 }
 
 /** Compute average over n entries. The first n-1 entries have partial averages if [includePartialList] is true. */
-fun List<Double>.movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map {
+fun List<Double>.movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = false) = slidingWindow(bucket, includePartialList).map {
     if (!nonZero) it.average() else it.filter { it != 0.0 }.average()
 }
 /** Compute sum over n entries. The first n-1 entries have partial sums if [includePartialList] is true. */
-fun List<Double>.movingSum(bucket: Int, includePartialList: Boolean = true) = slidingWindow(bucket, includePartialList).map { it.sum() }
+fun List<Double>.movingSum(bucket: Int, includePartialList: Boolean = false) = slidingWindow(bucket, includePartialList).map { it.sum() }
+/** Ratio of n days (top) over m days (bottom). */
+fun List<Double>.growthRatio(topBucket: Int, bottomBucket: Int): List<Double> {
+    val top = movingSum(topBucket, false)
+    val bottom = movingSum(bottomBucket, false)
+    val size = minOf(top.size, bottom.size)
+    val topLast = top.takeLast(size)
+    val bottomLast = bottom.takeLast(size)
+    val res = topLast.mapIndexed { i, v -> v / bottomLast[i] }
+    return res
+}
 
