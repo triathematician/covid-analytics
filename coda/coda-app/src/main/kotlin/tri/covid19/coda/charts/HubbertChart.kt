@@ -2,7 +2,7 @@
  * #%L
  * coda-app
  * --
- * Copyright (C) 2020 Elisha Peterson
+ * Copyright (C) 2020 - 2021 Elisha Peterson
  * --
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

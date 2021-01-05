@@ -33,7 +33,7 @@ enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Num
  * #%L
  * coda-data
  * --
- * Copyright (C) 2020 Elisha Peterson
+ * Copyright (C) 2020 - 2021 Elisha Peterson
  * --
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
