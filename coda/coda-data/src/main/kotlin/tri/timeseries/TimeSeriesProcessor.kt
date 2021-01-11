@@ -104,4 +104,4 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
     abstract fun inprocess(file: File): List<TimeSeries>
 }
 
-private fun processingNote(text: String) = println("${ansiYellow("DATA")} $text")
+private fun processingNote(text: String) = println("[${ansiYellow("DATA")}] $text")
