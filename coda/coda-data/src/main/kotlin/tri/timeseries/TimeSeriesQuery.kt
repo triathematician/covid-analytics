@@ -29,7 +29,7 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     /** Load all data into memory, grouped by area. */
     val data by lazy { sources.flatMap { it.data() }.groupByArea() }
     /** Flat version of all data. */
-    val flatData = data.flatMap { it.value }
+    val flatData by lazy { data.flatMap { it.value } }
     /** List of all areas in the data. */
     val areas by lazy { data.keys }
 
