@@ -22,9 +22,9 @@ package tri.util
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.*
 import java.lang.UnsupportedOperationException
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.net.URL
 import java.nio.charset.Charset
 import kotlin.reflect.KClass
