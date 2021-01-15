@@ -33,9 +33,9 @@ const val ANSI_PURPLE = "\u001B[35m"
 const val ANSI_CYAN = "\u001B[36m"
 const val ANSI_WHITE = "\u001B[37m"
 
-fun ansiYellow(text: String) = "[$ANSI_YELLOW$text$ANSI_RESET]"
-fun ansiCyan(text: String) = "[$ANSI_CYAN$text$ANSI_RESET]"
-fun ansiGreen(text: String) = "[$ANSI_GREEN$text$ANSI_RESET]"
+fun ansiYellow(text: String) = "$ANSI_YELLOW$text$ANSI_RESET"
+fun ansiCyan(text: String) = "$ANSI_CYAN$text$ANSI_RESET"
+fun ansiGreen(text: String) = "$ANSI_GREEN$text$ANSI_RESET"
 
 /** Logs first line of file to target output. */
 fun File.logFirstLine(ps: PrintStream = System.out, prefix: String = "") = useLines { it.first().log(ps, prefix) }

@@ -24,6 +24,7 @@ import kotlin.time.ExperimentalTime
 
 /** Data sources made available for query by this package. */
 @ExperimentalTime
-object LocalCovidDataQuery : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlForecasts, YygForecasts) {
+object LocalCovidDataQuery : TimeSeriesQuery(JhuDailyReports) {
+//object LocalCovidDataQuery : TimeSeriesQuery(JhuDailyReports, IhmeForecasts, LanlForecasts, YygForecasts) {
 
 }
