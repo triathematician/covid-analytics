@@ -43,15 +43,17 @@ object JhuDailyReports : TimeSeriesFileProcessor(
         { LocalCovidData.jhuCsseDailyData { it.extension == "csv" } },
         { LocalCovidData.jhuCsseProcessedData }) {
 
+    private val MAR1 = LocalDate.of(2020, 3, 1)
+    private val MAR21 = LocalDate.of(2020, 3, 21)
+
     override fun inprocess(file: File): List<TimeSeries> {
-        println("Reading $file")
         val name = file.url.path.substringAfterLast("/")
         val date = name.substringBeforeLast(".").toLocalDate(M_D_YYYY)
 
         val lineReader: (Map<String, String>) -> DailyReportRow = when {
-            name < "03-01-2020.csv" -> { m -> m.read1() }
-            name >= "03-01-2020.csv" && name <= "03-21-2020.csv" -> { m -> m.read2() }
-            name > "03-21-2020.csv" -> { m -> m.read3() }
+            date < MAR1 -> { m -> m.read1() }
+            date >= MAR1 && date <= MAR21 -> { m -> m.read2() }
+            date > MAR21 -> { m -> m.read3() }
             else -> throw IllegalStateException()
         }
 
@@ -67,7 +69,7 @@ object JhuDailyReports : TimeSeriesFileProcessor(
 
         return rows.flatMap { row ->
             val areaId = row.areaId
-            Lookup.areaOrNull(areaId)!!
+            Lookup.areaOrNull(areaId) ?: throw IllegalArgumentException("Unknown area: $areaId")
             listOfNotNull(TimeSeries(JHU_CSSE, areaId, CASES, "", 0, row.Last_Update, row.Confirmed),
                     TimeSeries(JHU_CSSE, areaId, DEATHS, "", 0, row.Last_Update, row.Deaths)
 //                    intTimeSeries(areaId, RECOVERED, row.Last_Update, row.Recovered)

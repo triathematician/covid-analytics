@@ -64,7 +64,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
     val selectedRegionType = SimpleStringProperty(regionTypes[1]).apply { addListener { _ -> onChange() } }
     val includeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
     val excludeRegionActive = SimpleBooleanProperty(false).apply { addListener { _ -> onChange() } }
-    val parentRegion = SimpleStringProperty("USA").apply { addListener { _ -> onChange() } }
+    val parentRegion = SimpleStringProperty("United States").apply { addListener { _ -> onChange() } }
     val includeRegion = SimpleStringProperty("").apply { addListener { _ -> if (includeRegionActive.get()) onChange() } }
     val excludeRegion = SimpleStringProperty("").apply { addListener { _ -> if (excludeRegionActive.get()) onChange() } }
 
@@ -122,7 +122,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
-                    .filter { parentRegion.value == null || it.area.parent == Lookup.area(parentRegion.value) }
+                    .filter { parentRegion.value.isNullOrEmpty() || it.area.parent == Lookup.area(parentRegion.value) }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
                     .filter { it.area.population.let { it == null || it in minPopulation..maxPopulation } }
                     .filter { exclude(it.areaId) }
