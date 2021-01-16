@@ -27,6 +27,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/** Provides a common basic object mapper, with support for Kotlin and local dates. */
 object DefaultMapper: ObjectMapper() {
 
     init {
