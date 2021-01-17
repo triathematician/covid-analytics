@@ -25,8 +25,8 @@ import java.time.LocalDate
 
 /** A named set of (x,y) data points. */
 data class ChartDataSeries(var id: String, var points: DataPoints) {
-    fun maxX() = points.map { it.first.toDouble() }.max()
-    fun maxY() = points.map { it.second.toDouble() }.max()
+    fun maxX() = points.map { it.first.toDouble() }.maxOrNull()
+    fun maxY() = points.map { it.second.toDouble() }.maxOrNull()
 }
 
 /** Construct series from time series, using indices of metric's domain for x values. */

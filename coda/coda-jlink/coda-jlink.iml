@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="AutoImportedSourceRoots">
+    <option name="directories">
+      <list>
+        <option value="C:\data\covid\covid-analytics\coda\coda-jlink/src/main/java" />
+        <option value="C:\data\covid\covid-analytics\coda\coda-jlink/src/main/kotlin" />
+      </list>
+    </option>
+  </component>
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="3" platform="JVM 11" allPlatforms="JVM [11]" useProjectSettings="false">

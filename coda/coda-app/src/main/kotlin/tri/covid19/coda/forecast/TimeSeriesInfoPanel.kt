@@ -124,8 +124,8 @@ class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View(
 
     private fun ExtremaSummary.textInfo(): List<Text> {
         val extremaValues = extrema.values.toList()
-        val globalMin = extremaValues.map { it.value }.min()!!
-        val globalMax = extremaValues.map { it.value }.max()!!
+        val globalMin = extremaValues.map { it.value }.minOrNull()!!
+        val globalMax = extremaValues.map { it.value }.maxOrNull()!!
         return extremaValues.mapIndexed { i, cur -> cur.text(extremaValues.getOrNull(i - 1), globalMin, globalMax, i == extremaValues.size - 1) }
                 .flatMap { it + Text(System.lineSeparator()) }
     }

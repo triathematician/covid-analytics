@@ -120,7 +120,7 @@ data class TimeSeries(
     /** Get date of peak and value. */
     fun peak(since: LocalDate? = null): Pair<LocalDate, Double> = domain.map { it to get(it) }
             .filter { since == null || !it.first.isBefore(since) }
-            .maxBy { it.second }!!
+            .maxByOrNull { it.second }!!
 
     /** Get values for the given range of dates. */
     fun values(dates: DateRange) = dates.map { get(it) }
@@ -261,11 +261,11 @@ fun Collection<TimeSeries>.deltas() = map { it.deltas() }
 
 /** First date with a positive number of values for any of the given series. */
 val Collection<TimeSeries>.firstPositiveDate
-    get() = map { it.firstPositiveDate }.min()
+    get() = map { it.firstPositiveDate }.minOrNull()
 
 /** Last date for any of the given series. */
 val Collection<TimeSeries>.lastDate
-    get() = map { it.end }.max()
+    get() = map { it.end }.maxOrNull()
 
 /** Last date for any of the given series. */
 val Collection<TimeSeries>.dateRange

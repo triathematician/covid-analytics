@@ -117,7 +117,7 @@ class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, va
         hubbertChart.lineWidth = lineChartWidthForCount(series.size)
 
         if (hubbertPanelModel.showPeakCurve.get()) {
-            val max = series.mapNotNull { it.points.map { it.first.toDouble() }.max() }.max()
+            val max = series.mapNotNull { it.points.map { it.first.toDouble() }.maxOrNull() }.maxOrNull()
             if (max != null) {
                 val peak = hubbertPanelModel.peakValue
                 val label = hubbertPanelModel.peakLabel
