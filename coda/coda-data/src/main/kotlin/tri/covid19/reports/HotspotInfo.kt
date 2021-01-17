@@ -94,17 +94,17 @@ data class HotspotInfo(var areaId: String, var metric: String, var start: LocalD
         get() = dailyChange28 divideOrNull perCapitaPop
 
     val peak7
-        get() = values.deltas().movingAverage(7).max()?.times(7) ?: 0.0
+        get() = values.deltas().movingAverage(7).maxOrNull()?.times(7) ?: 0.0
     val peak7PerCapita
         get() = peak7 divideOrNull perCapitaPop
     val peak7Date
-        get() = values.deltas().movingAverage(7).withIndex().maxBy { it.value }?.index?.let { start.plusDays(it + 7L) }
+        get() = values.deltas().movingAverage(7).withIndex().maxByOrNull { it.value }?.index?.let { start.plusDays(it + 7L) }
     val peak14
-        get() = values.deltas().movingAverage(14).max()?.times(14) ?: 0.0
+        get() = values.deltas().movingAverage(14).maxOrNull()?.times(14) ?: 0.0
     val peak14PerCapita
         get() = peak14 divideOrNull perCapitaPop
     val peak14Date
-        get() = values.deltas().movingAverage(14).withIndex().maxBy { it.value }?.index?.let { start.plusDays(it + 7L) }
+        get() = values.deltas().movingAverage(14).withIndex().maxByOrNull { it.value }?.index?.let { start.plusDays(it + 7L) }
 
     val regionId
         get() = area.id

@@ -42,11 +42,11 @@ object Lookup {
             this["${state.fullName}, US"] = state
         }
         // prepopulate with FEMA/HHS regions
-        Usa.femaRegions.forEach { (num, area) ->
+        Usa.femaRegions.forEach { (_, area) ->
             this[area.id] = area
         }
         // prepopulate with Census regions
-        Usa.censusRegions.forEach { (num, area) ->
+        Usa.censusRegions.forEach { (_, area) ->
             this[area.id] = area
         }
         this["X"] = Usa.regionX

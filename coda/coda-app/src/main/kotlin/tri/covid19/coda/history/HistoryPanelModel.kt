@@ -143,8 +143,8 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
             TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
             TimeSeriesSort.POPULATION -> area.population?.toDouble() ?: 0.0
-            TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).max() ?: 0.0
-            TimeSeriesSort.PEAK14 -> values.deltas().movingAverage(14).max() ?: 0.0
+            TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).maxOrNull() ?: 0.0
+            TimeSeriesSort.PEAK14 -> values.deltas().movingAverage(14).maxOrNull() ?: 0.0
         }
 
     internal fun data() = when (selectedRegionType.get()) {

@@ -40,8 +40,8 @@ open class LineChartOnFirstSeries(xAxis: Axis<Number>, yAxis: Axis<Number>, val 
         if (xData != null || yData != null) {
             val maxX0 = data.getOrNull(0)?.maxX()
             val maxY0 = data.getOrNull(0)?.maxY()
-            val maxX = data.mapNotNull { it.maxX() }.max()
-            val maxY = data.mapNotNull { it.maxY() }.max()
+            val maxX = data.mapNotNull { it.maxX() }.maxOrNull()
+            val maxY = data.mapNotNull { it.maxY() }.maxOrNull()
             val xm = if (maxX0 == null || maxX == null) 1.0 else if (maxX >= maxMultiplier * maxX0) maxMultiplier else maxX/maxX0
             val ym = if (maxY0 == null || maxY == null) 1.0 else if (maxY >= maxMultiplier * maxY0) maxMultiplier else maxY/maxY0
             data.firstOrNull()?.let {
@@ -57,6 +57,6 @@ open class LineChartOnFirstSeries(xAxis: Axis<Number>, yAxis: Axis<Number>, val 
         }
     }
 
-    private fun Series<Number, Number>.maxX() = data.map { it.xValue.toDouble() }.max()
-    private fun Series<Number, Number>.maxY() = data.map { it.yValue.toDouble() }.max()
+    private fun Series<Number, Number>.maxX() = data.map { it.xValue.toDouble() }.maxOrNull()
+    private fun Series<Number, Number>.maxY() = data.map { it.yValue.toDouble() }.maxOrNull()
 }

@@ -33,8 +33,8 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
 
     fun invoke(series: TimeSeries): ExtremaSummary {
         val values = series.values.convolve()
-        val largest = values.max()
-        val smallest = values.min()
+        val largest = values.maxOrNull()
+        val smallest = values.minOrNull()
         if (smallest == largest) {
             return ExtremaSummary(series).apply {
                 extrema[series.start] = ExtremeInfo(series.metric, series.start, series[series.start], ExtremeType.ENDPOINT, null)
@@ -77,8 +77,8 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
     fun findMaxs(series: List<Double>, win: Int) = series.indices.filter { t -> series.window(t - win, t + win).all { it <= series[t] } }
 
     private fun <X> List<X>.window(min: Int, max: Int) = subList(maxOf(min, 0), minOf(max + 1, size))
-    private fun <X : Comparable<X>> List<X>.argmin(min: Int, max: Int) = (min..max).minBy { get(it) }
-    private fun <X : Comparable<X>> List<X>.argmax(min: Int, max: Int) = (min..max).maxBy { get(it) }
+    private fun <X : Comparable<X>> List<X>.argmin(min: Int, max: Int) = (min..max).minByOrNull { it: Int -> get(it) }
+    private fun <X : Comparable<X>> List<X>.argmax(min: Int, max: Int) = (min..max).maxByOrNull { it: Int -> get(it) }
     private fun List<Double>.convolve() = indices.map { i ->
         (-10..10).sumByDouble { getOrElse(i + it) { 0.0 } * convolveFun(it) }
     }

@@ -20,7 +20,6 @@
 package tri.area
 
 import org.junit.Test
-import java.nio.charset.Charset
 
 class LookupTest {
 

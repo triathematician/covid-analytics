@@ -22,9 +22,7 @@ package tri.timeseries.analytics
 import org.junit.Test
 import tri.area.AreaType
 import tri.area.USA
-import tri.covid19.data.LocalCovidData
 import tri.covid19.data.LocalCovidDataQuery
-import java.nio.charset.Charset
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
