@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.data
+package tri.covid19.coda.data
 
 import tri.timeseries.TimeSeriesQuery
 import kotlin.time.ExperimentalTime

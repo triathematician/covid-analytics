@@ -17,11 +17,11 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.data
+package tri.covid19.coda.data
 
 import tri.covid19.*
-import tri.covid19.data.LocalCovidData.extractMetrics
-import tri.covid19.data.LocalCovidData.forecasts
+import tri.covid19.coda.data.LocalCovidData.extractMetrics
+import tri.covid19.coda.data.LocalCovidData.forecasts
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
