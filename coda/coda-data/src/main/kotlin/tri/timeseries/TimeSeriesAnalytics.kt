@@ -29,7 +29,7 @@ fun List<Double>.slidingWindow(n: Int, includePartialList: Boolean = false) = wh
 }
 
 /** Compute diffs between entries. */
-fun List<Double>.deltas() = (1 until size).map { get(it) - get(it - 1) }
+fun List<Double>.deltas() = (0 until size).map { get(it) - getOrElse(it - 1) { 0.0 } }
 
 /** Construct partial sums of values. */
 fun List<Double>.partialSums(): List<Double> {
