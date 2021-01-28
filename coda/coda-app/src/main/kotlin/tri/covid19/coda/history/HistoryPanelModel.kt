@@ -205,7 +205,7 @@ enum class TimeSeriesSort {
 /** Creates Hubbert series from monotonic metric. */
 fun TimeSeries.hubbertSeries(window: Int): Pair<TimeSeries, TimeSeries> {
     val totals = movingAverage(window).restrictNumberOfStartingZerosTo(0)
-    val growths = totals.growthPercentages()
+    val growths = totals.symmetricGrowth()
     return totals to growths
 }
 

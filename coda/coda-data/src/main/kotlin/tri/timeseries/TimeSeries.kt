@@ -35,33 +35,58 @@ import java.time.temporal.ChronoUnit
  * Time series of a single metric. Stores values as doubles, but will report them as [Int]s if a flag is set.
  */
 data class TimeSeries(
-        /** Source for the time series. */
-        var source: String,
-        /** ID of the area for this time series. */
-        var areaId: String,
-        /** Metric reported in this time series. */
-        var metric: String,
-        /** Qualifier for this time series, e.g. for breakdowns by age/demographics. */
-        var qualifier: String = "",
-        /** If true, values are reported/serialized as integers. */
-        var intSeries: Boolean = false,
-        /** Default value, when none is stored for a given date. */
-        val defValue: Double = 0.0,
-        /** First date with data for this series. */
-        var start: LocalDate = LocalDate.now(),
-        /** List of values for this series. */
-        val values: List<Double> = listOf()) {
+    /** Source for the time series. */
+    var source: String,
+    /** ID of the area for this time series. */
+    var areaId: String,
+    /** Metric reported in this time series. */
+    var metric: String,
+    /** Qualifier for this time series, e.g. for breakdowns by age/demographics. */
+    var qualifier: String = "",
+    /** If true, values are reported/serialized as integers. */
+    var intSeries: Boolean = false,
+    /** Default value, when none is stored for a given date. */
+    val defValue: Double = 0.0,
+    /** First date with data for this series. */
+    var start: LocalDate = LocalDate.now(),
+    /** List of values for this series. */
+    val values: List<Double> = listOf()
+) {
 
     /** Construct with explicit floating-point values. */
-    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, start: LocalDate, vararg values: Double)
+    constructor(
+        source: String,
+        areaId: String,
+        metric: String,
+        qualifier: String = "",
+        defValue: Double = 0.0,
+        start: LocalDate,
+        vararg values: Double
+    )
             : this(source, areaId, metric, qualifier, false, defValue, start, values.toList())
 
     /** Construct with a set of integer values. */
-    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, values: List<Int>)
+    constructor(
+        source: String,
+        areaId: String,
+        metric: String,
+        qualifier: String = "",
+        defValue: Int = 0,
+        start: LocalDate,
+        values: List<Int>
+    )
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     /** Construct with a set of integer values. */
-    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, vararg values: Int)
+    constructor(
+        source: String,
+        areaId: String,
+        metric: String,
+        qualifier: String = "",
+        defValue: Int = 0,
+        start: LocalDate,
+        vararg values: Int
+    )
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     val uniqueMetricKey = listOf(source, areaId, metric, qualifier).joinToString("::")
@@ -74,6 +99,7 @@ data class TimeSeries(
     @get:JsonIgnore
     val size: Int
         get() = values.size
+
     @get:JsonIgnore
     val lastValue: Double
         get() = values.lastOrNull() ?: 0.0
@@ -81,9 +107,11 @@ data class TimeSeries(
     @get:JsonIgnore
     val firstPositiveDate: LocalDate
         get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
+
     @get:JsonIgnore
     val end: LocalDate
         get() = date(values.size - 1)
+
     @get:JsonIgnore
     val domain: DateRange
         get() = DateRange(firstPositiveDate, end)
@@ -97,11 +125,13 @@ data class TimeSeries(
 
     /** Get value on given date. */
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
+
     /** Get value on given date, or null if argument is outside range. */
     fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
 
     /** Get date by index. */
     fun date(i: Int) = start.plusDays(i.toLong())
+
     /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
 
@@ -119,17 +149,21 @@ data class TimeSeries(
 
     /** Get date of peak and value. */
     fun peak(since: LocalDate? = null): Pair<LocalDate, Double> = domain.map { it to get(it) }
-            .filter { since == null || !it.first.isBefore(since) }
-            .maxByOrNull { it.second }!!
+        .filter { since == null || !it.first.isBefore(since) }
+        .maxByOrNull { it.second }!!
 
     /** Get values for the given range of dates. */
     fun values(dates: DateRange) = dates.map { get(it) }
+
     /** Compute sum over all dates in given range. */
     fun sum(dates: DateRange) = values(dates).sum()
+
     /** Compute average over all dates in given range. */
     fun average(dates: DateRange) = values(dates).average()
+
     /** Compute sum over all dates in given range. */
     fun sum(month: YearMonth) = values(month.dateRange).sum()
+
     /** Compute average over all dates in given range. */
     fun average(month: YearMonth) = values(month.dateRange).average()
 
@@ -137,7 +171,7 @@ data class TimeSeries(
     fun daysSinceHalfCurrentValue(): Int? {
         val cur = lastValue
         if (cur <= 0) return null
-        (1..values.size).forEach { if (valueByDaysFromEnd(it) <= .5*cur) return it }
+        (1..values.size).forEach { if (valueByDaysFromEnd(it) <= .5 * cur) return it }
         return null
     }
 
@@ -146,16 +180,26 @@ data class TimeSeries(
     //region DERIVED SERIES
 
     /** Copy where data is restricted to start no early than given date. */
-    fun copyWithDataSince(firstDate: LocalDate)
-            = copy(metric = metric, start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()), intSeries = intSeries)
+    fun copyWithDataSince(firstDate: LocalDate) = copy(
+        metric = metric,
+        start = maxOf(start, firstDate),
+        values = values.drop(maxOf(start, firstDate).minus(start).toInt()),
+        intSeries = intSeries
+    )
 
-    /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. */
-    fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries)
-            = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+    /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. Assumes the end of the series is fixed date. */
+    fun copyAdjustingStartDay(
+        metric: String = this.metric,
+        values: List<Double> = this.values,
+        intSeries: Boolean = this.intSeries
+    ) = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
 
     /** Copy after dropping first n values. */
-    fun dropFirst(n: Int): TimeSeries {
-        val res = copyAdjustingStartDay(values = values.drop(n))
+    fun dropFirst(n: Int) = copyAdjustingStartDay(values = values.drop(n))
+
+    /** Copy after dropping first n values. */
+    fun dropLast(n: Int): TimeSeries {
+        val res = copyAdjustingStartDay(values = values.dropLast(n))
         return res
     }
 
@@ -173,33 +217,79 @@ data class TimeSeries(
     operator fun div(n: TimeSeries) = reduceSeries(this, n) { a, b -> a / b }
 
     /** Return copy with moving averages. */
-    fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingAverage(bucket, nonZero, includePartialList))
+    fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) =
+        copyAdjustingStartDay(
+            values = values.movingAverage(bucket, nonZero, includePartialList)
+        )
+
     /** Return copy with moving sum. */
-    fun movingSum(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(values = values.movingSum(bucket, includePartialList))
+    fun movingSum(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(
+        values = values.movingSum(bucket, includePartialList)
+    )
 
     /** Return copy with deltas. */
-    fun deltas(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.deltas())
+    fun deltas(offset: Int = 1, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric),
+        values = values.deltas(offset)
+    )
+
+    /** Return copy with deltas between averages of [bucket] successive values. */
+    fun averageDeltas(bucket: Int, metricFunction: (String) -> String = { it }) =
+        copyAdjustingStartDay(
+            metric = metricFunction(metric), intSeries = false,
+            values = values.movingAverage(bucket, includePartialList = true).deltas(bucket)
+        )
 
     /** Compute cumulative totals. */
-    fun cumulative(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.partialSums())
+    fun cumulative(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric),
+        values = values.partialSums()
+    )
+
     /** Compute cumulative totals starting on the given day. */
-    fun cumulativeSince(cumulativeStart: LocalDate, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric),
-            values = values(DateRange(cumulativeStart..end)).partialSums())
+    fun cumulativeSince(cumulativeStart: LocalDate, metricFunction: (String) -> String = { it }) =
+        copyAdjustingStartDay(
+            metric = metricFunction(metric),
+            values = values(DateRange(cumulativeStart..end)).partialSums()
+        )
+
+    /** Return copy with percent changes. */
+    fun percentChanges(bucket: Int = 1, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric), intSeries = false,
+        values = values.movingAverage(bucket).percentChanges(offset = bucket)
+    ).restrictToRealNumbers()
+
+    /** Return copy with growth rates. */
+    fun growthRates(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric), intSeries = false,
+        values = values.growthRates()
+    ).restrictToRealNumbers()
 
     /** Return copy with growth percentages. */
-    fun growthPercentages(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.growthPercentages(), intSeries = false)
-            .restrictToRealNumbers()
+    fun symmetricGrowth(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric), intSeries = false,
+        values = values.symmetricGrowth()
+    ).restrictToRealNumbers()
+
     /** Return copy with doubling times. */
-    fun doublingTimes(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(metric = metricFunction(metric), values = values.doublingTimes(), intSeries = false)
-            .restrictToRealNumbers()
+    fun doublingTimes(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric), intSeries = false,
+        values = values.doublingTimes()
+    ).restrictToRealNumbers()
+
     /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
     fun shortTermLogisticForecast(days: Int): List<TimeSeries> {
         val predictions = values.computeLogisticPrediction(days).filter { it.hasBoundedConfidence }
-        return listOf(copyAdjustingStartDay(metric = "$metric (predicted total)", values = predictions.map { it.kTotal }),
-                copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = predictions.map { it.minKTotal }),
-                copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = predictions.map { it.maxKTotal }),
-                copyAdjustingStartDay(metric = "$metric (predicted peak)", values = predictions.map { it.peakGrowth }),
-                copyAdjustingStartDay(metric = "$metric (days to peak)", values = predictions.map { it.daysToPeak }, intSeries = false)
+        return listOf(
+            copyAdjustingStartDay(metric = "$metric (predicted total)", values = predictions.map { it.kTotal }),
+            copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = predictions.map { it.minKTotal }),
+            copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = predictions.map { it.maxKTotal }),
+            copyAdjustingStartDay(metric = "$metric (predicted peak)", values = predictions.map { it.peakGrowth }),
+            copyAdjustingStartDay(
+                metric = "$metric (days to peak)",
+                values = predictions.map { it.daysToPeak },
+                intSeries = false
+            )
 //                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = predictions.map { it.slope }, intSeries = false),
 //                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = predictions.map { it.intercept }, intSeries = false)
         ).map { it.restrictToRealNumbers() }
@@ -243,16 +333,19 @@ data class TimeSeries(
 
 /** Smooth the series over a 7-day window, with either a sum or an average. */
 fun TimeSeries.smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
+
 /** Smooth all series over a 7-day window, with either a sum or an average. */
 fun List<TimeSeries>.smooth7(total: Boolean) = map { it.smooth7(total) }
 
 /** Organize by area, using first series for each area. */
 fun Collection<TimeSeries>.byArea() = map { it.area to it }.toMap()
+
 /** Organize by area id, using first series for each area. */
 fun Collection<TimeSeries>.byAreaId() = map { it.areaId to it }.toMap()
 
 /** Group by area. */
 fun Collection<TimeSeries>.groupByArea() = filter { Lookup.areaOrNull(it.areaId) != null }.groupBy { it.area }
+
 /** Group by area id. */
 fun Collection<TimeSeries>.groupByAreaId() = groupBy { it.areaId }
 
@@ -275,15 +368,15 @@ val Collection<TimeSeries>.dateRange
 
 /** Merge a bunch of time series by id and metric. */
 fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
-        .map { it.value.merge() }
-        .map { if (coerceIncreasing) it.coerceIncreasing() else it }
-        .map { it.restrictNumberOfStartingZerosTo(5) }
+    .map { it.value.merge() }
+    .map { if (coerceIncreasing) it.coerceIncreasing() else it }
+    .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Sums a bunch of time series by id and metric. */
 fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
-        .map { it.value.sum() }
-        .map { if (coerceIncreasing) it.coerceIncreasing() else it }
-        .map { it.restrictNumberOfStartingZerosTo(5) }
+    .map { it.value.sum() }
+    .map { if (coerceIncreasing) it.coerceIncreasing() else it }
+    .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge a bunch of separate time series into a single time series object, using the max value in two series. */
 private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
@@ -296,7 +389,8 @@ private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
 }
 
 /** Sums a bunch of separate time series into a single time series object, with an option to update area id and metric name. */
-fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 -> reduceSeries(s1, s2) { a, b -> a + b } }
+fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) =
+    reduce { s1, s2 -> reduceSeries(s1, s2) { a, b -> a + b } }
         .let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
 
 /** Reduces two series using the given operation. Result has domain that is the union of the two provided series. */
