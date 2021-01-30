@@ -20,14 +20,14 @@
 package tri.timeseries.analytics
 
 import org.apache.commons.math3.stat.regression.SimpleRegression
-import tri.timeseries.growthPercentages
+import tri.timeseries.symmetricGrowth
 import tri.timeseries.slidingWindow
 import kotlin.math.ln
 
 /** Fit logistic curve using Hubbert linearization, and use the result to predict final total and peaks. */
 fun List<Double>.computeLogisticPrediction(days: Int): List<LogisticPrediction> {
     return slidingWindow(days)
-            .map { it.last() to linearRegression(it.drop(1), it.growthPercentages()) }
+            .map { it.last() to linearRegression(it.drop(1), it.symmetricGrowth()) }
             .map { LogisticPrediction(it.first, it.second) }
 }
 

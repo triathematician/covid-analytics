@@ -54,10 +54,16 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
 
     /** Query for daily version of time series. */
     open fun daily(area: AreaInfo, metric: String): TimeSeries? = null
+    /** Query for cumulative version of time series. */
+    open fun cumulative(area: AreaInfo, metric: String): TimeSeries? = null
+
     /** Query for weekly average version of time series. */
     open fun weeklyAverage(area: AreaInfo, metric: String): TimeSeries? = null
     /** Query for weekly total version of time series. */
     open fun weeklyTotal(area: AreaInfo, metric: String): TimeSeries? = null
+
+    /** Query for 14-day total version of time series. */
+    open fun biweeklyTotal(area: AreaInfo, metric: String): TimeSeries? = null
 
     /** Query for monthly average value. */
     open fun monthlyAverage(area: AreaInfo, metric: String, month: YearMonth): Double? = null

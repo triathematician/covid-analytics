@@ -80,7 +80,7 @@ object CovidTimeSeriesSources {
                 .flatMap { it.value }
                 .flatMap {
                     listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" },
-                            it.movingAverage(averageDays).growthPercentages { "$it (growth)" }) +
+                            it.movingAverage(averageDays).symmetricGrowth { "$it (growth)" }) +
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)
                 }
     }.also {

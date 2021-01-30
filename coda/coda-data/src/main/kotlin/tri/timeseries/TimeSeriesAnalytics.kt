@@ -19,6 +19,7 @@
  */
 package tri.timeseries
 
+import tri.covid19.reports.percentChangeTo
 import kotlin.math.log2
 import kotlin.math.max
 
@@ -29,7 +30,9 @@ fun List<Double>.slidingWindow(n: Int, includePartialList: Boolean = false) = wh
 }
 
 /** Compute diffs between entries. */
-fun List<Double>.deltas() = (1 until size).map { get(it) - get(it - 1) }
+fun List<Double>.deltas(offset: Int = 1) = (0 until size).map {
+    get(it) - getOrElse(it - offset) { 0.0 }
+}
 
 /** Construct partial sums of values. */
 fun List<Double>.partialSums(): List<Double> {
@@ -42,6 +45,11 @@ fun List<Double>.partialSums(): List<Double> {
     return res
 }
 
+/** Compute percent change from last to next. */
+fun List<Double>.percentChanges(offset: Int = 1): List<Double> = (0 until size).map {
+    (getOrElse(it - offset) { 0.0 }).percentChangeTo(get(it))
+}
+
 /** Compute growth rates between entries (ratio of successive entries). Can produce infinity. */
 fun List<Double>.growthRates(day0: Int = 0) = (1 until size).map {
     when (day0) {
@@ -49,8 +57,9 @@ fun List<Double>.growthRates(day0: Int = 0) = (1 until size).map {
         else -> (get(it) - get(maxOf(0, it-day0))) / (get(it - 1) - get(maxOf(0, it-day0)))
     }
 }
-/** Compute growth percentage between entries (ratio of change to total). */
-fun List<Double>.growthPercentages() = (1 until size).map { (get(it) - get(it - 1)) / (.5 * (get(it) + get(it - 1))) }
+
+/** Compute growth percentage between entries (ratio of change to average). */
+fun List<Double>.symmetricGrowth() = (1 until size).map { (get(it) - get(it - 1)) / (.5 * (get(it) + get(it - 1))) }
 
 /**
  * Compute doubling time based on constant growth rates.
