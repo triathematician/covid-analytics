@@ -767,11 +767,11 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 344,HK,HKG,344,,,Hong Kong,China,22.3,114.2,"Hong Kong, China",7496988
 446,MO,MAC,446,,,Macau,China,22.1667,113.55,"Macau, China",649342
 840,US,USA,840,,,,US,40,-100,US,329466283
-16,AS,ASM,16,60,,American Samoa,US,-14.271,-170.132,"American Samoa, US",55641
-316,GU,GUM,316,66,,Guam,US,13.4443,144.7937,"Guam, US",164229
-580,MP,MNP,580,69,,Northern Mariana Islands,US,15.0979,145.6739,"Northern Mariana Islands, US",55144
-850,VI,VIR,850,78,,Virgin Islands,US,18.3358,-64.8963,"Virgin Islands, US",107268
-630,PR,PRI,630,72,,Puerto Rico,US,18.2208,-66.5901,"Puerto Rico, US",2933408
+16,AS,ASM,16,60,,American Samoa,US,-14.271,-170.132,"American Samoa, US",55519
+316,GU,GUM,316,66,,Guam,US,13.4443,144.7937,"Guam, US",159385
+580,MP,MNP,580,69,,Northern Mariana Islands,US,15.0979,145.6739,"Northern Mariana Islands, US",53883
+850,VI,VIR,850,78,,Virgin Islands,US,18.3358,-64.8963,"Virgin Islands, US",106405
+630,PR,PRI,630,72,,Puerto Rico,US,18.2208,-66.5901,"Puerto Rico, US",3193694
 63072001,PR,PRI,630,72001,Adjuntas,Puerto Rico,US,18.180117,-66.754367,"Adjuntas, Puerto Rico, US",19483
 63072003,PR,PRI,630,72003,Aguada,Puerto Rico,US,18.360255,-67.175131,"Aguada, Puerto Rico, US",41959
 63072005,PR,PRI,630,72005,Aguadilla,Puerto Rico,US,18.459681,-67.120815,"Aguadilla, Puerto Rico, US",60949
