@@ -114,7 +114,7 @@ data class TimeSeries(
 
     @get:JsonIgnore
     val domain: DateRange
-        get() = DateRange(firstPositiveDate, end)
+        get() = DateRange(start, end)
 
     val valuesAsMap: Map<LocalDate, Double>
         get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
@@ -193,6 +193,21 @@ data class TimeSeries(
         values: List<Double> = this.values,
         intSeries: Boolean = this.intSeries
     ) = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+
+    /**
+     * Create copy after filling data through a given date.
+     */
+    fun copyExtendedThrough(date: LocalDate, fill: TimeSeriesFillStrategy): TimeSeries {
+        if (!date.isAfter(end)) {
+            return this
+        }
+        val daysToAdd = date - end
+        val fillValue = when (fill) {
+            TimeSeriesFillStrategy.FILL_WITH_ZEROS -> 0.0
+            TimeSeriesFillStrategy.FILL_LAST -> values.last()
+        }
+        return copy(values = values + (1..daysToAdd).map { fillValue })
+    }
 
     /** Copy after dropping first n values. */
     fun dropFirst(n: Int) = copyAdjustingStartDay(values = values.drop(n))
@@ -299,7 +314,9 @@ data class TimeSeries(
 
     //region CLEANUP UTILS
 
-    /** Return copy of this series where values are forced to be increasing. */
+    /**
+     * Return copy of this series where values are forced to be increasing.
+     */
     fun coerceIncreasing(): TimeSeries {
         val res = values.toMutableList()
         for (i in 1 until res.size) {
@@ -403,3 +420,7 @@ fun reduceSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double)
 
 //endregion
 
+enum class TimeSeriesFillStrategy {
+    FILL_WITH_ZEROS,
+    FILL_LAST;
+}
