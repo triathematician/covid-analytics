@@ -154,15 +154,15 @@ object Usa {
     fun state(abbrev: String) = states[abbrev] ?: error("Invalid state abbreviation $abbrev")
 
     /** Lookup FEMA region by abbreviation. */
-    fun stateFemaRegion(abbrev: String) = femaRegionByState[abbrev] ?: error("Invalid state abbreviation $abbrev")
+    fun stateFemaRegion(abbrev: String) = femaRegionByState[abbrev]
 
     //endregions
 
     //region UTILS
 
     internal fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
-    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.map {
-        Usa.states[it.state_abbr] ?: error("State!")
+    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.mapNotNull {
+        Usa.states[it.state_abbr]
     })
 
     //endregion

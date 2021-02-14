@@ -54,39 +54,15 @@ data class TimeSeries(
 ) {
 
     /** Construct with explicit floating-point values. */
-    constructor(
-        source: String,
-        areaId: String,
-        metric: String,
-        qualifier: String = "",
-        defValue: Double = 0.0,
-        start: LocalDate,
-        vararg values: Double
-    )
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, start: LocalDate, vararg values: Double)
             : this(source, areaId, metric, qualifier, false, defValue, start, values.toList())
 
     /** Construct with a set of integer values. */
-    constructor(
-        source: String,
-        areaId: String,
-        metric: String,
-        qualifier: String = "",
-        defValue: Int = 0,
-        start: LocalDate,
-        values: List<Int>
-    )
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, values: List<Int>)
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     /** Construct with a set of integer values. */
-    constructor(
-        source: String,
-        areaId: String,
-        metric: String,
-        qualifier: String = "",
-        defValue: Int = 0,
-        start: LocalDate,
-        vararg values: Int
-    )
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, vararg values: Int)
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     val uniqueMetricKey = listOf(source, areaId, metric, qualifier).joinToString("::")
@@ -130,7 +106,7 @@ data class TimeSeries(
     fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
 
     /** Get date by index. */
-    fun date(i: Int) = start.plusDays(i.toLong())
+    fun date(i: Int) = start.plusDays(i.toLong())!!
 
     /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
@@ -180,19 +156,12 @@ data class TimeSeries(
     //region DERIVED SERIES
 
     /** Copy where data is restricted to start no early than given date. */
-    fun copyWithDataSince(firstDate: LocalDate) = copy(
-        metric = metric,
-        start = maxOf(start, firstDate),
-        values = values.drop(maxOf(start, firstDate).minus(start).toInt()),
-        intSeries = intSeries
-    )
+    fun copyWithDataSince(firstDate: LocalDate) =
+        copy(metric = metric, start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()), intSeries = intSeries)
 
     /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. Assumes the end of the series is fixed date. */
-    fun copyAdjustingStartDay(
-        metric: String = this.metric,
-        values: List<Double> = this.values,
-        intSeries: Boolean = this.intSeries
-    ) = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+    fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries) =
+        copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
 
     /**
      * Create copy after filling data through a given date.
@@ -384,8 +353,8 @@ val Collection<TimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
-    .map { it.value.merge() }
+fun List<TimeSeries>.regroupAndMax(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
+    .map { it.value.max() }
     .map { if (coerceIncreasing) it.coerceIncreasing() else it }
     .map { it.restrictNumberOfStartingZerosTo(5) }
 
@@ -396,7 +365,7 @@ fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { it.uni
     .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge a bunch of separate time series into a single time series object, using the max value in two series. */
-private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
+private fun List<TimeSeries>.max() = reduce { s1, s2 ->
     require(s1.areaId == s2.areaId)
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)

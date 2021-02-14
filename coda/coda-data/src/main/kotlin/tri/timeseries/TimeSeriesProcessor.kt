@@ -99,7 +99,7 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
 
     override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, FileOutputStream(processed()), Charsets.UTF_8)
 
-    open fun process(series: List<TimeSeries>) = series.regroupAndMerge(coerceIncreasing = false)
+    open fun process(series: List<TimeSeries>) = series.regroupAndMax(coerceIncreasing = false)
 
     abstract fun inprocess(file: File): List<TimeSeries>
 }
