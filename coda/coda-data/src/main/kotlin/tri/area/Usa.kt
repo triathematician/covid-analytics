@@ -94,7 +94,7 @@ object Usa {
             }.toMap()
 
     /** County area objects. */
-    val countyAreas = counties.values
+    val countyAreas = counties.values.toList()
 
     /** Unassigned regions, indexed by state. */
     val unassigned = states
@@ -111,7 +111,7 @@ object Usa {
             }.toMap()
 
     /** CBSA area objects. */
-    val cbsaAreas = cbsas.values
+    val cbsaAreas = cbsas.values.toList()
 
     /** CBSAs, indexed by CBSA title. */
     val cbsaByName = cbsas.mapKeys { it.value.cbsaTitle }
