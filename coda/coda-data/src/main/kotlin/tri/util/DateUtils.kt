@@ -52,6 +52,8 @@ val LocalDate.monthDayReadable
 /** Formats date as year-month-day. */
 val LocalDate.yyyyMMdd
     get() = DateTimeFormatter.ofPattern("yyyyMMdd").format(this)
+val LocalDate.yyyy_MM_dd
+    get() = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(this)
 
 /** Parses string to local date using one of given formats. */
 fun String.toLocalDate(vararg formats: DateTimeFormatter): LocalDate {
