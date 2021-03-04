@@ -52,6 +52,8 @@ fun List<Any>.log(ps: PrintStream = System.out, prefix: String = "", sep: String
     }.toString()
 }.joinToString(sep).log(ps, prefix)
 
+/** Prints fine log. */
+inline fun <reified X> fine(message: String) = logger<X>().fine(message)
 /** Prints info log. */
 inline fun <reified X> info(message: String) = logger<X>().info(message)
 /** Prints warning log. */

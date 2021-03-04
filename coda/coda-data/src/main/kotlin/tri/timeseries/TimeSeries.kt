@@ -53,9 +53,17 @@ data class TimeSeries(
     val values: List<Double> = listOf()
 ) {
 
+    /** Construct with a set of floating-point values. */
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, values: Map<LocalDate, Double>, fillLatest: Boolean = false)
+            : this(source, areaId, metric, qualifier, defValue, values.keys.minOrNull()!!, *values.valueList(defValue, fillLatest).toDoubleArray())
+
     /** Construct with explicit floating-point values. */
     constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, start: LocalDate, vararg values: Double)
             : this(source, areaId, metric, qualifier, false, defValue, start, values.toList())
+
+    /** Construct with a set of integer values. */
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, values: Map<LocalDate, Int>)
+            : this(source, areaId, metric, qualifier, defValue, values.keys.minOrNull()!!, values.valueList(defValue))
 
     /** Construct with a set of integer values. */
     constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, values: List<Int>)
@@ -200,6 +208,9 @@ data class TimeSeries(
     operator fun times(n: TimeSeries) = reduceSeries(this, n) { a, b -> a * b }
     operator fun div(n: TimeSeries) = reduceSeries(this, n) { a, b -> a / b }
 
+    /** Smooth the series over a 7-day window, with either a sum or an average. */
+    fun smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
+
     /** Return copy with moving averages. */
     fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) =
         copyAdjustingStartDay(
@@ -317,9 +328,6 @@ data class TimeSeries(
 
 //region List<TimeSeries> XF
 
-/** Smooth the series over a 7-day window, with either a sum or an average. */
-fun TimeSeries.smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
-
 /** Smooth all series over a 7-day window, with either a sum or an average. */
 fun List<TimeSeries>.smooth7(total: Boolean) = map { it.smooth7(total) }
 
@@ -388,6 +396,20 @@ fun reduceSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double)
 }
 
 //endregion
+
+/**
+ * Utility that converts a key-value map by date to a list of values.
+ * @param valueIfMissing used in result list if a date is missing
+ * @param fillLatest if true, will use the most recent value if missing
+ */
+fun <X> Map<LocalDate, X>.valueList(valueIfMissing: X, fillLatest: Boolean = false) = if (fillLatest) {
+    var recent: X? = null
+    DateRange(keys).map {
+        val x = getOrDefault(it, recent ?: valueIfMissing)
+        recent = x
+        x
+    }
+} else DateRange(keys).map { getOrDefault(it, valueIfMissing) }
 
 enum class TimeSeriesFillStrategy {
     FILL_WITH_ZEROS,

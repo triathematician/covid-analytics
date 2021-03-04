@@ -48,7 +48,6 @@ abstract class TimeSeriesProcessor {
     fun loadProcessedData(): List<TimeSeries>? {
         val processed = loadProcessed()
         if (processed.isNotEmpty()) {
-            processingNote("Loaded processed ${processed.size} time series using ${this::class.simpleName}")
             return processed
         }
         return null
