@@ -25,6 +25,7 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities
 
 /** Get month/year of date. */
 val LocalDate.yearMonth
@@ -52,6 +53,8 @@ val LocalDate.monthDayReadable
 /** Formats date as year-month-day. */
 val LocalDate.yyyyMMdd
     get() = DateTimeFormatter.ofPattern("yyyyMMdd").format(this)
+val LocalDate.yyyy_MM_dd
+    get() = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(this)
 
 /** Parses string to local date using one of given formats. */
 fun String.toLocalDate(vararg formats: DateTimeFormatter): LocalDate {
@@ -92,10 +95,16 @@ val YearMonth.dateRange
 /** Produces a date range. */
 operator fun LocalDate.rangeTo(other: LocalDate) = DateRange(this, other)
 
+private fun Iterable<LocalDate>.enclosingRange(): ClosedRange<LocalDate> {
+    val set = toSortedSet()
+    return set.first()..set.last()
+}
+
 /** Provides a range of dates, with ability to iterate. */
 data class DateRange(override var start: LocalDate, override var endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
 
     constructor(range: ClosedRange<LocalDate>): this(range.start, range.endInclusive)
+    constructor(dates: Collection<LocalDate>): this(dates.enclosingRange())
 
     override fun iterator() = DateIterator(start, endInclusive)
 

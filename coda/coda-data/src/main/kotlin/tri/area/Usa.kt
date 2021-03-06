@@ -37,7 +37,6 @@ object Usa {
 
     /** Mapping of US state abbreviations to state names. */
     val statesByAbbreviation = stateFips.map { it.state_abbr to it.state_name }.toMap()
-
     /** Mapping of US state abbreviations from state names. */
     val abbreviationsByState = stateFips.map { it.state_name to it.state_abbr }.toMap()
 
@@ -52,34 +51,31 @@ object Usa {
     val states = JhuAreaData.index.filter { it.key is String && it.value.fips != null && it.value.fips!! < 100 }
             .map { it.key as String to UsStateInfo(it.key as String, it.value.provinceOrState, it.value.fips!!, it.value.population) }
             .toMap()
-
     /** State area objects. */
     val stateAreas = states.values.sortedBy { it.id }
-
     /** List of US state abbreviations. */
     val stateAbbreviations = stateFips.map { it.state_abbr }
-
     /** List of US state names, e.g. "Ohio". */
     val stateNames = states.map { it.value.fullName }
-
     /** US states, indexed by full name, e.g. "Ohio". */
     val statesByLongName = states.mapKeys { it.value.fullName }
 
     /** FEMA regions, indexed by number. */
     val femaRegions = stateFips.groupBy { it.fema_region }.map { (num, states) -> num to region("Region $num", states) }.toMap()
-
     /** Ordered FEMA regions. */
     val femaRegionAreas = (1..10).map { femaRegions[it]!! }
-
     /** FEMA regions by state */
     val femaRegionByState = stateFips.map { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }.toMap()
 
     /** Census regions and divisions, indexed by name. */
     val censusRegions = stateFips.filter { it.region_name.isNotEmpty() }.groupBy { it.region_name }.map { (name, states) -> name to region(name, states) }.toMap() +
             stateFips.filter { it.division_name.isNotEmpty() }.groupBy { it.division_name }.map { (name, states) -> name to region(name, states) }.toMap()
-
     /** Census region areas. */
     val censusRegionAreas = censusRegions.values
+    /** Census regions by state */
+    val censusRegionByState = stateFips.filter { it.region_name.isNotEmpty() }.map { it.state_abbr to censusRegions[it.region_name]!! }.toMap()
+    /** Census divisions by state */
+    val censusDivisionByState = stateFips.filter { it.division_name.isNotEmpty() }.map { it.state_abbr to censusRegions[it.division_name]!! }.toMap()
 
     /** Region X. */
     val regionX = UsRegionInfo("X", "WA,OR,CA,NV,AZ,HI,CO,NM,MN,WI,IL,MI,ME,NH,VT,NY,PA,VA,GA,MA,RI,CT,NJ,DE,MD,DC".split(",").map { states[it]!! })
@@ -94,7 +90,7 @@ object Usa {
             }.toMap()
 
     /** County area objects. */
-    val countyAreas = counties.values
+    val countyAreas = counties.values.toList()
 
     /** Unassigned regions, indexed by state. */
     val unassigned = states
@@ -111,7 +107,7 @@ object Usa {
             }.toMap()
 
     /** CBSA area objects. */
-    val cbsaAreas = cbsas.values
+    val cbsaAreas = cbsas.values.toList()
 
     /** CBSAs, indexed by CBSA title. */
     val cbsaByName = cbsas.mapKeys { it.value.cbsaTitle }
@@ -154,15 +150,15 @@ object Usa {
     fun state(abbrev: String) = states[abbrev] ?: error("Invalid state abbreviation $abbrev")
 
     /** Lookup FEMA region by abbreviation. */
-    fun stateFemaRegion(abbrev: String) = femaRegionByState[abbrev] ?: error("Invalid state abbreviation $abbrev")
+    fun stateFemaRegion(abbrev: String) = femaRegionByState[abbrev]
 
     //endregions
 
     //region UTILS
 
     internal fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
-    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.map {
-        Usa.states[it.state_abbr] ?: error("State!")
+    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.mapNotNull {
+        Usa.states[it.state_abbr]
     })
 
     //endregion
@@ -287,6 +283,10 @@ class UsStateInfo(val abbreviation: String, val fullName: String, fips: Int, pop
 
     val femaRegion
         get() = Usa.femaRegionByState[abbreviation]!!
+    val censusRegion
+        get() = Usa.censusRegionByState[abbreviation]
+    val censusDivision
+        get() = Usa.censusDivisionByState[abbreviation]
 }
 
 /** Information about a US CBSA. */

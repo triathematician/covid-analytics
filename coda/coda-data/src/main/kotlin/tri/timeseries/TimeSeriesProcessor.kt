@@ -22,6 +22,7 @@ package tri.timeseries
 import tri.util.ansiYellow
 import java.io.File
 import java.io.FileOutputStream
+import java.net.URL
 import java.nio.charset.Charset
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -47,7 +48,6 @@ abstract class TimeSeriesProcessor {
     fun loadProcessedData(): List<TimeSeries>? {
         val processed = loadProcessed()
         if (processed.isNotEmpty()) {
-            processingNote("Loaded processed ${processed.size} time series using ${this::class.simpleName}")
             return processed
         }
         return null
@@ -66,18 +66,9 @@ abstract class TimeSeriesProcessor {
 
 }
 
-/** Processes raw files to processed files, reads processed files if possible. */
+/** Inprocesses files from a "raw" source and saves them to a processed file location. */
 @ExperimentalTime
-abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val processed: () -> File): TimeSeriesProcessor() {
-    override fun loadRaw() = process(rawSources().flatMap { file ->
-        measureTimedValue {
-            processingNote("Loading data from $file...")
-            inprocess(file)
-        }.let {
-            processingNote("Loaded ${it.value.size} rows in ${it.duration} from $file")
-            it.value
-        }
-    })
+abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeriesProcessor() {
 
     override fun loadProcessed(): List<TimeSeries> {
         val file = processed()
@@ -99,9 +90,44 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, val pro
 
     override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, FileOutputStream(processed()), Charsets.UTF_8)
 
-    open fun process(series: List<TimeSeries>) = series.regroupAndMerge(coerceIncreasing = false)
+    open fun process(series: List<TimeSeries>) = series.regroupAndMax(coerceIncreasing = false)
+
+}
+
+/** Processes raw files to processed files, reads processed files if possible. */
+@ExperimentalTime
+abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, processed: () -> File): TimeSeriesCachingProcessor(processed) {
+
+    override fun loadRaw() = process(rawSources().flatMap { file ->
+        measureTimedValue {
+            processingNote("Loading data from $file...")
+            inprocess(file)
+        }.let {
+            processingNote("Loaded ${it.value.size} rows in ${it.duration} from $file")
+            it.value
+        }
+    })
 
     abstract fun inprocess(file: File): List<TimeSeries>
+
+}
+
+/** Processes URLs to processed files, reads processed files if possible. */
+@ExperimentalTime
+abstract class TimeSeriesUrlProcessor(val rawSources: () -> List<URL>, processed: () -> File): TimeSeriesCachingProcessor(processed) {
+
+    override fun loadRaw() = process(rawSources().flatMap { url ->
+        measureTimedValue {
+            processingNote("Loading data from $url...")
+            inprocess(url)
+        }.let {
+            processingNote("Loaded ${it.value.size} rows in ${it.duration} from $url")
+            it.value
+        }
+    })
+
+    abstract fun inprocess(url: URL): List<TimeSeries>
+
 }
 
 private fun processingNote(text: String) = println("[${ansiYellow("DATA")}] $text")

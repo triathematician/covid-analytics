@@ -53,40 +53,24 @@ data class TimeSeries(
     val values: List<Double> = listOf()
 ) {
 
+    /** Construct with a set of floating-point values. */
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, values: Map<LocalDate, Double>, fillLatest: Boolean = false)
+            : this(source, areaId, metric, qualifier, defValue, values.keys.minOrNull()!!, *values.valueList(defValue, fillLatest).toDoubleArray())
+
     /** Construct with explicit floating-point values. */
-    constructor(
-        source: String,
-        areaId: String,
-        metric: String,
-        qualifier: String = "",
-        defValue: Double = 0.0,
-        start: LocalDate,
-        vararg values: Double
-    )
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Double = 0.0, start: LocalDate, vararg values: Double)
             : this(source, areaId, metric, qualifier, false, defValue, start, values.toList())
 
     /** Construct with a set of integer values. */
-    constructor(
-        source: String,
-        areaId: String,
-        metric: String,
-        qualifier: String = "",
-        defValue: Int = 0,
-        start: LocalDate,
-        values: List<Int>
-    )
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, values: Map<LocalDate, Int>)
+            : this(source, areaId, metric, qualifier, defValue, values.keys.minOrNull()!!, values.valueList(defValue))
+
+    /** Construct with a set of integer values. */
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, values: List<Int>)
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     /** Construct with a set of integer values. */
-    constructor(
-        source: String,
-        areaId: String,
-        metric: String,
-        qualifier: String = "",
-        defValue: Int = 0,
-        start: LocalDate,
-        vararg values: Int
-    )
+    constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, vararg values: Int)
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
     val uniqueMetricKey = listOf(source, areaId, metric, qualifier).joinToString("::")
@@ -114,7 +98,7 @@ data class TimeSeries(
 
     @get:JsonIgnore
     val domain: DateRange
-        get() = DateRange(firstPositiveDate, end)
+        get() = DateRange(start, end)
 
     val valuesAsMap: Map<LocalDate, Double>
         get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
@@ -130,7 +114,7 @@ data class TimeSeries(
     fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
 
     /** Get date by index. */
-    fun date(i: Int) = start.plusDays(i.toLong())
+    fun date(i: Int) = start.plusDays(i.toLong())!!
 
     /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
@@ -180,19 +164,27 @@ data class TimeSeries(
     //region DERIVED SERIES
 
     /** Copy where data is restricted to start no early than given date. */
-    fun copyWithDataSince(firstDate: LocalDate) = copy(
-        metric = metric,
-        start = maxOf(start, firstDate),
-        values = values.drop(maxOf(start, firstDate).minus(start).toInt()),
-        intSeries = intSeries
-    )
+    fun copyWithDataSince(firstDate: LocalDate) =
+        copy(metric = metric, start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()), intSeries = intSeries)
 
     /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. Assumes the end of the series is fixed date. */
-    fun copyAdjustingStartDay(
-        metric: String = this.metric,
-        values: List<Double> = this.values,
-        intSeries: Boolean = this.intSeries
-    ) = copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+    fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries) =
+        copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+
+    /**
+     * Create copy after filling data through a given date.
+     */
+    fun copyExtendedThrough(date: LocalDate, fill: TimeSeriesFillStrategy): TimeSeries {
+        if (!date.isAfter(end)) {
+            return this
+        }
+        val daysToAdd = date - end
+        val fillValue = when (fill) {
+            TimeSeriesFillStrategy.FILL_WITH_ZEROS -> 0.0
+            TimeSeriesFillStrategy.FILL_LAST -> values.last()
+        }
+        return copy(values = values + (1..daysToAdd).map { fillValue })
+    }
 
     /** Copy after dropping first n values. */
     fun dropFirst(n: Int) = copyAdjustingStartDay(values = values.drop(n))
@@ -215,6 +207,9 @@ data class TimeSeries(
     operator fun minus(n: TimeSeries) = reduceSeries(this, n) { a, b -> a - b }
     operator fun times(n: TimeSeries) = reduceSeries(this, n) { a, b -> a * b }
     operator fun div(n: TimeSeries) = reduceSeries(this, n) { a, b -> a / b }
+
+    /** Smooth the series over a 7-day window, with either a sum or an average. */
+    fun smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
 
     /** Return copy with moving averages. */
     fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) =
@@ -299,7 +294,9 @@ data class TimeSeries(
 
     //region CLEANUP UTILS
 
-    /** Return copy of this series where values are forced to be increasing. */
+    /**
+     * Return copy of this series where values are forced to be increasing.
+     */
     fun coerceIncreasing(): TimeSeries {
         val res = values.toMutableList()
         for (i in 1 until res.size) {
@@ -330,9 +327,6 @@ data class TimeSeries(
 }
 
 //region List<TimeSeries> XF
-
-/** Smooth the series over a 7-day window, with either a sum or an average. */
-fun TimeSeries.smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
 
 /** Smooth all series over a 7-day window, with either a sum or an average. */
 fun List<TimeSeries>.smooth7(total: Boolean) = map { it.smooth7(total) }
@@ -367,8 +361,8 @@ val Collection<TimeSeries>.dateRange
     }
 
 /** Merge a bunch of time series by id and metric. */
-fun List<TimeSeries>.regroupAndMerge(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
-    .map { it.value.merge() }
+fun List<TimeSeries>.regroupAndMax(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
+    .map { it.value.max() }
     .map { if (coerceIncreasing) it.coerceIncreasing() else it }
     .map { it.restrictNumberOfStartingZerosTo(5) }
 
@@ -379,7 +373,7 @@ fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { it.uni
     .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge a bunch of separate time series into a single time series object, using the max value in two series. */
-private fun List<TimeSeries>.merge() = reduce { s1, s2 ->
+private fun List<TimeSeries>.max() = reduce { s1, s2 ->
     require(s1.areaId == s2.areaId)
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
@@ -403,3 +397,21 @@ fun reduceSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double)
 
 //endregion
 
+/**
+ * Utility that converts a key-value map by date to a list of values.
+ * @param valueIfMissing used in result list if a date is missing
+ * @param fillLatest if true, will use the most recent value if missing
+ */
+fun <X> Map<LocalDate, X>.valueList(valueIfMissing: X, fillLatest: Boolean = false) = if (fillLatest) {
+    var recent: X? = null
+    DateRange(keys).map {
+        val x = getOrDefault(it, recent ?: valueIfMissing)
+        recent = x
+        x
+    }
+} else DateRange(keys).map { getOrDefault(it, valueIfMissing) }
+
+enum class TimeSeriesFillStrategy {
+    FILL_WITH_ZEROS,
+    FILL_LAST;
+}

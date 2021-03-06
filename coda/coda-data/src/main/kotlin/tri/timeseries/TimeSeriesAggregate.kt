@@ -27,10 +27,10 @@ import tri.util.DateRange
  */
 enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Number?>>, LocalDate?) -> Map<LocalDate, Number>) {
     /** Sums entries. */
-    SUM({ pairs, date ->
+    SUM({ pairs, finalDate ->
         val dateValues = pairs.groupBy { it.first }.mapValues { it.value.map { it.second } }.toSortedMap()
         if (dateValues.isEmpty()) mapOf<LocalDate, Number>()
-        else DateRange(dateValues.keys.first()..(date ?: dateValues.keys.last())).map {
+        else DateRange(dateValues.keys.first()..(finalDate ?: dateValues.keys.last())).map {
             val values = dateValues[it] ?: listOf()
             val integers = values.all { it is Int }
             val sum: Number = if (integers) values.sumBy { it?.toInt() ?: 0 } else values.sumByDouble { it?.toDouble() ?: 0.0 }

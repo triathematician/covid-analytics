@@ -20,6 +20,7 @@
 package tri.area
 
 import tri.util.csvResource
+import tri.util.fine
 import tri.util.javaTrim
 import tri.util.warning
 import java.nio.charset.Charset
@@ -97,8 +98,8 @@ object Lookup {
         val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
         val areaInfo = if (jhuArea?.fips != null) Usa.counties[jhuArea.fips] else jhuArea?.toAreaInfo()
         return if (areaInfo == null) {
-            warning<Lookup>("Area not found: $name")
-            warning<Lookup>(name.map { it.toInt() }.toString())
+            fine<Lookup>("Area not found: $name")
+            fine<Lookup>(name.map { it.toInt() }.toString())
             notFound[name] = UNKNOWN
             null
         } else {
