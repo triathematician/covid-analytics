@@ -40,13 +40,14 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     /** Query all data based on area. */
     fun byArea(areaFilter: (AreaInfo) -> Boolean) = data.filterKeys(areaFilter)
 
-    /** Query by area and metric. */
+    /** Query by area and metric/qualifier. */
     fun by(area: AreaInfo, metric: String? = null, qualifier: String? = null) =
             data[area]?.filter { (metric == null || it.metric == metric) && (qualifier == null || it.qualifier == qualifier) } ?: emptyList()
 
     /** Query all data based on area and metric. */
-    fun by(areaFilter: (AreaInfo) -> Boolean, metricFilter: (String) -> Boolean) = data.filterKeys(areaFilter)
-            .mapValues { it.value.filter { metricFilter(it.metric) } }
+    fun by(areaFilter: (AreaInfo) -> Boolean, metricFilter: (String) -> Boolean, qualifierFilter: (String) -> Boolean = { true }) =
+        data.filterKeys(areaFilter)
+            .mapValues { it.value.filter { metricFilter(it.metric) && qualifierFilter(it.qualifier) } }
             .filterValues { it.isNotEmpty() }
 
     /** Query all data based on a generic filter. */
