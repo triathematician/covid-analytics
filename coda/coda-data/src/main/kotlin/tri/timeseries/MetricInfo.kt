@@ -1,16 +1,3 @@
-package tri.timeseries
-
-/** Time periods across which [TimeSeries] data can be aggregated. */
-enum class TimePeriod {
-    CUMULATIVE,
-    DAILY,
-    WEEKLY,
-    WEEKLY_TOTAL,
-    WEEKLY_AVERAGE,
-    MONTHLY,
-    MONTHLY_TOTAL,
-    MONTHLY_AVERAGE;
-
 /*-
  * #%L
  * coda-data-0.1.4-SNAPSHOT
@@ -30,4 +17,7 @@ enum class TimePeriod {
  * limitations under the License.
  * #L%
  */
-}
+package tri.timeseries
+
+/** A single metric. */
+data class MetricInfo(val metric: String, val qualifier: String = "")

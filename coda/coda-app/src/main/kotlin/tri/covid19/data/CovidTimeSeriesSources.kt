@@ -76,7 +76,7 @@ object CovidTimeSeriesSources {
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
     fun dailyReports(areaFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
-        LocalCovidDataQuery.byArea(areaFilter)
+        LocalCovidDataQuery.allDataByArea(areaFilter)
                 .flatMap { it.value }
                 .flatMap {
                     listOfNotNull(it, it.scaledByPopulation { "$it (per 100k)" },

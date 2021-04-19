@@ -19,6 +19,8 @@
  */
 package tri.timeseries
 
+import tri.area.AreaInfo
+import tri.covid19.data.IhmeForecasts
 import tri.util.ansiYellow
 import java.io.File
 import java.io.FileOutputStream
@@ -29,9 +31,10 @@ import kotlin.time.measureTimedValue
 
 /** Tool that supports both reading and processing input data to a normalized format, and storing that data locally so next time it can be more quickly retrieved. */
 abstract class TimeSeriesProcessor {
-
     /** Load data by source. */
     fun data(source: String? = null) = loadProcessedData()?.bySource(source) ?: reloadRawData().bySource(source)
+
+    //region DATA LOADING
 
     /** Forces data to be reprocessed from source files. */
     fun reloadRawData(): List<TimeSeries> {
@@ -53,17 +56,21 @@ abstract class TimeSeriesProcessor {
         return null
     }
 
+    //endregion
+
+    /** List of metric/qualifier pairs provided by this processor. */
+    abstract fun metricsProvided(): Set<MetricInfo>
+    /** Filter indicating whether the given data is provided by this processor. Override to limit areas. */
+    open fun provides(area: AreaInfo, metric: String, qualifier: String) = MetricInfo(metric, qualifier) in metricsProvided()
+
     /** Load data from original source. */
     abstract fun loadRaw(): List<TimeSeries>
-
     /** Saves processed data, so it can be retrieved more quickly later. */
     abstract fun saveProcessed(data: List<TimeSeries>)
-
     /** Load data from local source/cache, if possible. */
     abstract fun loadProcessed(): List<TimeSeries>
 
     private fun List<TimeSeries>.bySource(source: String? = null) = if (source == null) this else filter { it.source == source }
-
 }
 
 /** Inprocesses files from a "raw" source and saves them to a processed file location. */

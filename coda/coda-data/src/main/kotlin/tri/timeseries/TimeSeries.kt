@@ -31,9 +31,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
-/**
- * Time series of a single metric. Stores values as doubles, but will report them as [Int]s if a flag is set.
- */
+/** Time series of a single metric. Stores values as doubles, but will report them as [Int]s if a flag is set. */
 data class TimeSeries(
     /** Source for the time series. */
     var source: String,
@@ -79,29 +77,27 @@ data class TimeSeries(
 
     val area
         get() = Lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
-
-    @get:JsonIgnore
-    val size: Int
-        get() = values.size
-
-    @get:JsonIgnore
-    val lastValue: Double
-        get() = values.lastOrNull() ?: 0.0
+    val metricInfo
+        get() = MetricInfo(metric, qualifier)
 
     @get:JsonIgnore
     val firstPositiveDate: LocalDate
         get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
-
     @get:JsonIgnore
     val end: LocalDate
         get() = date(values.size - 1)
-
     @get:JsonIgnore
     val domain: DateRange
         get() = DateRange(start, end)
 
+    @get:JsonIgnore
+    val size: Int
+        get() = values.size
     val valuesAsMap: Map<LocalDate, Double>
         get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
+    @get:JsonIgnore
+    val lastValue: Double
+        get() = values.lastOrNull() ?: 0.0
 
     //endregion
 

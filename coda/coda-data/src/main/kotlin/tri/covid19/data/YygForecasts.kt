@@ -26,6 +26,7 @@ import tri.covid19.DEATHS
 import tri.covid19.data.LocalCovidData.forecasts
 import tri.covid19.data.LocalCovidData.metric
 import tri.covid19.data.LocalCovidData.normalizedDataFile
+import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
@@ -38,6 +39,9 @@ const val YYG = "YYG"
 @ExperimentalTime
 object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("yyg") && it.extension == "csv" } },
         { normalizedDataFile("yyg-forecasts.csv") }) {
+
+    // TODO - part of the metrics are dynamically generated -- need to adjust for multiple forecasts?
+    override fun metricsProvided() = setOf("$DEATHS-lower", DEATHS, "$DEATHS-upper", "$CASES-lower", CASES, "$CASES-upper").map { MetricInfo(it) }.toSet()
 
     override fun inprocess(file: File): List<TimeSeries> {
         val date = file.name.substringAfter("yyg-").substringBeforeLast("-")
