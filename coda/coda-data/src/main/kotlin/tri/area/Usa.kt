@@ -70,12 +70,14 @@ object Usa {
     /** Census regions and divisions, indexed by name. */
     val censusRegions = stateFips.filter { it.region_name.isNotEmpty() }.groupBy { it.region_name }.map { (name, states) -> name to region(name, states) }.toMap() +
             stateFips.filter { it.division_name.isNotEmpty() }.groupBy { it.division_name }.map { (name, states) -> name to region(name, states) }.toMap()
-    /** Census region areas. */
-    val censusRegionAreas = censusRegions.values
     /** Census regions by state */
     val censusRegionByState = stateFips.filter { it.region_name.isNotEmpty() }.map { it.state_abbr to censusRegions[it.region_name]!! }.toMap()
     /** Census divisions by state */
     val censusDivisionByState = stateFips.filter { it.division_name.isNotEmpty() }.map { it.state_abbr to censusRegions[it.division_name]!! }.toMap()
+    /** Census region areas. */
+    val censusRegionAreas = censusRegionByState.values.toSet()
+    /** Census division areas. */
+    val censusDivisionAreas = censusDivisionByState.values.toSet()
 
     /** Region X. */
     val regionX = UsRegionInfo("X", "WA,OR,CA,NV,AZ,HI,CO,NM,MN,WI,IL,MI,ME,NH,VT,NY,PA,VA,GA,MA,RI,CT,NJ,DE,MD,DC".split(",").map { states[it]!! })
@@ -330,6 +332,17 @@ class UsHsaInfo(val num: Int, val name: String) : AreaInfo("HSA_${num}", AreaTyp
 
 /** Information about an HSA (hospital service area). */
 class UsHrrInfo(val num: Int, val name: String) : AreaInfo("HRR_${num}", AreaType.UNKNOWN, USA, null, AreaMetrics())
+
+/** Gets a friendly name for areas that are within the USA. */
+val AreaInfo.friendlyName
+    get() = when (this) {
+        is UsStateInfo -> fullName
+        is UsCountyInfo -> fullName
+        is UsCbsaInfo -> cbsaTitle
+        is UsHrrInfo -> name
+        is UsHsaInfo -> name
+        else -> id
+    }
 
 //endregion
 
