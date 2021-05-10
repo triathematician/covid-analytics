@@ -769,9 +769,13 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 840,US,USA,840,,,,US,40,-100,US,329466283
 16,AS,ASM,16,60,,American Samoa,US,-14.271,-170.132,"American Samoa, US",55519
 316,GU,GUM,316,66,,Guam,US,13.4443,144.7937,"Guam, US",159385
+31666010,GU,GUM,316,66010,,Guam,US,13.4443,144.7937,"Guam, Guam, US",159385
 580,MP,MNP,580,69,,Northern Mariana Islands,US,15.0979,145.6739,"Northern Mariana Islands, US",53883
 630,PR,PRI,630,72,,Puerto Rico,US,18.2208,-66.5901,"Puerto Rico, US",3193694
 850,VI,VIR,850,78,,Virgin Islands,US,18.3358,-64.8963,"Virgin Islands, US",106405
+85078010,VI,VIR,850,78010,Saint Croix,Virgin Islands,US,18.3358,-64.8963,"Saint Croix, Virgin Islands, US",
+85078020,VI,VIR,850,78020,Saint John,Virgin Islands,US,18.3358,-64.8963,"Saint John, Virgin Islands, US",
+85078030,VI,VIR,850,78030,Saint Thomas,Virgin Islands,US,18.3358,-64.8963,"Saint Thomas, Virgin Islands, US",
 -1,FM,,,64,,Federated States of Micronesia,,,,"Federated States of Micronesia",
 -1,MH,,,68,,Marshall Islands,,,,"Marshall Islands",
 -1,PW,,,70,,Palau,,,,"Palau",
