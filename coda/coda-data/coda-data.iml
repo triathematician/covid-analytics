@@ -3,7 +3,6 @@
   <component name="AutoImportedSourceRoots">
     <option name="directories">
       <list>
-        <option value="C:\Code\covid-analytics\coda\coda-data/src/main/java" />
         <option value="C:\Code\covid-analytics\coda\coda-data/src/main/kotlin" />
       </list>
     </option>
@@ -37,7 +36,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/kotlin" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/license" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
