@@ -95,7 +95,6 @@
                         <configuration>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-                                <sourceDir>${project.basedir}/src/main/java</sourceDir>
                             </sourceDirs>
                         </configuration>
                     </execution>
@@ -225,6 +224,32 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+
+                    <!-- build javadocs -->
+                    <plugin>
+                        <groupId>org.jetbrains.dokka</groupId>
+                        <artifactId>dokka-maven-plugin</artifactId>
+                        <version>${kotlin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>dokka</goal>
+                                    <goal>javadoc</goal>
+                                    <goal>javadocJar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <!--                <configuration>-->
+                        <!--                    <dokkaPlugins>-->
+                        <!--                        <plugin>-->
+                        <!--                            <groupId>org.jetbrains.dokka</groupId>-->
+                        <!--                            <artifactId>kotlin-as-java-plugin</artifactId>-->
+                        <!--                            <version>${kotlin.version}</version>-->
+                        <!--                        </plugin>-->
+                        <!--                    </dokkaPlugins>-->
+                        <!--                </configuration>-->
                     </plugin>
 
                     <!-- build javadocs -->
