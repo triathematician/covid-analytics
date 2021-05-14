@@ -19,10 +19,11 @@
  */
 package tri.covid19.data
 
-import tri.covid19.DEATHS
+import tri.covid19.*
 import tri.covid19.data.LocalCovidData.extractMetrics
 import tri.covid19.data.LocalCovidData.forecasts
 import tri.covid19.data.LocalCovidData.normalizedDataFile
+import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
@@ -35,6 +36,9 @@ const val LANL = "LANL"
 @ExperimentalTime
 object LanlForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("lanl") && it.extension == "csv" } },
         { normalizedDataFile("lanl-forecasts.csv") }) {
+
+    // TODO - part of the metrics are dynamically generated -- need to adjust for multiple forecasts?
+    override fun metricsProvided() = setOf("$DEATHS-lower", DEATHS, "$DEATHS-upper").map { MetricInfo(it) }.toSet()
 
     override fun inprocess(file: File): List<TimeSeries> {
         val date = file.name.substringAfter("lanl-").substringBefore(".csv")

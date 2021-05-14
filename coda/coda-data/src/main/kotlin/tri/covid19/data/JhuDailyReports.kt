@@ -22,8 +22,8 @@ package tri.covid19.data
 import tri.area.Lookup
 import tri.area.UsCbsaInfo
 import tri.area.Usa
-import tri.covid19.CASES
-import tri.covid19.DEATHS
+import tri.covid19.*
+import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
@@ -45,6 +45,8 @@ object JhuDailyReports : TimeSeriesFileProcessor(
 
     private val MAR1 = LocalDate.of(2020, 3, 1)
     private val MAR21 = LocalDate.of(2020, 3, 21)
+
+    override fun metricsProvided() = setOf(CASES, DEATHS).map { MetricInfo(it) }.toSet()
 
     override fun inprocess(file: File): List<TimeSeries> {
         val name = file.url.path.substringAfterLast("/")

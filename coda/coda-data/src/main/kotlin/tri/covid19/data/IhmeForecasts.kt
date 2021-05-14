@@ -19,9 +19,11 @@
  */
 package tri.covid19.data
 
+import tri.area.AreaInfo
 import tri.covid19.*
 import tri.covid19.data.LocalCovidData.extractMetrics
 import tri.covid19.data.LocalCovidData.forecasts
+import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import tri.timeseries.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
@@ -38,6 +40,8 @@ object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith(
     private val EXCLUDE_LOCATIONS = listOf(
             "Other Counties, WA", "Life Care Center, Kirkland, WA", "King and Snohomish Counties (excluding Life Care Center), WA",
             "Valencian Community", "Mexico City")
+
+    override fun metricsProvided() = setOf(DEATHS, BEDS, ICU, VENTILATORS, ADMITS).map { MetricInfo(it) }.toSet()
 
     override fun inprocess(file: File): List<TimeSeries> {
         val date = file.name.substringAfter("ihme-").substringBefore(".csv")

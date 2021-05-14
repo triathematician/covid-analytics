@@ -20,6 +20,8 @@
 package tri.timeseries
 
 import org.junit.Test
+import tri.covid19.CASES
+import tri.covid19.DEATHS
 import tri.covid19.data.JhuDailyReports
 import tri.covid19.data.LocalCovidData
 import java.io.File
@@ -52,6 +54,7 @@ class TimeSeriesFileFormatTest {
         println(LocalCovidData.dataDir)
         println(LocalCovidData.jhuCsseProcessedData)
         val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.rawSources() }, { File("test3.csv") }) {
+            override fun metricsProvided() = setOf(CASES, DEATHS).map { MetricInfo(it) }.toSet()
             override fun inprocess(file: File) = JhuDailyReports.inprocess(file)
         }
         measureTime {
