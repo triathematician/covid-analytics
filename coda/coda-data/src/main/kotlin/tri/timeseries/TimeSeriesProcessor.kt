@@ -72,7 +72,7 @@ abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeries
 
     override fun loadProcessed(): List<TimeSeries> {
         val file = processed()
-        val timestamp = if (file.exists()) file.lastModified() else null
+//        val timestamp = if (file.exists()) file.lastModified() else null
         return if (file.exists()) {
             measureTimedValue {
                 if (Charset.defaultCharset() != Charsets.UTF_8) {

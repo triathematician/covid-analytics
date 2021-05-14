@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,7 +11,7 @@
 
     <artifactId>coda-jlink</artifactId>
     <name>${project.artifactId}-${project.version}</name>
-<!--    <packaging>jlink</packaging>-->
+    <packaging>jlink</packaging>
 
     <dependencies>
         <dependency>
@@ -20,28 +21,30 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
+<!--    <build>-->
+<!--        <plugins>-->
 <!--            <plugin>-->
-<!--                <groupId>net.agilhard.maven.plugins</groupId>-->
-<!--                <artifactId>jlink-jpackager-maven-plugin</artifactId>-->
-<!--                <version>1.0.0-SNAPSHOT</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <verbose>true</verbose>-->
-<!--                    <module>coda/tri.covid19.coda.CodaApp</module>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
-<!--            <plugin>-->
-<!--                <artifactId>maven-jlink-plugin</artifactId>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jmod-plugin</artifactId>-->
 <!--                <version>3.0.0-alpha-1</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; configuration elements goes here &ndash;&gt;-->
-<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>list</id>-->
+<!--                        <goals>-->
+<!--                            <goal>list</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>verify</phase>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>describe</id>-->
+<!--                        <goals>-->
+<!--                            <goal>describe</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>verify</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
 <!--            </plugin>-->
-        </plugins>
-    </build>
+<!--        </plugins>-->
+<!--    </build>-->
 
 </project>

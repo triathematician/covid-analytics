@@ -9,6 +9,8 @@ import tornadofx.*
 import tri.area.Lookup
 import tri.area.USA
 import tri.area.Usa
+import tri.covid19.coda.data.CovidForecasts
+import tri.covid19.coda.data.CovidTimeSeriesSources
 import tri.covid19.coda.history.METRIC_OPTIONS
 import tri.covid19.coda.history.changeDoublingDataSeries
 import tri.covid19.coda.history.hubbertSeries

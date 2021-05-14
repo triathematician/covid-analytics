@@ -17,12 +17,13 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.data
+package tri.covid19.coda.data
 
 import org.junit.Test
 import tri.covid19.CASES
 import tri.timeseries.TimeSeries
 import tri.area.AreaType
+import tri.covid19.data.LocalCovidDataQuery
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
 import tri.util.minus

@@ -17,8 +17,11 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.data
+package tri.covid19.coda.data
 
+import tri.covid19.data.IHME
+import tri.covid19.data.LANL
+import tri.covid19.data.YYG
 import tri.timeseries.Forecast
 import tri.timeseries.ForecastId
 import tri.timeseries.TimeSeriesFileFormat

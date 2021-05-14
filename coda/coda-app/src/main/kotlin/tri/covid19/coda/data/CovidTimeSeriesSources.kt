@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.data
+package tri.covid19.coda.data
 
 import tri.covid19.CASES
 import tri.covid19.DEATHS
@@ -26,6 +26,7 @@ import tri.area.AreaInfo
 import tri.area.EARTH
 import tri.area.AreaType
 import tri.area.USA
+import tri.covid19.data.LocalCovidDataQuery
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 import kotlin.time.milliseconds

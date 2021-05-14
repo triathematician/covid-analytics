@@ -17,9 +17,10 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.data
+package tri.covid19.coda.data
 
 import org.junit.Test
+import tri.covid19.data.JhuDailyReports
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

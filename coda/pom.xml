@@ -10,10 +10,10 @@
     <modules>
         <module>coda-data</module>
         <module>coda-app</module>
-        <module>coda-jlink</module>
+<!--        <module>coda-jlink</module>-->
     </modules>
 
-    <name>${artifactId}-${version}</name>
+    <name>${project.artifactId}-${project.version}</name>
     <description>Time series analytics and visualization, with specialized tools for COVID-19 data processing and visualization.</description>
     <url>https://github.com/triathematician/covid-analytics</url>
     <inceptionYear>2020</inceptionYear>
@@ -57,7 +57,7 @@
     </distributionManagement>
 
     <properties>
-        <kotlin.version>1.4.21</kotlin.version>
+        <kotlin.version>1.4.32</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- set license attributes for license plugin -->
         <license.organizationName>Elisha Peterson</license.organizationName>
@@ -65,17 +65,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-            <version>${kotlin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-            <version>${kotlin.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -204,6 +193,16 @@
                     <goals>deploy</goals>
                 </configuration>
             </plugin>
+
+            <!-- support for jlink -->
+            <plugin>
+                <artifactId>maven-jlink-plugin</artifactId>
+                <version>3.1.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- configuration elements goes here -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -232,7 +231,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.1.1</version>
+                        <version>3.2.0</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>

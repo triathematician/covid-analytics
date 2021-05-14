@@ -30,7 +30,7 @@ import tri.covid19.coda.history.*
 import tri.covid19.coda.utils.*
 import tri.covid19.reports.HotspotInfo
 import tri.covid19.reports.hotspotPerCapitaInfo
-import tri.covid19.data.CovidTimeSeriesSources
+import tri.covid19.coda.data.CovidTimeSeriesSources
 import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */

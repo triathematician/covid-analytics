@@ -35,7 +35,7 @@ import javafx.util.StringConverter
 import org.controlsfx.control.CheckComboBox
 import org.controlsfx.control.RangeSlider
 import tornadofx.*
-import tri.covid19.data.CovidForecasts
+import tri.covid19.coda.data.CovidForecasts
 import tri.covid19.data.IHME
 import tri.covid19.data.M_D_YYYY
 import tri.covid19.data.YYG

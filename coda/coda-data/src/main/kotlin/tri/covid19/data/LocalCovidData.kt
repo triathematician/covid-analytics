@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.coda.data
+package tri.covid19.data
 
 import tri.area.Lookup
 import tri.timeseries.TimeSeries
