@@ -193,15 +193,15 @@
                 </configuration>
             </plugin>
 
-            <!-- support for jlink -->
-            <plugin>
-                <artifactId>maven-jlink-plugin</artifactId>
-                <version>3.1.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <!-- configuration elements goes here -->
-                </configuration>
-            </plugin>
+<!--            &lt;!&ndash; support for jlink &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <artifactId>maven-jlink-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <extensions>true</extensions>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; configuration elements goes here &ndash;&gt;-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
@@ -241,15 +241,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <!--                <configuration>-->
-                        <!--                    <dokkaPlugins>-->
-                        <!--                        <plugin>-->
-                        <!--                            <groupId>org.jetbrains.dokka</groupId>-->
-                        <!--                            <artifactId>kotlin-as-java-plugin</artifactId>-->
-                        <!--                            <version>${kotlin.version}</version>-->
-                        <!--                        </plugin>-->
-                        <!--                    </dokkaPlugins>-->
-                        <!--                </configuration>-->
                     </plugin>
 
                     <!-- build javadocs -->
