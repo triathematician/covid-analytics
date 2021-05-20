@@ -204,6 +204,15 @@ data class TimeSeries(
     operator fun times(n: TimeSeries) = reduceSeries(this, n) { a, b -> a * b }
     operator fun div(n: TimeSeries) = reduceSeries(this, n) { a, b -> a / b }
 
+    /**
+     * Subtracts the other [TimeSeries], but constrain so that only positive values are in the result. Trims the time
+     * series start so that all values are positive.
+     */
+    fun minusMustBePositive(n: TimeSeries) = minus(n).let {
+        val lastZero = it.valuesAsMap.entries.findLast { it.value <= 0 }
+        if (lastZero == null) it else it.copyWithDataSince(lastZero.key.plusDays(1))
+    }
+
     /** Smooth the series over a 7-day window, with either a sum or an average. */
     fun smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
 
@@ -368,15 +377,35 @@ fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { it.uni
     .map { if (coerceIncreasing) it.coerceIncreasing() else it }
     .map { it.restrictNumberOfStartingZerosTo(5) }
 
+/** Merge a bunch of separate time series into a single time series object, using the first nonzero value in two series. */
+fun List<TimeSeries>.firstNonZero(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
+    require(s1.areaId == s2.areaId)
+    require(s1.metric == s2.metric)
+    val minDate = minOf(s1.start, s2.start)
+    val maxDate = maxOf(s1.end, s2.end)
+    val series = (minDate..maxDate).map { listOf(s1[it], s2[it]).firstOrNull { it != 0.0 } ?: 0.0 }
+    s1.copy(start = minDate, values = series)
+}.let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
+
+/** Merge a bunch of separate time series into a single time series object, using the min value in two series. */
+fun List<TimeSeries>.min(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
+    require(s1.areaId == s2.areaId)
+    require(s1.metric == s2.metric)
+    val minDate = minOf(s1.start, s2.start)
+    val maxDate = maxOf(s1.end, s2.end)
+    val series = (minDate..maxDate).map { minOf(s1[it], s2[it]) }
+    s1.copy(start = minDate, values = series)
+}.let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
+
 /** Merge a bunch of separate time series into a single time series object, using the max value in two series. */
-private fun List<TimeSeries>.max() = reduce { s1, s2 ->
+fun List<TimeSeries>.max(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
     require(s1.areaId == s2.areaId)
     require(s1.metric == s2.metric)
     val minDate = minOf(s1.start, s2.start)
     val maxDate = maxOf(s1.end, s2.end)
     val series = (minDate..maxDate).map { maxOf(s1[it], s2[it]) }
     s1.copy(start = minDate, values = series)
-}
+}.let { it.copy(areaId = altAreaId ?: it.areaId, metric = altMetric ?: it.metric) }
 
 /** Sums a bunch of separate time series into a single time series object, with an option to update area id and metric name. */
 fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) =
