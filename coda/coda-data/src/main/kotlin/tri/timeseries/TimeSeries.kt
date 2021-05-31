@@ -253,6 +253,12 @@ data class TimeSeries(
             values = values(DateRange(cumulativeStart..end)).partialSums()
         )
 
+    /** Return copy with absolute changes by offsetting days. */
+    fun absoluteChanges(offset: Int = 7, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+        metric = metricFunction(metric), intSeries = false,
+        values = values.changes(offset)
+    ).restrictToRealNumbers()
+
     /** Return copy with percent changes. */
     fun percentChanges(bucket: Int = 1, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric), intSeries = false,

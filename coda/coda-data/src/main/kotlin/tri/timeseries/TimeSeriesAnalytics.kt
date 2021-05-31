@@ -45,9 +45,12 @@ fun List<Double>.partialSums(): List<Double> {
     return res
 }
 
+/** Compute changes from prior values, with given offset. The result has [offset] fewer entries. */
+fun List<Double>.changes(offset: Int = 1): List<Double> = (offset until size).map { get(it) - get(it - offset) }
+
 /** Compute percent change from last to next. */
 fun List<Double>.percentChanges(offset: Int = 1): List<Double> = (0 until size).map {
-    (getOrElse(it - offset) { 0.0 }).percentChangeTo(get(it))
+    (getOrElse(it - offset) { Double.NaN }).percentChangeTo(get(it))
 }
 
 /** Compute growth rates between entries (ratio of successive entries). Can produce infinity. */
