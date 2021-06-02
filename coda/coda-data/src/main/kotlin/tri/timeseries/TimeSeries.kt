@@ -383,6 +383,14 @@ fun List<TimeSeries>.regroupAndSum(coerceIncreasing: Boolean) = groupBy { it.uni
     .map { if (coerceIncreasing) it.coerceIncreasing() else it }
     .map { it.restrictNumberOfStartingZerosTo(5) }
 
+/** Merge a bunch of time series by id and metric. Any missing dates between known values are filled in with the latest value. */
+fun List<TimeSeries>.regroupAndLatest() = groupBy { it.uniqueMetricKey }
+    .map {
+        val first = it.value[0]!!
+        val valueMap = it.value.flatMap { it.valuesAsMap.entries }.map { it.key to it.value }.toMap()
+        TimeSeries(first.source, first.areaId, first.metric, first.qualifier, 0.0, valueMap, fillLatest = true)
+    }
+
 /** Merge a bunch of separate time series into a single time series object, using the first nonzero value in two series. */
 fun List<TimeSeries>.firstNonZero(altAreaId: String? = null, altMetric: String? = null) = reduce { s1, s2 ->
     require(s1.areaId == s2.areaId)
