@@ -23,10 +23,12 @@ package tri.timeseries
 enum class TimePeriod {
     CUMULATIVE,
     DAILY,
-    WEEKLY,
     WEEKLY_TOTAL,
     WEEKLY_AVERAGE,
-    MONTHLY,
+    BIWEEKLY_TOTAL,
+    BIWEEKLY_AVERAGE,
     MONTHLY_TOTAL,
-    MONTHLY_AVERAGE;
+    MONTHLY_AVERAGE,
+    YEARLY_TOTAL,
+    YEARLY_AVERAGE;
 }
