@@ -21,6 +21,7 @@ package tri.timeseries
 
 import java.time.LocalDate
 import tri.util.DateRange
+import tri.util.minus
 
 /**
  * Provides various ways to aggregate date/value data into a [TimeSeries].
@@ -38,7 +39,7 @@ enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Num
         }.toMap()
     }),
 
-    /** Fills latest value, ensuring nonzero entries. */
+    /** Fills latest value, ensuring gaps between missing entries are all filled. */
     FILL_WITH_LATEST_VALUE({ pairs, date ->
         val dateValues = pairs.map { it.first to it.second }.toMap().toSortedMap()
         if (dateValues.isEmpty()) mapOf<LocalDate, Number>()
@@ -46,6 +47,29 @@ enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Num
             it to if (it in dateValues.keys) dateValues[it]!!
             else dateValues.headMap(it).values.last()!!
         }.toMap()
+    }),
+
+    /** Fills latest value, but does not allow filling forward more than 7 days. */
+    FILL_WITH_LATEST_VALUE_UP_TO_7({ pairs, date ->
+        val sortedDates = pairs.map { it.first to it.second?.toDouble() }.toMap().toSortedMap()
+        val first = sortedDates.keys.first()
+        val last = sortedDates.keys.last()
+        val dates = DateRange(first..last).toList()
+        val values = dates.map { sortedDates[it] }
+        var lastValueIndex = 0
+        var lastValue = 0.0
+        val adjustedValues = values.mapIndexed { i, value ->
+            dates[i] to if (value != null) {
+                lastValueIndex = i
+                lastValue = value
+                value
+            } else if (i - lastValueIndex <= 7) {
+                lastValue
+            } else {
+                0.0
+            }
+        }.toMap()
+        adjustedValues
     });
 
     operator fun invoke(entries: List<Pair<LocalDate, Number>>, date: LocalDate?) = aggregator(entries, date)
