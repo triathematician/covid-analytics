@@ -52,24 +52,27 @@ enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Num
     /** Fills latest value, but does not allow filling forward more than 7 days. */
     FILL_WITH_LATEST_VALUE_UP_TO_7({ pairs, date ->
         val sortedDates = pairs.map { it.first to it.second?.toDouble() }.toMap().toSortedMap()
-        val first = sortedDates.keys.first()
-        val last = sortedDates.keys.last()
-        val dates = DateRange(first..last).toList()
-        val values = dates.map { sortedDates[it] }
-        var lastValueIndex = 0
-        var lastValue = 0.0
-        val adjustedValues = values.mapIndexed { i, value ->
-            dates[i] to if (value != null) {
-                lastValueIndex = i
-                lastValue = value
-                value
-            } else if (i - lastValueIndex <= 7) {
-                lastValue
-            } else {
-                0.0
-            }
-        }.toMap()
-        adjustedValues
+        if (sortedDates.isEmpty()) mapOf<LocalDate, Number>()
+        else {
+            val first = sortedDates.keys.first()
+            val last = sortedDates.keys.last()
+            val dates = DateRange(first..last).toList()
+            val values = dates.map { sortedDates[it] }
+            var lastValueIndex = 0
+            var lastValue = 0.0
+            val adjustedValues = values.mapIndexed { i, value ->
+                dates[i] to when {
+                    value != null -> {
+                        lastValueIndex = i
+                        lastValue = value
+                        value
+                    }
+                    i - lastValueIndex <= 7 -> lastValue
+                    else -> 0.0
+                }
+            }.toMap()
+            adjustedValues
+        }
     });
 
     operator fun invoke(entries: List<Pair<LocalDate, Number>>, date: LocalDate?) = aggregator(entries, date)
