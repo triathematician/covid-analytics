@@ -260,9 +260,9 @@ data class TimeSeries(
     ).restrictToRealNumbers()
 
     /** Return copy with percent changes. */
-    fun percentChanges(bucket: Int = 1, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
+    fun percentChanges(bucket: Int = 1, offset: Int = bucket, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric), intSeries = false,
-        values = values.movingAverage(bucket).percentChanges(offset = bucket)
+        values = values.movingAverage(bucket).percentChanges(offset = offset)
     ).restrictToRealNumbers()
 
     /** Return copy with growth rates. */
