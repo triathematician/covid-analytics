@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.googlecode.blaisemath</groupId>
 		<artifactId>coda</artifactId>
-        <version>0.1.13</version>
+        <version>0.1.14-SNAPSHOT</version>
 	</parent>
 
     <artifactId>coda-app</artifactId>
