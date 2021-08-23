@@ -37,8 +37,8 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
         val smallest = values.minOrNull()
         if (smallest == largest) {
             return ExtremaSummary(series).apply {
-                extrema[series.start] = ExtremeInfo(series.metric, series.start, series[series.start], ExtremeType.ENDPOINT, null)
-                extrema[series.end] = ExtremeInfo(series.metric, series.end, series[series.end], ExtremeType.ENDPOINT, null)
+                extrema[series.start] = ExtremeInfo(series.metric, series.start, series[series.start], ExtremeType.ENDPOINT, 0, null)
+                extrema[series.end] = ExtremeInfo(series.metric, series.end, series[series.end], ExtremeType.ENDPOINT, 0, null)
             }
         }
 
@@ -57,7 +57,8 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
                 val previous = if (i == 0) null else series.values.getOrNull(combined[i - 1].first)
                 val current = series.values.getOrNull(pair.first) ?: 0.0
                 val type = if (current == largest) ExtremeType.GLOBAL_MAX else if (current == smallest) ExtremeType.GLOBAL_MIN else pair.second
-                ExtremeInfo(series.metric, series.date(pair.first), current, type, previous?.percentChangeTo(current))
+                val daysSinceLast = if (i == 0) 0 else combined[i].first - combined[i - 1].first
+                ExtremeInfo(series.metric, series.date(pair.first), current, type, daysSinceLast, previous?.percentChangeTo(current))
             }.onEach { extrema[it.date] = it }
         }
     }
@@ -100,5 +101,8 @@ class ExtremaSummary(val series: TimeSeries) {
 /** Types of extrema. */
 enum class ExtremeType { GLOBAL_MAX, GLOBAL_MIN, LOCAL_MAX, LOCAL_MIN, ENDPOINT }
 
-/** Information associated with a single extremum. */
-data class ExtremeInfo(var metric: String, var date: LocalDate, var value: Double, var type: ExtremeType, var percentChange: Double?)
+/**
+ * Information associated with a single extremum. Tracks the extremum type, date, and value, along with the length of
+ * time and change since the prior extremum.
+ */
+data class ExtremeInfo(var metric: String, var date: LocalDate, var value: Double, var type: ExtremeType, var daysSinceLast: Int, var percentChange: Double?)
