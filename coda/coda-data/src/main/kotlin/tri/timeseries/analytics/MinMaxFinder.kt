@@ -32,7 +32,7 @@ import kotlin.math.abs
 class MinMaxFinder(var sampleWindow: Int = 7) {
 
     fun invoke(series: TimeSeries): ExtremaSummary {
-        val values = series.values.convolve()
+        val values = series.values.removeTrailingZeros().convolve()
         val largest = values.maxOrNull()
         val smallest = values.minOrNull()
         if (smallest == largest) {
@@ -46,7 +46,7 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
         val maxima = findMaxs(values, sampleWindow)
 
         val extremes = (minima.map { it to ExtremeType.LOCAL_MIN } + maxima.map { it to ExtremeType.LOCAL_MAX })
-        val endpoints = listOf(0 to ExtremeType.ENDPOINT, series.size - 1 to ExtremeType.ENDPOINT)
+        val endpoints = listOf(0 to ExtremeType.ENDPOINT, values.size - 1 to ExtremeType.ENDPOINT)
         val intermediates = extremes.windowed(2)
                 .filter { it[0].second == it[1].second && it[1].first - it[0].first > sampleWindow }
                 .map { betweenExtremes(series.values, it[0], it[1]) }
@@ -83,6 +83,7 @@ class MinMaxFinder(var sampleWindow: Int = 7) {
     private fun List<Double>.convolve() = indices.map { i ->
         (-10..10).sumByDouble { getOrElse(i + it) { 0.0 } * convolveFun(it) }
     }
+    private fun List<Double>.removeTrailingZeros() = dropLastWhile { !it.isFinite() || it == 0.0 }
 
     private fun convolveFun(i: Int) = when (i) {
         0 -> 1.0
