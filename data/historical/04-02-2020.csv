@@ -2356,7 +2356,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,New South Wales,Australia,4/2/20 23:32,-33.8688,151.2093,2298,10,4,2284,"New South Wales, Australia"
 ,,Newfoundland and Labrador,Canada,4/2/20 23:31,53.1355,-57.6604,183,1,0,0,"Newfoundland and Labrador, Canada"
 ,,Ningxia,China,3/16/20 8:47,37.2692,106.1655,75,0,75,0,"Ningxia, China"
-,,Northern Mariana Islands,US,4/2/20 23:25,15.0979,145.6739,6,1,0,0,",Northern Mariana Islands,US"
+,,Northern Mariana Islands,US,4/2/20 23:25,15.0979,145.6739,6,0,0,0,",Northern Mariana Islands,US"
 ,,Northern Territory,Australia,4/2/20 23:32,-12.4634,130.8456,21,0,0,21,"Northern Territory, Australia"
 ,,Northwest Territories,Canada,4/2/20 23:31,64.8255,-124.8457,2,0,0,0,",Northwest Territories,Canada"
 ,,Nova Scotia,Canada,4/2/20 23:31,44.682,-63.7443,193,0,0,0,"Nova Scotia, Canada"

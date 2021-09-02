@@ -3314,7 +3314,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Norrbotten,Sweden,2020-06-06 02:33:00,66.8309,20.3992,481,48,0,433,"Norrbotten, Sweden",192.32845381518075,9.97920997920998
 ,,Norte de Santander,Colombia,2020-06-06 02:33:00,7.9463,-72.8988,133,14,103,16,"Norte de Santander, Colombia",8.916067625356224,10.526315789473685
 ,,North Ossetia - Alania Republic,Russia,2020-06-06 02:33:00,42.79336110000001,44.6324493,3197,57,2702,438,"North Ossetia - Alania Republic, Russia",455.56560957015523,1.7829214888958398
-69,,Northern Mariana Islands,US,2020-06-06 02:33:00,15.0979,145.6739,26,16,0,10,"Northern Mariana Islands, US",47.14928188016829,61.53846153846154
+69,,Northern Mariana Islands,US,2020-06-06 02:33:00,15.0979,145.6739,26,2,0,10,"Northern Mariana Islands, US",47.14928188016829,61.53846153846154
 ,,Northern Territory,Australia,2020-06-06 02:33:00,-12.4634,130.8456,29,0,29,0,"Northern Territory, Australia",11.807817589576548,0.0
 ,,Northwest Territories,Canada,2020-06-06 02:33:00,64.8255,-124.8457,5,0,5,0,"Northwest Territories, Canada",11.13486549082487,0.0
 ,,Nova Scotia,Canada,2020-06-06 02:33:00,44.681999999999995,-63.7443,1058,61,997,0,"Nova Scotia, Canada",108.24005557277711,5.765595463137997
