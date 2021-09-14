@@ -79,6 +79,9 @@ object Usa {
     /** Census division areas. */
     val censusDivisionAreas = censusDivisionByState.values.toSet()
 
+    /** All regional area groupings. */
+    val allRegionAreas = femaRegionAreas + censusRegionAreas + censusDivisionAreas
+
     /** Region X. */
     val regionX = UsRegionInfo("X", "WA,OR,CA,NV,AZ,HI,CO,NM,MN,WI,IL,MI,ME,NH,VT,NY,PA,VA,GA,MA,RI,CT,NJ,DE,MD,DC".split(",").map { states[it]!! })
     val regionY = UsRegionInfo("Y", "AK,ID,MT,WY,UT,ND,SD,NE,KS,OK,TX,IA,MO,AR,LA,IN,OH,KY,WV,TN,MS,AL,NC,SC,FL".split(",").map { states[it]!! })
