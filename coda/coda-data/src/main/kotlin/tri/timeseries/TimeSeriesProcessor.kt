@@ -99,7 +99,7 @@ abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeries
 
     override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, FileOutputStream(processed()), Charsets.UTF_8)
 
-    open fun process(series: List<TimeSeries>) = series.regroupAndMax(coerceIncreasing = false)
+    open fun process(series: List<TimeSeries>) = series.regroupAndMax(coerceIncreasing = false, replaceZerosWithPrevious = false)
 
 }
 
