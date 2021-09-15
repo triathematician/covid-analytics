@@ -262,7 +262,7 @@ private fun censusRegionOf(area: AreaInfo): UsRegionInfo? {
 
 private fun censusDivisionOf(area: AreaInfo): UsRegionInfo? {
     val state = stateOf(area)
-    return Usa.censusRegionAreas.filter { state in it.states }.getOrNull(1)
+    return Usa.censusDivisionAreas.firstOrNull { state in it.states }
 }
 
 private fun xyRegionOf(area: AreaInfo): UsRegionInfo? {
