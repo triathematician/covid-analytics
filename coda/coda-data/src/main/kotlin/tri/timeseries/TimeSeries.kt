@@ -316,6 +316,17 @@ data class TimeSeries(
         return copy(values = res)
     }
 
+    /**
+     * Return copy of this series where zero values are replaced by the previous value.
+     */
+    fun replaceZerosWithPrevious(): TimeSeries {
+        val res = values.toMutableList()
+        for (i in 1 until res.size) {
+            if (res[i] == 0.0) res[i] = res[i - 1]
+        }
+        return copy(values = res)
+    }
+
     /** Return copy of this series where values are real numbers. */
     fun restrictToRealNumbers(): TimeSeries {
         val firstRealNumber = values.indexOfFirst { it.isFinite() }

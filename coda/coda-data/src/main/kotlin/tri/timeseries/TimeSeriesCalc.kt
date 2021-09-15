@@ -30,10 +30,15 @@ fun Collection<TimeSeries>.smooth7(total: Boolean) = map { it.smooth7(total) }
 /** Organize by area, using first series for each area. */
 fun Collection<TimeSeries>.deltas() = map { it.deltas() }
 
-/** Merge [TimeSeries] by unique key, taking the max value across instances. */
-fun List<TimeSeries>.regroupAndMax(coerceIncreasing: Boolean) = groupBy { it.uniqueMetricKey }
+/**
+ * Merge [TimeSeries] by unique key, taking the max value across instances.
+ * @param coerceIncreasing if true, forces the series to be always increasing (e.g. to force a cumulative series)
+ * @param replaceZerosWithPrevious if true, replaces any zeros in the middle of the series with the prior value
+ *   (e.g. to force a cumulative series with occasional downward corrections). This flag is ignored if [coerceIncreasing] is true.
+ */
+fun List<TimeSeries>.regroupAndMax(coerceIncreasing: Boolean, replaceZerosWithPrevious: Boolean) = groupBy { it.uniqueMetricKey }
         .map { it.value.max() }
-        .map { if (coerceIncreasing) it.coerceIncreasing() else it }
+        .map { if (coerceIncreasing) it.coerceIncreasing() else if (replaceZerosWithPrevious) it.replaceZerosWithPrevious() else it }
         .map { it.restrictNumberOfStartingZerosTo(5) }
 
 /** Merge [TimeSeries] by unique key, summing across instances. */
