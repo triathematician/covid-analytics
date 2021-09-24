@@ -366,7 +366,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,MS Zaandam,2020-10-24 04:24:46,,,9,2,0,7,MS Zaandam,,22.22222222222222
 ,,,Madagascar,2020-10-24 04:24:46,-18.766947,46.869107,16810,238,16215,357,Madagascar,60.705602780453845,1.4158239143367044
 ,,,Malawi,2020-10-24 04:24:46,-13.2543,34.3015,5885,183,5287,415,Malawi,30.76327152886664,3.109600679694138
-,,,Malaysia,2020-10-24 04:24:46,4.210483999999999,101.975766,24514,214,15884,8416,Malaysia,75.73997872705796,0.8729705474422779
 ,,,Maldives,2020-10-24 04:24:46,3.2028,73.2207,11391,37,10428,926,Maldives,2107.3293102108623,0.32481783864454394
 ,,,Mali,2020-10-24 04:24:46,17.570692,-3.996166000000001,3444,132,2620,692,Mali,17.00670698303092,3.832752613240418
 ,,,Malta,2020-10-24 04:24:46,35.9375,14.3754,5258,49,3439,1770,Malta,1190.8347846962554,0.9319132750095093
@@ -3967,3 +3966,20 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Palau,2020-10-24 04:24:46,7.515,134.5825,0,0,0,0,Palau,0.0,0.0
 ,,Cook Islands,New Zealand,2020-10-24 04:24:46,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand",0.0,0.0
 ,,,Summer Olympics 2020,2020-10-24 04:24:46,35.6491,139.7737,0,0,0,0,Summer Olympics 2020,0.0,0.0
+,,Johor,Malaysia,2020-10-24 04:24:46,1.4854,103.7618,848,20,798,0,"Johor, Malaysia",0.0,0.0
+,,Kedah,Malaysia,2020-10-24 04:24:46,6.1184,100.3685,1968,8,1415,0,"Kedah, Malaysia",0.0,0.0
+,,Kelantan,Malaysia,2020-10-24 04:24:46,6.1254,102.2381,178,3,166,0,"Kelantan, Malaysia",0.0,0.0
+,,Melaka,Malaysia,2020-10-24 04:24:46,2.1896,102.2501,300,6,264,0,"Melaka, Malaysia",0.0,0.0
+,,Negeri Sembilan,Malaysia,2020-10-24 04:24:46,2.7258,101.9424,1195,8,1059,0,"Negeri Sembilan, Malaysia",0.0,0.0
+,,Pahang,Malaysia,2020-10-24 04:24:46,3.8126,103.3256,395,7,380,0,"Pahang, Malaysia",0.0,0.0
+,,Perak,Malaysia,2020-10-24 04:24:46,4.5921,101.0901,448,7,302,0,"Perak, Malaysia",0.0,0.0
+,,Perlis,Malaysia,2020-10-24 04:24:46,6.4449,100.2048,38,2,35,0,"Perlis, Malaysia",0.0,0.0
+,,Pulau Pinang,Malaysia,2020-10-24 04:24:46,5.4141,100.3288,730,3,365,0,"Pulau Pinang, Malaysia",0.0,0.0
+,,Sabah,Malaysia,2020-10-24 04:24:46,5.9788,116.0753,10397,97,4428,0,"Sabah, Malaysia",0.0,0.0
+,,Sarawak,Malaysia,2020-10-24 04:24:46,1.5533,110.3592,772,19,718,0,"Sarawak, Malaysia",0.0,0.0
+,,Selangor,Malaysia,2020-10-24 04:24:46,3.0738,101.5183,3806,25,2874,0,"Selangor, Malaysia",0.0,0.0
+,,Terengganu,Malaysia,2020-10-24 04:24:46,5.3117,103.1324,168,1,148,0,"Terengganu, Malaysia",0.0,0.0
+,,W.P. Kuala Lumpur,Malaysia,2020-10-24 04:24:46,3.139,101.6869,2917,19,2773,0,"W.P. Kuala Lumpur, Malaysia",0.0,0.0
+,,W.P. Labuan,Malaysia,2020-10-24 04:24:46,5.2831,115.2308,216,2,44,0,"W.P. Labuan, Malaysia",0.0,0.0
+,,W.P. Putrajaya,Malaysia,2020-10-24 04:24:46,2.9264,101.6964,138,1,114,0,"W.P. Putrajaya, Malaysia",0.0,0.0
+,,Unknown,Malaysia,2020-10-24 04:24:46,,,0,0,0,0,"Unknown, Malaysia",0.0,0.0

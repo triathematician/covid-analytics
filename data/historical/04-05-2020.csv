@@ -2686,7 +2686,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,MS Zaandam,2020-04-05 23:06:26,,,9,2,0,7,",,MS Zaandam"
 ,,,Madagascar,2020-04-05 23:06:26,-18.766947000000002,46.869107,72,0,2,70,Madagascar
 ,,,Malawi,2020-04-05 23:06:26,-13.254307999999998,34.301525,4,0,0,4,Malawi
-,,,Malaysia,2020-04-05 23:06:26,4.210483999999999,101.97576600000001,3662,61,1005,2596,Malaysia
 ,,,Maldives,2020-04-05 23:06:26,3.2028,73.2207,19,0,13,6,Maldives
 ,,,Mali,2020-04-05 23:06:26,17.570692,-3.996166000000001,45,5,1,39,Mali
 ,,,Malta,2020-04-05 23:06:26,35.9375,14.3754,227,0,5,222,Malta
@@ -2769,3 +2768,20 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Palau,2020-04-05 23:06:45,7.515,134.5825,0,0,0,0,Palau
 ,,Cook Islands,New Zealand,2020-04-05 23:06:45,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
 ,,,Summer Olympics 2020,2020-04-05 23:06:45,35.6491,139.7737,0,0,0,0,Summer Olympics 2020
+,,Johor,Malaysia,2020-04-05 23:06:45,1.4854,103.7618,443,13,134,0,"Johor, Malaysia"
+,,Kedah,Malaysia,2020-04-05 23:06:45,6.1184,100.3685,82,1,35,0,"Kedah, Malaysia"
+,,Kelantan,Malaysia,2020-04-05 23:06:45,6.1254,102.2381,142,3,57,0,"Kelantan, Malaysia"
+,,Melaka,Malaysia,2020-04-05 23:06:45,2.1896,102.2501,85,2,0,0,"Melaka, Malaysia"
+,,Negeri Sembilan,Malaysia,2020-04-05 23:06:45,2.7258,101.9424,232,4,79,0,"Negeri Sembilan, Malaysia"
+,,Pahang,Malaysia,2020-04-05 23:06:45,3.8126,103.3256,161,1,22,0,"Pahang, Malaysia"
+,,Perak,Malaysia,2020-04-05 23:06:45,4.5921,101.0901,212,4,68,0,"Perak, Malaysia"
+,,Perlis,Malaysia,2020-04-05 23:06:45,6.4449,100.2048,14,1,8,0,"Perlis, Malaysia"
+,,Pulau Pinang,Malaysia,2020-04-05 23:06:45,5.4141,100.3288,99,1,0,0,"Pulau Pinang, Malaysia"
+,,Sabah,Malaysia,2020-04-05 23:06:45,5.9788,116.0753,239,2,14,0,"Sabah, Malaysia"
+,,Sarawak,Malaysia,2020-04-05 23:06:45,1.5533,110.3592,260,12,18,0,"Sarawak, Malaysia"
+,,Selangor,Malaysia,2020-04-05 23:06:45,3.0738,101.5183,934,8,385,0,"Selangor, Malaysia"
+,,Terengganu,Malaysia,2020-04-05 23:06:45,5.3117,103.1324,85,1,0,0,"Terengganu, Malaysia"
+,,W.P. Kuala Lumpur,Malaysia,2020-04-05 23:06:45,3.139,101.6869,626,8,174,0,"W.P. Kuala Lumpur, Malaysia"
+,,W.P. Labuan,Malaysia,2020-04-05 23:06:45,5.2831,115.2308,11,0,1,0,"W.P. Labuan, Malaysia"
+,,W.P. Putrajaya,Malaysia,2020-04-05 23:06:45,2.9264,101.6964,37,1,9,0,"W.P. Putrajaya, Malaysia"
+,,Unknown,Malaysia,2020-04-05 23:06:45,,,0,0,0,0,"Unknown, Malaysia"

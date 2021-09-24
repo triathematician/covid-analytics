@@ -3130,7 +3130,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,MS Zaandam,2020-05-06 02:32:31,,,9,2,0,7,MS Zaandam
 ,,,Madagascar,2020-05-06 02:32:31,-18.766947000000002,46.869107,151,0,101,50,Madagascar
 ,,,Malawi,2020-05-06 02:32:31,-13.254307999999998,34.301525,41,3,9,29,Malawi
-,,,Malaysia,2020-05-06 02:32:31,4.210483999999999,101.97576600000001,6383,106,4567,1710,Malaysia
 ,,,Maldives,2020-05-06 02:32:31,3.2028,73.2207,573,2,20,551,Maldives
 ,,,Mali,2020-05-06 02:32:31,17.570692,-3.996166000000001,612,32,228,352,Mali
 ,,,Malta,2020-05-06 02:32:31,35.9375,14.3754,482,5,403,74,Malta
@@ -3215,3 +3214,20 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Palau,2020-05-06 02:32:31,7.515,134.5825,0,0,0,0,Palau
 ,,Cook Islands,New Zealand,2020-05-06 02:32:31,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
 ,,,Summer Olympics 2020,2020-05-06 02:32:31,35.6491,139.7737,0,0,0,0,Summer Olympics 2020
+,,Johor,Malaysia,2020-05-06 02:32:31,1.4854,103.7618,670,17,422,0,"Johor, Malaysia"
+,,Kedah,Malaysia,2020-05-06 02:32:31,6.1184,100.3685,95,1,86,0,"Kedah, Malaysia"
+,,Kelantan,Malaysia,2020-05-06 02:32:31,6.1254,102.2381,155,3,143,0,"Kelantan, Malaysia"
+,,Melaka,Malaysia,2020-05-06 02:32:31,2.1896,102.2501,202,5,136,0,"Melaka, Malaysia"
+,,Negeri Sembilan,Malaysia,2020-05-06 02:32:31,2.7258,101.9424,599,8,395,0,"Negeri Sembilan, Malaysia"
+,,Pahang,Malaysia,2020-05-06 02:32:31,3.8126,103.3256,308,4,223,0,"Pahang, Malaysia"
+,,Perak,Malaysia,2020-05-06 02:32:31,4.5921,101.0901,252,6,239,0,"Perak, Malaysia"
+,,Perlis,Malaysia,2020-05-06 02:32:31,6.4449,100.2048,18,2,8,0,"Perlis, Malaysia"
+,,Pulau Pinang,Malaysia,2020-05-06 02:32:31,5.4141,100.3288,120,1,117,0,"Pulau Pinang, Malaysia"
+,,Sabah,Malaysia,2020-05-06 02:32:31,5.9788,116.0753,317,4,264,0,"Sabah, Malaysia"
+,,Sarawak,Malaysia,2020-05-06 02:32:31,1.5533,110.3592,525,17,323,0,"Sarawak, Malaysia"
+,,Selangor,Malaysia,2020-05-06 02:32:31,3.0738,101.5183,1556,20,1167,0,"Selangor, Malaysia"
+,,Terengganu,Malaysia,2020-05-06 02:32:31,5.3117,103.1324,112,1,88,0,"Terengganu, Malaysia"
+,,W.P. Kuala Lumpur,Malaysia,2020-05-06 02:32:31,3.139,101.6869,1352,17,885,0,"W.P. Kuala Lumpur, Malaysia"
+,,W.P. Labuan,Malaysia,2020-05-06 02:32:31,5.2831,115.2308,16,0,16,0,"W.P. Labuan, Malaysia"
+,,W.P. Putrajaya,Malaysia,2020-05-06 02:32:31,2.9264,101.6964,86,1,54,0,"W.P. Putrajaya, Malaysia"
+,,Unknown,Malaysia,2020-05-06 02:32:31,,,0,0,0,0,"Unknown, Malaysia"

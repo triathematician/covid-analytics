@@ -3361,7 +3361,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Luxembourg,3/29/20 23:08,49.8153,6.1296,1950,21,40,1889,Luxembourg
 ,,,MS Zaandam,3/29/20 23:08,0.0,0.0,2,0,0,2,",,MS Zaandam"
 ,,,Madagascar,3/29/20 23:08,-18.766947,46.869107,39,0,0,39,Madagascar
-,,,Malaysia,3/29/20 23:08,4.210484,101.975766,2470,35,388,2047,Malaysia
 ,,,Maldives,3/29/20 23:08,3.2028,73.2207,17,0,13,4,Maldives
 ,,,Mali,3/29/20 23:08,17.570692,-3.996166,18,1,0,17,Mali
 ,,,Malta,3/29/20 23:08,35.9375,14.3754,151,0,2,149,Malta
@@ -3441,3 +3440,20 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Palau,3/29/20 23:08,7.515,134.5825,0,0,0,0,Palau
 ,,Cook Islands,New Zealand,3/29/20 23:08,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
 ,,,Summer Olympics 2020,3/29/20 23:08,35.6491,139.7737,0,0,0,0,Summer Olympics 2020
+,,Johor,Malaysia,3/29/20 23:08,1.4854,103.7618,314,11,32,0,"Johor, Malaysia"
+,,Kedah,Malaysia,3/29/20 23:08,6.1184,100.3685,75,1,16,0,"Kedah, Malaysia"
+,,Kelantan,Malaysia,3/29/20 23:08,6.1254,102.2381,124,2,0,0,"Kelantan, Malaysia"
+,,Melaka,Malaysia,3/29/20 23:08,2.1896,102.2501,45,2,0,0,"Melaka, Malaysia"
+,,Negeri Sembilan,Malaysia,3/29/20 23:08,2.7258,101.9424,163,1,28,0,"Negeri Sembilan, Malaysia"
+,,Pahang,Malaysia,3/29/20 23:08,3.8126,103.3256,97,0,7,0,"Pahang, Malaysia"
+,,Perak,Malaysia,3/29/20 23:08,4.5921,101.0901,175,3,2,0,"Perak, Malaysia"
+,,Perlis,Malaysia,3/29/20 23:08,6.4449,100.2048,11,1,2,0,"Perlis, Malaysia"
+,,Pulau Pinang,Malaysia,3/29/20 23:08,5.4141,100.3288,85,1,0,0,"Pulau Pinang, Malaysia"
+,,Sabah,Malaysia,3/29/20 23:08,5.9788,116.0753,198,1,3,0,"Sabah, Malaysia"
+,,Sarawak,Malaysia,3/29/20 23:08,1.5533,110.3592,128,5,7,0,"Sarawak, Malaysia"
+,,Selangor,Malaysia,3/29/20 23:08,3.0738,101.5183,608,5,195,0,"Selangor, Malaysia"
+,,Terengganu,Malaysia,3/29/20 23:08,5.3117,103.1324,46,0,0,0,"Terengganu, Malaysia"
+,,W.P. Kuala Lumpur,Malaysia,3/29/20 23:08,3.139,101.6869,369,5,91,0,"W.P. Kuala Lumpur, Malaysia"
+,,W.P. Labuan,Malaysia,3/29/20 23:08,5.2831,115.2308,10,0,0,0,"W.P. Labuan, Malaysia"
+,,W.P. Putrajaya,Malaysia,3/29/20 23:08,2.9264,101.6964,22,1,5,0,"W.P. Putrajaya, Malaysia"
+,,Unknown,Malaysia,3/29/20 23:08,,,0,0,0,0,"Unknown, Malaysia"

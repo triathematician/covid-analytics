@@ -378,7 +378,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,MS Zaandam,2020-11-30 05:26:13,,,9,2,0,7,MS Zaandam,,22.22222222222222
 ,,,Madagascar,2020-11-30 05:26:13,-18.766947,46.869107,17341,251,16657,433,Madagascar,62.62319201759964,1.4474367106856583
 ,,,Malawi,2020-11-30 05:26:13,-13.2543,34.3015,6025,185,5453,387,Malawi,31.495108064812488,3.070539419087137
-,,,Malaysia,2020-11-30 05:26:13,4.210483999999999,101.975766,64485,357,52647,11481,Malaysia,199.23686579971985,0.5536171202605257
 ,,,Maldives,2020-11-30 05:26:13,3.2028,73.2207,12994,46,11902,1046,Maldives,2403.883509514524,0.3540095428659381
 ,,,Mali,2020-11-30 05:26:13,17.570692,-3.996166000000001,4688,152,3178,1358,Mali,23.14966386075754,3.242320819112628
 ,,,Malta,2020-11-30 05:26:13,35.9375,14.3754,9752,133,7557,2062,Malta,2208.6384215210887,1.363822805578343
@@ -3983,3 +3982,20 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Palau,2020-11-30 05:26:13,7.515,134.5825,0,0,0,0,Palau,0.0,0.0
 ,,Cook Islands,New Zealand,2020-11-30 05:26:13,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand",0.0,0.0
 ,,,Summer Olympics 2020,2020-11-30 05:26:13,35.6491,139.7737,0,0,0,0,Summer Olympics 2020,0.0,0.0
+,,Johor,Malaysia,2020-11-30 05:26:13,1.4854,103.7618,1328,21,1018,0,"Johor, Malaysia",0.0,0.0
+,,Kedah,Malaysia,2020-11-30 05:26:13,6.1184,100.3685,2532,10,2306,0,"Kedah, Malaysia",0.0,0.0
+,,Kelantan,Malaysia,2020-11-30 05:26:13,6.1254,102.2381,359,3,254,0,"Kelantan, Malaysia",0.0,0.0
+,,Melaka,Malaysia,2020-11-30 05:26:13,2.1896,102.2501,382,6,364,0,"Melaka, Malaysia",0.0,0.0
+,,Negeri Sembilan,Malaysia,2020-11-30 05:26:13,2.7258,101.9424,4775,9,3762,0,"Negeri Sembilan, Malaysia",0.0,0.0
+,,Pahang,Malaysia,2020-11-30 05:26:13,3.8126,103.3256,404,7,391,0,"Pahang, Malaysia",0.0,0.0
+,,Perak,Malaysia,2020-11-30 05:26:13,4.5921,101.0901,1740,14,1006,0,"Perak, Malaysia",0.0,0.0
+,,Perlis,Malaysia,2020-11-30 05:26:13,6.4449,100.2048,43,2,39,0,"Perlis, Malaysia",0.0,0.0
+,,Pulau Pinang,Malaysia,2020-11-30 05:26:13,5.4141,100.3288,2026,5,1748,0,"Pulau Pinang, Malaysia",0.0,0.0
+,,Sabah,Malaysia,2020-11-30 05:26:13,5.9788,116.0753,28446,209,25120,0,"Sabah, Malaysia",0.0,0.0
+,,Sarawak,Malaysia,2020-11-30 05:26:13,1.5533,110.3592,1062,19,1008,0,"Sarawak, Malaysia",0.0,0.0
+,,Selangor,Malaysia,2020-11-30 05:26:13,3.0738,101.5183,13537,27,9576,0,"Selangor, Malaysia",0.0,0.0
+,,Terengganu,Malaysia,2020-11-30 05:26:13,5.3117,103.1324,239,1,230,0,"Terengganu, Malaysia",0.0,0.0
+,,W.P. Kuala Lumpur,Malaysia,2020-11-30 05:26:13,3.139,101.6869,6084,19,4639,0,"W.P. Kuala Lumpur, Malaysia",0.0,0.0
+,,W.P. Labuan,Malaysia,2020-11-30 05:26:13,5.2831,115.2308,1325,4,995,0,"W.P. Labuan, Malaysia",0.0,0.0
+,,W.P. Putrajaya,Malaysia,2020-11-30 05:26:13,2.9264,101.6964,203,1,190,0,"W.P. Putrajaya, Malaysia",0.0,0.0
+,,Unknown,Malaysia,2020-11-30 05:26:13,,,0,0,0,0,"Unknown, Malaysia",0.0,0.0

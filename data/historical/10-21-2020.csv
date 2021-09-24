@@ -366,7 +366,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,MS Zaandam,2020-10-22 04:24:27,,,9,2,0,7,MS Zaandam,,22.22222222222222
 ,,,Madagascar,2020-10-22 04:24:27,-18.766947,46.869107,16810,238,16215,357,Madagascar,60.705602780453845,1.4158239143367044
 ,,,Malawi,2020-10-22 04:24:27,-13.2543,34.3015,5864,183,4762,919,Malawi,30.65349604847476,3.120736698499318
-,,,Malaysia,2020-10-22 04:24:27,4.210483999999999,101.975766,22957,199,14931,7827,Malaysia,70.9293747098421,0.8668380014810297
 ,,,Maldives,2020-10-22 04:24:27,3.2028,73.2207,11316,37,10284,995,Maldives,2093.454347673261,0.32697066101095795
 ,,,Mali,2020-10-22 04:24:27,17.570692,-3.996166000000001,3428,132,2599,697,Mali,16.92769789135598,3.8506417736289382
 ,,,Malta,2020-10-22 04:24:27,35.9375,14.3754,5026,46,3331,1649,Malta,1138.2912947667135,0.9152407481098289
@@ -3967,3 +3966,20 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Palau,2020-10-22 04:24:27,7.515,134.5825,0,0,0,0,Palau,0.0,0.0
 ,,Cook Islands,New Zealand,2020-10-22 04:24:27,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand",0.0,0.0
 ,,,Summer Olympics 2020,2020-10-22 04:24:27,35.6491,139.7737,0,0,0,0,Summer Olympics 2020,0.0,0.0
+,,Johor,Malaysia,2020-10-22 04:24:27,1.4854,103.7618,843,20,785,0,"Johor, Malaysia",0.0,0.0
+,,Kedah,Malaysia,2020-10-22 04:24:27,6.1184,100.3685,1964,6,1274,0,"Kedah, Malaysia",0.0,0.0
+,,Kelantan,Malaysia,2020-10-22 04:24:27,6.1254,102.2381,175,3,166,0,"Kelantan, Malaysia",0.0,0.0
+,,Melaka,Malaysia,2020-10-22 04:24:27,2.1896,102.2501,297,6,257,0,"Melaka, Malaysia",0.0,0.0
+,,Negeri Sembilan,Malaysia,2020-10-22 04:24:27,2.7258,101.9424,1120,8,1058,0,"Negeri Sembilan, Malaysia",0.0,0.0
+,,Pahang,Malaysia,2020-10-22 04:24:27,3.8126,103.3256,392,7,379,0,"Pahang, Malaysia",0.0,0.0
+,,Perak,Malaysia,2020-10-22 04:24:27,4.5921,101.0901,430,6,292,0,"Perak, Malaysia",0.0,0.0
+,,Perlis,Malaysia,2020-10-22 04:24:27,6.4449,100.2048,38,2,35,0,"Perlis, Malaysia",0.0,0.0
+,,Pulau Pinang,Malaysia,2020-10-22 04:24:27,5.4141,100.3288,681,3,311,0,"Pulau Pinang, Malaysia",0.0,0.0
+,,Sabah,Malaysia,2020-10-22 04:24:27,5.9788,116.0753,9291,81,3931,0,"Sabah, Malaysia",0.0,0.0
+,,Sarawak,Malaysia,2020-10-22 04:24:27,1.5533,110.3592,769,19,711,0,"Sarawak, Malaysia",0.0,0.0
+,,Selangor,Malaysia,2020-10-22 04:24:27,3.0738,101.5183,3606,25,2677,0,"Selangor, Malaysia",0.0,0.0
+,,Terengganu,Malaysia,2020-10-22 04:24:27,5.3117,103.1324,165,1,142,0,"Terengganu, Malaysia",0.0,0.0
+,,W.P. Kuala Lumpur,Malaysia,2020-10-22 04:24:27,3.139,101.6869,2883,19,2755,0,"W.P. Kuala Lumpur, Malaysia",0.0,0.0
+,,W.P. Labuan,Malaysia,2020-10-22 04:24:27,5.2831,115.2308,169,1,44,0,"W.P. Labuan, Malaysia",0.0,0.0
+,,W.P. Putrajaya,Malaysia,2020-10-22 04:24:27,2.9264,101.6964,134,1,113,0,"W.P. Putrajaya, Malaysia",0.0,0.0
+,,Unknown,Malaysia,2020-10-22 04:24:27,,,0,0,0,0,"Unknown, Malaysia",0.0,0.0
