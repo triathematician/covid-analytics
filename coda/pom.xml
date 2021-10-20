@@ -4,7 +4,7 @@
 
     <groupId>com.googlecode.blaisemath</groupId>
     <artifactId>coda</artifactId>
-    <version>0.1.18</version>
+    <version>0.1.19-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -39,7 +39,7 @@
         <url>https://github.com/triathematician/covid-analytics</url>
         <connection>scm:git:git://github.com/triathematician/covid-analytics.git</connection>
         <developerConnection>scm:git:git@github.com:triathematician/covid-analytics.git</developerConnection>
-      <tag>coda-0.1.18</tag>
+      <tag>coda-0.1.12</tag>
   </scm>
     <issueManagement>
         <system>GitHub Issues</system>
