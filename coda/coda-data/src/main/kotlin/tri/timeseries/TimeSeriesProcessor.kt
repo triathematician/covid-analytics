@@ -44,7 +44,8 @@ abstract class TimeSeriesProcessor {
             saveProcessed(raw)
             return raw
         }
-        throw IllegalStateException("Could not find data")
+        processingNote("No data returned when loading data from $this")
+        return listOf()
     }
 
     /** Loads already processed data, if present. */
@@ -107,6 +108,8 @@ abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeries
 @ExperimentalTime
 abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, processed: () -> File): TimeSeriesCachingProcessor(processed) {
 
+    override fun toString() = "TimeSeriesFileProcessor ${rawSources()}"
+
     override fun loadRaw() = process(rawSources().flatMap { file ->
         measureTimedValue {
             processingNote("Loading data from $file...")
@@ -124,6 +127,8 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, process
 /** Processes URLs to processed files, reads processed files if possible. */
 @ExperimentalTime
 abstract class TimeSeriesUrlProcessor(val rawSources: () -> List<URL>, processed: () -> File): TimeSeriesCachingProcessor(processed) {
+
+    override fun toString() = "TimeSeriesUrlProcessor ${rawSources()}"
 
     override fun loadRaw() = process(rawSources().flatMap { url ->
         measureTimedValue {
