@@ -27,6 +27,9 @@ import kotlin.math.round
 /** Format number with given number of digits. */
 fun Number.format(digits: Int) = "%.${digits}f".format(this)
 
+/** Format number with given number of digits. */
+fun Number.formatAlwaysShowSign(digits: Int) = "%+.${digits}f".format(this)
+
 /** Format a number with digits for presenting to user. */
 fun Number.userFormat(): String {
     val x = toDouble().absoluteValue
@@ -46,6 +49,12 @@ private val Number.nearestInt
     get() = if (this.toLong().absoluteValue > Int.MAX_VALUE) round(toDouble()).toLong() else round(toDouble()).toInt()
 /** Format a number as a percentage. */
 fun Number.percentFormat(digits: Int = 0) = NumberFormat.getPercentInstance().also { it.minimumFractionDigits = digits }.format(this)
+
+/** Format a number as a percentage, always showing sign. */
+fun Number.percentFormatAlwaysShowSign(digits: Int = 0) = percentFormat(digits).let {
+    if (this.toDouble() > 0) "+$it"
+    else it
+}
 
 fun String.javaTrim() = trim { it <= ' ' }
 fun String?.nonBlankOrNull() = if (this.isNullOrBlank()) null else this
