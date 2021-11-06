@@ -32,7 +32,10 @@ object TimeSeriesFileFormat {
     fun readSeries(file: File, charset: Charset) = file.readLines(charset).map { readSeries(it) }
 
     /** Writes several series to the writer. */
-    fun writeSeries(m: List<TimeSeries>, out: OutputStream, charset: Charset) = PrintStream(out, false, charset).use { ps -> m.forEach { writeSeries(it, ps) } }
+    fun writeSeries(m: List<TimeSeries>, out: OutputStream, charset: Charset) =
+        PrintStream(out, false, charset).use { ps ->
+            m.forEach { writeSeries(it, ps) }
+        }
 
     /** Writes a single series to the writer. */
     fun writeSeries(m: TimeSeries, out: PrintStream) {
