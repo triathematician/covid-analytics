@@ -22,6 +22,7 @@ package tri.timeseries
 import tri.area.AreaInfo
 import tri.covid19.data.IhmeForecasts
 import tri.util.ansiYellow
+import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -98,7 +99,7 @@ abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeries
 
     fun deleteProcessedFile() = processed().delete()
 
-    override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, FileOutputStream(processed()), Charsets.UTF_8)
+    override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, BufferedOutputStream(FileOutputStream(processed())), Charsets.UTF_8)
 
     open fun process(series: List<TimeSeries>) = series.regroupAndMax(coerceIncreasing = false, replaceZerosWithPrevious = false)
 
