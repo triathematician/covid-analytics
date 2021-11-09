@@ -19,19 +19,16 @@
 */
 package tri.area
 
+import tri.area.UsaSourceData.cbsaData
+import tri.area.UsaSourceData.stateFips
 import tri.timeseries.TimeSeries
 import tri.timeseries.sum
-import tri.util.csvResource
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
-import kotlin.time.measureTimedValue
+
 
 /** Areas and associated data sources for USA. */
 object Usa {
-
-    private val fips = Usa::class.csvResource<CountyFips>(true, "resources/fips.csv")
-    private val stateFips = Usa::class.csvResource<StateFips>(true, "resources/state-fips.csv")
-    private val cbsaData = Usa::class.csvResource<CbsaCountyMapping>(true, "resources/census/Mar2020cbsaDelineation.csv")
 
     //region LOOKUP TABLES
 
@@ -162,7 +159,8 @@ object Usa {
     //region UTILS
 
     internal fun validCountyFips(n: Int?) = n != null && n >= 1000 && n < 80000 && n % 1000 != 0
-    private fun region(name: String, states: List<StateFips>) = UsRegionInfo(name, states.mapNotNull {
+
+    private fun region(name: String, states: List<UsaSourceData.StateFips>) = UsRegionInfo(name, states.mapNotNull {
         Usa.states[it.state_abbr]
     })
 
@@ -372,27 +370,5 @@ private fun checkZipCode(code: Int) = check(code, { it in 0..99999 }) { "Invalid
 
 /** Utility method for inline checking of values. */
 private fun <X> check(x: X, test: (X) -> Boolean, message: (X) -> String): X = if (test(x)) x else throw IllegalArgumentException(message(x))
-
-//endregion
-
-//region DATA LOADER CLASSES
-
-/** Mapping for state FIPS file. */
-class StateFips(val state_name: String, val state_abbr: String, val long_name: String,
-                val fips: Int, val sumlev: Int, val region: Int, val division: Int, val state: Int,
-                val region_name: String, val division_name: String, val fema_region: Int)
-
-/** Mapping for FIPS file. */
-class CountyFips(val fips: Int, val name: String, val state: String)
-
-/** Mapping for CBSA delineation file. */
-class CbsaCountyMapping(val CBSA_Code: Int, val Metropolitan_Division_Code: String, val CSA_Code: Int,
-                        val CBSA_Title: String, val CBSA_Type: String,
-                        val Metropolitan_Division_Title: String, val CSA_Title: String,
-                        val County_or_Equivalent: String, val State_Name: String,
-                        val FIPS_State_Code: Int, val FIPS_County_Code: Int, val FIPS_Combined: Int,
-                        val Central_Outlying_County: String) {
-    val fipsCombined = FIPS_State_Code * 1000 + FIPS_County_Code
-}
 
 //endregion
