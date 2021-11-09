@@ -61,7 +61,8 @@ enum class AreaType(vararg parentTypes: AreaType, val areasInUsa: () -> List<Are
     PROVINCE_STATE_AGGREGATE(COUNTRY_REGION, areasInUsa = { Usa.femaRegionAreas + Usa.censusRegionAreas }),
     PROVINCE_STATE(PROVINCE_STATE_AGGREGATE, COUNTRY_REGION, areasInUsa = { Usa.stateAreas }),
     METRO(PROVINCE_STATE, COUNTRY_REGION, areasInUsa = { Usa.cbsaAreas }),
-    COUNTY(METRO, PROVINCE_STATE, areasInUsa = { Usa.countyAreas }),
+    // TODO - Alaska FIPS split, to fix when census updates
+    COUNTY(METRO, PROVINCE_STATE, areasInUsa = { Usa.countyAreas.filter { it.fips !in listOf(2063, 2066) }.sortedBy { it.fips } }),
     ZIPCODE(COUNTY, METRO, PROVINCE_STATE, areasInUsa = { listOf<AreaInfo>() }),
     UNKNOWN(UNKNOWN, PROVINCE_STATE, COUNTRY_REGION, CONTINENT, PLANET, areasInUsa = { listOf<AreaInfo>() });
 
