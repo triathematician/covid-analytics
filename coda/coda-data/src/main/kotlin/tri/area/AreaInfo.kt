@@ -38,6 +38,10 @@ open class AreaInfo(val id: String, val type: AreaType, @JsonIgnore val parent: 
     val populationPer100k
         get() = metrics.population?.let { it/100000.0 }
 
+    @get:JsonIgnore
+    val AreaInfo.ancestors: List<AreaInfo>
+        get() = parent?.let { listOf(it) + it.ancestors } ?: listOf()
+
     override fun toString(): String {
         return "AreaInfo(id='$id', type=$type)"
     }
