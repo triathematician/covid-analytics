@@ -28,7 +28,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore
  */
 open class AreaInfo(val id: String, val type: AreaType, @JsonIgnore val parent: AreaInfo?, val fips: Int? = null, val metrics: AreaMetrics) {
     init {
-        require(if (parent == null) type.parents.isEmpty() else parent.type in type.parents) { "Parent type of $id was invalid: $type cannot have parent $parent" }
+        require(if (parent == null) type.parents.isEmpty() else parent.type in type.parents) {
+            "Parent type of $id was invalid: $type cannot have parent $parent"
+        }
     }
 
     @get:JsonIgnore
@@ -38,13 +40,7 @@ open class AreaInfo(val id: String, val type: AreaType, @JsonIgnore val parent: 
     val populationPer100k
         get() = metrics.population?.let { it/100000.0 }
 
-    @get:JsonIgnore
-    val AreaInfo.ancestors: List<AreaInfo>
-        get() = parent?.let { listOf(it) + it.ancestors } ?: listOf()
-
-    override fun toString(): String {
-        return "AreaInfo(id='$id', type=$type)"
-    }
+    override fun toString() = "AreaInfo(id='$id', type=$type)"
 }
 
 //region UNIQUE AREAS

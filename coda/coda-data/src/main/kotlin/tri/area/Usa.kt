@@ -76,9 +76,6 @@ object Usa {
     /** Census division areas. */
     val censusDivisionAreas = censusDivisionByState.values.toSet()
 
-    /** All regional area groupings. */
-    val allRegionAreas = femaRegionAreas + censusRegionAreas + censusDivisionAreas
-
     /** Region X. */
     val regionX = UsRegionInfo("X", "WA,OR,CA,NV,AZ,HI,CO,NM,MN,WI,IL,MI,ME,NH,VT,NY,PA,VA,GA,MA,RI,CT,NJ,DE,MD,DC".split(",").map { states[it]!! })
     val regionY = UsRegionInfo("Y", "AK,ID,MT,WY,UT,ND,SD,NE,KS,OK,TX,IA,MO,AR,LA,IN,OH,KY,WV,TN,MS,AL,NC,SC,FL".split(",").map { states[it]!! })
@@ -163,6 +160,18 @@ object Usa {
     private fun region(name: String, states: List<UsaSourceData.StateFips>) = UsRegionInfo(name, states.mapNotNull {
         Usa.states[it.state_abbr]
     })
+
+    //endregion
+
+    //region PARENTS AND ANCESTORS
+
+    /** All regional area groupings. */
+    val allRegionAreas = femaRegionAreas + censusRegionAreas + censusDivisionAreas
+
+    /** Get regions that completely contain this region. */
+    val regionsContainingRegion = allRegionAreas.associateWith { region -> allRegionAreas.filter { it.states.containsAll(region.states) }.toSet() }
+    /** Get regions that completely contain this state. */
+    val regionsContainingState = stateAreas.associateWith { state -> allRegionAreas.filter { state in it.states }.toSet() }
 
     //endregion
 }
@@ -345,6 +354,16 @@ val AreaInfo.friendlyName
         is UsHsaInfo -> name
         else -> id
     }
+
+/** Get all ancestors of the given area, including itself. */
+fun AreaInfo.ancestors(): Set<AreaInfo> = when (this) {
+    USA -> setOf(USA)
+    is UsRegionInfo -> Usa.regionsContainingRegion[this]!! + setOf(this, USA)
+    is UsStateInfo -> Usa.regionsContainingState[this]!!.flatMap { it.ancestors() }.toSet() + setOf(this)
+    is UsCbsaInfo -> states.flatMap { it.ancestors() }.toSet() + setOf(this)
+    is UsCountyInfo -> Usa.cbsaAreas.filter { this in it.counties }.toSet() + state.ancestors()
+    else -> setOf(this)
+} + USA
 
 //endregion
 

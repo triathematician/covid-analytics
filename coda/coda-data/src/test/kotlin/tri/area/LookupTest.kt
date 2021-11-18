@@ -56,4 +56,14 @@ class LookupTest {
             }
         }
     }
+
+    @Test
+    fun testUsaAncestors() {
+        println(Lookup.area("24027").ancestors().map { it.id })
+        println(Lookup.area("MD").ancestors().map { it.id })
+        println(Lookup.area("Region 3").ancestors().map { it.id })
+        println(Lookup.area("USA").ancestors().map { it.id })
+
+        println(Lookup.area("Region 1").ancestors().map { it.id })
+    }
 }
