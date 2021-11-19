@@ -22,7 +22,7 @@ package tri.area
 import tri.util.csvResource
 
 /** Loads data from files with information about counties, CBSAs, FIPS, and more. */
-internal object UsaSourceData {
+object UsaSourceData {
 
     /** County FIPS data. */
     internal val fips = Usa::class.csvResource<CountyFips>(true, "resources/fips.csv")
@@ -32,6 +32,16 @@ internal object UsaSourceData {
 
     /** CBSA/County mapping data. */
     internal val cbsaData = Usa::class.csvResource<CbsaCountyMapping>(true, "resources/census/Mar2020cbsaDelineation.csv")
+
+    /** JHU data for areas of many types. */
+    internal val jhuData by lazy { JhuAreaData::class.csvResource<JhuAreaInfo>(true, "resources/jhucsse/jhu-iso-fips-lookup.csv") }
+
+    /** List of US state abbreviations. */
+    val stateAbbreviations = stateFips.map { it.state_abbr }
+    /** Mapping of US state abbreviations to state names. */
+    val statesByAbbreviation = stateFips.associate { it.state_abbr to it.state_name }
+    /** Mapping of US state abbreviations from state names. */
+    val abbreviationsByState = stateFips.associate { it.state_name to it.state_abbr }
 
     //region DATA LOADER CLASSES
 

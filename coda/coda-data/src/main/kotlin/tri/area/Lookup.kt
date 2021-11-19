@@ -22,8 +22,6 @@ package tri.area
 import tri.util.csvResource
 import tri.util.fine
 import tri.util.javaTrim
-import tri.util.warning
-import java.nio.charset.Charset
 
 /**
  * Quick access to looking up areas/elements by region name. Maintains a cache so that only one lookup is performed per
@@ -64,8 +62,8 @@ object Lookup {
             this["${it.value.id}, US"] = it.value
         }
         // prepopulate with e.g. "Unassigned, Ohio, US"
-        Usa.unassigned.forEach {
-            this["Unassigned, ${Usa.statesByAbbreviation[it.key]}, US"] = it.value
+        Usa.unassignedCountiesByState.forEach {
+            this["Unassigned, ${UsaSourceData.statesByAbbreviation[it.key]}, US"] = it.value
         }
     }
     private val notFound = mutableMapOf<String, AreaInfo>()
@@ -89,6 +87,9 @@ object Lookup {
 
     /** Get object for area with given name. Logs an error and returns null if not found. */
     fun areaOrNull(lookupName: String, assumeUsState: Boolean = false): AreaInfo? {
+        areaCache[lookupName]?.let { return it }
+        notFound[lookupName]?.let { return null }
+
         val name = aliases[lookupName.javaTrim()] ?: lookupName
         val altName = if (assumeUsState) "$name, US" else null
         areaCache[name]?.let { return it }
@@ -101,9 +102,11 @@ object Lookup {
             fine<Lookup>("Area not found: $name")
             fine<Lookup>(name.map { it.toInt() }.toString())
             notFound[name] = UNKNOWN
+            notFound[lookupName] = UNKNOWN
             null
         } else {
             areaCache[name] = areaInfo
+            areaCache[lookupName] = areaInfo
             areaInfo
         }
     }
@@ -125,7 +128,7 @@ object Lookup {
     //region CHECKS
 
     private val aliases = Lookup::class.csvResource<AreaAlias>(true, "resources/area-aliases.csv")
-            .map { it.alias to it.name }.toMap()
+        .associate { it.alias to it.name }
 
     private class AreaAlias(val alias: String, val name: String)
 

@@ -216,16 +216,18 @@ data class TimeSeries(
     /** Smooth the series over a 7-day window, with either a sum or an average. */
     fun smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
 
-    /** Return copy with moving averages. */
+    /** Return copy with moving averages. If bucket is <=1, returns this series. */
     fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) =
-        copyAdjustingStartDay(
-            values = values.movingAverage(bucket, nonZero, includePartialList)
-        )
+        when {
+            bucket <= 1 -> this
+            else -> copyAdjustingStartDay(values = values.movingAverage(bucket, nonZero, includePartialList))
+        }
 
-    /** Return copy with moving sum. */
-    fun movingSum(bucket: Int, includePartialList: Boolean = true) = copyAdjustingStartDay(
-        values = values.movingSum(bucket, includePartialList)
-    )
+    /** Return copy with moving sum. If bucket is <=1, returns this series. */
+    fun movingSum(bucket: Int, includePartialList: Boolean = true) = when {
+        bucket <= 1 -> this
+        else -> copyAdjustingStartDay(values = values.movingSum(bucket, includePartialList))
+    }
 
     /** Return copy with deltas. */
     fun deltas(offset: Int = 1, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(

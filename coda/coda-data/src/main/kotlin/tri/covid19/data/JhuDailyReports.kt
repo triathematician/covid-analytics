@@ -22,6 +22,7 @@ package tri.covid19.data
 import tri.area.Lookup
 import tri.area.UsCbsaInfo
 import tri.area.Usa
+import tri.area.UsaSourceData
 import tri.covid19.*
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
@@ -113,7 +114,7 @@ object JhuDailyReports : TimeSeriesFileProcessor(
 
     private fun String.stateFix() = when (this) {
         "Virgin Islands, U.S." -> "Virgin Islands"
-        in Usa.stateAbbreviations -> Usa.statesByAbbreviation[this]!!
+        in UsaSourceData.stateAbbreviations -> UsaSourceData.statesByAbbreviation[this]!!
         in listOf("None") -> ""
         else -> this
     }

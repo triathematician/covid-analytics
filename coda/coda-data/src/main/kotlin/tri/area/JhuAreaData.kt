@@ -20,15 +20,12 @@
 package tri.area
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import tri.util.csvResource
 
 /** Loads JHU region/population data. */
 object JhuAreaData {
-    private val data = JhuAreaData::class.csvResource<JhuAreaInfo>(true, "resources/jhucsse/jhu-iso-fips-lookup.csv")
-
-    val index = data.groupByOne { it.indexKey }
+    val index = UsaSourceData.jhuData.groupByOne { it.indexKey }
     val areas = index.values
-    val usCounties = data.filter { Usa.validCountyFips(it.fips) }.map { it.fips!! to it }.toMap()
+    val usCounties = UsaSourceData.jhuData.filter { validCountyFips(it.fips) }.associateBy { it.fips!! }
 
     private val lowerIndex by lazy { index.mapKeys { it.key.toString().toLowerCase() } }
 
@@ -47,7 +44,7 @@ data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String, var cod
     val indexKey: List<Any>
         get() = when {
             fips == null -> listOf(combinedKey)
-            fips < 100 -> listOf(fips, Usa.abbreviationsByState[provinceOrState]!!)
+            fips < 100 -> listOf(fips, abbreviationsByState[provinceOrState]!!)
             else -> listOf(fips, combinedKey)
         }
 
@@ -71,20 +68,12 @@ data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String, var cod
         require(fips == null || fips >= 80000) { "Use Usa object to access areas within the US: $this" }
         return AreaInfo(combinedKey, regionType, regionParent, fips, AreaMetrics(population, latitude, longitude))
     }
+
+    companion object {
+        private val abbreviationsByState = UsaSourceData.stateFips.associate { it.state_name to it.state_abbr }
+    }
 }
 
 //region UTILS
-
-private fun <X, Y> List<X>.groupByOne(keySelectors: (X) -> List<Y>): Map<Y, X> {
-    val res = mutableMapOf<Y, MutableList<X>>()
-    for (element in this) {
-        keySelectors(element).forEach { key ->
-            val list = res.getOrPut(key) { ArrayList() }
-            list.add(element)
-        }
-    }
-    res.values.forEach { if (it.size > 1) println("Two values had the same key: $it") }
-    return res.mapValues { it.value.first() }
-}
 
 //endregion
