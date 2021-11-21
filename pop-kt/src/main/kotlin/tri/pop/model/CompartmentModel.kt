@@ -14,7 +14,7 @@ class CompartmentModel(_cohorts: List<Cohort>) {
     /** Rules for transitioning from one step to the next. */
     val rules = mutableListOf<TransitionRule>()
 
-    //region LOOKLUPS
+    //region LOOKUPS
 
     fun cohort(s: String): Cohort = cohorts.find { it.name == s } ?: throw IllegalArgumentException()
 
@@ -62,7 +62,7 @@ fun CompartmentModel.chanceEncounter(first: String, second: String, from: String
 //region EXECUTORS
 
 fun CompartmentModel.run(steps: Int = 100): MutableList<IntArray> {
-    var result = mutableListOf<IntArray>()
+    val result = mutableListOf<IntArray>()
     result.add(cohorts.populationArray())
     for (i in 1..steps) {
         iterate()

@@ -7,18 +7,22 @@ import tri.pop.model.transition
 import kotlin.math.max
 
 /** Model representing susceptible-infected-recovered. */
-fun seir(initialPop: Int = 1000000, initialExposed: Int = 5, initialInfected: Int = 5, initialRecovered: Int = 0, mixRate: Double = 0.25, infectionRate: Double = 0.05, recoverRate: Double = 0.05) = compartmentModel {
-    cohort("susceptible", initialPop - initialExposed - initialInfected - initialRecovered)
-    cohort("exposed", initialExposed)
-    cohort("infectious", initialInfected)
-    cohort("recovered", initialRecovered)
-    chanceEncounter(first = "susceptible", second = "infectious", to = "exposed", weight = mixRate)
-    transition(from = "exposed", to = "infectious", probability = infectionRate)
-    transition(from = "infectious", to = "recovered", probability = recoverRate)
-}
+fun seir(
+        initialPop: Int = 1000000, initialExposed: Int = 5, initialInfected: Int = 5, initialRecovered: Int = 0,
+        mixRate: Double = 0.25, infectionRate: Double = 0.05, recoverRate: Double = 0.05
+) =
+        compartmentModel {
+            cohort("susceptible", initialPop - initialExposed - initialInfected - initialRecovered)
+            cohort("exposed", initialExposed)
+            cohort("infectious", initialInfected)
+            cohort("recovered", initialRecovered)
+            chanceEncounter(first = "susceptible", second = "infectious", to = "exposed", weight = mixRate)
+            transition(from = "exposed", to = "infectious", probability = infectionRate)
+            transition(from = "infectious", to = "recovered", probability = recoverRate)
+        }
 
 fun main() {
-    with (seir()) {
+    with(seir()) {
         var peakInfected = cohort("infectious").count
         println("---")
         for (i in 1..100) {
