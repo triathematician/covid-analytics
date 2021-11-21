@@ -112,13 +112,13 @@ private fun stateOf(area: AreaInfo) = when (area) {
 }
 
 private fun censusRegionOf(area: AreaInfo): UsRegionInfo? {
-    val state = stateOf(area)
-    return Usa.censusRegionAreas.firstOrNull { state in it.states }
+    val state = stateOf(area) ?: return null
+    return Usa.censusRegionByState[state.abbreviation]
 }
 
 private fun censusDivisionOf(area: AreaInfo): UsRegionInfo? {
-    val state = stateOf(area)
-    return Usa.censusDivisionAreas.firstOrNull { state in it.states }
+    val state = stateOf(area) ?: return null
+    return Usa.censusDivisionByState[state.abbreviation]
 }
 
 private fun xyRegionOf(area: AreaInfo): UsRegionInfo? {
