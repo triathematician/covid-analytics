@@ -45,14 +45,6 @@ data class HotspotInfo(var areaId: String, var metric: String, var start: LocalD
     val doublings14 = values.movingAverage(averageDays).doublingTimes(sinceDaysAgo = 14)
     val doublings28 = values.movingAverage(averageDays).doublingTimes(sinceDaysAgo = 28)
 
-//    val minPrior = priorInfo.mapNotNull { it?.totalSeverity }.min()
-//    val maxPrior = priorInfo.mapNotNull { it?.totalSeverity }.max()
-//    val severityChange = when {
-//        minPrior == null || maxPrior == null -> 0
-//        minPrior < riskTotal -> riskTotal - minPrior
-//        else -> riskTotal - maxPrior
-//    }
-
     val value
         get() = values.last()
     val valuePerCapita

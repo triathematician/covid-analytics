@@ -76,7 +76,7 @@ object CovidTimeSeriesSources {
             .sortedBy { it.areaId }
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
-    fun dailyReports(areaFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
+    private fun dailyReports(areaFilter: (AreaInfo) -> Boolean = { true }, averageDays: Int = 7) = measureTimedValue {
         LocalCovidDataQuery.allDataByArea(areaFilter)
                 .flatMap { it.value }
                 .flatMap {
@@ -85,7 +85,7 @@ object CovidTimeSeriesSources {
                             it.movingAverage(averageDays).shortTermLogisticForecast(10)
                 }
     }.also {
-        if (it.duration > 100.milliseconds) println("Loaded region group data with predictions in ${it.duration}")
+        if (it.duration > 100.milliseconds) println("Loaded filtered area data with derived series (pop/growth/forecast) in ${it.duration}")
     }.value
 
     /** Filter daily reports for selected region and metric. */

@@ -37,9 +37,9 @@ class CovidDataTests {
     @ExperimentalTime
     fun testGrowth() {
         println(File("").absolutePath)
-        val data = LocalCovidDataQuery.by({ it.type == AreaType.COUNTY}, { it == CASES })
+        val data = LocalCovidDataQuery.by({ it.type == AreaType.COUNTY}, { it == CASES }).take(10)
         val latest = mutableMapOf<String, LocalDate>()
-        (LocalDate.of(2020, 6, 15)..LocalDate.now()).forEach { date ->
+        (LocalDate.of(2020, 6, 25)..LocalDate.of(2020, 6, 30)).forEach { date ->
             val filtered = data.map { Growth(it, date) }.filter {
                 it.count7 >= 100 && it.countPerCapita7 >= 20 &&
                         it.ratio730 >= .31 && (it.change7 >= 1.6 || it.change3 >= 1.6)

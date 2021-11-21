@@ -73,12 +73,9 @@ object JhuDailyReports : TimeSeriesFileProcessor(
         return rows.flatMap { row ->
             val areaId = row.areaId
             Lookup.areaOrNull(areaId) ?: throw IllegalArgumentException("Unknown area: $areaId")
-            listOfNotNull(TimeSeries(JHU_CSSE, areaId, CASES, "", 0, row.Last_Update, row.Confirmed),
+            listOfNotNull(
+                    TimeSeries(JHU_CSSE, areaId, CASES, "", 0, row.Last_Update, row.Confirmed),
                     TimeSeries(JHU_CSSE, areaId, DEATHS, "", 0, row.Last_Update, row.Deaths)
-//                    intTimeSeries(areaId, RECOVERED, row.Last_Update, row.Recovered)
-//                    intTimeSeries(areaId, ACTIVE, row.Last_Update, row.Active),
-//                    row.People_Tested?.let { intTimeSeries(areaId, TESTS, row.Last_Update, it) },
-//                    row.People_Hospitalized?.let { intTimeSeries(areaId, ADMITS, row.Last_Update, it) }
             )
         }
     }
@@ -173,10 +170,11 @@ private val FORMAT1 = DateTimeFormatter.ofPattern("M/d/yy H:mm")
 private val FORMAT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 private val FORMAT3 = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
 private val FORMAT4 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+private val FORMAT5 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
 val M_D_YYYY = DateTimeFormatter.ofPattern("M-d-yyyy")
 
-private val FORMATS = arrayOf(FORMAT1, FORMAT2, FORMAT3, FORMAT4)
+private val FORMATS = arrayOf(FORMAT1, FORMAT2, FORMAT3, FORMAT4, FORMAT5)
 
 /** List of substrings to exclude if found anywhere in area name. */
 private val EXCLUDED_AREAS = listOf("Madison, Wisconsin, US", "Ashland, Nebraska, US", "Travis, California, US",

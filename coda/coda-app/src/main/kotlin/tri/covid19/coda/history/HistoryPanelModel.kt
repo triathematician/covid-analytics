@@ -30,10 +30,6 @@ import tri.covid19.DEATHS
 import tri.covid19.RECOVERED
 import tri.covid19.coda.utils.ChartDataSeries
 import tri.covid19.coda.utils.series
-import tri.timeseries.TimeSeries
-import tri.timeseries.dateRange
-import tri.timeseries.deltas
-import tri.timeseries.movingAverage
 import tri.util.DateRange
 import tri.util.javaTrim
 import tri.covid19.coda.data.CovidTimeSeriesSources.countryData
@@ -41,6 +37,7 @@ import tri.covid19.coda.data.CovidTimeSeriesSources.usCbsaData
 import tri.covid19.coda.data.CovidTimeSeriesSources.usCountyData
 import tri.covid19.coda.data.CovidTimeSeriesSources.usStateData
 import tri.covid19.coda.data.perCapita
+import tri.timeseries.*
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
 import kotlin.time.ExperimentalTime
@@ -181,7 +178,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         if (perDay) {
             metrics = metrics.map { it.deltas() }
         }
-        val domain = metrics.dateRange ?: DateRange(LocalDate.now(), LocalDate.now())
+        val domain = metrics.dateRangeOrNull() ?: DateRange(LocalDate.now(), LocalDate.now())
         return domain to metrics.map { series(it.areaId, domain, it) }
     }
 

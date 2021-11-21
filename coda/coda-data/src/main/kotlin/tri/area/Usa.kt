@@ -19,7 +19,7 @@
 */
 package tri.area
 
-import tri.area.UsaSourceData.cbsaData
+import tri.area.UsaSourceData.cbsaMapping
 import tri.area.UsaSourceData.stateFips
 
 
@@ -59,7 +59,7 @@ object Usa {
         }.toMap()
 
     /** CBSAs, indexed by CBSA Code. */
-    val cbsas = cbsaData.groupBy { listOf(it.CBSA_Code, it.CSA_Code, it.CBSA_Title, it.CSA_Title) }
+    val cbsas = cbsaMapping.groupBy { listOf<Any>(it.CBSA_Code, it.CSA_Code, it.CBSA_Title, it.CSA_Title) }
         .map { (info, mappings) ->
             info[0] as Int to UsCbsaInfo(info[0] as Int, info[1] as Int, info[2] as String, info[3] as String,
                 mappings.map {
@@ -115,7 +115,7 @@ object Usa {
     /** CBSA's by county */
     val cbsaByCounty = cbsas.values.flatMap { cbsa -> cbsa.counties.map { it to cbsa } }.toMap()
     /** CBSA code by county FIPS */
-    val cbsaCodeByCounty = cbsaData.associate { it.fipsCombined to it.CBSA_Code }
+    val cbsaCodeByCounty = cbsaMapping.associate { it.fipsCombined to it.CBSA_Code }
 
     /** FEMA regions by state */
     val femaRegionByState = stateFips.associate { it.state_abbr to (femaRegions[it.fema_region] ?: error("Region!")) }

@@ -54,9 +54,9 @@ class ForecastTable(model: ForecastPanelModel) : BorderPane() {
                 readonlyColumn("End of May", ForecastStats::may31Total).cellFormat { text = it?.userFormat() }
                 readonlyColumn("End of June", ForecastStats::june30Total).cellFormat { text = it?.userFormat() }
                 readonlyColumn("End of July", ForecastStats::july31Total).cellFormat { text = it?.userFormat() }
-                readonlyColumn("May Total", ForecastStats::mayTotal).cellFormat { text = it?.userFormat() }
-                readonlyColumn("June Total", ForecastStats::juneTotal).cellFormat { text = it?.userFormat() }
-                readonlyColumn("July Total", ForecastStats::julyTotal).cellFormat { text = it?.userFormat() }
+                readonlyColumn("May Total", ForecastStats::mayTotal).cellFormat { text = it.userFormat() }
+                readonlyColumn("June Total", ForecastStats::juneTotal).cellFormat { text = it.userFormat() }
+                readonlyColumn("July Total", ForecastStats::julyTotal).cellFormat { text = it.userFormat() }
                 readonlyColumn("Total", ForecastStats::totalValue).cellFormat { text = it?.userFormat() }
 
                 readonlyColumn("Curve", ForecastStats::sigmoidCurve)

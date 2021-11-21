@@ -158,7 +158,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     var externalForecasts = ExternalForecasts()
 
     private fun updateData() {
-        val areaMetrics = CovidTimeSeriesSources.dailyReports(Lookup.area(areaId), selectedMetric)
+        val areaMetrics = CovidTimeSeriesSources.dailyReports(Lookup.area(areaId, assumeUsState = true), selectedMetric)
         mainSeries.value = areaMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
         domain = mainSeries.value?.domain?.shift(0, 30)
 

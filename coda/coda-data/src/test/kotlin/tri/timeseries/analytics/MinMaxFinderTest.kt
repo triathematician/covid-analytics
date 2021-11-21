@@ -31,6 +31,7 @@ class MinMaxFinderTest {
     @Test
     fun testFind() {
         LocalCovidDataQuery.by({ it.type == AreaType.PROVINCE_STATE && it.parent == USA }, { " " !in it })
+                .take(5)
                 .onEach {
                     val series = it.deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)
                     println("${it.areaId} - ${it.metric} - ${series.values.map { it.toInt() }}")

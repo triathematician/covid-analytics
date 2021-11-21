@@ -53,7 +53,8 @@ class TimeSeriesFileFormatTest {
         println(File("../../../../data").exists())
         println(LocalCovidData.dataDir)
         println(LocalCovidData.jhuCsseProcessedData)
-        val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.rawSources() }, { File("test3.csv") }) {
+
+        val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.rawSources().subList(0, 2) }, { File("test3.csv") }) {
             override fun metricsProvided() = setOf(CASES, DEATHS).map { MetricInfo(it) }.toSet()
             override fun inprocess(file: File) = JhuDailyReports.inprocess(file)
         }

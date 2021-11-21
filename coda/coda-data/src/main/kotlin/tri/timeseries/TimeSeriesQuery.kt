@@ -21,8 +21,10 @@ package tri.timeseries
 
 import tri.area.AreaInfo
 import java.time.YearMonth
+import kotlin.time.ExperimentalTime
 
 /** Manages access to a variety of time series, and provides simple query access. */
+@ExperimentalTime
 open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
 
     /** List of sources. */
@@ -108,7 +110,8 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     }
 
     private fun TimeSeriesProcessor.loadData() {
-        sourceData[this] = data().groupByArea()
+        if (!sourceData.containsKey(this))
+            sourceData[this] = data().groupByArea()
     }
 
     //endregion

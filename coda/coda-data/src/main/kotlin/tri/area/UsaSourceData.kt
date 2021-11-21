@@ -26,12 +26,11 @@ object UsaSourceData {
 
     /** County FIPS data. */
     internal val fips = Usa::class.csvResource<CountyFips>(true, "resources/fips.csv")
-
     /** State/territory FIPS data, with Census Region/Division. */
     internal val stateFips = Usa::class.csvResource<StateFips>(true, "resources/state-fips.csv")
 
     /** CBSA/County mapping data. */
-    internal val cbsaData = Usa::class.csvResource<CbsaCountyMapping>(true, "resources/census/Mar2020cbsaDelineation.csv")
+    internal val cbsaMapping = Usa::class.csvResource<CbsaCountyMapping>(true, "resources/census/Mar2020cbsaDelineation.csv")
 
     /** JHU data for areas of many types. */
     internal val jhuData by lazy { JhuAreaData::class.csvResource<JhuAreaInfo>(true, "resources/jhucsse/jhu-iso-fips-lookup.csv") }

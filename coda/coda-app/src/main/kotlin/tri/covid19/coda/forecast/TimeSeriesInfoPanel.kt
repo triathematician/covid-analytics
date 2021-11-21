@@ -53,18 +53,22 @@ class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View(
         series.onChange { update(it) }
     }
 
-    override val root = form {
-        fieldset("Data Characteristics") {
-            field("Population") { label(popText) }
-            field("Peak") { label(peakText) }
-            field("Doubling Time") { label(doublingText) }
-            field("Recent Change") { label(recentChangeText) }
-            field("Current Trend") { label(currentTrendText) {
-                textFillProperty().bind(currentTrendColor)
-            } }
-            field("History") {
-                labelContainer.alignment = Pos.TOP_LEFT
-                textflow { bindChildren(dataInfo) { it } }
+    override val root = scrollpane {
+        form {
+            fieldset("Data Characteristics") {
+                field("Population") { label(popText) }
+                field("Peak") { label(peakText) }
+                field("Doubling Time") { label(doublingText) }
+                field("Recent Change") { label(recentChangeText) }
+                field("Current Trend") {
+                    label(currentTrendText) {
+                        textFillProperty().bind(currentTrendColor)
+                    }
+                }
+                field("History") {
+                    labelContainer.alignment = Pos.TOP_LEFT
+                    textflow { bindChildren(dataInfo) { it } }
+                }
             }
         }
     }

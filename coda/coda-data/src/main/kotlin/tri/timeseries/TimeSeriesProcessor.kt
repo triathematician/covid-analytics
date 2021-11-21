@@ -28,9 +28,11 @@ import java.io.FileOutputStream
 import java.net.URL
 import java.nio.charset.Charset
 import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 import kotlin.time.measureTimedValue
 
 /** Tool that supports both reading and processing input data to a normalized format, and storing that data locally so next time it can be more quickly retrieved. */
+@ExperimentalTime
 abstract class TimeSeriesProcessor {
     /** Load data by source. */
     fun data(source: String? = null) = loadProcessedData()?.bySource(source) ?: reloadRawData().bySource(source)
@@ -41,11 +43,14 @@ abstract class TimeSeriesProcessor {
     fun reloadRawData(): List<TimeSeries> {
         val raw = loadRaw()
         if (raw.isNotEmpty()) {
-            processingNote("Loaded raw data. Now saving ${raw.size} time series using ${this::class.simpleName}")
-            saveProcessed(raw)
+            measureTime {
+                saveProcessed(raw)
+            }.let {
+                processingNote("Saved ${raw.size} time series using ${this::class.simpleName} in $it.")
+            }
             return raw
         }
-        processingNote("No data returned when loading data from $this")
+        processingNote("No data returned when loading data from $this.")
         return listOf()
     }
 
@@ -101,7 +106,12 @@ abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeries
 
     override fun saveProcessed(data: List<TimeSeries>) = TimeSeriesFileFormat.writeSeries(data, BufferedOutputStream(FileOutputStream(processed())), Charsets.UTF_8)
 
-    open fun process(series: List<TimeSeries>) = series.regroupAndMax(coerceIncreasing = false, replaceZerosWithPrevious = false)
+    open fun process(series: List<TimeSeries>) = measureTimedValue {
+        series.regroupAndMax(coerceIncreasing = false, replaceZerosWithPrevious = false)
+    }.let {
+        processingNote("Regrouped data into ${it.value.size} time series in ${it.duration}")
+        it.value
+    }
 
 }
 

@@ -19,21 +19,26 @@
  */
 package tri.area
 
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 
 class LookupTest {
 
     @Test
     fun testLookups() {
-        println(Lookup.area("Doña Ana, New Mexico, US"))
-        println(Lookup.area("Do¦a Ana, New Mexico, US"))
-        println(Lookup.area("Bristol Bay plus Lake Peninsula, Alaska, US"))
-        println(Lookup.area("Los Angeles, CA, US"))
-        println(Lookup.area("Los Angeles, California, US"))
-        println((Lookup.area("Los Angeles, California, US") as UsCountyInfo).cbsa)
-        println(Lookup.area("St. Louis City, Missouri, US"))
-        println(Lookup.area("Virginia Beach city, Virginia, US"))
-        println(Lookup.area("Virginia Beach, Virginia, US"))
+        assertEquals(AreaType.COUNTRY_REGION, Lookup.area("Marshall Islands").type)
+        assertEquals(AreaType.COUNTRY_REGION, Lookup.area("Palau").type)
+
+        assertEquals(AreaType.COUNTY, Lookup.area("Doña Ana, New Mexico, US").type)
+        assertEquals(AreaType.UNKNOWN, Lookup.area("Do¦a Ana, New Mexico, US").type)
+        assertEquals(AreaType.COUNTY, Lookup.area("Bristol Bay plus Lake Peninsula, Alaska, US").type)
+        assertEquals(AreaType.UNKNOWN, Lookup.area("Los Angeles, CA, US").type)
+        assertEquals(AreaType.COUNTY, Lookup.area("Los Angeles, California, US").type)
+        assertEquals(AreaType.METRO, (Lookup.area("Los Angeles, California, US") as UsCountyInfo).cbsa!!.type)
+
+        assertEquals(AreaType.COUNTY, Lookup.area("St. Louis City, Missouri, US").type)
+        assertEquals(AreaType.UNKNOWN, Lookup.area("Virginia Beach city, Virginia, US").type)
+        assertEquals(AreaType.COUNTY, Lookup.area("Virginia Beach, Virginia, US").type)
     }
 
     @Test
@@ -55,15 +60,5 @@ class LookupTest {
                 println("${it.fips}, ${it.id}, ${it.population}")
             }
         }
-    }
-
-    @Test
-    fun testUsaAncestors() {
-        println(Lookup.area("24027").ancestors().map { it.id })
-        println(Lookup.area("MD").ancestors().map { it.id })
-        println(Lookup.area("Region 3").ancestors().map { it.id })
-        println(Lookup.area("USA").ancestors().map { it.id })
-
-        println(Lookup.area("Region 1").ancestors().map { it.id })
     }
 }

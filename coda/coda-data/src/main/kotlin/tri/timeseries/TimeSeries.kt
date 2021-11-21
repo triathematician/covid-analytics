@@ -199,10 +199,10 @@ data class TimeSeries(
     operator fun times(n: Number) = copy(values = values.map { it * n.toDouble() })
     operator fun div(n: Number) = copy(values = values.map { it / n.toDouble() })
 
-    operator fun plus(n: TimeSeries) = reduceSeries(this, n) { a, b -> a + b }
-    operator fun minus(n: TimeSeries) = reduceSeries(this, n) { a, b -> a - b }
-    operator fun times(n: TimeSeries) = reduceSeries(this, n) { a, b -> a * b }
-    operator fun div(n: TimeSeries) = reduceSeries(this, n) { a, b -> a / b }
+    operator fun plus(n: TimeSeries) = mergeSeries(this, n) { a, b -> a + b }
+    operator fun minus(n: TimeSeries) = mergeSeries(this, n) { a, b -> a - b }
+    operator fun times(n: TimeSeries) = mergeSeries(this, n) { a, b -> a * b }
+    operator fun div(n: TimeSeries) = mergeSeries(this, n) { a, b -> a / b }
 
     /**
      * Subtracts the other [TimeSeries], but constrain so that only positive values are in the result. Trims the time
