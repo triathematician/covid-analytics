@@ -20,8 +20,14 @@
 package tri.area
 
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class UsaTest {
+
+    @Test
+    fun testStates() {
+        assertEquals(60, Usa.stateAreas.size)
+    }
 
     @Test
     fun testUsaAncestors() {

@@ -73,7 +73,3 @@ data class JhuAreaInfo(val UID: Int, val iso2: String, val iso3: String, var cod
         private val abbreviationsByState = UsaSourceData.stateFips.associate { it.state_name to it.state_abbr }
     }
 }
-
-//region UTILS
-
-//endregion
