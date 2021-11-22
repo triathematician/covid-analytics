@@ -27,6 +27,9 @@ class UsaTest {
     @Test
     fun testStates() {
         assertEquals(60, Usa.stateAreas.size)
+
+        Usa.stateByLongName("Federated States of Micronesia")
+        Usa.stateByLongName("Palau")
     }
 
     @Test
