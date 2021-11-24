@@ -355,7 +355,7 @@ data class TimeSeries(
  * @param valueIfMissing used in result list if a date is missing
  * @param fillLatest if true, will fill in any missing values with the latest value prior to the missing date
  */
-fun <X> Map<LocalDate, X>.valueList(valueIfMissing: X, fillLatest: Boolean = false) = if (fillLatest) {
+private fun <X> Map<LocalDate, X>.valueList(valueIfMissing: X, fillLatest: Boolean = false) = if (fillLatest) {
     var recent: X? = null
     DateRange(keys).map {
         val x = getOrDefault(it, recent ?: valueIfMissing)
