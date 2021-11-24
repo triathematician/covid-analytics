@@ -352,7 +352,6 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 462,MV,MDV,462,,,,Maldives,3.2028,73.2207,Maldives,540542
 466,ML,MLI,466,,,,Mali,17.570692,-3.996166,Mali,20250834
 470,MT,MLT,470,,,,Malta,35.9375,14.3754,Malta,441539
-584,MH,MHL,584,,,,Marshall Islands,7.1315,171.1845,Marshall Islands,58413
 478,MR,MRT,478,,,,Mauritania,21.0079,-10.9408,Mauritania,4649660
 480,MU,MUS,480,,,,Mauritius,-20.348404,57.552152,Mauritius,1271767
 484,MX,MEX,484,,,,Mexico,23.6345,-102.5528,Mexico,127792286
@@ -389,7 +388,6 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 48431,MX,MEX,484,,,Yucatan,Mexico,20.7099,-89.0943,"Yucatan, Mexico",2259098
 48432,MX,MEX,484,,,Zacatecas,Mexico,22.7709,-102.5832,"Zacatecas, Mexico",1666426
 48433,MX,MEX,484,,,Unknown,Mexico,,,"Unknown, Mexico",
-583,FM,FSM,583,,,,Micronesia,7.4256,150.5508,Micronesia,113815
 498,MD,MDA,498,,,,Moldova,47.4116,28.3699,Moldova,4033963
 492,MC,MCO,492,,,,Monaco,43.7333,7.4167,Monaco,39244
 496,MN,MNG,496,,,,Mongolia,46.8625,103.8467,Mongolia,3278292
@@ -473,7 +471,6 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 58606,PK,PAK,586,,,Punjab,Pakistan,30.811346,72.139132,"Punjab, Pakistan",110012442
 58607,PK,PAK,586,,,Sindh,Pakistan,26.009446,68.776807,"Sindh, Pakistan",47886051
 58608,PK,PAK,586,,,Unknown,Pakistan,,,"Unknown, Pakistan",
-585,PW,PLW,8,,,,Palau,7.5150,134.5825,Palau,18008
 591,PA,PAN,591,,,,Panama,8.538,-80.7821,Panama,4314768
 598,PG,PNG,598,,,,Papua New Guinea,-6.314993,143.95555,Papua New Guinea,8947027
 600,PY,PRY,600,,,,Paraguay,-23.4425,-58.4438,Paraguay,7132530
@@ -809,10 +806,14 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 446,MO,MAC,446,,,Macau,China,22.1667,113.55,"Macau, China",649342
 840,US,USA,840,,,,US,40,-100,US,329466283
 16,AS,ASM,16,60,,American Samoa,US,-14.271,-170.132,"American Samoa, US",55519
+583,FM,FSM,583,64,,Federated States of Micronesia,US,7.4256,150.5508,"Federated States of Micronesia, US",113815
 316,GU,GUM,316,66,,Guam,US,13.4443,144.7937,"Guam, US",159385
-31666010,GU,GUM,316,66010,,Guam,US,13.4443,144.7937,"Guam, Guam, US",159385
+31666010,GU,GUM,316,66010,Guam,Guam,US,13.4443,144.7937,"Guam, Guam, US",159385
+584,MH,MHL,584,68,,Marshall Islands,US,7.1315,171.1845,"Marshall Islands, US",58413
 580,MP,MNP,580,69,,Northern Mariana Islands,US,15.0979,145.6739,"Northern Mariana Islands, US",53883
+585,PW,PLW,8,70,,Palau,US,7.5150,134.5825,"Palau, US",18008
 630,PR,PRI,630,72,,Puerto Rico,US,18.2208,-66.5901,"Puerto Rico, US",3193694
+-1,UM,,,74,,Minor Outlying Islands,US,,,"Minor Outlying Islands, US",
 850,VI,VIR,850,78,,Virgin Islands,US,18.3358,-64.8963,"Virgin Islands, US",106405
 85078010,VI,VIR,850,78010,Saint Croix,Virgin Islands,US,18.3358,-64.8963,"Saint Croix, Virgin Islands, US",
 85078020,VI,VIR,850,78020,Saint John,Virgin Islands,US,18.3358,-64.8963,"Saint John, Virgin Islands, US",

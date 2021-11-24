@@ -26,8 +26,10 @@ class LookupTest {
 
     @Test
     fun testLookups() {
-        assertEquals(AreaType.COUNTRY_REGION, Lookup.area("Marshall Islands").type)
-        assertEquals(AreaType.COUNTRY_REGION, Lookup.area("Palau").type)
+        assertEquals(AreaType.UNKNOWN, Lookup.area("Marshall Islands").type)
+        assertEquals(AreaType.PROVINCE_STATE, Lookup.area("Marshall Islands, US").type)
+        assertEquals(AreaType.UNKNOWN, Lookup.area("Palau").type)
+        assertEquals(AreaType.PROVINCE_STATE, Lookup.area("Palau, US").type)
 
         assertEquals(AreaType.COUNTY, Lookup.area("Doña Ana, New Mexico, US").type)
         assertEquals(AreaType.UNKNOWN, Lookup.area("Do¦a Ana, New Mexico, US").type)
