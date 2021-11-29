@@ -19,16 +19,23 @@
  */
 package tri.timeseries
 
-/** Time periods across which [TimeSeries] data can be aggregated. */
-enum class TimePeriod {
+/** Common time periods across which [TimeSeries] data can be aggregated. */
+enum class TimePeriod(val daysPerValue: Int? = null) {
     CUMULATIVE,
-    DAILY,
-    WEEKLY_TOTAL,
-    WEEKLY_AVERAGE,
-    BIWEEKLY_TOTAL,
-    BIWEEKLY_AVERAGE,
+    LATEST(1),
+    DAILY(1),
+    WEEKLY_TOTAL(7),
+    WEEKLY_AVERAGE(1),
+    BIWEEKLY_TOTAL(14),
+    BIWEEKLY_AVERAGE(1),
     MONTHLY_TOTAL,
-    MONTHLY_AVERAGE,
+    MONTHLY_AVERAGE(1),
     YEARLY_TOTAL,
-    YEARLY_AVERAGE;
+    YEARLY_AVERAGE(1),
+
+    WEEKLY_TOTAL_DIFFERENCE,
+    WEEKLY_AVERAGE_DIFFERENCE,
+    WEEKLY_PERCENT_CHANGE,
+    WEEKLY_CUMULATIVE_PERCENT_CHANGE
+    ;
 }
