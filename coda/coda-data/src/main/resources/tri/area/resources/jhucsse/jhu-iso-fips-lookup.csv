@@ -805,16 +805,16 @@ UID,iso2,iso3,code3,FIPS,Admin2,Province_State,Country_Region,Lat,Long_,Combined
 344,HK,HKG,344,,,Hong Kong,China,22.3,114.2,"Hong Kong, China",7496988
 446,MO,MAC,446,,,Macau,China,22.1667,113.55,"Macau, China",649342
 840,US,USA,840,,,,US,40,-100,US,329466283
-16,AS,ASM,16,60,,American Samoa,US,-14.271,-170.132,"American Samoa, US",55519
-583,FM,FSM,583,64,,Federated States of Micronesia,US,7.4256,150.5508,"Federated States of Micronesia, US",113815
-316,GU,GUM,316,66,,Guam,US,13.4443,144.7937,"Guam, US",159385
-31666010,GU,GUM,316,66010,Guam,Guam,US,13.4443,144.7937,"Guam, Guam, US",159385
-584,MH,MHL,584,68,,Marshall Islands,US,7.1315,171.1845,"Marshall Islands, US",58413
-580,MP,MNP,580,69,,Northern Mariana Islands,US,15.0979,145.6739,"Northern Mariana Islands, US",53883
-585,PW,PLW,8,70,,Palau,US,7.5150,134.5825,"Palau, US",18008
+16,AS,ASM,16,60,,American Samoa,US,-14.271,-170.132,"American Samoa, US",47392
+583,FM,FSM,583,64,,Federated States of Micronesia,US,7.4256,150.5508,"Federated States of Micronesia, US",102320
+316,GU,GUM,316,66,,Guam,US,13.4443,144.7937,"Guam, US",168489
+31666010,GU,GUM,316,66010,Guam,Guam,US,13.4443,144.7937,"Guam, Guam, US",168489
+584,MH,MHL,584,68,,Marshall Islands,US,7.1315,171.1845,"Marshall Islands, US",77741
+580,MP,MNP,580,69,,Northern Mariana Islands,US,15.0979,145.6739,"Northern Mariana Islands, US",51851
+585,PW,PLW,8,70,,Palau,US,7.5150,134.5825,"Palau, US",21532
 630,PR,PRI,630,72,,Puerto Rico,US,18.2208,-66.5901,"Puerto Rico, US",3193694
 -1,UM,,,74,,Minor Outlying Islands,US,,,"Minor Outlying Islands, US",
-850,VI,VIR,850,78,,Virgin Islands,US,18.3358,-64.8963,"Virgin Islands, US",106405
+850,VI,VIR,850,78,,Virgin Islands,US,18.3358,-64.8963,"Virgin Islands, US",106290
 85078010,VI,VIR,850,78010,Saint Croix,Virgin Islands,US,18.3358,-64.8963,"Saint Croix, Virgin Islands, US",
 85078020,VI,VIR,850,78020,Saint John,Virgin Islands,US,18.3358,-64.8963,"Saint John, Virgin Islands, US",
 85078030,VI,VIR,850,78030,Saint Thomas,Virgin Islands,US,18.3358,-64.8963,"Saint Thomas, Virgin Islands, US",
