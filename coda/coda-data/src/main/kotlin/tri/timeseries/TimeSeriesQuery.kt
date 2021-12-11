@@ -30,7 +30,7 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     /** List of sources. */
     val sources = _sources.toList()
     /** Data associated with a given source. */
-    private val sourceData: MutableMap<TimeSeriesProcessor, Map<AreaInfo, List<TimeSeries>>> = mutableMapOf()
+    private val sourceData = mutableMapOf<TimeSeriesProcessor, Map<AreaInfo, List<TimeSeries>>>()
 
 //    /** Load all data into memory, grouped by area. */
 //    private val data by lazy { sources.flatMap { it.data() }.groupByArea() }
@@ -61,6 +61,9 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
 
 //    /** Query all data based on a generic filter. */
 //    fun by(filter: (TimeSeries) -> Boolean) = flatData.filter(filter)
+
+    /** Query for raw data. */
+    open fun data(area: AreaInfo, metric: String): TimeSeries? = null
 
     /** Query for daily version of time series. */
     open fun daily(area: AreaInfo, metric: String): TimeSeries? = null
@@ -115,5 +118,4 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     }
 
     //endregion
-
 }

@@ -27,6 +27,11 @@ import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
 import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities
 
+/** Today's date (as of runtime). */
+val TODAY = LocalDate.now()
+/** Yesterday's date (as of runtime). */
+val YESTERDAY = TODAY - 1
+
 /** Get month/year of date. */
 val LocalDate.yearMonth
     get() = YearMonth.of(year, month)
