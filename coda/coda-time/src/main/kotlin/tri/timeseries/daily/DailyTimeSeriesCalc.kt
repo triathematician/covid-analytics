@@ -17,7 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.daily
+
+import tri.util.DateRange
 
 //region GENERIC REDUCE OPERATIONS
 

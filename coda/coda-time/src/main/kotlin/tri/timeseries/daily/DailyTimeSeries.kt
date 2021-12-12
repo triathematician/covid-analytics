@@ -21,6 +21,7 @@ package tri.timeseries
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.series.*
+import tri.util.DateRange
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
