@@ -19,16 +19,27 @@
  */
 package tri.timeseries
 
-/** Time periods across which [DailyTimeSeries] data can be aggregated. */
-enum class TimePeriod {
-    CUMULATIVE,
-    DAILY,
-    WEEKLY_TOTAL,
-    WEEKLY_AVERAGE,
-    BIWEEKLY_TOTAL,
-    BIWEEKLY_AVERAGE,
-    MONTHLY_TOTAL,
-    MONTHLY_AVERAGE,
-    YEARLY_TOTAL,
-    YEARLY_AVERAGE;
+import tri.util.yearMonth
+import java.time.LocalDate
+import java.time.Year
+import java.time.YearMonth
+import java.time.temporal.Temporal
+
+/** Time periods across which [TimeSeries] can be specified or aggregated. */
+enum class TimePeriod(val type: Class<out Temporal>) {
+    YEAR(Year::class.java),
+    QUARTER(YearMonth::class.java),
+    MONTH(YearMonth::class.java),
+    MONDAY_WEEK(LocalDate::class.java),
+    SUNDAY_WEEK(LocalDate::class.java),
+    DAILY(LocalDate::class.java);
+
+    fun toWeek(date: LocalDate) = date.minusDays(date.dayOfWeek.value % 7L)
+    fun toMondayWeek(date: LocalDate) = date.minusDays(date.dayOfWeek.value - 1L)
+    fun toMonth(date: LocalDate) = date.yearMonth
+    fun toQuarter(date: LocalDate) = MONTH.toQuarter(toMonth(date))
+    fun toYear(date: LocalDate) = Year.from(date)
+
+    fun toQuarter(month: YearMonth) = month.minusMonths((month.monthValue - 1) % 3L)
+    fun toYear(month: YearMonth) = Year.from(month)
 }

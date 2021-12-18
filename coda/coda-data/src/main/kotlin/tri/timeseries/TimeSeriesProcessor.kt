@@ -20,7 +20,7 @@
 package tri.timeseries
 
 import tri.area.AreaInfo
-import tri.covid19.data.IhmeForecasts
+import tri.timeseries.daily.regroupAndMax
 import tri.util.ansiYellow
 import java.io.BufferedOutputStream
 import java.io.File

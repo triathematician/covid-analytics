@@ -38,6 +38,7 @@ import tri.covid19.coda.data.CovidTimeSeriesSources.usCountyData
 import tri.covid19.coda.data.CovidTimeSeriesSources.usStateData
 import tri.covid19.coda.data.perCapita
 import tri.timeseries.*
+import tri.timeseries.daily.dateRangeOrNull
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
 import kotlin.time.ExperimentalTime

@@ -22,6 +22,7 @@ package tri.timeseries
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.area.Lookup
 import tri.timeseries.analytics.computeLogisticPrediction
+import tri.timeseries.daily.TimeSeriesFillStrategy
 import tri.util.DateRange
 import tri.util.dateRange
 import tri.util.minus

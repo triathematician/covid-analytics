@@ -1,14 +1,9 @@
 package tri.timeseries
 
-import tri.series.DoubleSeries
-import tri.series.NullableDoubleSeries
-import tri.series.cumulativeSums
-import tri.series.notNull
-import java.time.LocalDate
 import java.time.temporal.Temporal
 
 /** [TimeSeriesData] with values for a consecutive series of dates. */
-abstract class IndexedTimeSeries<X, V>(
+abstract class IndexedTimeSeriesData<X, V>(
         override val defaultValue: V?,
         val start: X,
         val values: List<V>,

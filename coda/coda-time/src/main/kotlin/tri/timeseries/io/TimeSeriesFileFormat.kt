@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.io
 
 import tri.util.toLocalDate
 import java.io.File

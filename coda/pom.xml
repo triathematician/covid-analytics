@@ -4,10 +4,11 @@
 
     <groupId>com.googlecode.blaisemath</groupId>
     <artifactId>coda</artifactId>
-    <version>0.2.6-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>coda-time</module>
         <module>coda-data</module>
         <module>coda-app</module>
     </modules>
@@ -57,7 +58,7 @@
     </distributionManagement>
 
     <properties>
-        <kotlin.version>1.4.32</kotlin.version>
+        <kotlin.version>1.5.20</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- set license attributes for license plugin -->
         <license.organizationName>Elisha Peterson</license.organizationName>

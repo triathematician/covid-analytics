@@ -1,7 +1,8 @@
-package tri.timeseries
+package tri.util
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
+import java.time.Year
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
@@ -48,9 +49,35 @@ data class DateRange(override var start: LocalDate, override var endInclusive: L
     //endregion
 }
 
-/** Produces a date range. */
-operator fun LocalDate.rangeTo(other: LocalDate) = DateRange(this, other)
+/** Provides a range of months, with ability to iterate. */
+data class YearMonthRange(override var start: YearMonth, override var endInclusive: YearMonth): Iterable<YearMonth>, ClosedRange<YearMonth> {
 
-/** Get range of dates in month. */
-val YearMonth.dateRange
-    get() = atDay(1)..atEndOfMonth()
+    constructor(range: ClosedRange<YearMonth>) : this(range.start, range.endInclusive)
+
+    override fun iterator() = object : Iterator<YearMonth> {
+        private var currentDate = start
+        override fun hasNext() = currentDate <= endInclusive
+        override fun next(): YearMonth {
+            val next = currentDate
+            currentDate = currentDate.plusMonths(1L)
+            return next
+        }
+    }
+}
+
+/** Provides a range of years, with ability to iterate. */
+data class YearRange(override var start: Year, override var endInclusive: Year): Iterable<Year>, ClosedRange<Year> {
+
+    constructor(range: ClosedRange<Year>) : this(range.start, range.endInclusive)
+
+    override fun iterator() = object : Iterator<Year> {
+        private var currentDate = start
+        override fun hasNext() = currentDate <= endInclusive
+        override fun next(): Year {
+            val next = currentDate
+            currentDate = currentDate.plusYears(1L)
+            return next
+        }
+    }
+}
+

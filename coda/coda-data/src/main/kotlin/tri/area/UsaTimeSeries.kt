@@ -21,7 +21,6 @@ package tri.area
  */
 
 import tri.timeseries.TimeSeries
-import tri.timeseries.sum
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 

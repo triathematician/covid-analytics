@@ -19,13 +19,11 @@
  */
 package tri.util
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
-import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities
 
 /** Today's date (as of runtime). */
 val TODAY = LocalDate.now()
@@ -103,47 +101,6 @@ operator fun LocalDate.rangeTo(other: LocalDate) = DateRange(this, other)
 private fun Iterable<LocalDate>.enclosingRange(): ClosedRange<LocalDate> {
     val set = toSortedSet()
     return set.first()..set.last()
-}
-
-/** Provides a range of dates, with ability to iterate. */
-data class DateRange(override var start: LocalDate, override var endInclusive: LocalDate): Iterable<LocalDate>, ClosedRange<LocalDate> {
-
-    constructor(range: ClosedRange<LocalDate>): this(range.start, range.endInclusive)
-    constructor(dates: Collection<LocalDate>): this(dates.enclosingRange())
-
-    override fun iterator() = DateIterator(start, endInclusive)
-
-    /** Number of days in range. */
-    @get:JsonIgnore
-    val size
-        get() = endInclusive - start + 1
-
-    @JsonIgnore
-    override fun isEmpty() = super.isEmpty()
-
-    /** Adds given number of days to start and end of range. */
-    fun shift(startDelta: Int, endDelta: Int) = DateRange(start + startDelta, endInclusive + endDelta)
-    /** Takes the last n days from the range. */
-    fun tail(n: Int) = when {
-        size > n -> shift(size.toInt() - n, 0)
-        else -> this
-    }
-
-    /** Intersects with another domain. */
-    fun intersect(other: DateRange) = DateRange(maxOf(start, other.start), minOf(endInclusive, other.endInclusive)).let {
-        if (size < 0) null else it
-    }
-}
-
-/** Iterates between two dates. */
-class DateIterator(startDate: LocalDate, val endDateInclusive: LocalDate): Iterator<LocalDate> {
-    private var currentDate = startDate
-    override fun hasNext() = currentDate <= endDateInclusive
-    override fun next(): LocalDate {
-        val next = currentDate
-        currentDate += 1
-        return next
-    }
 }
 
 //endregion

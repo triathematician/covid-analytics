@@ -17,11 +17,12 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.daily
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.series.*
 import tri.util.DateRange
+import tri.util.dateRange
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
@@ -71,14 +72,15 @@ data class DailyTimeSeries(
     //region GETTER HELPERS
 
     @get:JsonIgnore
-    val firstPositiveDate: LocalDate
-        get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
-    @get:JsonIgnore
     val end: LocalDate
         get() = date(values.size - 1)
     @get:JsonIgnore
     val domain: DateRange
         get() = DateRange(start, end)
+
+    @get:JsonIgnore
+    val firstPositiveDate: LocalDate
+        get() = domain.firstOrNull { get(it) > 0.0 } ?: end
 
     @get:JsonIgnore
     val size: Int
@@ -234,14 +236,14 @@ data class DailyTimeSeries(
     /** Compute cumulative totals. */
     fun cumulative(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric),
-        values = values.partialSums()
+        values = values.cumulativeSums()
     )
 
     /** Compute cumulative totals starting on the given day. */
     fun cumulativeSince(cumulativeStart: LocalDate, metricFunction: (String) -> String = { it }) =
         copyAdjustingStartDay(
             metric = metricFunction(metric),
-            values = values(DateRange(cumulativeStart..end)).partialSums()
+            values = values(DateRange(cumulativeStart..end)).cumulativeSums()
         )
 
     /** Return copy with absolute changes by offsetting days. */
