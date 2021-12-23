@@ -21,6 +21,7 @@ package tri.timeseries
 
 import tri.util.DateRange
 import tri.util.minus
+import tri.util.plus
 import java.time.LocalDate
 
 /**
@@ -49,7 +50,7 @@ enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Num
         if (pairs.isEmpty()) mapOf<LocalDate, Number>() else {
             val dateValues = pairs.groupBy { it.first }.mapValues { it.value.map { it.second } }.toSortedMap()
             associateDates(dateValues.keys, finalDate) {
-                it to dateValues.headMap(it).tailMap(it - 6).values
+                it to dateValues.subMap(it - 6, it + 1).values
                     .mapNotNull { it.sumOrNull() }
                     .average()
             }.filter { it.value.isFinite() }
