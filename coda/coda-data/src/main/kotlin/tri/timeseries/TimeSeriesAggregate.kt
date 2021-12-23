@@ -19,48 +19,64 @@
  */
 package tri.timeseries
 
-import java.time.LocalDate
 import tri.util.DateRange
 import tri.util.minus
+import java.time.LocalDate
 
 /**
  * Provides various ways to aggregate date/value data into a [TimeSeries].
  */
 enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Number?>>, LocalDate?) -> Map<LocalDate, Number>) {
+    /** Gets first entry for each date. */
+    FIRST({ pairs, _ ->
+        pairs.filter { it.second != null }.associate { it as Pair<LocalDate, Number> }.toSortedMap()
+    }),
+
     /** Sums entries. */
     SUM({ pairs, finalDate ->
-        val dateValues = pairs.groupBy { it.first }.mapValues { it.value.map { it.second } }.toSortedMap()
-        if (dateValues.isEmpty()) mapOf<LocalDate, Number>()
-        else DateRange(dateValues.keys.first()..(finalDate ?: dateValues.keys.last())).map {
-            val values = dateValues[it] ?: listOf()
-            val integers = values.all { it is Int }
-            val sum: Number = if (integers) values.sumBy { it?.toInt() ?: 0 } else values.sumByDouble { it?.toDouble() ?: 0.0 }
-            it to sum
-        }.toMap()
+        if (pairs.isEmpty()) mapOf<LocalDate, Number>() else {
+            val dateValues = pairs.groupBy { it.first }.mapValues { it.value.map { it.second } }.toSortedMap()
+            associateDates(dateValues.keys, finalDate) {
+                val values = dateValues[it] ?: listOf()
+                val integers = values.all { it is Int }
+                it to if (integers) values.sumBy { it?.toInt() ?: 0 } else values.sumByDouble { it?.toDouble() ?: 0.0 }
+            }
+        }
+    }),
+
+    /** Takes a 7-day average, skipping any missing values. If there is more than one entry per date, sums across those dates. */
+    AVERAGE_7_DAY({ pairs, finalDate ->
+        if (pairs.isEmpty()) mapOf<LocalDate, Number>() else {
+            val dateValues = pairs.groupBy { it.first }.mapValues { it.value.map { it.second } }.toSortedMap()
+            associateDates(dateValues.keys, finalDate) {
+                it to dateValues.headMap(it).tailMap(it - 6).values
+                    .mapNotNull { it.sumOrNull() }
+                    .average()
+            }.filter { it.value.isFinite() }
+        }
     }),
 
     /** Fills latest value, ensuring gaps between missing entries are all filled. */
-    FILL_WITH_LATEST_VALUE({ pairs, date ->
-        val dateValues = pairs.map { it.first to it.second }.toMap().toSortedMap()
-        if (dateValues.isEmpty()) mapOf<LocalDate, Number>()
-        else DateRange(dateValues.keys.first()..(date ?: dateValues.keys.last())).map {
-            it to if (it in dateValues.keys) dateValues[it]!!
-            else dateValues.headMap(it).values.last()!!
-        }.toMap()
+    FILL_WITH_LATEST_VALUE({ pairs, finalDate ->
+        if (pairs.isEmpty()) mapOf<LocalDate, Number>() else {
+            val sortedDates = pairs.associate { it.first to it.second }.toSortedMap()
+            associateDates(sortedDates.keys, finalDate) {
+                it to (sortedDates[it] ?: sortedDates.headMap(it).values.last()!!)
+            }
+        }
     }),
 
     /** Fills latest value, but does not allow filling forward more than 7 days. */
-    FILL_WITH_LATEST_VALUE_UP_TO_7({ pairs, date ->
-        val sortedDates = pairs.map { it.first to it.second?.toDouble() }.toMap().toSortedMap()
-        if (sortedDates.isEmpty()) mapOf<LocalDate, Number>()
-        else {
+    FILL_WITH_LATEST_VALUE_UP_TO_7({ pairs, finalDate ->
+        if (pairs.isEmpty()) mapOf<LocalDate, Number>() else {
+            val sortedDates = pairs.associate { it.first to it.second?.toDouble() }.toSortedMap()
             val first = sortedDates.keys.first()
-            val last = sortedDates.keys.last()
+            val last = finalDate ?: sortedDates.keys.last()
             val dates = DateRange(first..last).toList()
             val values = dates.map { sortedDates[it] }
             var lastValueIndex = 0
             var lastValue = 0.0
-            val adjustedValues = values.mapIndexed { i, value ->
+            values.mapIndexed { i, value ->
                 dates[i] to when {
                     value != null -> {
                         lastValueIndex = i
@@ -70,10 +86,18 @@ enum class TimeSeriesAggregate(private val aggregator: (List<Pair<LocalDate, Num
                     i - lastValueIndex <= 7 -> lastValue
                     else -> 0.0
                 }
-            }.toMap()
-            adjustedValues
+            }.toMap().toSortedMap()
         }
     });
 
     operator fun invoke(entries: List<Pair<LocalDate, Number>>, date: LocalDate?) = aggregator(entries, date)
+
+    companion object {
+        private fun <Y> associateDates(sortedKeys: Set<LocalDate>, finalDate: LocalDate?, op: (LocalDate) -> Pair<LocalDate, Y>) =
+            DateRange(sortedKeys.first()..(finalDate ?: sortedKeys.last())).associate(op).toSortedMap()
+
+        private fun List<Number?>.sumOrNull(): Double? = mapNotNull { it?.toDouble() }.filter { it.isFinite() }.let {
+            if (it.isEmpty()) null else it.sum()
+        }
+    }
 }
