@@ -24,6 +24,7 @@ import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream
 import java.nio.charset.Charset
+import kotlin.math.roundToInt
 
 /** Writes to/from files, with one series per row, similar to a CSV format. */
 object TimeSeriesFileFormat {
@@ -45,7 +46,7 @@ object TimeSeriesFileFormat {
     /** Writes a single series to the writer. */
     fun writeSeriesAsString(m: TimeSeries) =
             (listOf(m.source, m.areaId, m.metric, m.qualifier, m.intSeries, if (m.intSeries) m.defValue.toInt() else m.defValue, m.start)
-                    + (if (m.intSeries) m.values.map { it.toInt() } else m.values)).joinToString("\t")
+                    + (if (m.intSeries) m.values.map { it.roundToInt() } else m.values)).joinToString("\t")
 
     /** Reads a series from a writer line. */
     fun readSeries(line: String): TimeSeries {
