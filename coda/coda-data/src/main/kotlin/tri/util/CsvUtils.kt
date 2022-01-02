@@ -188,8 +188,8 @@ fun List<Any>.logCsv(ps: PrintStream = System.out, prefix: String = "", sep: Str
 
 //region GETTING VALUES FROM STRING KEY-VALUE MAPS
 
-fun Map<String, String>.stringNonnull(n: String) = get(n)?.let { if (it.isEmpty()) null else it } ?: throw UnsupportedOperationException("Unexpected $n = ${get(n)}")
-fun Map<String, String>.string(n: String) = get(n)?.let { if (it.isEmpty()) null else it }
+fun Map<String, String>.stringNonnull(n: String) = get(n)?.let { it.ifEmpty { null } } ?: throw UnsupportedOperationException("Unexpected $n = ${get(n)}")
+fun Map<String, String>.string(n: String) = get(n)?.let { it.ifEmpty { null } }
 fun Map<String, String>.boolean(n: String) = get(n)?.let { "TRUE".equals(it, ignoreCase = true) } ?: false
 fun Map<String, String>.int(n: String) = get(n)?.toIntOrNull() ?: get(n)?.toDoubleOrNull()?.toInt()
 fun Map<String, String>.double(n: String) = get(n)?.toDoubleOrNull()
