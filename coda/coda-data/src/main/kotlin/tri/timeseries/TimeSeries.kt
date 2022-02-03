@@ -2,7 +2,7 @@
  * #%L
  * coda-data
  * --
- * Copyright (C) 2020 - 2021 Elisha Peterson
+ * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,8 @@ data class TimeSeries(
     constructor(source: String, areaId: String, metric: String, qualifier: String = "", defValue: Int = 0, start: LocalDate, vararg values: Int)
             : this(source, areaId, metric, qualifier, true, defValue.toDouble(), start, values.map { it.toDouble() })
 
-    val uniqueMetricKey = listOf(source, areaId, metric, qualifier).joinToString("::")
+    val uniqueMetricKey
+        get() = listOf(source, areaId, metric, qualifier).joinToString("::")
 
     //region GETTER HELPERS
 

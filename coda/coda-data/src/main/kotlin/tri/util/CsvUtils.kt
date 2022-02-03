@@ -2,7 +2,7 @@
  * #%L
  * coda-data
  * --
- * Copyright (C) 2020 - 2021 Elisha Peterson
+ * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package tri.util
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.convertValue
 import java.io.*
 import java.lang.UnsupportedOperationException
@@ -114,7 +115,10 @@ private fun Reader.firstLine() = useLines {
     it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
 }
 
-val MAPPER = ObjectMapper().registerKotlinModule().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+val MAPPER = ObjectMapper()
+    .registerKotlinModule()
+    .registerModule(JavaTimeModule())
+    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
 /** Maps lines of data from a string. */
 fun <X> String.mapCsvKeyValues(splitOnNewLines: Boolean, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
