@@ -28,7 +28,7 @@ import tri.covid19.data.LocalCovidData.metric
 import tri.covid19.data.LocalCovidData.normalizedDataFile
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
-import tri.timeseries.TimeSeriesFileProcessor
+import tri.timeseries.io.TimeSeriesFileProcessor
 import tri.util.csvKeyValues
 import java.io.File
 import kotlin.time.ExperimentalTime

@@ -17,12 +17,12 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.io
 
+import tri.timeseries.TimeSeries
 import tri.util.toLocalDate
-import java.io.File
-import java.io.OutputStream
-import java.io.PrintStream
+import java.io.*
+import java.net.URL
 import java.nio.charset.Charset
 import kotlin.math.roundToInt
 
@@ -30,7 +30,10 @@ import kotlin.math.roundToInt
 object TimeSeriesFileFormat {
 
     /** Reads several series from a file. */
-    fun readSeries(file: File, charset: Charset) = file.readLines(charset).map { readSeries(it) }
+    fun readSeries(file: File, charset: Charset) = BufferedReader(FileReader(file)).useLines { it.map { readSeries(it) }.toList() }
+
+    /** Reads several series from a file. */
+    fun readSeries(url: URL, charset: Charset) = BufferedReader(InputStreamReader(url.openStream(), charset)).useLines { it.map { readSeries(it) }.toList() }
 
     /** Writes several series to the writer. */
     fun writeSeries(m: List<TimeSeries>, out: OutputStream, charset: Charset) =

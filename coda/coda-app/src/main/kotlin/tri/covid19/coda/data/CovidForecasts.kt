@@ -24,7 +24,7 @@ import tri.covid19.data.LANL
 import tri.covid19.data.YYG
 import tri.timeseries.Forecast
 import tri.timeseries.ForecastId
-import tri.timeseries.TimeSeriesFileFormat
+import tri.timeseries.io.TimeSeriesFileFormat
 import java.io.File
 import java.time.LocalDate
 import kotlin.time.ExperimentalTime

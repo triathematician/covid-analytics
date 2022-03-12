@@ -20,6 +20,7 @@
 package tri.timeseries
 
 import tri.area.AreaInfo
+import tri.timeseries.io.TimeSeriesProcessor
 import java.time.YearMonth
 import kotlin.time.ExperimentalTime
 

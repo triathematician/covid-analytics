@@ -1,6 +1,6 @@
 /*-
  * #%L
- * coda-data
+ * coda-data-0.2.9-SNAPSHOT
  * --
  * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
@@ -17,13 +17,15 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.io
 
 import org.junit.Test
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.data.JhuDailyReports
 import tri.covid19.data.LocalCovidData
+import tri.timeseries.MetricInfo
+import tri.timeseries.TimeSeries
 import java.io.File
 import java.time.LocalDate
 import kotlin.time.ExperimentalTime
