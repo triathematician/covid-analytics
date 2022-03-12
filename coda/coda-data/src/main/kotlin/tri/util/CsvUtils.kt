@@ -138,6 +138,19 @@ inline fun <reified X> File.mapCsvKeyValues(splitOnNewLines: Boolean = true) = c
 /** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
 inline fun <reified X> File.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPPER.convertValue<X>(it) }
 
+/** Reads lines of data from a file. */
+fun Reader.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines) { this }.keyValues()
+/** Reads lines of data from a file. */
+fun Reader.csvKeyValuesFast() = CsvLineSplitterFast.readData { this }.keyValues()
+/** Maps lines of data from a file. */
+fun <X> Reader.mapCsvKeyValues(splitOnNewLines: Boolean = true, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
+/** Maps lines of data from a file. */
+fun <X> Reader.mapCsvKeyValuesFast(op: (Map<String, String>) -> X) = csvKeyValuesFast().map { op(it) }
+/** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> Reader.mapCsvKeyValues(splitOnNewLines: Boolean = true) = csvKeyValues(splitOnNewLines).map { MAPPER.convertValue<X>(it) }
+/** Maps lines of data from a file to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> Reader.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPPER.convertValue<X>(it) }
+
 /** Reads lines of data from a URL. */
 fun URL.csvLines(splitOnNewLines: Boolean) = CsvLineSplitter.readData(splitOnNewLines, this).second
 /** Reads lines of data from a URL. */
