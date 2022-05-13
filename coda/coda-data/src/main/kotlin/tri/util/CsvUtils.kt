@@ -120,10 +120,21 @@ val MAPPER: ObjectMapper = ObjectMapper()
     .registerModule(JavaTimeModule())
     .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
+//region EXTENSION FUNCTIONS FOR SPECIFIC SOURCES
+
+/** Reads lines of data from a string. */
+fun String.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines,this).keyValues()
 /** Maps lines of data from a string. */
 fun <X> String.mapCsvKeyValues(splitOnNewLines: Boolean, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
-/** Reads lines of data from a URL. */
-fun String.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines,this).keyValues()
+/** Maps lines of data from a string to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> String.mapCsvKeyValues(splitOnNewLines: Boolean = true) = csvKeyValues(splitOnNewLines).map { MAPPER.convertValue<X>(it) }
+
+/** Reads lines of data from a string. */
+fun String.csvKeyValuesFast() = CsvLineSplitterFast.readData(this).keyValues()
+/** Maps lines of data from a string. */
+fun <X> String.mapCsvKeyValuesFast(op: (Map<String, String>) -> X) = csvKeyValuesFast().map { op(it) }
+/** Maps lines of data from a string to a data class, using Jackson [ObjectMapper] for conversions. */
+inline fun <reified X> String.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPPER.convertValue<X>(it) }
 
 /** Reads lines of data from a file. */
 fun File.csvKeyValues(splitOnNewLines: Boolean = true) = url.csvKeyValues(splitOnNewLines)
@@ -157,6 +168,8 @@ inline fun <reified X> URL.mapCsvKeyValuesFast() = csvKeyValuesFast().map { MAPP
 
 /** Maps CSV file to target object, using Jackson [ObjectMapper] for conversions. */
 inline fun <reified X> KClass<*>.csvResource(splitOnNewLines: Boolean, name: String) = java.getResource(name).mapCsvKeyValues<X>(splitOnNewLines).toList()
+
+//endregion
 
 //region CONVERTING TO KEY VALUES
 
