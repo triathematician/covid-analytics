@@ -10,7 +10,7 @@
 
     <properties>
         <main.class>tri.pop.model.ui.SirModelAppKt</main.class>
-        <jackson.version>2.12.1</jackson.version>
+        <jackson.version>2.12.6.1</jackson.version>
         <kotlin.version>1.3.70</kotlin.version>
     </properties>
 
