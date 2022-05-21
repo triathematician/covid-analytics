@@ -35,6 +35,9 @@ object TimeSeriesFileFormat {
     /** Reads several series from a file. */
     fun readSeries(url: URL, charset: Charset) = BufferedReader(InputStreamReader(url.openStream(), charset)).useLines { it.map { readSeries(it) }.toList() }
 
+    /** Reads several series from an input stream. */
+    fun readSeries(inputStream: InputStream, charset: Charset) = BufferedReader(InputStreamReader(inputStream, charset)).useLines { it.map { readSeries(it) }.toList() }
+
     /** Writes several series to the writer. */
     fun writeSeries(m: List<TimeSeries>, out: OutputStream, charset: Charset) =
         PrintStream(out, false, charset).use { ps ->

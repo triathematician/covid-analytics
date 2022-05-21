@@ -20,20 +20,24 @@
 package tri.timeseries.io
 
 import tri.timeseries.*
+import java.io.InputStream
 import java.net.URL
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 /** Processes URLs to a remote location. */
 @ExperimentalTime
-abstract class TimeSeriesUrlCachingProcessor(val rawSources: () -> List<URL>, val processed: () -> URL, val resourceExists: (URL) -> Boolean): TimeSeriesProcessor() {
+abstract class TimeSeriesUrlCachingProcessor(val rawSources: () -> List<URL>,
+                                             val processed: () -> URL,
+                                             val resourceLoader: (URL) -> InputStream,
+                                             val resourceExists: (URL) -> Boolean): TimeSeriesProcessor() {
 
     override fun toString() = "TimeSeriesUrlCachingProcessor ${rawSources()}"
 
     override fun loadProcessed(): List<TimeSeries> {
         val url = processed()
         return TimeSeriesCachingProcessor.logLoadProcessedResource(url, resourceExists(url)) {
-            TimeSeriesFileFormat.readSeries(it, Charsets.UTF_8)
+            TimeSeriesFileFormat.readSeries(resourceLoader(it), Charsets.UTF_8)
         }
     }
 
