@@ -29,7 +29,7 @@ import kotlin.time.ExperimentalTime
 open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
 
     /** List of sources. */
-    val sources = _sources.toList()
+    val sources = _sources.toMutableList()
     /** Data associated with a given source. */
     private val sourceData = mutableMapOf<TimeSeriesProcessor, Map<AreaInfo, List<TimeSeries>>>()
 
