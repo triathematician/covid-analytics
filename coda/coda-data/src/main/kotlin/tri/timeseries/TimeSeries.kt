@@ -160,9 +160,13 @@ data class TimeSeries(
 
     //region DERIVED SERIES
 
-    /** Copy where data is restricted to start no early than given date. */
+    /**
+     * Copy where data is restricted to start no early than given date.
+     * If provided date is before [start], no change is made.
+     * If provided date is after [end], returns a time series with no values
+     */
     fun copyWithDataSince(firstDate: LocalDate) =
-        copy(metric = metric, start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()), intSeries = intSeries)
+        copy(start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()))
 
     /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. Assumes the end of the series is fixed date. */
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries) =
@@ -170,26 +174,47 @@ data class TimeSeries(
 
     /**
      * Create copy after filling data through a given date.
+     * Makes no change if provided date is earlier than the current end date.
      */
-    fun copyExtendedThrough(date: LocalDate, fill: TimeSeriesFillStrategy): TimeSeries {
-        if (!date.isAfter(end)) {
-            return this
-        }
-        val daysToAdd = date - end
-        val fillValue = when (fill) {
-            TimeSeriesFillStrategy.FILL_WITH_ZEROS -> 0.0
-            TimeSeriesFillStrategy.FILL_LAST -> values.last()
-        }
-        return copy(values = values + (1..daysToAdd).map { fillValue })
-    }
+    fun copyExtendedThrough(date: LocalDate, fill: TimeSeriesFillStrategy) =
+            if (date <= end) this
+            else adjustDates(start, date, fillForward = fill)
 
     /** Copy after dropping first n values. */
     fun dropFirst(n: Int) = copyAdjustingStartDay(values = values.drop(n))
 
-    /** Copy after dropping first n values. */
-    fun dropLast(n: Int): TimeSeries {
-        val res = copyAdjustingStartDay(values = values.dropLast(n))
-        return res
+    /** Copy after dropping last n values. Does not change start date. */
+    fun dropLast(n: Int) = copy(values = values.dropLast(n))
+
+    /** Trims by dropping a given number of days from beginning and ending of series. */
+    fun trim(nStart: Int, nEnd: Int) = dropFirst(nStart).dropLast(nEnd)
+
+    /**
+     * Trims by setting a given range of dates. Optional fill strategies can set values before and after the current
+     * date range. If omitted, date ranges will not be extended.
+     */
+    fun adjustDates(newStart: LocalDate, newEnd: LocalDate,
+                    fillReverse: TimeSeriesFillStrategy = TimeSeriesFillStrategy.LEAVE_BLANK,
+                    fillForward: TimeSeriesFillStrategy = TimeSeriesFillStrategy.LEAVE_BLANK): TimeSeries {
+
+        if (newStart > newEnd)
+            return copy(start = newStart, values = listOf())
+
+        val useStart = if (fillReverse == TimeSeriesFillStrategy.LEAVE_BLANK || fillReverse == TimeSeriesFillStrategy.FILL_FORWARD)
+            maxOf(newStart, start) else newStart
+        val fillStart = if (fillReverse == TimeSeriesFillStrategy.FILL_WITH_ZEROS) 0.0 else values.firstOrNull() ?: 0.0
+        val extendStart = (start - useStart).toInt()
+
+        val useEnd = if (fillForward == TimeSeriesFillStrategy.LEAVE_BLANK || fillForward == TimeSeriesFillStrategy.FILL_BACKWARD)
+            minOf(newEnd, end) else newEnd
+        val fillEnd = if (fillForward == TimeSeriesFillStrategy.FILL_WITH_ZEROS) 0.0 else values.lastOrNull() ?: 0.0
+        val extendEnd = (useEnd - end).toInt()
+
+        val trimmedValues = values.drop(maxOf(0, -extendStart)).dropLast(maxOf(0, -extendEnd))
+
+        fun Double.repeat(n: Int) = if (n <= 0) listOf() else generateSequence { this }.take(n).toList()
+
+        return copy(start = useStart, values = fillStart.repeat(extendStart) + trimmedValues + fillEnd.repeat(extendEnd))
     }
 
     /** Apply arbitrary operator to series. */
@@ -365,7 +390,3 @@ fun <X> Map<LocalDate, X>.valueList(valueIfMissing: X, fillLatest: Boolean = fal
     }
 } else DateRange(keys).map { getOrDefault(it, valueIfMissing) }
 
-enum class TimeSeriesFillStrategy {
-    FILL_WITH_ZEROS,
-    FILL_LAST;
-}
