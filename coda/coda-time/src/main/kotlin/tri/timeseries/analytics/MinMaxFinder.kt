@@ -19,7 +19,7 @@
  */
 package tri.timeseries.analytics
 
-import tri.covid19.reports.percentChangeTo
+import tri.timeseries.percentChangeTo
 import tri.timeseries.TimeSeries
 import java.time.LocalDate
 import kotlin.math.abs

@@ -22,8 +22,8 @@ package tri.covid19.coda.data
 import tri.covid19.data.IHME
 import tri.covid19.data.LANL
 import tri.covid19.data.YYG
-import tri.timeseries.Forecast
-import tri.timeseries.ForecastId
+import tri.timeseries.forecast.Forecast
+import tri.timeseries.forecast.ForecastId
 import tri.timeseries.io.TimeSeriesFileFormat
 import java.io.File
 import java.time.LocalDate

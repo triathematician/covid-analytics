@@ -20,13 +20,14 @@
 package tri.timeseries
 
 import tri.area.AreaInfo
+import tri.area.AreaLookup
 import tri.timeseries.io.TimeSeriesProcessor
 import java.time.YearMonth
 import kotlin.time.ExperimentalTime
 
 /** Manages access to a variety of time series, and provides simple query access. */
 @ExperimentalTime
-open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
+open class TimeSeriesQuery(val lookup: AreaLookup, vararg _sources: TimeSeriesProcessor) {
 
     /** List of sources. */
     val sources = _sources.toMutableList()
@@ -46,11 +47,11 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
 //    fun byArea(area: AreaInfo) = data[area] ?: emptyList()
 
     /** Get all areas in the data set (loading all data). */
-    fun allDataAreas() = allSources().flatMap { sourceData[it]!!.keys }.toSet()
+    fun allDataAreas() = allSources(lookup).flatMap { sourceData[it]!!.keys }.toSet()
 
     /** Get all data matching given area filter (loading all data). */
-    fun allDataByArea(areaFilter: (AreaInfo) -> Boolean) = allSources().map { sourceData[it]!!.filterKeys(areaFilter) }
-        .flatMap { it.values.flatten() }.groupByArea()
+    fun allDataByArea(areaFilter: (AreaInfo) -> Boolean) = allSources(lookup).map { sourceData[it]!!.filterKeys(areaFilter) }
+        .flatMap { it.values.flatten() }.groupByArea(lookup)
 
     /** Query by area and metric/qualifier. */
     fun by(area: AreaInfo, metric: String, qualifier: String = "") = sourcesFor(area, metric, qualifier)
@@ -89,7 +90,7 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
     //region UTILS
 
     /** Loads all data sources. */
-    private fun allSources() = sources.onEach { it.loadData() }
+    private fun allSources(lookup: AreaLookup) = sources.onEach { it.loadData(lookup) }
 
     private fun sourcesFor(area: AreaInfo, metric: String, qualifier: String = "") = sources.filter { it.provides(area, metric, qualifier) }
 
@@ -101,21 +102,21 @@ open class TimeSeriesQuery(vararg _sources: TimeSeriesProcessor) {
         { metricFilter(it.metric) && qualifierFilter(it.qualifier) }
 
     private fun TimeSeriesProcessor.query(area: AreaInfo, metric: String, qualifier: String? = ""): List<TimeSeries> {
-        if (this !in sourceData.keys) loadData()
+        if (this !in sourceData.keys) loadData(lookup)
         return sourceData[this]!!.getOrElse(area) { listOf() }
             .filter { (it.metric == metric) && (qualifier == null || it.qualifier == qualifier) }
     }
 
     private fun TimeSeriesProcessor.query(areaFilter: (AreaInfo) -> Boolean, metricFilter: (String) -> Boolean, qualifierFilter: (String) -> Boolean): List<TimeSeries> {
-        if (this !in sourceData.keys) loadData()
+        if (this !in sourceData.keys) loadData(lookup)
         val data = sourceData[this]!!
         val filter = metricInfoFilter(metricFilter, qualifierFilter)
         return data.filterKeys(areaFilter).flatMap { it.value.filter { filter(it.metricInfo) } }
     }
 
-    private fun TimeSeriesProcessor.loadData() {
+    private fun TimeSeriesProcessor.loadData(lookup: AreaLookup) {
         if (!sourceData.containsKey(this))
-            sourceData[this] = data().groupByArea()
+            sourceData[this] = data().groupByArea(lookup)
     }
 
     //endregion

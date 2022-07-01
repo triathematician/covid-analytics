@@ -42,33 +42,3 @@ open class AreaInfo(val id: String, val type: AreaType, @JsonIgnore val parent: 
 
     override fun toString() = "AreaInfo(id='$id', type=$type)"
 }
-
-//region UNIQUE AREAS
-
-val EARTH = AreaInfo("Earth", AreaType.PLANET, null, null, AreaMetrics(7775510000L))
-//val NORTH_AMERICA = AreaInfo("North America", RegionType.CONTINENT, EARTH, null, TODO())
-// USA population is sum of state and territory populations
-val USA = AreaInfo("United States", AreaType.COUNTRY_REGION, EARTH, null, AreaMetrics(331808409L))
-val UNKNOWN = AreaInfo("Unknown", AreaType.UNKNOWN, EARTH, null, AreaMetrics(0L))
-
-//endregion
-
-/** Area type. */
-enum class AreaType(vararg parentTypes: AreaType, val areasInUsa: () -> List<AreaInfo>) {
-    PLANET(areasInUsa = { listOf<AreaInfo>() }),
-    CONTINENT(PLANET, areasInUsa = { listOf<AreaInfo>() }),
-    COUNTRY_REGION(PLANET, CONTINENT, areasInUsa = { listOf<AreaInfo>(USA) }),
-    PROVINCE_STATE_AGGREGATE(COUNTRY_REGION, areasInUsa = { Usa.femaRegionAreas + Usa.censusRegionAreas }),
-    PROVINCE_STATE(PROVINCE_STATE_AGGREGATE, COUNTRY_REGION, areasInUsa = { Usa.stateAreas }),
-    METRO(PROVINCE_STATE, COUNTRY_REGION, areasInUsa = { Usa.cbsaAreas }),
-    // TODO - Alaska FIPS split, to fix when census updates
-    COUNTY(METRO, PROVINCE_STATE, areasInUsa = { Usa.countyAreas.filter { it.fips !in listOf(2063, 2066) }.sortedBy { it.fips } }),
-    ZIPCODE(COUNTY, METRO, PROVINCE_STATE, areasInUsa = { listOf<AreaInfo>() }),
-    UNKNOWN(UNKNOWN, PROVINCE_STATE, COUNTRY_REGION, CONTINENT, PLANET, areasInUsa = { listOf<AreaInfo>() });
-
-    val parents = listOf(*parentTypes)
-
-    /** Get list of areas of this type in the USA, if any. */
-    val areasInUs
-        get() = areasInUsa()
-}

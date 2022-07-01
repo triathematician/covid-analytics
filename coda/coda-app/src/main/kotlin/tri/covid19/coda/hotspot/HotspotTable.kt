@@ -24,7 +24,7 @@ import javafx.event.EventTarget
 import javafx.scene.control.SplitPane
 import javafx.scene.control.TableView
 import tornadofx.*
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.covid19.DEATHS
 import tri.covid19.coda.history.*
 import tri.covid19.coda.utils.*
@@ -145,10 +145,10 @@ class HotspotTable: SplitPane() {
 
     private fun updateTableData() {
         hotspotData.setAll(data()
-                .filter { parentRegion.value == null || it.area.parent == Lookup.area(parentRegion.value) }
+                .filter { parentRegion.value == null || it.area(UsaAreaLookup).parent == UsaAreaLookup.area(parentRegion.value) }
                 .filter { it.lastValue >= minCount.value && it.deltas().last(0..6).sum() >= minLastWeekCount.value }
-                .filter { it.area.population == null || it.lastValue / it.area.population!! * 1E5 >= minPerCapitaCount.value }
-                .filter { it.area.population == null || it.deltas().last(0..6).sum() / it.area.population!! * 1E5 >= minLastWeekPerCapitaCount.value }
+                .filter { it.area(UsaAreaLookup).population == null || it.lastValue / it.area(UsaAreaLookup).population!! * 1E5 >= minPerCapitaCount.value }
+                .filter { it.area(UsaAreaLookup).population == null || it.deltas().last(0..6).sum() / it.area(UsaAreaLookup).population!! * 1E5 >= minLastWeekPerCapitaCount.value }
                 .hotspotPerCapitaInfo(metric = selectedMetric.value, minPopulation = minPopulation.value, maxPopulation = maxPopulation.value))
     }
 

@@ -22,7 +22,6 @@ package tri.timeseries.io
 import tri.area.AreaInfo
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
-import tri.util.ansiYellow
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -76,3 +75,8 @@ abstract class TimeSeriesProcessor {
 }
 
 internal fun processingNote(text: String) = println("[${ansiYellow("DATA")}] $text")
+
+private fun ansiYellow(text: String) = "$ANSI_YELLOW$text$ANSI_RESET"
+
+private const val ANSI_YELLOW = "\u001B[33m"
+private const val ANSI_RESET = "\u001B[0m"

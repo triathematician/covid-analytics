@@ -26,6 +26,7 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Text
 import tornadofx.*
+import tri.area.UsaAreaLookup
 import tri.covid19.reports.HotspotInfo
 import tri.timeseries.*
 import tri.timeseries.analytics.ExtremaSummary
@@ -84,7 +85,7 @@ class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View(
             return
         }
 
-        popText.value = s.area.population?.userFormat() ?: "unknown"
+        popText.value = s.area(UsaAreaLookup).population?.userFormat() ?: "unknown"
 
         val deltas = s.deltas()
         val smoothedDeltas = deltas.movingAverage(7)

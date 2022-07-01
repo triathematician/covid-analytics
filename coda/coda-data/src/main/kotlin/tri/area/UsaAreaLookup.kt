@@ -27,7 +27,7 @@ import tri.util.javaTrim
  * Quick access to looking up areas/elements by region name. Maintains a cache so that only one lookup is performed per
  * request string.
  */
-object Lookup {
+object UsaAreaLookup : AreaLookup {
 
     //region CACHE
 
@@ -86,7 +86,7 @@ object Lookup {
     fun area(lookupName: String, assumeUsState: Boolean = false) = areaOrNull(lookupName, assumeUsState) ?: UNKNOWN
 
     /** Get object for area with given name. Logs an error and returns null if not found. */
-    fun areaOrNull(lookupName: String, assumeUsState: Boolean = false): AreaInfo? {
+    override fun areaOrNull(lookupName: String, assumeUsState: Boolean): AreaInfo? {
         areaCache[lookupName]?.let { return it }
         notFound[lookupName]?.let { return null }
 
@@ -99,8 +99,8 @@ object Lookup {
         val jhuArea = JhuAreaData.lookupCaseInsensitive(name) ?: JhuAreaData.lookupCaseInsensitive(altName ?: "")
         val areaInfo = if (jhuArea?.fips != null) Usa.counties[jhuArea.fips] else jhuArea?.toAreaInfo()
         return if (areaInfo == null) {
-            fine<Lookup>("Area not found: $name")
-            fine<Lookup>(name.map { it.toInt() }.toString())
+            fine<UsaAreaLookup>("Area not found: $name")
+            fine<UsaAreaLookup>(name.map { it.toInt() }.toString())
             notFound[name] = UNKNOWN
             notFound[lookupName] = UNKNOWN
             null
@@ -113,6 +113,20 @@ object Lookup {
 
     /** Get object for area with given FIPS. */
     fun areaByFips(fips: Int) = Usa.counties[fips] ?: Usa.cbsas[fips]
+
+    /** Get list of areas in USA by type. */
+    fun areasInUsa(type: AreaType): List<AreaInfo> = when (type) {
+        AreaType.PLANET -> listOf()
+        AreaType.CONTINENT -> listOf()
+        AreaType.COUNTRY_REGION -> listOf(USA)
+        AreaType.PROVINCE_STATE_AGGREGATE -> Usa.femaRegionAreas + Usa.censusRegionAreas
+        AreaType.PROVINCE_STATE -> Usa.stateAreas
+        AreaType.METRO -> Usa.cbsaAreas
+        // TODO - Alaska FIPS split, to fix when census updates
+        AreaType.COUNTY -> Usa.countyAreas.filter { it.fips !in listOf(2063, 2066) }.sortedBy { it.fips }
+        AreaType.ZIPCODE -> listOf() // TODO
+        AreaType.UNKNOWN -> listOf()
+    }
 
     //endregion
 
@@ -127,7 +141,7 @@ object Lookup {
 
     //region CHECKS
 
-    private val aliases = Lookup::class.csvResource<AreaAlias>(true, "resources/area-aliases.csv")
+    private val aliases = UsaAreaLookup::class.csvResource<AreaAlias>(true, "resources/area-aliases.csv")
         .associate { it.alias to it.name }
 
     private class AreaAlias(val alias: String, val name: String)

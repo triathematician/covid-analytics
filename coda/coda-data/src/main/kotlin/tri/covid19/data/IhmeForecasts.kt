@@ -19,7 +19,6 @@
  */
 package tri.covid19.data
 
-import tri.area.AreaInfo
 import tri.covid19.*
 import tri.covid19.data.LocalCovidData.extractMetrics
 import tri.covid19.data.LocalCovidData.forecasts

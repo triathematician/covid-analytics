@@ -20,7 +20,7 @@
 package tri.covid19.coda.data
 
 import org.junit.Test
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.covid19.data.JhuDailyReports
 import kotlin.time.ExperimentalTime
 
@@ -37,22 +37,22 @@ class JhuDailyReportsTest {
 
     @Test
     fun testStates() {
-        println(CovidTimeSeriesSources.dailyReports(Lookup.area("MD"), "cases").joinToString("\n"))
+        println(CovidTimeSeriesSources.dailyReports(UsaAreaLookup.area("MD"), "cases").joinToString("\n"))
     }
 
     @Test
     fun testCounties() {
-        println(CovidTimeSeriesSources.dailyReports(Lookup.area("Montgomery, Maryland, US"), "cases").joinToString("\n"))
+        println(CovidTimeSeriesSources.dailyReports(UsaAreaLookup.area("Montgomery, Maryland, US"), "cases").joinToString("\n"))
     }
 
     @Test
     fun testCbsas() {
-        println(CovidTimeSeriesSources.dailyReports(Lookup.area("Savannah, GA, US"), "cases").joinToString("\n"))
+        println(CovidTimeSeriesSources.dailyReports(UsaAreaLookup.area("Savannah, GA, US"), "cases").joinToString("\n"))
     }
 
     @Test
     fun testCountries() {
-        println(CovidTimeSeriesSources.dailyReports(Lookup.area("United Kingdom"), "cases").joinToString("\n"))
+        println(CovidTimeSeriesSources.dailyReports(UsaAreaLookup.area("United Kingdom"), "cases").joinToString("\n"))
     }
 
 }

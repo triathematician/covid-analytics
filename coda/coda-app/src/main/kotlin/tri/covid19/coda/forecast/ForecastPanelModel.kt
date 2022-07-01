@@ -26,7 +26,7 @@ import javafx.scene.control.Alert
 import org.apache.commons.math3.exception.NoBracketingException
 import org.apache.commons.math3.exception.TooManyEvaluationsException
 import tornadofx.*
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.area.USA
 import tri.area.Usa
 import tri.covid19.coda.data.CovidForecasts
@@ -37,7 +37,7 @@ import tri.covid19.coda.history.hubbertSeries
 import tri.covid19.coda.utils.ChartDataSeries
 import tri.covid19.data.*
 import tri.math.Sigmoid
-import tri.timeseries.Forecast
+import tri.timeseries.forecast.Forecast
 import tri.timeseries.TimeSeries
 import tri.util.DateRange
 import tri.util.minus
@@ -158,7 +158,7 @@ class ForecastPanelModel(var listener: () -> Unit = {}) {
     var externalForecasts = ExternalForecasts()
 
     private fun updateData() {
-        val areaMetrics = CovidTimeSeriesSources.dailyReports(Lookup.area(areaId, assumeUsState = true), selectedMetric)
+        val areaMetrics = CovidTimeSeriesSources.dailyReports(UsaAreaLookup.area(areaId, assumeUsState = true), selectedMetric)
         mainSeries.value = areaMetrics.firstOrNull { it.metric == selectedMetric }?.restrictNumberOfStartingZerosTo(0)
         domain = mainSeries.value?.domain?.shift(0, 30)
 

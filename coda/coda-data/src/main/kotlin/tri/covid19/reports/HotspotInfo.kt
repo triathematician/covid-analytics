@@ -19,7 +19,7 @@
  */
 package tri.covid19.reports
 
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.covid19.CovidRiskLevel
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
@@ -37,7 +37,7 @@ data class HotspotInfo(var areaId: String, var metric: String, var start: LocalD
 
     constructor(series: TimeSeries): this(series.areaId, series.metric, series.start, series.values)
 
-    val area = Lookup.areaOrNull(areaId)!!
+    val area = UsaAreaLookup.areaOrNull(areaId)!!
 
     val deltas = values.deltas()
     val deltaAverages = deltas.movingAverage(averageDays)
@@ -137,8 +137,6 @@ private infix fun Double?.divideOrNull(y: Double?) = when {
     else -> this/y
 }
 
-/** Compute percentage change from this value to the provided value. */
-fun Double.percentChangeTo(count: Double) = (count - this) / this
 
 private class CurrentTrend(map: SortedMap<LocalDate, ExtremeInfo>) {
     val curValue by lazy { map.values.last().value }

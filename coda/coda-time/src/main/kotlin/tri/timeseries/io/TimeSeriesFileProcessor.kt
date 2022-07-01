@@ -45,6 +45,6 @@ abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, process
     abstract fun inprocess(file: File): List<TimeSeries>
 
     override fun saveProcessed(data: List<TimeSeries>) =
-        TimeSeriesFileFormat.writeSeries(data, BufferedOutputStream(FileOutputStream(processed())), Charsets.UTF_8)
+            TimeSeriesFileFormat.writeSeries(data, BufferedOutputStream(FileOutputStream(processed())), Charsets.UTF_8)
 
 }

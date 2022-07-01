@@ -20,7 +20,7 @@
 package tri.covid19.data
 
 import tri.area.AreaType
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.covid19.data.LocalCovidData.forecasts
@@ -76,7 +76,7 @@ object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("y
     private fun yygArea(region: String, country: String): String {
         if (region == "ALL" || region == "")
             return country
-        val lookup = Lookup.areaOrNull(region) ?: Lookup.area("$region, $country")
+        val lookup = UsaAreaLookup.areaOrNull(region) ?: UsaAreaLookup.area("$region, $country")
         if (lookup.type != AreaType.UNKNOWN) {
             return lookup.id
         } else {

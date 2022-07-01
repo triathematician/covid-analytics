@@ -17,14 +17,15 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.forecast
 
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
+import tri.timeseries.TimeSeries
 import java.time.LocalDate
 
 /** A single forecast, with model/forecast date, targeted region/metric, and associated time series with forecast data. */
 data class Forecast(val model: String, val forecastDate: LocalDate, val areaId: String, val metric: String, val data: List<TimeSeries>) {
-    val area = Lookup.areaOrNull(areaId)!!
+    val area = UsaAreaLookup.areaOrNull(areaId)!!
 
     constructor(forecastId: ForecastId, data: List<TimeSeries>) : this(forecastId.model, forecastId.forecastDate, forecastId.areaId, forecastId.metric, data)
 }

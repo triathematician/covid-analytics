@@ -19,7 +19,7 @@
  */
 package tri.covid19.data
 
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.area.UsCbsaInfo
 import tri.area.Usa
 import tri.area.UsaSourceData
@@ -72,7 +72,7 @@ object JhuDailyReports : TimeSeriesFileProcessor(
 
         return rows.flatMap { row ->
             val areaId = row.areaId
-            Lookup.areaOrNull(areaId) ?: throw IllegalArgumentException("Unknown area: $areaId")
+            UsaAreaLookup.areaOrNull(areaId) ?: throw IllegalArgumentException("Unknown area: $areaId")
             listOfNotNull(
                     TimeSeries(JHU_CSSE, areaId, CASES, "", 0, row.Last_Update, row.Confirmed),
                     TimeSeries(JHU_CSSE, areaId, DEATHS, "", 0, row.Last_Update, row.Deaths)

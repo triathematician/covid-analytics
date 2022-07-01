@@ -1,6 +1,20 @@
+package tri.area
+
+/** Area type. */
+enum class AreaType(vararg parentTypes: AreaType) {
+    PLANET(),
+    CONTINENT(PLANET),
+    COUNTRY_REGION(PLANET, CONTINENT),
+    PROVINCE_STATE_AGGREGATE(COUNTRY_REGION),
+    PROVINCE_STATE(PROVINCE_STATE_AGGREGATE, COUNTRY_REGION),
+    METRO(PROVINCE_STATE, COUNTRY_REGION),
+    COUNTY(METRO, PROVINCE_STATE),
+    ZIPCODE(COUNTY, METRO, PROVINCE_STATE),
+    UNKNOWN(UNKNOWN, PROVINCE_STATE, COUNTRY_REGION, CONTINENT, PLANET);
+
 /*-
  * #%L
- * coda-data
+ * coda-time-0.4.0-SNAPSHOT
  * --
  * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
@@ -17,9 +31,6 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
 
-/** Tracks a range with uncertainty lower/upper bounds. */
-class UncertaintyRange(val mean: Double, val lower: Double, val upper: Double) {
-    constructor(mean: String?, lower: String?, upper: String?) : this(mean!!.toDouble(), lower!!.toDouble(), upper!!.toDouble())
+    val parents = listOf(*parentTypes)
 }

@@ -20,7 +20,7 @@
 package tri.timeseries
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import tri.area.Lookup
+import tri.area.AreaLookup
 import tri.timeseries.analytics.computeLogisticPrediction
 import tri.util.DateRange
 import tri.util.dateRange
@@ -76,8 +76,6 @@ data class TimeSeries(
 
     //region GETTER HELPERS
 
-    val area
-        get() = Lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
     val metricInfo
         get() = MetricInfo(metric, qualifier)
 
@@ -103,6 +101,10 @@ data class TimeSeries(
     //endregion
 
     //region VALUE AND DATE GETTERS
+
+    /** Get area by id, if found. */
+    fun area(lookup: AreaLookup) =
+            lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
 
     /** Get value on given date. */
     operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }

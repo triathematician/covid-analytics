@@ -1,6 +1,6 @@
 /*-
  * #%L
- * coda-time-0.4.0-SNAPSHOT
+ * coda-data
  * --
  * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
@@ -17,3 +17,9 @@
  * limitations under the License.
  * #L%
  */
+package tri.timeseries.forecast
+
+/** Tracks a range with uncertainty lower/upper bounds. */
+class UncertaintyRange(val mean: Double, val lower: Double, val upper: Double) {
+    constructor(mean: String?, lower: String?, upper: String?) : this(mean!!.toDouble(), lower!!.toDouble(), upper!!.toDouble())
+}

@@ -127,7 +127,7 @@ object Usa {
     /** Get county for the given FIPS. */
     fun county(fips: Int) = counties[fips]
     /** Get county by a given name. */
-    fun county(name: String) = checkCountyName(name).let { Lookup.area(name) as? UsCountyInfo }
+    fun county(name: String) = checkCountyName(name).let { UsaAreaLookup.area(name) as? UsCountyInfo }
 
     /** Get unassigned county by FIPS. */
     fun unassignedCounty(fips: Int): UsCountyInfo? {

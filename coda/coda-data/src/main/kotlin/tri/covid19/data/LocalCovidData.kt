@@ -19,7 +19,7 @@
  */
 package tri.covid19.data
 
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.timeseries.TimeSeries
 import tri.util.info
 import tri.util.toLocalDate
@@ -62,7 +62,7 @@ object LocalCovidData {
 
     /** Easy way to construct metric from string value content. */
     internal fun metric(source: String, areaId: String, assumeUsState: Boolean, metric: String?, qualifier: String, date: String, value: Double) = metric?.let {
-        val area = Lookup.areaOrNull(areaId, assumeUsState)!!
+        val area = UsaAreaLookup.areaOrNull(areaId, assumeUsState)!!
         TimeSeries(source, area.id, it, qualifier, 0.0, date.toLocalDate(FORMAT), value)
     }
 

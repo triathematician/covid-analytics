@@ -34,11 +34,11 @@ class UsaTest {
 
     @Test
     fun testUsaAncestors() {
-        println(Lookup.area("24027").ancestors().map { it.id })
-        println(Lookup.area("MD").ancestors().map { it.id })
-        println(Lookup.area("Region 3").ancestors().map { it.id })
-        println(Lookup.area("USA").ancestors().map { it.id })
+        println(UsaAreaLookup.area("24027").ancestors().map { it.id })
+        println(UsaAreaLookup.area("MD").ancestors().map { it.id })
+        println(UsaAreaLookup.area("Region 3").ancestors().map { it.id })
+        println(UsaAreaLookup.area("USA").ancestors().map { it.id })
 
-        println(Lookup.area("Region 1").ancestors().map { it.id })
+        println(UsaAreaLookup.area("Region 1").ancestors().map { it.id })
     }
 }

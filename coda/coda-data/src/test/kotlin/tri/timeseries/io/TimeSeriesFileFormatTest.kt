@@ -1,6 +1,6 @@
 /*-
  * #%L
- * coda-data-0.2.9-SNAPSHOT
+ * coda-data-0.4.0-SNAPSHOT
  * --
  * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
@@ -20,10 +20,6 @@
 package tri.timeseries.io
 
 import org.junit.Test
-import tri.covid19.CASES
-import tri.covid19.DEATHS
-import tri.covid19.data.JhuDailyReports
-import tri.covid19.data.LocalCovidData
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import java.io.File
@@ -53,12 +49,12 @@ class TimeSeriesFileFormatTest {
         println(File("../../../data").exists())
         println(File("../../../../data").absoluteFile)
         println(File("../../../../data").exists())
-        println(LocalCovidData.dataDir)
-        println(LocalCovidData.jhuCsseProcessedData)
+        println(tri.covid19.data.LocalCovidData.dataDir)
+        println(tri.covid19.data.LocalCovidData.jhuCsseProcessedData)
 
-        val proc0 = object : TimeSeriesFileProcessor({ JhuDailyReports.rawSources().subList(0, 2) }, { File("test3.csv") }) {
-            override fun metricsProvided() = setOf(CASES, DEATHS).map { MetricInfo(it) }.toSet()
-            override fun inprocess(file: File) = JhuDailyReports.inprocess(file)
+        val proc0 = object : TimeSeriesFileProcessor({ tri.covid19.data.JhuDailyReports.rawSources().subList(0, 2) }, { File("test3.csv") }) {
+            override fun metricsProvided() = setOf(tri.covid19.CASES, tri.covid19.DEATHS).map { MetricInfo(it) }.toSet()
+            override fun inprocess(file: File) = tri.covid19.data.JhuDailyReports.inprocess(file)
         }
         measureTime {
             println(proc0.data().size)

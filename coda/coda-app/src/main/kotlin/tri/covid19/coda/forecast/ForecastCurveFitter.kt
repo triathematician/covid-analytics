@@ -26,7 +26,7 @@ import org.apache.commons.math3.fitting.leastsquares.ParameterValidator
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import tornadofx.property
 import tri.math.*
-import tri.timeseries.Forecast
+import tri.timeseries.forecast.Forecast
 import tri.timeseries.TimeSeries
 import tri.util.DateRange
 import tri.util.minus

@@ -19,7 +19,6 @@
  */
 package tri.timeseries
 
-import tri.covid19.reports.percentChangeTo
 import kotlin.math.log2
 import kotlin.math.max
 
@@ -92,3 +91,5 @@ fun List<Double>.growthRatio(topBucket: Int, bottomBucket: Int): List<Double> {
     return res
 }
 
+/** Compute percentage change from this value to the provided value. */
+fun Double.percentChangeTo(count: Double) = (count - this) / this

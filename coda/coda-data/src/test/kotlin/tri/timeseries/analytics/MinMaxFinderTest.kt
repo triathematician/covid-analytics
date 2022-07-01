@@ -1,6 +1,6 @@
 /*-
  * #%L
- * coda-data
+ * coda-data-0.4.0-SNAPSHOT
  * --
  * Copyright (C) 2020 - 2022 Elisha Peterson
  * --
@@ -19,18 +19,14 @@
  */
 package tri.timeseries.analytics
 
-import org.junit.Test
-import tri.area.AreaType
-import tri.area.USA
-import tri.covid19.data.LocalCovidDataQuery
-import kotlin.time.ExperimentalTime
+import tri.area.UsaAreaLookup
 
-@ExperimentalTime
+@kotlin.time.ExperimentalTime
 class MinMaxFinderTest {
 
-    @Test
+    @org.junit.Test
     fun testFind() {
-        LocalCovidDataQuery.by({ it.type == AreaType.PROVINCE_STATE && it.parent == USA }, { " " !in it })
+        tri.covid19.data.LocalCovidDataQuery.by({ it.type == tri.area.AreaType.PROVINCE_STATE && it.parent == tri.area.USA }, { " " !in it })
                 .take(5)
                 .onEach {
                     val series = it.deltas().restrictNumberOfStartingZerosTo(1).movingAverage(7)

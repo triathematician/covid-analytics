@@ -4,10 +4,11 @@
 
     <groupId>com.googlecode.blaisemath</groupId>
     <artifactId>coda</artifactId>
-    <version>0.3.7-SNAPSHOT</version>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>coda-time</module>
         <module>coda-data</module>
         <module>coda-app</module>
     </modules>

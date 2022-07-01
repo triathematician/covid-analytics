@@ -23,7 +23,7 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
-import tri.area.Lookup
+import tri.area.UsaAreaLookup
 import tri.covid19.ACTIVE
 import tri.covid19.CASES
 import tri.covid19.DEATHS
@@ -119,9 +119,9 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
-                    .filter { parentRegion.value.isNullOrEmpty() || it.area.parent == Lookup.area(parentRegion.value) }
+                    .filter { parentRegion.value.isNullOrEmpty() || it.area(UsaAreaLookup).parent == UsaAreaLookup.area(parentRegion.value) }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
-                    .filter { it.area.population.let { it == null || it in minPopulation..maxPopulation } }
+                    .filter { it.area(UsaAreaLookup).population.let { it == null || it in minPopulation..maxPopulation } }
                     .filter { exclude(it.areaId) }
                     .sortedByDescending { it.sortMetric }
                     .toList()
@@ -139,7 +139,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             TimeSeriesSort.ALL -> lastValue
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
             TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
-            TimeSeriesSort.POPULATION -> area.population?.toDouble() ?: 0.0
+            TimeSeriesSort.POPULATION -> area(UsaAreaLookup).population?.toDouble() ?: 0.0
             TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).maxOrNull() ?: 0.0
             TimeSeriesSort.PEAK14 -> values.deltas().movingAverage(14).maxOrNull() ?: 0.0
         }
