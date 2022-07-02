@@ -21,6 +21,7 @@ package tri.covid19.reports
 
 import tri.area.UsaAreaLookup
 import tri.covid19.CovidRiskLevel
+import tri.covid19.DEATHS
 import tri.covid19.risk_DoublingTime
 import tri.covid19.risk_PerCapitaDeathsPerDay
 import tri.timeseries.*
@@ -132,12 +133,17 @@ data class HotspotInfo(var areaId: String, var metric: String, var start: LocalD
     }
 }
 
-private infix fun Double?.divideOrNull(y: Double?) = when {
-    this == null || y == null -> null
-    else -> this/y
+/** Compute hotspots of given metric. */
+fun List<TimeSeries>.hotspotPerCapitaInfo(metric: String = DEATHS,
+                                          minPopulation: Int = 50000,
+                                          maxPopulation: Int = Int.MAX_VALUE,
+                                          valueFilter: (Double) -> Boolean = { it >= 5 }): List<HotspotInfo> {
+    return filter { it.area(UsaAreaLookup).population?.let { it in minPopulation..maxPopulation } ?: true }
+            .filter { it.metric == metric && valueFilter(it.lastValue) }
+            .map { HotspotInfo(it.areaId, it.metric, it.start, it.values) }
 }
 
-
+/** Information about current trend. */
 private class CurrentTrend(map: SortedMap<LocalDate, ExtremeInfo>) {
     val curValue by lazy { map.values.last().value }
     val curDate by lazy { map.keys.last()
@@ -150,4 +156,9 @@ private class CurrentTrend(map: SortedMap<LocalDate, ExtremeInfo>) {
     val anchorValue by lazy { map[anchorDate]!!.value }
     val daysSigned by lazy { ((curValue - anchorValue).sign * curDate.minus(anchorDate)).toInt() }
     val percentChangeSinceExtremum by lazy { anchorValue.percentChangeTo(curValue) }
+}
+
+private infix fun Double?.divideOrNull(y: Double?) = when {
+    this == null || y == null -> null
+    else -> this/y
 }
