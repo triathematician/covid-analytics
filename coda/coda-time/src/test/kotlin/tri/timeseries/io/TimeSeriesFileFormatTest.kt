@@ -17,140 +17,70 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.io
 
 import org.junit.Test
+import tri.timeseries.TimeSeries
 import java.time.LocalDate
 import kotlin.time.ExperimentalTime
-import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
-import kotlin.test.fail
 
 @ExperimentalTime
-class TimeSeriesTest {
+class TimeSeriesFileFormatTest {
 
     @Test
-    fun testCopyWithDataSince() {
-        val t = testSeries(listOf(1, 2, 3, 4))
+    fun testSerialize() {
+        assertEquals("s\ta\tm\tq\ttrue\t0\t2000-02-01\t1\t2\t3\t4",
+                TimeSeriesFileFormat.writeSeriesAsString(testSeries(1, 2, 3, 4)))
+        assertEquals("s\ta\tm\tq\ttrue\t0\t2000-02-01\t1\t2\t0\t0",
+                TimeSeriesFileFormat.writeSeriesAsString(testSeries(1, 2, 0, 0)))
+        assertEquals("s\ta\tm\tq\ttrue\t0\t2000-02-01\t0\t0\t3\t4",
+                TimeSeriesFileFormat.writeSeriesAsString(testSeries(0, 0, 3, 4)))
 
-        t.copyWithDataSince(date(1, 30))
-                .assertTimeSeries(date(2, 1), 1, 2, 3, 4)
+        assertEquals("s\ta\tm\tq\tfalse\t0.0\t2000-02-01\t1.0\t2.1\t3.22\t4.333\t5.4444\t6.55555\t7.666666",
+                TimeSeriesFileFormat.writeSeriesAsString(testSeries(1.0, 2.1, 3.22, 4.333, 5.4444, 6.55555, 7.666666)))
 
-        t.copyWithDataSince(date(2, 2))
-                .assertTimeSeries(date(2, 2), 2, 3, 4)
-        t.copyWithDataSince(date(2, 10))
-                .assertTimeSeries(date(2, 10))
+        assertEquals("s\ta\tm\tq\tfalse\t0.0\t2000-02-01\t1.0\t-Inf\t\tInf",
+                TimeSeriesFileFormat.writeSeriesAsString(testSeries(1.0, Double.NEGATIVE_INFINITY, Double.NaN, Double.POSITIVE_INFINITY)))
+        assertEquals("s\ta\tm\tq\ttrue\t0\t2000-02-02\tInf\t0\t\t1\t",
+                TimeSeriesFileFormat.writeSeriesAsString(testSeries(0, 1, 0, 0, 1, 0).div(testSeries(0, 0, 1, 0, 1, 0))))
     }
 
     @Test
-    fun testCopyExtendedThrough() {
-        val t = testSeries(listOf(1, 2, 3, 4))
-
-        t.copyExtendedThrough(date(1, 30), TimeSeriesFillStrategy.FILL_WITH_ZEROS)
-                .assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-
-        t.copyExtendedThrough(date(2, 2), TimeSeriesFillStrategy.FILL_WITH_ZEROS)
-                .assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-
-        t.copyExtendedThrough(date(2, 6), TimeSeriesFillStrategy.FILL_WITH_ZEROS)
-                .assertTimeSeries(date(2, 1), 1, 2, 3, 4, 0, 0)
-        t.copyExtendedThrough(date(2, 6), TimeSeriesFillStrategy.FILL_FORWARD)
-                .assertTimeSeries(date(2, 1), 1, 2, 3, 4, 4, 4)
-    }
-
-    @Test
-    fun testPercentChanges() {
-        val values = listOf(1, 1, 1, 2, 2, 2, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 2, 2)
-        val t = testSeries(values)
-
-        assertEquals(listOf(0.0, 0.0, 1.0, 0.0, 0.0, 0.5, 0.0, 0.0, -1.0, Double.NaN, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 0.0, 1.0, 0.0, 0.0),
-            t.percentChanges(1, 1).values)
-        assertEquals(listOf(0.5, 1.0, 0.3333333333333333, 0.25, 0.5, 0.2, -0.5, -1.0, -1.0, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 1.0, 0.5, 1.0, 0.3333333333333333),
-            t.percentChanges(2, 2).values)
-        assertEquals(listOf(-0.3333333333333333, -0.5714285714285714, -0.6874999999999999, -0.5333333333333333, -0.30769230769230765),
-            t.percentChanges(7, 7).values)
-
-        assertEquals(date(2, 14), t.percentChanges(7, 7).start)
-    }
-
-    @Test
-    fun testDropFirst() {
-        val t = testSeries(listOf(1, 2, 3, 4))
-
-        try {
-        t.dropFirst(-2).assertTimeSeries(date(2, 3), 3, 4)
-            fail()
-        } catch (x: IllegalArgumentException) {
-            // expected
-        }
-        t.dropFirst(0).assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-        t.dropFirst(2).assertTimeSeries(date(2, 3), 3, 4)
-    }
-
-    @Test
-    fun testDropLast() {
-        val t = testSeries(listOf(1, 2, 3, 4))
-
-        try {
-            t.dropLast(-2).assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-            fail()
-        } catch (x: IllegalArgumentException) {
-            // expected
-        }
-        t.dropLast(0).assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-        t.dropLast(2).assertTimeSeries(date(2, 1), 1, 2)
-    }
-
-    @Test
-    fun testTrim() {
-        val t = testSeries(listOf(1, 2, 3, 4))
-
-        try {
-            t.trim(-1, 1).assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-            fail()
-        } catch (x: IllegalArgumentException) {
-            // expected
-        }
-        try {
-            t.trim(1, -1).assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-            fail()
-        } catch (x: IllegalArgumentException) {
-            // expected
-        }
-
-        t.trim(1, 1).assertTimeSeries(date(2, 2), 2, 3)
-        t.trim(0, 2).assertTimeSeries(date(2, 1), 1, 2)
-        t.trim(2, 0).assertTimeSeries(date(2, 3), 3, 4)
-    }
-
-    @Test
-    fun testAdjustDates() {
-        val t = testSeries(listOf(1, 2, 3, 4))
-
-        t.adjustDates(date(1, 31), date(2, 5))
-                .assertTimeSeries(date(2, 1), 1, 2, 3, 4)
-
-        t.adjustDates(date(1, 31), date(2, 5), TimeSeriesFillStrategy.FILL_WITH_ZEROS, TimeSeriesFillStrategy.FILL_WITH_ZEROS)
-                .assertTimeSeries(date(1, 31), 0, 1, 2, 3, 4, 0)
-        t.adjustDates(date(1, 31), date(2, 5), TimeSeriesFillStrategy.FILL_BACKWARD, TimeSeriesFillStrategy.FILL_FORWARD)
-                .assertTimeSeries(date(1, 31), 1, 1, 2, 3, 4, 4)
-
-        t.adjustDates(date(2, 2), date(2, 3))
-                .assertTimeSeries(date(2, 2), 2, 3)
-        t.adjustDates(date(2, 2), date(2, 10), fillForward = TimeSeriesFillStrategy.FILL_BACKWARD)
-                .assertTimeSeries(date(2, 2), 2, 3, 4)
-        t.adjustDates(date(2, 2), date(2, 10), fillForward = TimeSeriesFillStrategy.FILL_WITH_ZEROS)
-                .assertTimeSeries(date(2, 2), 2, 3, 4, 0, 0, 0, 0, 0, 0)
+    fun testDeserialize() {
+        testRecycleSeries(1, 2, 3, 4)
+        testRecycleSeries(1.0, 2.1, 3.22, 4.333, 5.4444, 6.55555, 7.666666)
+        testRecycleSeries(1.0, Double.NEGATIVE_INFINITY, Double.NaN, Double.POSITIVE_INFINITY)
+        testSeries(0, 1, 0, 0, 1, 0).div(testSeries(0, 0, 1, 0, 1, 0)).testRecycle()
+        TimeSeries("s", "a", "m", "q", true, Double.NaN, date(2, 1),
+                listOf(1.0, Double.NEGATIVE_INFINITY, Double.NaN, Double.POSITIVE_INFINITY)).testRecycle()
     }
 
     private fun date(month: Int, dayOfMonth: Int) = LocalDate.of(2000, month, dayOfMonth)
 
-    private fun testSeries(values: List<Int>) =
-            TimeSeries("", "", "", "", 0, date(2, 1), values)
+    private fun testSeries(vararg values: Int) =
+            TimeSeries("s", "a", "m", "q", 0, date(2, 1), values.toList())
 
-    private fun TimeSeries.assertTimeSeries(date: LocalDate, vararg expectedValues: Number) {
-        assertEquals(expectedValues.map { it.toDouble() }, values)
-        assertEquals(date, start)
+    private fun testSeries(vararg values: Double) =
+            TimeSeries("s", "a", "m", "q", 0.0, date(2, 1), *values)
+
+    private fun testRecycleSeries(vararg values: Int) {
+        testSeries(*values).testRecycle()
     }
+
+    private fun testRecycleSeries(vararg values: Double) {
+        testSeries(*values).testRecycle()
+    }
+
+    private fun TimeSeries.testRecycle() {
+        val str1 = TimeSeriesFileFormat.writeSeriesAsString(this)
+        val series2 = TimeSeriesFileFormat.readSeries(str1)
+        val str2 = TimeSeriesFileFormat.writeSeriesAsString(this)
+        assertEquals(values, series2.values)
+        assertEquals(str1, str2)
+        println(str1)
+    }
+
+    private fun TimeSeries.recycleSeries() = TimeSeriesFileFormat.readSeries(TimeSeriesFileFormat.writeSeriesAsString(this))
 
 }

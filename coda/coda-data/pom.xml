@@ -17,6 +17,12 @@
             <artifactId>coda-time</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
 	</dependencies>
 
     <build>

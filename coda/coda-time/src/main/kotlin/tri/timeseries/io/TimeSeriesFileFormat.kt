@@ -50,15 +50,35 @@ object TimeSeriesFileFormat {
     }
 
     /** Writes a single series to the writer. */
-    fun writeSeriesAsString(m: TimeSeries) =
-            (listOf(m.source, m.areaId, m.metric, m.qualifier, m.intSeries, if (m.intSeries) m.defValue.toInt() else m.defValue, m.start)
-                    + (if (m.intSeries) m.values.map { it.roundToInt() } else m.values)).joinToString("\t")
+    fun writeSeriesAsString(m: TimeSeries): String {
+        val head = sequenceOf(m.source, m.areaId, m.metric, m.qualifier, m.intSeries,
+                if (m.intSeries) m.defValue.toInt() else m.defValue, m.start).joinToString("\t")
+        val values = m.values.joinToString("\t") { it.writeValue(m.intSeries) }
+        return head + "\t" + values
+    }
 
     /** Reads a series from a writer line. */
     fun readSeries(line: String): TimeSeries {
         val split = line.split("\t")
         return TimeSeries(split[0], split[1], split[2], split[3], split[4].toBoolean(), split[5].toDouble(), split[6].toLocalDate(),
-                split.subList(7, split.size).map { it.toDouble() })
+                split.subList(7, split.size).map { it.readValue() })
+    }
+
+    /** Write double value to TSFF. */
+    private fun Double.writeValue(intSeries: Boolean) = when {
+        isNaN() -> ""
+        this == Double.POSITIVE_INFINITY -> "Inf"
+        this == Double.NEGATIVE_INFINITY -> "-Inf"
+        intSeries -> roundToInt().toString()
+        else -> toString()
+    }
+
+    /** Reads value from TSFF. */
+    private fun String.readValue(): Double = when (this) {
+        "" -> Double.NaN
+        "Inf" -> Double.POSITIVE_INFINITY
+        "-Inf" -> Double.NEGATIVE_INFINITY
+        else -> toDouble()
     }
 
 }

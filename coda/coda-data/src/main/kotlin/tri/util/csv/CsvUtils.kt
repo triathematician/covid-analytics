@@ -17,113 +17,36 @@
  * limitations under the License.
  * #L%
  */
-package tri.util
+package tri.util.csv
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.convertValue
-import java.io.*
-import java.lang.UnsupportedOperationException
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import tri.util.format
+import tri.util.log
+import tri.util.url
+import java.io.File
+import java.io.PrintStream
+import java.io.Reader
 import java.net.URL
-import java.nio.charset.Charset
 import kotlin.reflect.KClass
 
-/** Split lines of the CSV file, accommodating quotes and empty entries. */
-object CsvLineSplitter {
-    internal val FIND_REGEX = "(?m)(?s)(?<=^)(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+(?=$)".toRegex()
-    internal val FIND_REGEX2 = "(?s)^(?:[^\"\\r\\n]+|(?<=^|,)\"(?:\"\"|[^\"]+)+\"(?=,|$))+$".toRegex()
-
-    internal const val QUOTED = "(?<=^|,)\"(?:\"\"|[^\"]+)++\"(?=,|$)"
-    internal const val PARTIAL = "(?:[^,\"\\r\\n]+|$QUOTED)"
-
-    internal val MATCH_ONE_MULTILINE_CSV_RECORD = "(?s)^,*(?:$PARTIAL,*)+$".toRegex()
-    internal val INLINE_REGEX = "(?m)(?<=^|,)(?:\"\"|(?:)|[^,\"\\r\\n]+|\"(?:\"\"|[^\"]+)+\")(?=,|$)".toRegex()
-
-    /** Reads data from the given URL, returning the header line and content lines. */
-    fun readData(splitOnNewLines: Boolean, url: URL, charset: Charset = Charsets.UTF_8) =
-            readData(splitOnNewLines) { InputStreamReader(url.openStream(), charset) }
-
-    /** Reads data from the given string, returning the header line and content lines. */
-    fun readData(splitOnNewLines: Boolean, string: String) = readData(splitOnNewLines) { StringReader(string) }
-
-    /**
-     * Reads data from a reader, returning the header line and content lines.
-     * @param splitOnNewLines if true, each line will be read as a separate record; if false (slower), multiple lines will be reconstituted into a single record
-     */
-    fun readData(splitOnNewLines: Boolean, reader: () -> Reader): Pair<List<String>, Sequence<List<String>>> {
-        val header = splitLine(reader().firstLine())!!.map { it.javaTrim() }
-
-        val seq = reader().buffered().lineSequence().drop(1)
-        return header to (if (splitOnNewLines) seq else seq.reconstitute()).mapNotNull { splitLine(it) }
-
-//        val otherLines = BufferedReader(reader()).lineSequence().drop(1)
-//        val others = if (splitOnNewLines) otherLines else FIND_REGEX.findAll(otherLines.joinToString("\n")).map { it.value }
-//        return header to others.mapNotNull { splitLine(it) }
-    }
-
-    /** Converts sequence from raw to one where line breaks inside quotes have been merged. */
-    internal fun Sequence<String>.reconstitute(): Sequence<String> {
-        val iterator = iterator()
-        return object : Iterator<String> {
-            var next = ""
-            override fun hasNext(): Boolean {
-                val seq = mutableListOf<String>()
-                while (seq.isEmpty() || !MATCH_ONE_MULTILINE_CSV_RECORD.matches(seq.joinToString("\n"))) {
-                    if (seq.size > 100) println("Multiline string: ${seq.size}")
-                    if (iterator.hasNext()) iterator.next().let { if (it.isNotEmpty()) seq += it }
-                    else return false
-                }
-                next = seq.joinToString("\n")
-                return true
-            }
-            override fun next() = next
-        }.asSequence()
-    }
-
-    /** Splits a comma-separated lines. An empty line will generate an exception. */
-    fun splitLine(line: String): List<String>? {
-        if (line.isBlank()) return null
-        return INLINE_REGEX.findAll(line).map {
-            var res = it.value
-            while (res.startsWith("\"") && res.endsWith("\"")) {
-                res = res.substring(1, res.length - 1)
-            }
-            res
-        }.toList()
-    }
-}
-
-/** Split lines of the CSV file, without quotes. */
-object CsvLineSplitterFast {
-    /** Reads data from the given URL, returning the header line and content lines. */
-    fun readData(url: URL, charset: Charset = Charsets.UTF_8) = readData { InputStreamReader(url.openStream(), charset) }
-
-    /** Reads data from the given string, returning the header line and content lines. */
-    fun readData(string: String) = readData { StringReader(string) }
-
-    /** Reads data from a reader, returning the header line and content lines. */
-    fun readData(reader: () -> Reader) = splitLine(reader().firstLine()) to BufferedReader(reader()).lineSequence().drop(1).map { splitLine(it) }
-
-    /** Splits a comma-separated lines. An empty line will generate an exception. */
-    fun splitLine(line: String) = line.split(",").map { it.javaTrim() }
-}
+val MAPPER: ObjectMapper = ObjectMapper()
+        .registerKotlinModule()
+        .registerModule(JavaTimeModule())
+        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
 /** Get first line, removing BOM markers. */
-private fun Reader.firstLine() = useLines {
+internal fun Reader.firstLine() = useLines {
     it.first().substringAfter("\uFEFF").substringAfter("ï»¿")
 }
-
-val MAPPER: ObjectMapper = ObjectMapper()
-    .registerKotlinModule()
-    .registerModule(JavaTimeModule())
-    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
 //region EXTENSION FUNCTIONS FOR SPECIFIC SOURCES
 
 /** Reads lines of data from a string. */
-fun String.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines,this).keyValues()
+fun String.csvKeyValues(splitOnNewLines: Boolean = true) = CsvLineSplitter.readData(splitOnNewLines, this).keyValues()
 /** Maps lines of data from a string. */
 fun <X> String.mapCsvKeyValues(splitOnNewLines: Boolean, op: (Map<String, String>) -> X) = csvKeyValues(splitOnNewLines).map { op(it) }
 /** Maps lines of data from a string to a data class, using Jackson [ObjectMapper] for conversions. */

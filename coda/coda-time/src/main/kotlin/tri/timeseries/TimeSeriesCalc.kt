@@ -36,7 +36,7 @@ fun List<TimeSeries>.mergeSeries(op: (List<Double>) -> Double): TimeSeries {
 fun mergeSeries(s1: TimeSeries, s2: TimeSeries, op: (Double, Double) -> Double) = listOf(s1, s2).mergeSeries { it.reduce(op) }
 
 /** First date with a positive number of values for any of the given series. */
-fun Collection<TimeSeries>.firstPositiveDateOrNull() = map { it.firstPositiveDate }.minOrNull()
+fun Collection<TimeSeries>.firstPositiveDateOrNull() = mapNotNull { it.firstPositiveDate }.minOrNull()
 
 /** Last date for any of the given series. */
 fun Collection<TimeSeries>.lastDateOrNull() = map { it.end }.maxOrNull()

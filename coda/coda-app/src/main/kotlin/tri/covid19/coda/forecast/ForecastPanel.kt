@@ -42,7 +42,7 @@ import tri.covid19.data.YYG
 import tri.covid19.coda.history.METRIC_OPTIONS
 import tri.covid19.coda.installHoverEffect
 import tri.covid19.coda.utils.*
-import tri.math.Sigmoid
+import tri.util.math.Sigmoid
 import tri.util.minus
 import tri.util.monthDay
 import tri.util.toLocalDate

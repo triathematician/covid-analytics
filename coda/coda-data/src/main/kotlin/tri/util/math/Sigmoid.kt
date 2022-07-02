@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.math
+package tri.util.math
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresBuilder

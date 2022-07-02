@@ -19,7 +19,7 @@
  */
 package tri.area
 
-import tri.util.csvLines
+import tri.util.csv.csvLines
 
 //
 // This file provides access to population data tables.
@@ -30,11 +30,13 @@ private const val STATE_CENSUS_DATA = "resources/census/state census.csv"
 private const val METRO_DATA = "resources/metro.csv"
 private const val COUNTRY_DATA = "resources/countries.csv"
 
+/** Interface for population lookups. */
 sealed class PopulationLookupData(resource: String): (String) -> Long? {
     val dataLines = CountyData::class.java.getResource(resource).csvLines(true).toList()
     val dataTable: MutableMap<String, Long> = mutableMapOf()
 }
 
+/** County population lookups. */
 object CountyData: PopulationLookupData(COUNTY_CENSUS_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[12].replace(",", "").toLong() } }
 
@@ -57,6 +59,7 @@ object CountyData: PopulationLookupData(COUNTY_CENSUS_DATA) {
     }
 }
 
+/** State population lookups. */
 object StateData: PopulationLookupData(STATE_CENSUS_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[12].replace(",", "").toLong() } }
     override fun invoke(input: String) = when (input.split(", ", ",").size) {
@@ -66,11 +69,13 @@ object StateData: PopulationLookupData(STATE_CENSUS_DATA) {
     }
 }
 
+/** Metro population lookups. */
 object MetroData: PopulationLookupData(METRO_DATA) {
     init { dataLines.forEach { dataTable[it[0].toLowerCase()] = it[1].toLong() } }
     override fun invoke(input: String) = dataTable[input.toLowerCase()]
 }
 
+/** Country population lookups. */
 object CountryData: PopulationLookupData(COUNTRY_DATA) {
     init { dataLines.forEach { dataTable[it[1].toLowerCase()] = it[2].replace(",", "").toLong() } }
 

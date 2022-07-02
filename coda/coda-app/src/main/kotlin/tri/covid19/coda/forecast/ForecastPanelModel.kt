@@ -36,7 +36,7 @@ import tri.covid19.coda.history.changeDoublingDataSeries
 import tri.covid19.coda.history.hubbertSeries
 import tri.covid19.coda.utils.ChartDataSeries
 import tri.covid19.data.*
-import tri.math.Sigmoid
+import tri.util.math.Sigmoid
 import tri.timeseries.forecast.Forecast
 import tri.timeseries.TimeSeries
 import tri.util.DateRange

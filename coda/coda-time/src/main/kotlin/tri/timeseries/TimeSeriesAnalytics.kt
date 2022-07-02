@@ -22,19 +22,25 @@ package tri.timeseries
 import kotlin.math.log2
 import kotlin.math.max
 
+/** List of numeric values. */
+typealias Series = List<Double>
+
 /** Sliding window of at least n entries. Results in (size-n+1) entries. */
-fun List<Double>.slidingWindow(n: Int, includePartialList: Boolean = false) = when {
+fun Series.slidingWindow(n: Int, includePartialList: Boolean = false) = when {
     !includePartialList -> (n..size).map { subList(it - n, it) }
     else -> indices.map { subList(max(0, it - n + 1), it + 1) }
 }
 
-/** Compute diffs between entries. */
-fun List<Double>.deltas(offset: Int = 1) = (0 until size).map {
-    get(it) - getOrElse(it - offset) { 0.0 }
+/** Compute diffs between entries. The result has the same number of entries, with [defaultValue] assumed for missing entries. */
+fun Series.deltas(offset: Int = 1, defaultValue: Double = 0.0) = (0 until size).map {
+    get(it) - getOrElse(it - offset) { defaultValue }
 }
 
+/** Compute changes from prior values, with given offset. The result has [offset] fewer entries. */
+fun Series.changes(offset: Int = 1): Series = (offset until size).map { get(it) - get(it - offset) }
+
 /** Construct partial sums of values. */
-fun List<Double>.partialSums(): List<Double> {
+fun Series.partialSums(): Series {
     val res = mutableListOf<Double>()
     var sum = 0.0
     forEach {
@@ -43,20 +49,16 @@ fun List<Double>.partialSums(): List<Double> {
     }
     return res
 }
-
-/** Compute changes from prior values, with given offset. The result has [offset] fewer entries. */
-fun List<Double>.changes(offset: Int = 1): List<Double> = (offset until size).map { get(it) - get(it - offset) }
-
 /**
  * Compute percent change from last to next.
  * Result will be [Double.NaN] if dividing 0 by 0, or [Double.POSITIVE_INFINITY]/[Double.NEGATIVE_INFINITY] if dividing by 0 otherwise.
  */
-fun List<Double>.percentChanges(offset: Int = 1): List<Double> = (0 until size).map {
+fun Series.percentChanges(offset: Int = 1): Series = (0 until size).map {
     (getOrElse(it - offset) { Double.NaN }).percentChangeTo(get(it))
 }
 
 /** Compute growth rates between entries (ratio of successive entries). Can produce infinity. */
-fun List<Double>.growthRates(day0: Int = 0) = (1 until size).map {
+fun Series.growthRates(day0: Int = 0) = (1 until size).map {
     when (day0) {
         0 -> get(it) / get(it - 1)
         else -> (get(it) - get(maxOf(0, it-day0))) / (get(it - 1) - get(maxOf(0, it-day0)))
@@ -64,24 +66,28 @@ fun List<Double>.growthRates(day0: Int = 0) = (1 until size).map {
 }
 
 /** Compute growth percentage between entries (ratio of change to average). */
-fun List<Double>.symmetricGrowth() = (1 until size).map { (get(it) - get(it - 1)) / (.5 * (get(it) + get(it - 1))) }
+fun Series.symmetricGrowth() = (1 until size).map {
+    (get(it) - get(it - 1)) / (.5 * (get(it) + get(it - 1)))
+}
 
 /**
  * Compute doubling time based on constant growth rates.
  * @param sinceDaysAgo how many days ago is "day 0" for computation of growth rates.
  */
-fun List<Double>.doublingTimes(sinceDaysAgo: Int = 0) = growthRates(sinceDaysAgo).map {
+fun Series.doublingTimes(sinceDaysAgo: Int = 0) = growthRates(sinceDaysAgo).map {
     1/log2(it)
 }
 
 /** Compute average over n entries. The first n-1 entries have partial averages if [includePartialList] is true. */
-fun List<Double>.movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = false) = slidingWindow(bucket, includePartialList).map {
+fun Series.movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = false) = slidingWindow(bucket, includePartialList).map {
     if (!nonZero) it.average() else it.filter { it != 0.0 }.average()
 }
+
 /** Compute sum over n entries. The first n-1 entries have partial sums if [includePartialList] is true. */
-fun List<Double>.movingSum(bucket: Int, includePartialList: Boolean = false) = slidingWindow(bucket, includePartialList).map { it.sum() }
+fun Series.movingSum(bucket: Int, includePartialList: Boolean = false) = slidingWindow(bucket, includePartialList).map { it.sum() }
+
 /** Ratio of n days (top) over m days (bottom). */
-fun List<Double>.growthRatio(topBucket: Int, bottomBucket: Int): List<Double> {
+fun Series.growthRatio(topBucket: Int, bottomBucket: Int): Series {
     val top = movingSum(topBucket, false)
     val bottom = movingSum(bottomBucket, false)
     val size = minOf(top.size, bottom.size)

@@ -21,7 +21,6 @@ package tri.timeseries
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tri.area.AreaLookup
-import tri.timeseries.analytics.computeLogisticPrediction
 import tri.util.DateRange
 import tri.util.dateRange
 import tri.util.minus
@@ -80,14 +79,14 @@ data class TimeSeries(
         get() = MetricInfo(metric, qualifier)
 
     @get:JsonIgnore
-    val firstPositiveDate: LocalDate
-        get() = (start..end).firstOrNull { get(it) > 0.0 } ?: end
+    val domain: DateRange
+        get() = DateRange(start, end)
     @get:JsonIgnore
     val end: LocalDate
         get() = date(values.size - 1)
     @get:JsonIgnore
-    val domain: DateRange
-        get() = DateRange(start, end)
+    val firstPositiveDate: LocalDate?
+        get() = (start..end).firstOrNull { get(it) > 0.0 }
 
     @get:JsonIgnore
     val size: Int
@@ -96,21 +95,15 @@ data class TimeSeries(
         get() = values.mapIndexed { i, d -> date(i) to d }.toMap()
     @get:JsonIgnore
     val lastValue: Double
-        get() = values.lastOrNull() ?: 0.0
+        get() = values.lastOrNull() ?: defValue
 
     //endregion
 
-    //region VALUE AND DATE GETTERS
+    //region QUERIES
 
     /** Get area by id, if found. */
-    fun area(lookup: AreaLookup) =
-            lookup.areaOrNull(areaId) ?: throw IllegalStateException("Area not found: $areaId")
-
-    /** Get value on given date. */
-    operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
-
-    /** Get value on given date, or null if argument is outside range. */
-    fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
+    fun area(lookup: AreaLookup) = lookup.areaOrNull(areaId)
+            ?: throw IllegalStateException("Area not found: $areaId")
 
     /** Get date by index. */
     fun date(i: Int) = start.plusDays(i.toLong())!!
@@ -118,44 +111,25 @@ data class TimeSeries(
     /** Get index by date. */
     private fun indexOf(date: LocalDate) = ChronoUnit.DAYS.between(start, date).toInt()
 
-    //endregion
+    /** Get value on given date. */
+    operator fun get(date: LocalDate): Double = values.getOrElse(indexOf(date)) { defValue }
 
-    //region QUERIES
-
-    /** Get value by days from end. Zero returns the last value. */
-    fun valueByDaysFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
-
-    /** Get sublist with given indices relative to end of list. Zero is the last element. */
-    fun last(range: IntRange): List<Double> {
-        return values.subList(maxOf(0, values.size - range.last - 1), maxOf(0, values.size - range.first))
-    }
-
-    /** Get date of peak and value. */
-    fun peak(since: LocalDate? = null): Pair<LocalDate, Double> = domain.map { it to get(it) }
-        .filter { since == null || !it.first.isBefore(since) }
-        .maxByOrNull { it.second }!!
+    /** Get value on given date, or null if argument is outside range. */
+    fun getOrNull(date: LocalDate): Double? = values.getOrNull(indexOf(date))
 
     /** Get values for the given range of dates. */
     fun values(dates: DateRange) = dates.map { get(it) }
 
-    /** Compute sum over all dates in given range. */
-    fun sum(dates: DateRange) = values(dates).sum()
+    /** Get value by days from end. Zero returns the last value. */
+    fun valueByDaysFromEnd(value: Int): Double = values.getOrElse(values.size - 1 - value) { defValue }
 
-    /** Compute average over all dates in given range. */
-    fun average(dates: DateRange) = values(dates).average()
-
-    /** Compute sum over all dates in given range. */
-    fun sum(month: YearMonth) = values(month.dateRange).sum()
-
-    /** Compute average over all dates in given range. */
-    fun average(month: YearMonth) = values(month.dateRange).average()
-
-    /** Compute number of days since value was half of its current value. Returns null if current value is not positive. */
-    fun daysSinceHalfCurrentValue(): Int? {
-        val cur = lastValue
-        if (cur <= 0) return null
-        (1..values.size).forEach { if (valueByDaysFromEnd(it) <= .5 * cur) return it }
-        return null
+    /**
+     * Get sublist with given indices relative to end of list. Zero is the last element.
+     * Out-of-bounds indices are ignored.
+     */
+    fun last(range: IntRange): List<Double> {
+        return values.subList(maxOf(0, values.size - range.last - 1),
+                minOf(values.size, values.size - range.first))
     }
 
     //endregion
@@ -168,11 +142,11 @@ data class TimeSeries(
      * If provided date is after [end], returns a time series with no values
      */
     fun copyWithDataSince(firstDate: LocalDate) =
-        copy(start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()))
+            copy(start = maxOf(start, firstDate), values = values.drop(maxOf(start, firstDate).minus(start).toInt()))
 
     /** Create a copy while adjusting the start day forward/back if the number of values is more/less than current number of values. Assumes the end of the series is fixed date. */
     fun copyAdjustingStartDay(metric: String = this.metric, values: List<Double> = this.values, intSeries: Boolean = this.intSeries) =
-        copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
+            copy(metric = metric, start = date(this.values.size - values.size), values = values, intSeries = intSeries)
 
     /**
      * Create copy after filling data through a given date.
@@ -219,6 +193,22 @@ data class TimeSeries(
         return copy(start = useStart, values = fillStart.repeat(extendStart) + trimmedValues + fillEnd.repeat(extendEnd))
     }
 
+    //endregion
+
+    //region CALCULATIONS
+
+    /** Compute sum over all dates in given range. Returns 0 if dates are out of range. */
+    fun sum(dates: DateRange) = values(dates).sum()
+
+    /** Compute average over all dates in given range. Returns 0 if dates are out of range. */
+    fun average(dates: DateRange) = values(dates).average()
+
+    /** Compute sum over all dates in given range. Returns 0 if dates are out of range. */
+    fun sum(month: YearMonth) = values(month.dateRange).sum()
+
+    /** Compute average over all dates in given range. Returns 0 if dates are out of range. */
+    fun average(month: YearMonth) = values(month.dateRange).average()
+
     /** Apply arbitrary operator to series. */
     fun transform(op: (Double) -> Double) = copy(values = values.map { op(it) })
 
@@ -233,18 +223,9 @@ data class TimeSeries(
     operator fun div(n: TimeSeries) = mergeSeries(this, n) { a, b -> a / b }
 
     /**
-     * Subtracts the other [TimeSeries], but constrain so that only positive values are in the result. Trims the time
-     * series start so that all values are positive.
+     * Return copy with moving averages. If bucket is <=1, returns this series.
+     * If [nonZero] is true, zeros are filtered out before averaging, and windows with all zeros will have an average of [Double.NaN].
      */
-    fun minusMustBePositive(n: TimeSeries) = minus(n).let {
-        val lastZero = it.valuesAsMap.entries.findLast { it.value <= 0 }
-        if (lastZero == null) it else it.copyWithDataSince(lastZero.key.plusDays(1))
-    }
-
-    /** Smooth the series over a 7-day window, with either a sum or an average. */
-    fun smooth7(total: Boolean) = if (total) movingSum(7) else movingAverage(7)
-
-    /** Return copy with moving averages. If bucket is <=1, returns this series. */
     fun movingAverage(bucket: Int, nonZero: Boolean = false, includePartialList: Boolean = true) =
         when {
             bucket <= 1 -> this
@@ -260,15 +241,8 @@ data class TimeSeries(
     /** Return copy with deltas. */
     fun deltas(offset: Int = 1, metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric),
-        values = values.deltas(offset)
+        values = values.deltas(offset, defValue)
     )
-
-    /** Return copy with deltas between averages of [bucket] successive values. */
-    fun averageDeltas(bucket: Int, metricFunction: (String) -> String = { it }) =
-        copyAdjustingStartDay(
-            metric = metricFunction(metric), intSeries = false,
-            values = values.movingAverage(bucket, includePartialList = true).deltas(bucket)
-        )
 
     /** Compute cumulative totals. */
     fun cumulative(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
@@ -295,41 +269,44 @@ data class TimeSeries(
         values = values.movingAverage(bucket).percentChanges(offset = offset)
     ).restrictToRealNumbers()
 
-    /** Return copy with growth rates. */
+    /**
+     * Get date of peak and value.
+     * Return null when there is no data, or all values are NaN.
+     */
+    fun peak(since: LocalDate? = null): Pair<LocalDate, Double>? = domain.map { it to get(it) }
+            .filter { since == null || !it.first.isBefore(since) }
+            .filter { !it.second.isNaN() }
+            .maxByOrNull { it.second }
+
+    /**
+     * Compute number of days since value was less than or equal to half of its current value.
+     * Returns null if current value is not positive.
+     * Does not allow for default values outside the range of defined values.
+     */
+    fun daysSinceHalfCurrentValue(): Int? {
+        val cur = lastValue
+        if (cur <= 0) return null
+        (1 until values.size).forEach { if (valueByDaysFromEnd(it) <= .5 * cur) return it }
+        return null
+    }
+
+    /** Return copy with growth rates (ratio of successive entries). */
     fun growthRates(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric), intSeries = false,
         values = values.growthRates()
     ).restrictToRealNumbers()
 
-    /** Return copy with growth percentages. */
+    /** Return copy with growth percentages (ratio of change to average). */
     fun symmetricGrowth(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric), intSeries = false,
         values = values.symmetricGrowth()
     ).restrictToRealNumbers()
 
-    /** Return copy with doubling times. */
+    /** Return copy with doubling times when constant growth is assumed. */
     fun doublingTimes(metricFunction: (String) -> String = { it }) = copyAdjustingStartDay(
         metric = metricFunction(metric), intSeries = false,
         values = values.doublingTimes()
     ).restrictToRealNumbers()
-
-    /** Return derived metrics with logistic predictions, using given number of days for linear regression. */
-    fun shortTermLogisticForecast(days: Int): List<TimeSeries> {
-        val predictions = values.computeLogisticPrediction(days).filter { it.hasBoundedConfidence }
-        return listOf(
-            copyAdjustingStartDay(metric = "$metric (predicted total)", values = predictions.map { it.kTotal }),
-            copyAdjustingStartDay(metric = "$metric (predicted total, min)", values = predictions.map { it.minKTotal }),
-            copyAdjustingStartDay(metric = "$metric (predicted total, max)", values = predictions.map { it.maxKTotal }),
-            copyAdjustingStartDay(metric = "$metric (predicted peak)", values = predictions.map { it.peakGrowth }),
-            copyAdjustingStartDay(
-                metric = "$metric (days to peak)",
-                values = predictions.map { it.daysToPeak },
-                intSeries = false
-            )
-//                copyAdjustingStartDay(metric = "$metric (logistic slope)", values = predictions.map { it.slope }, intSeries = false),
-//                copyAdjustingStartDay(metric = "$metric (logistic intercept)", values = predictions.map { it.intercept }, intSeries = false)
-        ).map { it.restrictToRealNumbers() }
-    }
 
     //endregion
 

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19
+package tri.covid19.coda.hotspot
 
 enum class CovidRiskLevel(var level: Int) {
     MINOR(0),

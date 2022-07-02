@@ -19,8 +19,6 @@
  */
 package tri.timeseries.analytics
 
-import tri.area.UsaAreaLookup
-
 @kotlin.time.ExperimentalTime
 class MinMaxFinderTest {
 

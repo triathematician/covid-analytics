@@ -19,7 +19,7 @@
  */
 package tri.area
 
-import tri.util.csvResource
+import tri.util.csv.csvResource
 import tri.util.fine
 import tri.util.javaTrim
 

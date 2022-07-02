@@ -17,13 +17,10 @@
  * limitations under the License.
  * #L%
  */
-package tri.covid19.reports
+package tri.covid19.coda.hotspot
 
 import tri.area.UsaAreaLookup
-import tri.covid19.CovidRiskLevel
 import tri.covid19.DEATHS
-import tri.covid19.risk_DoublingTime
-import tri.covid19.risk_PerCapitaDeathsPerDay
 import tri.timeseries.*
 import tri.timeseries.analytics.ExtremeInfo
 import tri.timeseries.analytics.MinMaxFinder

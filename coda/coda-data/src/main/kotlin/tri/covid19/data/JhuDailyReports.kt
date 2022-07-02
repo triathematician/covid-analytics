@@ -27,7 +27,7 @@ import tri.covid19.*
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import tri.timeseries.io.TimeSeriesFileProcessor
-import tri.util.csvKeyValues
+import tri.util.csv.csvKeyValues
 import tri.util.javaTrim
 import tri.util.toLocalDate
 import tri.util.url

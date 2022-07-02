@@ -19,7 +19,7 @@
  */
 package tri.area
 
-import tri.util.csvResource
+import tri.util.csv.csvResource
 
 private const val PVI = "resources/538-partisan-lean.csv"
 

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.math
+package tri.util.math
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import kotlin.math.abs

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package tri.math
+package tri.util.math
 
 import org.apache.commons.math3.linear.ArrayRealVector
 import org.apache.commons.math3.linear.RealMatrix

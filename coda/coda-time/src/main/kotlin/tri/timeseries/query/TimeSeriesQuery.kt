@@ -17,10 +17,13 @@
  * limitations under the License.
  * #L%
  */
-package tri.timeseries
+package tri.timeseries.query
 
 import tri.area.AreaInfo
 import tri.area.AreaLookup
+import tri.timeseries.MetricInfo
+import tri.timeseries.TimeSeries
+import tri.timeseries.groupByArea
 import tri.timeseries.io.TimeSeriesProcessor
 import java.time.YearMonth
 import kotlin.time.ExperimentalTime

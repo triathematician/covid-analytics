@@ -24,6 +24,7 @@ import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.timeseries.TimeSeries
 import tri.covid19.data.LocalCovidDataQuery
+import tri.timeseries.analytics.shortTermLogisticForecast
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 import kotlin.time.milliseconds

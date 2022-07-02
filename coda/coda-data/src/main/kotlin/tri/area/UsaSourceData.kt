@@ -19,7 +19,7 @@
  */
 package tri.area
 
-import tri.util.csvResource
+import tri.util.csv.csvResource
 
 /** Loads data from files with information about counties, CBSAs, FIPS, and more. */
 object UsaSourceData {
