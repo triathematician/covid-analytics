@@ -23,6 +23,13 @@ package tri.area
 interface AreaLookup {
     /** Lookup an area by id or name, returning null if none. */
     fun areaOrNull(lookupName: String, assumeUsState: Boolean = false): AreaInfo?
+
+    /**
+     * Get object for area with given name. Logs an error and returns a generic "Unknown" area if not found.
+     * @param lookupName name to lookup
+     * @param assumeUsState if true, lookup will assume the area is part of the USA if not found or ambiguous
+     */
+    fun area(lookupName: String, assumeUsState: Boolean = false) = areaOrNull(lookupName, assumeUsState) ?: UNKNOWN
 }
 
 

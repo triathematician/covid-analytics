@@ -20,7 +20,7 @@
 package tri.timeseries.analytics
 
 import tri.timeseries.TimeSeries
-import tri.timeseries.percentChangeTo
+import tri.util.percentChangeTo
 import java.time.LocalDate
 import kotlin.math.abs
 

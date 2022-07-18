@@ -78,13 +78,6 @@ object UsaAreaLookup : AreaLookup {
             areaCache[area.id] = area
     }
 
-    /**
-     * Get object for area with given name. Logs an error and returns a generic "Unknown" area if not found.
-     * @param lookupName name to lookup
-     * @param assumeUsState if true, lookup will assume the area is part of the USA if not found or ambiguous
-     */
-    fun area(lookupName: String, assumeUsState: Boolean = false) = areaOrNull(lookupName, assumeUsState) ?: UNKNOWN
-
     /** Get object for area with given name. Logs an error and returns null if not found. */
     override fun areaOrNull(lookupName: String, assumeUsState: Boolean): AreaInfo? {
         areaCache[lookupName]?.let { return it }

@@ -25,6 +25,7 @@ import tri.timeseries.*
 import tri.timeseries.analytics.ExtremeInfo
 import tri.timeseries.analytics.MinMaxFinder
 import tri.util.minus
+import tri.util.percentChangeTo
 import java.time.LocalDate
 import java.util.*
 import kotlin.math.absoluteValue

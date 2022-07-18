@@ -21,6 +21,7 @@ package tri.util
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
+import java.time.Month
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -75,6 +76,9 @@ fun String.toLocalDate(vararg formats: DateTimeFormatter): LocalDate {
 //endregion
 
 //region DATE OPERATORS
+
+/** Quick utility for getting date using just month and day of month. Defaults to year 2020. */
+operator fun Month.invoke(dayOfMonth: Int, year: Int = 2020) = LocalDate.of(year, this, dayOfMonth)!!
 
 /** Add number of months to date. */
 operator fun YearMonth.plus(days: Number) = this.plusMonths(days.toLong())
