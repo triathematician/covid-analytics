@@ -28,7 +28,18 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
-/** Time series of a single metric. Stores values as doubles, but will report them as [Int]s if a flag is set. */
+/**
+ * Time series of a single metric. Stores values as doubles, but will report them as [Int]s if a flag is set.
+ * Stores a contiguous collection of [values] where the first denotes the value on [start] date.
+ * <p>
+ * If [defValue] is 0.0, assumes that any missing values have a value of 0.
+ * <p>
+ * If [defValue] is [Double.NaN], assumes that any missing values are "unknown" -- subsequent calculations will
+ * propagate these "unknowns" per Java's typical mathematical calculation rules, unless the calculations explicity
+ * accommodate support for missing values. For instance, a 7-day average that includes a missing value will result in
+ * a [Double.NaN], so one must first "fill in" missing values to obtain a finite value.
+ * [TimeSeriesAggregate] provides some common strategies for performing these kind of fill operations.
+ */
 data class TimeSeries(
     /** Source for the time series. */
     var source: String,

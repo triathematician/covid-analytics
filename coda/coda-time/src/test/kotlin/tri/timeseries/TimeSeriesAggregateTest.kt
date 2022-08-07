@@ -28,22 +28,21 @@ import kotlin.time.ExperimentalTime
 class TimeSeriesAggregateTest {
 
     @Test
-    fun testFill() {
-        println("\nEmpty Test")
-        println("---------------------")
+    fun testFill_Empty() {
         TimeSeriesAggregate.values().forEach {
             println(it)
             println(it.invoke(listOf(), null).values.joinToString("\t"))
             println(it.invoke(listOf(), LocalDate.of(2021, Month.DECEMBER, 21)).values.joinToString("\t"))
         }
+    }
 
-        println("\nSimple Test")
-        println("---------------------")
-        var dated = listOf<Pair<LocalDate, Number>>(
-            LocalDate.of(2021, Month.DECEMBER, 3) to 0,
-            LocalDate.of(2021, Month.DECEMBER, 4) to 5,
-            LocalDate.of(2021, Month.DECEMBER, 6) to 7,
-            LocalDate.of(2021, Month.DECEMBER, 8) to 3
+    @Test
+    fun testFill_Simple() {
+        val dated = listOf<Pair<LocalDate, Number>>(
+                LocalDate.of(2021, Month.DECEMBER, 3) to 0,
+                LocalDate.of(2021, Month.DECEMBER, 4) to 5,
+                LocalDate.of(2021, Month.DECEMBER, 6) to 7,
+                LocalDate.of(2021, Month.DECEMBER, 8) to 3
         )
 
         TimeSeriesAggregate.values().forEach {
@@ -51,14 +50,15 @@ class TimeSeriesAggregateTest {
             println(it.invoke(dated, null).values.joinToString("\t"))
             println(it.invoke(dated, LocalDate.of(2021, Month.DECEMBER, 21)).values.joinToString("\t"))
         }
+    }
 
-        println("\nDuplicates Test")
-        println("---------------------")
-        dated = listOf<Pair<LocalDate, Number>>(
-            LocalDate.of(2021, Month.DECEMBER, 3) to 0,
-            LocalDate.of(2021, Month.DECEMBER, 3) to 5,
-            LocalDate.of(2021, Month.DECEMBER, 4) to 7,
-            LocalDate.of(2021, Month.DECEMBER, 4) to 3
+    @Test
+    fun testFill_Duplicates() {
+        val dated = listOf<Pair<LocalDate, Number>>(
+                LocalDate.of(2021, Month.DECEMBER, 3) to 0,
+                LocalDate.of(2021, Month.DECEMBER, 3) to 5,
+                LocalDate.of(2021, Month.DECEMBER, 4) to 7,
+                LocalDate.of(2021, Month.DECEMBER, 4) to 3
         )
 
         TimeSeriesAggregate.values().forEach {
@@ -66,24 +66,27 @@ class TimeSeriesAggregateTest {
             println(it.invoke(dated, null).values.joinToString("\t"))
             println(it.invoke(dated, LocalDate.of(2021, Month.DECEMBER, 21)).values.joinToString("\t"))
         }
+    }
 
-        println("\nMissing Values Test")
-        println("---------------------")
+    @Test
+    fun testFill_MissingValues() {
         val series = "331\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\tnull\t331\tnull\tnull\tnull\tnull\tnull\tnull\tnull"
-            .split("\t").map { if (it == "null") null else it.toInt() }
-        dated = (1..21).map { LocalDate.of(2021, Month.DECEMBER, it) to series[it - 1] }
-            .filter { it.second != null }
-            .map { it as Pair<LocalDate, Number> }
+                .split("\t").map { if (it == "null") null else it.toInt() }
+        val dated = (1..21).map { LocalDate.of(2021, Month.DECEMBER, it) to series[it - 1] }
+                .filter { it.second != null }
+                .map { it as Pair<LocalDate, Number> }
 
         TimeSeriesAggregate.values().forEach {
             println(it)
             println(it.invoke(dated, null).values.joinToString("\t"))
             println(it.invoke(dated, LocalDate.of(2021, Month.DECEMBER, 21)).values.joinToString("\t"))
         }
+    }
 
-        println("\nZeros Test")
+    @Test
+    fun testFill_Zeros() {
         println("---------------------")
-        dated = listOf(LocalDate.of(2021, Month.DECEMBER, 1) to 0)
+        val dated = listOf(LocalDate.of(2021, Month.DECEMBER, 1) to 0)
 
         TimeSeriesAggregate.values().forEach {
             println(it)
