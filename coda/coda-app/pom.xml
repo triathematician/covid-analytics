@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>coda-data</artifactId>
+            <artifactId>coda-time-covid</artifactId>
             <version>${project.version}</version>
         </dependency>
 

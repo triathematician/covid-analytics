@@ -23,7 +23,7 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.getProperty
 import tornadofx.property
-import tri.area.UsaAreaLookup
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.ACTIVE
 import tri.covid19.CASES
 import tri.covid19.DEATHS

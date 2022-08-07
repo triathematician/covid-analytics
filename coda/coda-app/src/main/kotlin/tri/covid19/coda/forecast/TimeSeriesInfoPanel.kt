@@ -26,7 +26,7 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Text
 import tornadofx.*
-import tri.area.UsaAreaLookup
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.coda.hotspot.HotspotInfo
 import tri.timeseries.*
 import tri.timeseries.analytics.ExtremaSummary

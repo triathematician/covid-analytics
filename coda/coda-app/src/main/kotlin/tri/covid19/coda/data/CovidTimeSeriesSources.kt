@@ -20,6 +20,7 @@
 package tri.covid19.coda.data
 
 import tri.area.*
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.timeseries.TimeSeries

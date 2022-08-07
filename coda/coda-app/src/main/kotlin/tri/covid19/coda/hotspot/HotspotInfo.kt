@@ -19,7 +19,7 @@
  */
 package tri.covid19.coda.hotspot
 
-import tri.area.UsaAreaLookup
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.DEATHS
 import tri.timeseries.*
 import tri.timeseries.analytics.ExtremeInfo

@@ -23,7 +23,7 @@ import org.junit.Test
 import tri.covid19.CASES
 import tri.timeseries.TimeSeries
 import tri.area.AreaType
-import tri.area.UsaAreaLookup
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.data.LocalCovidDataQuery
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage

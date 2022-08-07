@@ -24,7 +24,7 @@ import javafx.event.EventTarget
 import javafx.scene.control.SplitPane
 import javafx.scene.control.TableView
 import tornadofx.*
-import tri.area.UsaAreaLookup
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.DEATHS
 import tri.covid19.coda.history.*
 import tri.covid19.coda.utils.*

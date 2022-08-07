@@ -26,9 +26,9 @@ import javafx.scene.control.Alert
 import org.apache.commons.math3.exception.NoBracketingException
 import org.apache.commons.math3.exception.TooManyEvaluationsException
 import tornadofx.*
-import tri.area.UsaAreaLookup
 import tri.area.USA
-import tri.area.Usa
+import tri.area.usa.UsaAreaLookup
+import tri.area.usa.Usa
 import tri.covid19.coda.data.CovidForecasts
 import tri.covid19.coda.data.CovidTimeSeriesSources
 import tri.covid19.coda.history.METRIC_OPTIONS
