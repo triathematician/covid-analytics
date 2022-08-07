@@ -26,7 +26,8 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Text
 import tornadofx.*
-import tri.covid19.reports.HotspotInfo
+import tri.area.usa.UsaAreaLookup
+import tri.covid19.coda.hotspot.HotspotInfo
 import tri.timeseries.*
 import tri.timeseries.analytics.ExtremaSummary
 import tri.timeseries.analytics.ExtremeInfo
@@ -84,13 +85,14 @@ class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View(
             return
         }
 
-        popText.value = s.area.population?.userFormat() ?: "unknown"
+        popText.value = UsaAreaLookup.area(s.areaId).population?.userFormat() ?: "unknown"
 
         val deltas = s.deltas()
         val smoothedDeltas = deltas.movingAverage(7)
         val peak = deltas.peak()
         val peakSmoothed = smoothedDeltas.peak()
-        peakText.value = "${peak.second.userFormat()} on ${peak.first.monthDay}, ${peakSmoothed.second.userFormat()} on ${peakSmoothed.first.monthDay} (smoothed)"
+        peakText.value = (if (peak == null) "(peak cannot be calculated), " else "${peak.second.userFormat()} on ${peak.first.monthDay}, ") +
+                (if (peakSmoothed == null) "(smoothed peak cannot be calculated)" else "${peakSmoothed.second.userFormat()} on ${peakSmoothed.first.monthDay} (smoothed)")
 
         val hotspotInfo = HotspotInfo(s)
         doublingText.value = "${hotspotInfo.doublingTimeDays?.userFormat() ?: "N/A"} days (all time), ${hotspotInfo.doublingTimeDays28?.userFormat() ?: "N/A"} days (last 28 days)"

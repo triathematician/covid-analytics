@@ -23,6 +23,7 @@ import org.junit.Test
 import tri.covid19.CASES
 import tri.timeseries.TimeSeries
 import tri.area.AreaType
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.data.LocalCovidDataQuery
 import tri.timeseries.deltas
 import tri.timeseries.movingAverage
@@ -71,7 +72,7 @@ class Growth(val series: TimeSeries, val date: LocalDate) {
     val count7
         get() = series[date] - series[date-7]
     val countPerCapita7
-        get() = series.area.population?.let { count7/(it/1E5) } ?: Double.NaN
+        get() = UsaAreaLookup.area(series.areaId).population?.let { count7/(it/1E5) } ?: Double.NaN
     val ratio730
         get() = (series[date]-series[date-7])/(series[date]-series[date-30])
     val change7

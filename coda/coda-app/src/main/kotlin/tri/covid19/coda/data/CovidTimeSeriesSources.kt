@@ -19,14 +19,13 @@
  */
 package tri.covid19.coda.data
 
+import tri.area.*
+import tri.area.usa.UsaAreaLookup
 import tri.covid19.CASES
 import tri.covid19.DEATHS
 import tri.timeseries.TimeSeries
-import tri.area.AreaInfo
-import tri.area.EARTH
-import tri.area.AreaType
-import tri.area.USA
 import tri.covid19.data.LocalCovidDataQuery
+import tri.timeseries.analytics.shortTermLogisticForecast
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 import kotlin.time.milliseconds
@@ -67,12 +66,12 @@ object CovidTimeSeriesSources {
 
     /** Easy access to state data. */
     fun usStateData(includeUS: Boolean = true) = dailyUsStateReports
-            .filter { includeUS || it.area != USA }
+            .filter { includeUS || UsaAreaLookup.area(it.areaId) != USA }
             .sortedBy { it.areaId }
 
     /** Easy access to country data. */
     fun countryData(includeGlobal: Boolean = true) = dailyCountryReports
-            .filter { includeGlobal || it.area != EARTH }
+            .filter { includeGlobal || UsaAreaLookup.area(it.areaId) != EARTH }
             .sortedBy { it.areaId }
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
@@ -95,7 +94,7 @@ object CovidTimeSeriesSources {
 
 //region population lookups
 
-fun TimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = area.population) {
+fun TimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = UsaAreaLookup.area(areaId).population) {
     null -> null
     else -> (this / (pop.toDouble() / 100000)).also {
         it.intSeries = false

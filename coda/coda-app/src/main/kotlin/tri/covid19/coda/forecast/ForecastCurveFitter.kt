@@ -25,10 +25,10 @@ import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver
 import org.apache.commons.math3.fitting.leastsquares.ParameterValidator
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import tornadofx.property
-import tri.math.*
-import tri.timeseries.Forecast
+import tri.timeseries.forecast.Forecast
 import tri.timeseries.TimeSeries
 import tri.util.DateRange
+import tri.util.math.*
 import tri.util.minus
 import tri.util.monthDay
 import java.time.LocalDate
@@ -153,8 +153,8 @@ class ForecastCurveFitter: (Number) -> Double {
         val deltas = totals.deltas()
         totalValue = totals.lastValue
         deltas.peak().apply {
-            peakDay = first
-            peakValue = second
+            peakDay = this?.first
+            peakValue = this?.second
         }
 
         arrayOf(APR30, MAY31, JUNE30, JULY31).forEach {

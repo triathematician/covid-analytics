@@ -30,7 +30,7 @@ import javafx.scene.input.Clipboard
 import javafx.scene.input.ClipboardContent
 import javafx.util.StringConverter
 import tornadofx.*
-import tri.util.logCsv
+import tri.util.csv.logCsv
 import tri.util.userFormat
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream

@@ -4,11 +4,15 @@
 
     <groupId>com.googlecode.blaisemath</groupId>
     <artifactId>coda</artifactId>
-    <version>0.3.7-SNAPSHOT</version>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>coda-data</module>
+		<module>coda-utils</module>
+		<module>coda-area</module>
+		<module>coda-area-usa</module>
+        <module>coda-time</module>
+        <module>coda-time-covid</module>
         <module>coda-app</module>
     </modules>
 
@@ -65,6 +69,28 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

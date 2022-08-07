@@ -20,8 +20,8 @@
 package tri.covid19.coda.forecast
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import tri.math.SigmoidParameters
-import tri.timeseries.Forecast
+import tri.util.math.SigmoidParameters
+import tri.timeseries.forecast.Forecast
 import tri.util.DateRange
 import java.time.LocalDate
 
