@@ -19,7 +19,6 @@
  */
 package tri.timeseries.io
 
-import tri.area.AreaInfo
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
 import kotlin.time.ExperimentalTime
@@ -61,8 +60,6 @@ abstract class TimeSeriesProcessor {
 
     /** List of metric/qualifier pairs provided by this processor. */
     abstract fun metricsProvided(): Set<MetricInfo>
-    /** Filter indicating whether the given data is provided by this processor. Override to limit areas. */
-    open fun provides(area: AreaInfo, metric: String, qualifier: String) = MetricInfo(metric, qualifier) in metricsProvided()
 
     /** Load data from original source. */
     abstract fun loadRaw(): List<TimeSeries>

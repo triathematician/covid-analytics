@@ -19,7 +19,6 @@
  */
 package tri.timeseries
 
-import tri.area.AreaLookup
 import tri.util.DateRange
 
 //region GENERIC REDUCE OPERATIONS
@@ -104,17 +103,10 @@ fun List<TimeSeries>.regroupAndLatest() = groupBy { it.uniqueMetricKey }
 
 //region EXTENSION FUNCTIONS FOR CALCULATING/PROPERTIES
 
-/** Organize by area, using first series for each area. */
-fun Collection<TimeSeries>.byArea(lookup: AreaLookup) = associate { it.area(lookup) to it }
-
 /** Organize by area id, using first series for each area. */
 fun Collection<TimeSeries>.byAreaId() = associate { it.areaId to it }
 
 /** Group by area id. */
 fun Collection<TimeSeries>.groupByAreaId() = groupBy { it.areaId }
-
-/** Group by area, filtering out invalid areas. */
-fun Collection<TimeSeries>.groupByArea(lookup: AreaLookup) =
-        filter { lookup.areaOrNull(it.areaId) != null }.groupBy { it.area(lookup) }
 
 //endregion

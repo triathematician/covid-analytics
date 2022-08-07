@@ -42,15 +42,6 @@ class TimeSeries_QueryTest {
     }
 
     @Test
-    fun testArea() {
-        val lookup = object : AreaLookup {
-            override fun areaOrNull(lookupName: String, assumeUsState: Boolean) = if (lookupName == "usa") USA else UNKNOWN
-        }
-        assertEquals(UNKNOWN, TEST_SERIES.area(lookup))
-        assertEquals(USA, testSeries("usa", 1, 2).area(lookup))
-    }
-
-    @Test
     fun testDate() {
         assertEquals(FIRST_DATE, TEST_SERIES.date(0))
         assertEquals(LAST_DATE, TEST_SERIES.date(1))

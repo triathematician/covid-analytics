@@ -22,11 +22,19 @@ package tri.timeseries.io
 import org.junit.Test
 import tri.timeseries.TimeSeries
 import java.time.LocalDate
-import kotlin.time.ExperimentalTime
 import kotlin.test.assertEquals
+import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class TimeSeriesFileFormatTest {
+
+    @Test
+    fun testJson() {
+        val t = TimeSeries("test", "IA", "test", "subpop", 0, LocalDate.now(), listOf(3, 1, 4, 1, 5))
+        TimeSeriesFileFormat.writeSeries(t, System.out)
+        val t2 = TimeSeriesFileFormat.readSeries(TimeSeriesFileFormat.writeSeriesAsString(t))
+        TimeSeriesFileFormat.writeSeries(t2, System.out)
+    }
 
     @Test
     fun testSerialize() {

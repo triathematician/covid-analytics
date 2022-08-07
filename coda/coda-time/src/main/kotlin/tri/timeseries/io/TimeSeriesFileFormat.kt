@@ -30,13 +30,23 @@ import kotlin.math.roundToInt
 object TimeSeriesFileFormat {
 
     /** Reads several series from a file. */
-    fun readSeries(file: File, charset: Charset) = BufferedReader(FileReader(file)).useLines { it.map { readSeries(it) }.toList() }
+    fun readSeries(file: File, charset: Charset) =
+            BufferedReader(FileReader(file, charset))
+                    .useLines(::readLines)
 
     /** Reads several series from a file. */
-    fun readSeries(url: URL, charset: Charset) = BufferedReader(InputStreamReader(url.openStream(), charset)).useLines { it.map { readSeries(it) }.toList() }
+    fun readSeries(url: URL, charset: Charset) =
+            BufferedReader(InputStreamReader(url.openStream(), charset))
+                    .useLines(::readLines)
 
     /** Reads several series from an input stream. */
-    fun readSeries(inputStream: InputStream, charset: Charset) = BufferedReader(InputStreamReader(inputStream, charset)).useLines { it.map { readSeries(it) }.toList() }
+    fun readSeries(inputStream: InputStream, charset: Charset) =
+            BufferedReader(InputStreamReader(inputStream, charset))
+                    .useLines(::readLines)
+
+    /** Reads a sequence of lines as time series objects. */
+    private fun readLines(seq: Sequence<String>): List<TimeSeries> =
+            seq.map { readSeries(it) }.toList()
 
     /** Writes several series to the writer. */
     fun writeSeries(m: List<TimeSeries>, out: OutputStream, charset: Charset) =

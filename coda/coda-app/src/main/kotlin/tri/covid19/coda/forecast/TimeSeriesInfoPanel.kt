@@ -85,7 +85,7 @@ class TimeSeriesInfoPanel(val series: SimpleObjectProperty<TimeSeries?>) : View(
             return
         }
 
-        popText.value = s.area(UsaAreaLookup).population?.userFormat() ?: "unknown"
+        popText.value = UsaAreaLookup.area(s.areaId).population?.userFormat() ?: "unknown"
 
         val deltas = s.deltas()
         val smoothedDeltas = deltas.movingAverage(7)

@@ -119,9 +119,9 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
         if (metric == null) {
             val sMetrics = data()
                     .asSequence()
-                    .filter { parentRegion.value.isNullOrEmpty() || it.area(UsaAreaLookup).parent == UsaAreaLookup.area(parentRegion.value) }
+                    .filter { parentRegion.value.isNullOrEmpty() || UsaAreaLookup.area(it.areaId).parent == UsaAreaLookup.area(parentRegion.value) }
                     .filter { it.metric == if (perCapita) selectedMetric.perCapita else selectedMetric }
-                    .filter { it.area(UsaAreaLookup).population.let { it == null || it in minPopulation..maxPopulation } }
+                    .filter { UsaAreaLookup.area(it.areaId).population.let { it == null || it in minPopulation..maxPopulation } }
                     .filter { exclude(it.areaId) }
                     .sortedByDescending { it.sortMetric }
                     .toList()
@@ -139,7 +139,7 @@ class HistoryPanelModel(var onChange: () -> Unit = {}) {
             TimeSeriesSort.ALL -> lastValue
             TimeSeriesSort.LAST14 -> lastValue - values.getOrElse(values.size - 14) { 0.0 }
             TimeSeriesSort.LAST7 -> lastValue - values.getOrElse(values.size - 7) { 0.0 }
-            TimeSeriesSort.POPULATION -> area(UsaAreaLookup).population?.toDouble() ?: 0.0
+            TimeSeriesSort.POPULATION -> UsaAreaLookup.area(areaId).population?.toDouble() ?: 0.0
             TimeSeriesSort.PEAK7 -> values.deltas().movingAverage(7).maxOrNull() ?: 0.0
             TimeSeriesSort.PEAK14 -> values.deltas().movingAverage(14).maxOrNull() ?: 0.0
         }

@@ -20,12 +20,10 @@
 package tri.timeseries
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import tri.area.AreaLookup
 import tri.util.DateRange
 import tri.util.dateRange
 import tri.util.minus
 import tri.util.rangeTo
-import java.lang.IllegalStateException
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
@@ -100,10 +98,6 @@ data class TimeSeries(
     //endregion
 
     //region QUERIES
-
-    /** Get area by id, if found. */
-    fun area(lookup: AreaLookup) = lookup.areaOrNull(areaId)
-            ?: throw IllegalStateException("Area not found: $areaId")
 
     /** Get date by index. */
     fun date(i: Int) = start.plusDays(i.toLong())!!

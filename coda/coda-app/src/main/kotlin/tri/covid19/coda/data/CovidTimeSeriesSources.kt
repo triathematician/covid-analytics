@@ -65,12 +65,12 @@ object CovidTimeSeriesSources {
 
     /** Easy access to state data. */
     fun usStateData(includeUS: Boolean = true) = dailyUsStateReports
-            .filter { includeUS || it.area(UsaAreaLookup) != USA }
+            .filter { includeUS || UsaAreaLookup.area(it.areaId) != USA }
             .sortedBy { it.areaId }
 
     /** Easy access to country data. */
     fun countryData(includeGlobal: Boolean = true) = dailyCountryReports
-            .filter { includeGlobal || it.area(UsaAreaLookup) != EARTH }
+            .filter { includeGlobal || UsaAreaLookup.area(it.areaId) != EARTH }
             .sortedBy { it.areaId }
 
     /** Get daily reports for given regions, with additional metrics giving daily growth rates and logistic fit predictions. */
@@ -93,7 +93,7 @@ object CovidTimeSeriesSources {
 
 //region population lookups
 
-fun TimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = area(UsaAreaLookup).population) {
+fun TimeSeries.scaledByPopulation(metricFunction: (String) -> String) = when (val pop = UsaAreaLookup.area(areaId).population) {
     null -> null
     else -> (this / (pop.toDouble() / 100000)).also {
         it.intSeries = false
