@@ -1,3 +1,3 @@
 ## Coda TimeSeries Library
 
-This will be the future site of Coda timeseries library documentation. For now, see https://github.com/triathematician/covid-analytics.
+This will be the future site of Coda timeseries library documentation, and the Coda TornadoFx application for browsing COVID-19 timeseries data from public sources.
