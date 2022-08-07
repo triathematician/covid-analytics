@@ -68,7 +68,9 @@ fun List<TimeSeries>.max(altAreaId: String? = null, altMetric: String? = null) =
 fun List<TimeSeries>.sum(altAreaId: String? = null, altMetric: String? = null) = mergeSeries { it.sum() }
         .copy(altAreaId, altMetric)
 
-private fun TimeSeries.copy(altAreaId: String? = null, altMetric: String? = null) = copy(areaId = altAreaId ?: areaId, metric = altMetric ?: metric)
+/** Creates a copy with an alternative metric name. */
+fun TimeSeries.copy(altAreaId: String? = null, altMetric: String? = null) =
+    copy(areaId = altAreaId ?: areaId, metric = altMetric ?: metric)
 
 //endregion
 

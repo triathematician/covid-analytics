@@ -21,8 +21,7 @@ package tri.util
 
 import java.text.NumberFormat
 import java.util.*
-import kotlin.math.absoluteValue
-import kotlin.math.round
+import kotlin.math.*
 
 /** Format number with given number of digits. */
 fun Number.format(digits: Int) = "%.${digits}f".format(this)

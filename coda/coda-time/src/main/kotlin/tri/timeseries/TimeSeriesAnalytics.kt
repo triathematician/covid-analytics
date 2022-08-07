@@ -19,6 +19,7 @@
  */
 package tri.timeseries
 
+import tri.util.percentChangeTo
 import kotlin.math.log2
 import kotlin.math.max
 
@@ -96,6 +97,3 @@ fun Series.growthRatio(topBucket: Int, bottomBucket: Int): Series {
     val res = topLast.mapIndexed { i, v -> v / bottomLast[i] }
     return res
 }
-
-/** Compute percentage change from this value to the provided value. */
-fun Double.percentChangeTo(count: Double) = (count - this) / this

@@ -85,6 +85,17 @@ open class TimeSeriesQuery(val lookup: AreaLookup, vararg _sources: TimeSeriesPr
     /** Query for weekly total version of time series. */
     open fun weeklyTotal(area: AreaInfo, metric: String): TimeSeries? = null
 
+    /** Query for weekly percent change version of time series. */
+    open fun weeklyPercentChange(area: AreaInfo, metric: String): TimeSeries? = null
+    /** Query for weekly average difference version of time series. */
+    open fun weeklyAverageDifference(area: AreaInfo, metric: String): TimeSeries? = null
+    /** Query for weekly total difference version of time series. */
+    open fun weeklyTotalDifference(area: AreaInfo, metric: String): TimeSeries? = null
+    /** Query for weekly cumulative percent change version of time series. */
+    open fun weeklyCumulativePercentChange(area: AreaInfo, metric: String): TimeSeries? = null
+
+    /** Query for 14-day average version of time series. */
+    open fun biweeklyAverage(area: AreaInfo, metric: String): TimeSeries? = null
     /** Query for 14-day total version of time series. */
     open fun biweeklyTotal(area: AreaInfo, metric: String): TimeSeries? = null
 
