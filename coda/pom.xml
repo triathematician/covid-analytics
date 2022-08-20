@@ -61,7 +61,7 @@
     </distributionManagement>
 
     <properties>
-        <kotlin.version>1.4.32</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- set license attributes for license plugin -->
         <license.organizationName>Elisha Peterson</license.organizationName>
