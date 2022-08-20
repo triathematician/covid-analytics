@@ -98,7 +98,7 @@ class ForecastCurveFitter: (Number) -> Double {
     internal fun equationPeak(bracket: IntRange = 0..200): Pair<Double, Double> {
         val diffs = UnivariateFunction { x -> derivative(x) }
         val diffs2 = UnivariateFunction { x -> invoke(x + .01) - 2 * invoke(x) + invoke(x - .01) }
-        val maxDay = bracket.maxBy { it: Int -> diffs.value(it.toDouble()) }!!
+        val maxDay = bracket.maxByOrNull { it: Int -> diffs.value(it.toDouble()) }!!
         val zero = BracketingNthOrderBrentSolver(1E-8, 5)
                 .solve(100, diffs2, maxDay - 1.0, maxDay + 1.0, AllowedSolution.ANY_SIDE)
         return zero to (invoke(zero + .5) - invoke(zero - .5))
