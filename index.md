@@ -13,7 +13,7 @@ The following three general purpose modules are part of the coda library:
 The following three modules provide specific functionality and data associated with these:
 
 - `coda-area-usa` provides a common baseline of US census and related data (2019 census)
-- `coda-time-covid` provides tools for loading and working with some specific COVID-19 datasets (including JHU CSSE COVID-19 data from https://github.com/CSSEGISandData/COVID-19 and several forecasting data sources)
+- `coda-time-covid` provides tools for loading and working with some specific COVID-19 datasets (including [JHU CSSE COVID-19](https://github.com/CSSEGISandData/COVID-19) data from and several forecasting data sources)
 - `coda-app` is a JavaFx application (built using TornadoFx) with views depicting historical data and forecasts
 
 ### TimeSeries Model and Data Structure
@@ -37,7 +37,7 @@ A ``TimeSeries`` is a data structure that stores a set of values by dates, assoc
 In general, timeseries may also specify values by hour, month, etc. or by specific timestamps, but these are not yet supported.
 
 ### CodaApp
-`CodaApp` is a data exploration `JavaFx` tool written using `TornadoFx` (https://tornadofx.io/). It was initially written early in the COVID-19 pandemic (Spring and Summer 2020), so contains an emphasis on understanding of data early in the pandemic, within the first wave. However, it can still be used to load and display the most recent data available from the JHU CSSE COVID-19 dataset.
+`CodaApp` is a data exploration [JavaFx](https://openjfx.io/) tool written using [TornadoFx](https://tornadofx.io/). It was initially written early in the COVID-19 pandemic (Spring and Summer 2020), so contains an emphasis on understanding of data early in the pandemic, within the first wave. However, it can still be used to load and display the most recent data available from the JHU CSSE COVID-19 dataset.
 
 Currently, the tool has four tabs:
 
