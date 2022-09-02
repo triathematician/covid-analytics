@@ -20,13 +20,11 @@
 package tri.timeseries.io
 
 import tri.timeseries.*
+import tri.util.measureTimedValue
 import java.io.File
 import java.nio.charset.Charset
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
 
 /** Processes files from a "raw" source and saves them to a processed file location. */
-@ExperimentalTime
 abstract class TimeSeriesCachingProcessor(val processed: () -> File): TimeSeriesProcessor() {
 
     override fun loadProcessed(): List<TimeSeries> {

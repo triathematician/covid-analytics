@@ -45,10 +45,8 @@ import tri.util.userFormat
 import java.time.LocalDate
 import java.util.*
 import kotlin.reflect.KMutableProperty1
-import kotlin.time.ExperimentalTime
 
 /** Config for logistic projection. */
-@ExperimentalTime
 class ForecastPanelModel(var listener: () -> Unit = {}) {
 
     //region UI BOUND PROPERTIES

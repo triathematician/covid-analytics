@@ -31,11 +31,9 @@ import tri.util.minus
 import tri.util.rangeTo
 import java.io.File
 import java.time.LocalDate
-import kotlin.time.ExperimentalTime
 
 class CovidDataTests {
     @Test
-    @ExperimentalTime
     fun testGrowth() {
         println(File("").absolutePath)
         val data = LocalCovidDataQuery.by({ it.type == AreaType.COUNTY}, { it == CASES }).take(10)
@@ -56,7 +54,6 @@ class CovidDataTests {
     }
 
     @Test
-    @ExperimentalTime
     fun testKernel() {
         val data = LocalCovidDataQuery.by({ it.id == "United Kingdom"}, { it == CASES }).first()
         println(data.values)

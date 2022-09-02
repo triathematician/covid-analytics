@@ -25,7 +25,6 @@ import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class TimeSeriesFileFormatTest {
 
     @Test

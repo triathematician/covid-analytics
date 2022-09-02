@@ -23,12 +23,11 @@ import tri.area.*
 import tri.area.usa.UsaAreaLookup
 import tri.covid19.CASES
 import tri.covid19.DEATHS
-import tri.timeseries.TimeSeries
 import tri.covid19.data.LocalCovidDataQuery
+import tri.timeseries.TimeSeries
 import tri.timeseries.analytics.shortTermLogisticForecast
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
-import kotlin.time.milliseconds
+import tri.util.measureTimedValue
+import kotlin.time.Duration.Companion.milliseconds
 
 //
 // This file links to various data sources providing time series information.
@@ -50,7 +49,6 @@ internal val String.perCapita
 //endregion
 
 /** Primary access point for COVID time series data. */
-@ExperimentalTime
 object CovidTimeSeriesSources {
 
     val dailyCountryReports by lazy { dailyReports(COUNTRY_FILTER) }

@@ -24,7 +24,6 @@ import java.time.LocalDate
 import java.time.Month
 import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class TimeSeriesAggregateTest {
 
     @Test

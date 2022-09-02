@@ -29,10 +29,8 @@ import tri.covid19.DEATHS
 import tri.covid19.coda.history.*
 import tri.covid19.coda.utils.*
 import tri.covid19.coda.data.CovidTimeSeriesSources
-import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
-@ExperimentalTime
 class HotspotTable: SplitPane() {
 
     val selectedMetric = SimpleStringProperty(DEATHS).apply { addListener { _ -> updateTableData() } }

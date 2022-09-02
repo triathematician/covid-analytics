@@ -22,9 +22,7 @@ package tri.covid19.coda.data
 import org.junit.Test
 import tri.area.usa.UsaAreaLookup
 import tri.covid19.data.JhuDailyReports
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class JhuDailyReportsTest {
 
     @Test
@@ -57,7 +55,6 @@ class JhuDailyReportsTest {
 
 }
 
-@ExperimentalTime
 object RebuildJhuDailyReportsData {
     @JvmStatic
     fun main(args: Array<String>) {

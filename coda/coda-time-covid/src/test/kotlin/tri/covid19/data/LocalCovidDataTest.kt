@@ -22,11 +22,9 @@ package tri.covid19.data
 import org.junit.Test
 import tri.timeseries.MetricInfo
 import tri.timeseries.io.TimeSeriesFileProcessor
+import tri.util.measureTime
 import java.io.File
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
-@ExperimentalTime
 class LocalCovidDataTest {
 
     @Test
