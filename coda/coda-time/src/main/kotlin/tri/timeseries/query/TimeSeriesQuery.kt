@@ -28,7 +28,6 @@ import java.time.YearMonth
 import kotlin.time.ExperimentalTime
 
 /** Manages access to a variety of time series, and provides simple query access. */
-@ExperimentalTime
 open class TimeSeriesQuery(val lookup: AreaLookup, vararg _sources: TimeSeriesProcessor) {
 
     /** List of sources. */

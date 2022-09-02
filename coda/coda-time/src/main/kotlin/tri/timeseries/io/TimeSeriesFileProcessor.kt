@@ -20,14 +20,12 @@
 package tri.timeseries.io
 
 import tri.timeseries.TimeSeries
+import tri.util.measureTimedValue
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
 
 /** Processes raw files to processed files, reads processed files if possible. */
-@ExperimentalTime
 abstract class TimeSeriesFileProcessor(val rawSources: () -> List<File>, processed: () -> File): TimeSeriesCachingProcessor(processed) {
 
     override fun toString() = "TimeSeriesFileProcessor ${rawSources()}"

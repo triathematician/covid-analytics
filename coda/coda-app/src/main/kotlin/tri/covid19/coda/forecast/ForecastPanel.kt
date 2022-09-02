@@ -43,17 +43,15 @@ import tri.covid19.coda.history.METRIC_OPTIONS
 import tri.covid19.coda.installHoverEffect
 import tri.covid19.coda.utils.*
 import tri.util.math.Sigmoid
+import tri.util.measureTime
 import tri.util.minus
 import tri.util.monthDay
 import tri.util.toLocalDate
 import tri.util.userFormat
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
-import kotlin.time.milliseconds
+import kotlin.time.Duration.Companion.milliseconds
 
-@ExperimentalTime
 class ForecastPanel : SplitPane() {
 
     val model = ForecastPanelModel { updateForecasts() }

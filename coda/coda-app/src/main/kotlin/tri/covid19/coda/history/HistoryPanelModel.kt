@@ -40,7 +40,6 @@ import tri.covid19.coda.data.perCapita
 import tri.timeseries.*
 import java.time.LocalDate
 import kotlin.reflect.KMutableProperty1
-import kotlin.time.ExperimentalTime
 
 const val COUNTRIES = "Countries and Global Regions"
 const val STATES = "US States and Territories"
@@ -49,7 +48,6 @@ const val CBSA = "US CBSA"
 val METRIC_OPTIONS = listOf(CASES, DEATHS, RECOVERED, ACTIVE)
 
 /** UI model for history panel. */
-@ExperimentalTime
 class HistoryPanelModel(var onChange: () -> Unit = {}) {
 
     val regionTypes = listOf(COUNTRIES, STATES, COUNTIES, CBSA)

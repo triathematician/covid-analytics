@@ -20,13 +20,11 @@
 package tri.timeseries.io
 
 import tri.timeseries.TimeSeries
+import tri.util.measureTimedValue
 import java.io.File
 import java.net.URL
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
 
 /** Processes URLs to processed files, reads processed files if possible. */
-@ExperimentalTime
 abstract class TimeSeriesUrlProcessor(val rawSources: () -> List<URL>, processed: () -> File): TimeSeriesCachingProcessor(processed) {
 
     override fun toString() = "TimeSeriesUrlProcessor ${rawSources()}"

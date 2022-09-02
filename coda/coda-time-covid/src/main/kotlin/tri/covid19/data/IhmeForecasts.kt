@@ -32,7 +32,6 @@ import kotlin.time.ExperimentalTime
 const val IHME = "IHME"
 
 /** Loads IHME models. */
-@ExperimentalTime
 object IhmeForecasts : TimeSeriesFileProcessor({ forecasts { it.name.startsWith("ihme") && it.extension == "csv" } },
         { LocalCovidData.normalizedDataFile("ihme-forecasts.csv") }) {
 

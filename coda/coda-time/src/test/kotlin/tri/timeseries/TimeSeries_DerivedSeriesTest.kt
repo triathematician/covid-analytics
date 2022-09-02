@@ -24,7 +24,6 @@ import kotlin.time.ExperimentalTime
 import java.lang.IllegalArgumentException
 import kotlin.test.fail
 
-@ExperimentalTime
 class TimeSeries_DerivedSeriesTest {
 
     private val BEFORE_DATE = date(1, 31)

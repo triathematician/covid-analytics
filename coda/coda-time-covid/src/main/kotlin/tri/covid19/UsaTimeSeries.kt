@@ -27,8 +27,7 @@ import tri.area.usa.Usa.femaRegionOf
 import tri.area.usa.Usa.xyRegionOf
 import tri.timeseries.TimeSeries
 import tri.timeseries.sum
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
+import tri.util.measureTime
 
 // this class contains utilities for processing timeseries data for [Usa] area types
 
@@ -45,7 +44,6 @@ val List<TimeSeries>.national
  * Adds rollups of series to a list of time series. Does not check that the input data is at the proper level.
  * If cumulative, fills missing future values with the last value. Otherwise assumes those values are zero.
  */
-@ExperimentalTime
 fun List<TimeSeries>.withAggregate(cbsa: Boolean = false, state: Boolean = false, regional: Boolean = false, censusRegional: Boolean = false, national: Boolean = false): List<TimeSeries> {
     val res = mutableListOf(this)
     if (cbsa) measureTime { res += aggregateByCbsa().flatMap { it.value } }.also { println("  aggregated $size records to CBSA in $it") }

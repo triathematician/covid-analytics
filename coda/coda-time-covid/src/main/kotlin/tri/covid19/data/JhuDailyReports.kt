@@ -36,7 +36,6 @@ import kotlin.time.ExperimentalTime
 const val JHU_CSSE = "JHU CSSE"
 
 /** Processes daily time series reports into a unified time series structure. */
-@ExperimentalTime
 object JhuDailyReports : TimeSeriesFileProcessor(
         { LocalCovidData.jhuCsseDailyData { it.extension == "csv" } },
         { LocalCovidData.jhuCsseProcessedData }) {

@@ -33,7 +33,6 @@ import kotlin.time.ExperimentalTime
 const val LANL = "LANL"
 
 /** Loads LANL models. */
-@ExperimentalTime
 object LanlForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("lanl") && it.extension == "csv" } },
         { normalizedDataFile("lanl-forecasts.csv") }) {
 

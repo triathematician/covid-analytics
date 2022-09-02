@@ -36,7 +36,6 @@ import kotlin.time.ExperimentalTime
 const val YYG = "YYG"
 
 /** Loads YYG models. */
-@ExperimentalTime
 object YygForecasts: TimeSeriesFileProcessor({ forecasts { it.name.startsWith("yyg") && it.extension == "csv" } },
         { normalizedDataFile("yyg-forecasts.csv") }) {
 

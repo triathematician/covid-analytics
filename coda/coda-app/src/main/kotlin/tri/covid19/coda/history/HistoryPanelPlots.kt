@@ -30,12 +30,10 @@ import tri.covid19.DEATHS
 import tri.covid19.coda.charts.*
 import tri.covid19.coda.installStandardHoverAndTooltip
 import tri.covid19.coda.utils.*
-import kotlin.time.ExperimentalTime
 
 /**
  * View with charts showing line plots for several selected regions.
  */
-@ExperimentalTime
 class HistoryPanelPlots constructor(val historyPanelModel: HistoryPanelModel, val hubbertPanelModel: HistoryHubbertModel) : View() {
 
     private lateinit var standardChart: TimeSeriesChart

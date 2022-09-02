@@ -20,13 +20,11 @@
 package tri.timeseries.io
 
 import tri.timeseries.*
+import tri.util.measureTimedValue
 import java.io.InputStream
 import java.net.URL
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
 
 /** Processes URLs to a remote location. */
-@ExperimentalTime
 abstract class TimeSeriesUrlCachingProcessor(val rawSources: () -> List<URL>,
                                              val processed: () -> URL,
                                              val resourceLoader: (URL) -> InputStream,

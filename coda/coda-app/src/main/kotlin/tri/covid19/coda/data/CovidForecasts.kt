@@ -27,10 +27,8 @@ import tri.timeseries.forecast.ForecastId
 import tri.timeseries.io.TimeSeriesFileFormat
 import java.io.File
 import java.time.LocalDate
-import kotlin.time.ExperimentalTime
 
 /** Access to forecasts by model and date. */
-@ExperimentalTime
 object CovidForecasts {
 
     val FORECAST_OPTIONS = listOf(IHME, LANL, YYG)

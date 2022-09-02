@@ -21,11 +21,9 @@ package tri.timeseries.io
 
 import tri.timeseries.MetricInfo
 import tri.timeseries.TimeSeries
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
+import tri.util.measureTime
 
 /** Tool that supports both reading and processing input data to a normalized format, and storing that data locally so next time it can be more quickly retrieved. */
-@ExperimentalTime
 abstract class TimeSeriesProcessor {
     /** Load data by source. */
     fun data(source: String? = null) = loadProcessedData()?.bySource(source) ?: reloadRawData().bySource(source)

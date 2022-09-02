@@ -24,10 +24,8 @@ import javafx.scene.control.SplitPane
 import tornadofx.*
 import tri.covid19.coda.utils.*
 import tri.util.userFormat
-import kotlin.time.ExperimentalTime
 
 /** UI for exploring historical COVID time series data. */
-@ExperimentalTime
 class HistoryPanel : SplitPane() {
 
     private val historyPanelModel = HistoryPanelModel()

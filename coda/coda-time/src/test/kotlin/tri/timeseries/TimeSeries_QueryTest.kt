@@ -28,7 +28,6 @@ import tri.util.DateRange
 import kotlin.time.ExperimentalTime
 import kotlin.test.assertEquals
 
-@ExperimentalTime
 class TimeSeries_QueryTest {
 
     private val FIRST_DATE = date(2, 1)

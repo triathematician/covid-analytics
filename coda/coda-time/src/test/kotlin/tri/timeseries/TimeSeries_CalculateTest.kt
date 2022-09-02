@@ -28,7 +28,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-@ExperimentalTime
 class TimeSeries_CalculateTest {
 
     private val FIRST_DATE = date(2, 1)

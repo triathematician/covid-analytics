@@ -31,18 +31,14 @@ import tri.covid19.coda.forecast.ForecastPanel
 import tri.covid19.coda.forecast.ForecastTable
 import tri.covid19.coda.history.HistoryPanel
 import tri.covid19.coda.hotspot.HotspotTable
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class CodaApp : App(CodaView::class, CodaStyles::class)
 
-@ExperimentalTime
 fun main(args: Array<String>) {
     launch<CodaApp>(args)
 }
 
 /** View configuration for the app. */
-@ExperimentalTime
 class CodaView : View() {
 
     override val root = vbox {
