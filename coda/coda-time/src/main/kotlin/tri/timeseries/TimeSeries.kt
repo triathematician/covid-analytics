@@ -172,7 +172,7 @@ data class TimeSeries(
 
     /**
      * Trims by setting a given range of dates. Optional fill strategies can set values before and after the current
-     * date range. If omitted, date ranges will not be extended.
+     * date range. If omitted, date ranges will not be extended. Does not change values in the middle of a series.
      */
     fun adjustDates(newStart: LocalDate, newEnd: LocalDate,
                     fillReverse: TimeSeriesFillStrategy = TimeSeriesFillStrategy.LEAVE_BLANK,
