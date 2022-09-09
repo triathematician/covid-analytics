@@ -20,15 +20,16 @@
 package tri.timeseries
 
 import tri.util.DateRange
+import java.time.LocalDate
 
 //region GENERIC REDUCE OPERATIONS
 
 /** Reduces time series by given operation, using the given reduce operation. */
 fun List<TimeSeries>.mergeSeries(op: (List<Double>) -> Double): TimeSeries {
-    val dates = dateRange()
+    val dates = dateRangeOrNull()
     val intSeries = all { it.intSeries }
-    val values = dates.map { date -> op(map { it[date] }) }
-    return get(0).copy(start = dates.start, values = values, intSeries = intSeries)
+    val values = dates?.map { date -> op(map { it[date] }) } ?: listOf()
+    return get(0).copy(start = dates?.start ?: LocalDate.now(), values = values, intSeries = intSeries)
 }
 
 /** Merge two [TimeSeries] using the given operation. */
