@@ -13,6 +13,7 @@
 		<module>coda-area-usa</module>
         <module>coda-time</module>
         <module>coda-time-covid</module>
+        <module>coda-time-usa</module>
         <module>coda-app</module>
     </modules>
 
