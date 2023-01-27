@@ -1,0 +1,100 @@
+@startuml
+component coda-area {
+  class AreaInfo
+  AreaInfo : +id: String
+  AreaInfo : +type: AreaType
+  AreaInfo : +parent: AreaInfo?
+  AreaInfo : +fips: Int?
+  AreaInfo : +AreaMetrics
+
+  class AreaMetrics
+  AreaMetrics : +population: Long?
+
+  enum AreaType
+
+  AreaInfo *-- AreaMetrics
+  AreaInfo *-- AreaType
+
+  interface AreaLookup
+
+  AreaLookup : +areaOrNull(name: String): AreaInfo?
+  AreaLookup : +area(name: String): AreaInfo
+}
+
+component coda-area-usa {
+  object UsaAreaLookup
+  AreaLookup <|-- UsaAreaLookup
+}
+
+component coda-time {
+
+  class TimeSeries
+  TimeSeries : +source: String
+  TimeSeries : +areaId: String
+  TimeSeries : +metric: String
+  TimeSeries : +qualifier: String
+  TimeSeries : +intSeries: Boolean
+  TimeSeries : +defValue: Double
+  TimeSeries : +start: LocalDate
+  TimeSeries : +values: List<Double>
+
+  struct MetricInfo
+  MetricInfo : +metric: String
+  MetricInfo : +qualifier: String
+
+  TimeSeries *-- MetricInfo
+
+  enum TimePeriod
+  enum TimeSeriesAggregate
+  enum TimeSeriesFillStrategy
+
+  interface TimeSeriesProcessor
+ 
+  TimeSeriesProcessor : +metricsProvided()  
+  TimeSeriesProcessor : +data(source)  
+  TimeSeriesProcessor : +loadRaw()  
+  TimeSeriesProcessor : +reloadRawData()  
+  TimeSeriesProcessor : +loadProcessed()  
+  TimeSeriesProcessor : +loadProcessedData()  
+  TimeSeriesProcessor : +saveProcessed()  
+
+  interface TimeSeriesCachingProcessor
+  TimeSeriesCachingProcessor : +processed(): File
+
+  interface TimeSeriesFileProcessor
+  TimeSeriesFileProcessor : +rawSources(): List<File>
+
+  interface TimeSeriesUrlProcessor
+  TimeSeriesUrlProcessor : +rawSources(): List<URL>
+
+  interface TimeSeriesUrlCachingProcessor
+
+  TimeSeriesUrlCachingProcessor : +rawSources(): List<URL>
+  TimeSeriesUrlCachingProcessor : +processed(): URL
+  TimeSeriesUrlCachingProcessor : +resourceLoader(URL): InputStream
+  TimeSeriesUrlCachingProcessor : +resourceExists(URL): InputStream
+
+  TimeSeriesProcessor <|-- TimeSeriesCachingProcessor
+  TimeSeriesCachingProcessor <|-- TimeSeriesFileProcessor
+  TimeSeriesCachingProcessor <|-- TimeSeriesUrlProcessor
+  TimeSeriesProcessor<|-- TimeSeriesUrlCachingProcessor
+
+  object TimeSeriesFileFormat
+  TimeSeriesFileFormat : +readSeries()
+  TimeSeriesFileFormat : +writeSeries()
+
+  class TimeSeriesQuery
+
+  TimeSeriesQuery : +sources: TimeSeriesProcessor[]
+  TimeSeriesQuery : +AreaLookup
+  TimeSeriesQuery : +data(AreaInfo, metric): TimeSeries?
+
+  TimeSeriesQuery *-- TimeSeriesProcessor
+  TimeSeriesQuery *-- TimeSeries
+  TimeSeriesQuery *-- AreaLookup
+
+  TimeSeries <-- TimeSeriesFileFormat
+
+}
+
+@enduml
