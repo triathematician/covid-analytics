@@ -4,18 +4,19 @@ This will be the future site of `coda` timeseries library documentation, and the
 
 ### Package Structure
 
-The following three general purpose modules are part of the coda library:
+The following two modules provide the core API for working with timeseries data in the coda library:
 
-- `coda-utils` provides some common utilities
 - `coda-area` defines classes for keeping tracking of areas of varying geographic levels (state, county, national, etc.)
 - `coda-time` defines classes for managing timeseries data, as well as some I/O operations 
 
-The following three modules provide specific functionality and data associated with these:
+The following four modules provide specific functionality and data associated with these:
 
 - `coda-area-usa` provides a common baseline of US census and related data (2019 census)
 - `coda-time-usa` provides utilities for working with US timeseries data, for instance rolling up values from county to state level
 - `coda-time-covid` provides tools for loading and working with some specific COVID-19 datasets (including [JHU CSSE COVID-19](https://github.com/CSSEGISandData/COVID-19) data from and several forecasting data sources)
 - `coda-app` is a JavaFx application (built using TornadoFx) with views depicting historical data and forecasts
+
+In addition, there is a utility module `coda-utils` for general-purpose utilities.
 
 ### TimeSeries Model and Data Structure
 When working with COVID (and similar) data, there are hundreds of different metrics where daily measurements or observations are important to track, although almost always a series of operations needs to be applied for any kind of analysis or presentation (e.g. 7-day averages). The `coda-time` module is designed to provide a common baseline for the most common timeseries aggregations, derivations, and other analytics, and also provides efficient storage utilities.
