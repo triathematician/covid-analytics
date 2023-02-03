@@ -32,7 +32,7 @@ object CsvLineSplitter {
  * #%L
  * coda-data-0.4.0-SNAPSHOT
  * --
- * Copyright (C) 2020 - 2022 Elisha Peterson
+ * Copyright (C) 2020 - 2023 Elisha Peterson
  * --
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
